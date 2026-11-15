@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import {defaults,simulate} from '../.sites-runtime/core-tests/simulation.mjs';
 import {runAnalysis,validateNarrative,fingerprint} from '../.sites-runtime/core-tests/analysis.mjs';
-import {evidenceFor,validatedLog,validatedThresholds,defaultThresholds} from '../.sites-runtime/core-tests/evidence.mjs';
+import {evidenceFor,validatedLog,validatedThresholds,defaultThresholds,scenarioAlternatives} from '../.sites-runtime/core-tests/evidence.mjs';
 import {indexDocument,hybridSearch} from '../.sites-runtime/core-tests/rag.mjs';
 import {providerSettings} from '../.sites-runtime/core-tests/provider.mjs';
 let count=0;async function test(name,fn){await fn();count++;console.log('PASS '+name);}
@@ -19,4 +19,7 @@ await test('免费额度耗尽时明确降级，不切换付费服务',async()=>
 await test('分析指纹随工况、日志或容差变化而改变',async()=>{const a=await fingerprint(c,log,defaultThresholds);assert.notEqual(a,await fingerprint({...c,speed:30},log,defaultThresholds));assert.notEqual(a,await fingerprint(c,{...log,offset:.2},defaultThresholds));assert.notEqual(a,await fingerprint(c,log,{...defaultThresholds,speed:3}));});
 await test('资料索引持久化保留页码、段落与字符锚点',()=>{const doc={id:'fixture-doc',title:'制动标定',body:'响应时间影响停车距离',metadata:JSON.stringify({segments:[{text:'响应时间影响停车距离',page:3,section:'制动测试'}]})};const chunks=indexDocument(doc);const hits=hybridSearch('停车距离响应时间',[{...doc,documentIndex:JSON.stringify(chunks)}]);assert.equal(hits[0].page,3);assert.equal(hits[0].chunkId,'fixture-doc#c1');assert.equal(hits[0].start,0);assert.equal(hits[0].end,doc.body.length);});
 await test('完全无关问题不捏造检索命中',()=>{assert.equal(hybridSearch('alien telescope volcano',[{id:'x',title:'制动距离',body:'车速和减速度决定停车距离'}]).length,0);});
+await test('规范化日志的键顺序不改变分析指纹',async()=>{const ordered={...log,rows:log.rows.map(({time,speed})=>({speed,time}))};assert.equal(await fingerprint(c,ordered,defaultThresholds),await fingerprint(c,validatedLog(ordered),defaultThresholds));});
+await test('失败请求计数准确，流式步骤更新至完成或警告状态',async()=>{const events=[];const r=await runAnalysis({config:c,question:'分析',log},[],settings,t=>events.push({...t}),async()=>{throw Error('免费额度达到上限');});assert.equal(r.modelCalls,1);assert.ok(r.trace.every(t=>t.status!=='running'));const modelEvents=events.filter(t=>t.kind==='model');assert.equal(modelEvents[0].id,modelEvents.at(-1).id);assert.equal(modelEvents.at(-1).status,'warning');});
+await test('候选参数触及边界时描述准确，静止工况不自动加速',()=>{const a=scenarioAlternatives(evidenceFor({...c,scenario:'urban',speed:0,distance:1000}));assert.equal(a.length,0);const b=scenarioAlternatives(evidenceFor({...c,scenario:'avoid',distance:990,laneTime:11}));assert.ok(b.some(p=>p.patch.distance===1000&&p.label.includes('1000')));assert.ok(b.some(p=>p.patch.laneTime===12&&p.label.includes('12')));});
 console.log(`${count} analysis tests passed`);

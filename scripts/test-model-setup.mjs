@@ -1,0 +1,21 @@
+import assert from 'node:assert/strict';
+import {diagnoseProviderFailure, providerRequest, SetupError, validateSetupKey} from './model-setup-provider.mjs';
+const token = 'ms-EXAMPLE_NOT_A_REAL_TOKEN';
+assert.equal(diagnoseProviderFailure(401,{error:{message:'please bind your alibaba cloud account before use'}}).reason,'account_binding_required');
+assert.equal(diagnoseProviderFailure(403,{message:'实名认证未完成'}).reason,'identity_verification_required');
+assert.match(diagnoseProviderFailure(401,{message:'unauthorized'}).message,/绑定.*实名认证/);
+assert.equal(diagnoseProviderFailure(429,{}).reason,'free_quota_or_rate_limit');
+assert.equal(diagnoseProviderFailure(402,{}).reason,'payment_required');
+assert.throws(()=>validateSetupKey('modelscope','sk-EXAMPLE_NOT_REAL'),/ms-/);
+assert.throws(()=>validateSetupKey('modelscope','my-token-name'),/ms-/);
+validateSetupKey('modelscope',token);
+const mock = async (_url, options) => {
+  assert.equal(options.headers.Authorization,'Bearer '+token);
+  return new Response(JSON.stringify({error:{message:'invalid token: '+token}}),{status:401});
+};
+await assert.rejects(providerRequest('modelscope',token,'chat/completions',{},mock),e=>e instanceof SetupError&&e.diagnosis.status===401&&!JSON.stringify(e).includes(token)&&!e.message.includes(token));
+await assert.rejects(providerRequest('modelscope',token,'models',undefined,async()=>new Response('proxy error '+token,{status:502})),e=>!e.message.includes(token)&&e.diagnosis.reason==='provider_unavailable');
+await assert.rejects(providerRequest('modelscope',token,'models',undefined,async()=>{throw Error(token);}),e=>!e.message.includes(token)&&e.diagnosis.reason==='network_unavailable');
+await assert.rejects(providerRequest('modelscope',token,'models',undefined,async()=>new Response('bad json '+token)),e=>!e.message.includes(token)&&e.diagnosis.reason==='invalid_response');
+assert.equal(diagnoseProviderFailure(404,{}).reason,'model_unavailable');
+console.log('PASS model setup: account/identity/auth/quota diagnostics, credential format, provider-error redaction, network and malformed responses (12 checks)');

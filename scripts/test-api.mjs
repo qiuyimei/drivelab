@@ -1,0 +1,13 @@
+import assert from 'node:assert/strict';
+import {defaults} from '../.sites-runtime/core-tests/simulation.mjs';
+import {ENGINE_VERSION} from '../.sites-runtime/core-tests/evidence.mjs';
+const base=process.env.DRIVELAB_TEST_URL??'http://127.0.0.1:5173';
+const anonymous=await fetch(base+'/api/records');assert.equal(anonymous.status,401);
+const login=await fetch(base+'/signin-with-chatgpt?return_to=/',{redirect:'manual'});const cookie=login.headers.getSetCookie().map(s=>s.split(';')[0]).join('; ');assert.ok(cookie,'Local preview sign-in cookie required');
+async function api(path,method='GET',data){const r=await fetch(base+'/api/'+path,{method,headers:{Cookie:cookie,Origin:base,...(data?{'Content-Type':'application/json'}:{})},body:data?JSON.stringify(data):undefined});const v=await r.json();if(!r.ok)throw Error(path+': '+JSON.stringify(v));return v;}
+const config={...defaults,name:'自动验收夹具（临时）',scenario:'curve',speed:36,duration:5};const log={name:'合成固定偏差验收夹具.csv',offset:0,dropped:0,duplicates:0,missing:['yaw','pressure','steering'],rows:Array.from({length:51},(_,i)=>({time:i/10,speed:38}))};const thresholds={speed:2,yaw:2,pressure:5,steering:10};
+const analysis=await api('analyze','POST',{config,log,thresholds,question:'解释本次车速对标误差',mode:'rules'});assert.equal(analysis.mode,'rules');assert.equal(analysis.evidence.comparison[0].rmse,2);assert.ok(analysis.trace.length>=4);
+const stream=await fetch(base+'/api/analyze',{method:'POST',headers:{Cookie:cookie,Origin:base,'Content-Type':'application/json',Accept:'text/event-stream'},body:JSON.stringify({config,log,thresholds,question:'分析车速误差',mode:'rules'})});const text=await stream.text();assert.match(text,/event: progress/);assert.match(text,/event: result/);assert.ok(!text.includes('event: error'));
+const record=await api('records','POST',{config,log,thresholds,analysis:analysis.answer,analysisBundle:analysis});try{const loaded=await api('records/'+record.id);const snapshot=JSON.parse(loaded.payload);assert.equal(snapshot.analysisBundle?.fingerprint,analysis.fingerprint);assert.equal(snapshot.engineVersion,ENGINE_VERSION);}finally{await api('records/'+record.id,'DELETE');}
+const sourceBody='验收资料：共同时间区间中的车速误差应结合单位、时延与基线工况进行解释。';const doc=await api('knowledge','POST',{title:'临时验收知识资料',body:sourceBody,kind:'pdf',sourceName:'fixture.pdf',segments:[{text:sourceBody,page:3,section:'第 3 页'}]});try{assert.ok(doc.chunkCount>=1);const docs=await api('knowledge');const own=docs.find(d=>d.id===doc.id);assert.equal(JSON.parse(own.metadata).segments[0].page,3);}finally{await api('knowledge/'+doc.id,'DELETE');}
+console.log('PASS API integration: auth gate, server comparison, SSE events, snapshot fingerprint, source page index, fixture cleanup (6 checks)');

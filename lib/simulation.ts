@@ -19,10 +19,10 @@ export function simulate(c:Config){
  const effectiveDecel=Math.min(c.decel,c.brakeLimit,c.mu*g);
  const stoppingDistance=v0*c.reaction+v0*v0/(2*effectiveDecel),stopTime=c.reaction+v0/effectiveDecel;
  const rows:Sample[]=[];let x=0,v=v0,minGap=c.distance,maxUtil=0,maxLat=0,maxSteer=0;
- for(let n=0;n<=Math.round(c.duration*10);n++){
-  const t=n/10;let ax=0;
+ for(let n=0;n<=Math.ceil(c.duration*10);n++){
+  const t=Math.min(n/10,c.duration);let ax=0;
   if(braking && t>=c.reaction)ax=v>0?-effectiveDecel:0;
-  if(n){const prevT=(n-1)/10,dt=t-prevT,active=braking?Math.max(0,Math.min(dt,t-Math.max(prevT,c.reaction))):0;const brakeTime=Math.min(active,v/effectiveDecel);x+=v*(dt-active)+v*brakeTime-0.5*effectiveDecel*brakeTime**2;v=Math.max(0,v-effectiveDecel*active);}
+  if(n){const prevT=Math.min((n-1)/10,c.duration),dt=t-prevT,active=braking?Math.max(0,Math.min(dt,t-Math.max(prevT,c.reaction))):0;const brakeTime=Math.min(active,v/effectiveDecel);x+=v*(dt-active)+v*brakeTime-0.5*effectiveDecel*brakeTime**2;v=Math.max(0,v-effectiveDecel*active);}
   ax=braking&&t>=c.reaction&&v>0?-effectiveDecel:0;
   const trajectoryTime=braking?Math.min(t,stopTime):t;
   const u=Math.max(0,Math.min(1,(trajectoryTime-c.reaction)/c.laneTime));

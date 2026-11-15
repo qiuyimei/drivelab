@@ -29,6 +29,8 @@ test('零速换道与避障参数被拒绝，停车制动仍可计算',()=>{asse
 test('避障停车后不再出现原地横移',()=>{const s=simulate({...defaults,...templates.find(t=>t.id==='avoid').config});const stopped=s.rows.filter(r=>r.speed===0);assert.ok(stopped.length>2);assert.ok(stopped.every(r=>r.y===stopped[0].y));assert.ok(stopped[0].y<s.config.laneWidth);});
 test('未覆盖完整换道轨迹时明确提示',()=>{const s=simulate({...defaults,scenario:'lane',duration:5,laneTime:12});assert.ok(s.findings.some(f=>f.title==='换道覆盖范围'&&f.level==='warn'));assert.notEqual(s.risk,'约束内');});
 test('大写与空白日志列名保持相同的自动单位转换',()=>{const l=parseLog(' TIMESTAMP_MS , SPEED_MPS , YAW_RATE_RAD \n1000,10,1\n2000,20,2','units.csv');assert.equal(l.rows[1].time,1);assert.equal(l.rows[0].speed,36);assert.ok(Math.abs(l.rows[1].yaw-2*180/Math.PI)<1e-9);});
+test('非整步长窗口严格在终点结束，导出时间不会因取两位小数被合并',()=>{for(const duration of [5.001,5.06,5.95]){const s=simulate({...defaults,scenario:'curve',duration,speed:36});assert.equal(s.rows.at(-1).time,duration);assert.ok(Math.abs(s.rows.at(-1).distance-10*duration)<1e-8);assert.ok(s.rows.every(r=>r.time<=duration));assert.equal(parseLog(sampleCSV(s.rows),'fraction.csv').rows.length,s.rows.length);}});
+test('JSON 布尔值不当成车速，异常巨大数值与时间溢出被拒绝',()=>{const l=parseLog(JSON.stringify([{time:0,speed:10},{time:1,speed:false},{time:2,speed:20}]),'bool.json');assert.equal(l.rows.length,2);assert.equal(l.dropped,1);assert.throws(()=>parseLog('null','null.json'),/记录数组/);assert.throws(()=>parseLog('time,speed\n0,1e300\n1,2e300','huge.csv'),/超出导入范围/);assert.throws(()=>parseLog('time,speed\n-1e308,1\n1e308,2','time.csv'),/超出导入范围/);});
 console.log(`${count} core tests passed`);
 
 
