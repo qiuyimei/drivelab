@@ -1,0 +1,1032 @@
+{
+  "engineVersion": "1.1.0",
+  "generatedAt": "2026-11-15T10:36:58.891Z",
+  "classification": "independent_analytic_reference",
+  "fixtureSha256": "fd39ae03d895a6129da5927ec6bde1d7160da422fa31ad91a25352cf1a869b70",
+  "summary": {
+    "total": 130,
+    "passed": 130,
+    "maxAbsoluteError": 9.094947017729282e-13
+  },
+  "groups": [
+    {
+      "kind": "closed_form_stopping",
+      "total": 109,
+      "passed": 109
+    },
+    {
+      "kind": "radius_first_geometry",
+      "total": 9,
+      "passed": 9
+    },
+    {
+      "kind": "six_boundary_linear_solve",
+      "total": 12,
+      "passed": 12
+    }
+  ],
+  "retrieval": {
+    "total": 12,
+    "hitAt3": 12,
+    "top1": 12,
+    "cases": [
+      {
+        "query": "停车距离和反应时间",
+        "expected": "KB-004",
+        "top1": "KB-004",
+        "hitAt3": true
+      },
+      {
+        "query": "弯道半径与舒适性阈值",
+        "expected": "KB-002",
+        "top1": "KB-002",
+        "hitAt3": true
+      },
+      {
+        "query": "方向盘转角与前轮角转换",
+        "expected": "KB-003",
+        "top1": "KB-003",
+        "hitAt3": true
+      },
+      {
+        "query": "摩擦圆联合制动转向",
+        "expected": "KB-001",
+        "top1": "KB-001",
+        "hitAt3": true
+      },
+      {
+        "query": "换道轨迹五次多项式",
+        "expected": "KB-005",
+        "top1": "KB-005",
+        "hitAt3": true
+      },
+      {
+        "query": "采集日志时间对齐和RMSE",
+        "expected": "KB-006",
+        "top1": "KB-006",
+        "hitAt3": true
+      },
+      {
+        "query": "恒定减速度停车时间",
+        "expected": "KB-004",
+        "top1": "KB-004",
+        "hitAt3": true
+      },
+      {
+        "query": "横摆角速度与轴距",
+        "expected": "KB-003",
+        "top1": "KB-003",
+        "hitAt3": true
+      },
+      {
+        "query": "湿滑弯道降低车速",
+        "expected": "KB-002",
+        "top1": "KB-002",
+        "hitAt3": true
+      },
+      {
+        "query": "无重叠数据不外推",
+        "expected": "KB-006",
+        "top1": "KB-006",
+        "hitAt3": true
+      },
+      {
+        "query": "缩短换道时长的影响",
+        "expected": "KB-005",
+        "top1": "KB-005",
+        "hitAt3": true
+      },
+      {
+        "query": "轮胎附着极限",
+        "expected": "KB-001",
+        "top1": "KB-001",
+        "hitAt3": true
+      }
+    ]
+  },
+  "publicSample": {
+    "id": "comma2k19-public-sample",
+    "rows": 4973,
+    "duration": 59.982570675,
+    "sourceCommit": "4c7f1a6e1957745beadc1def0e7225f559b09a2a",
+    "sha256": "e97ef42e65251f5ba0ca9fc2dec334b9870a27638be88710545ac5f1d17cd722",
+    "missing": [
+      "yaw",
+      "pressure"
+    ],
+    "classification": "public_measured_log_excerpt"
+  },
+  "limitations": "验证公式实现、单位、数值积分与给定轨迹边界条件；不证明实车精度、真实安全性或超限后的动态响应。",
+  "outcomes": [
+    {
+      "id": "brake-001",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 1.0658141036401503e-14,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-002",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 1.0658141036401503e-14,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-003",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 1.0658141036401503e-14,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-004",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 3.552713678800501e-15,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-005",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 2.4424906541753444e-15,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-006",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 5.218048215738236e-15,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-007",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 3.552713678800501e-15,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-008",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 2.4424906541753444e-15,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-009",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 1.5543122344752192e-15,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-010",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 3.552713678800501e-15,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-011",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 3.552713678800501e-15,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-012",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 3.552713678800501e-15,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-013",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 3.164135620181696e-15,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-014",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 3.552713678800501e-15,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-015",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 3.552713678800501e-15,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-016",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 3.164135620181696e-15,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-017",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 3.552713678800501e-15,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-018",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 5.329070518200751e-15,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-019",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 1.0658141036401503e-14,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-020",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 1.0658141036401503e-14,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-021",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 1.0658141036401503e-14,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-022",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 1.0658141036401503e-14,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-023",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 3.552713678800501e-15,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-024",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 2.4424906541753444e-15,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-025",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 1.0658141036401503e-14,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-026",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 3.552713678800501e-15,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-027",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 5.995204332975845e-15,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-028",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 1.4210854715202004e-13,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-029",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 1.4210854715202004e-13,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-030",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 1.4210854715202004e-13,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-031",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 1.7053025658242404e-13,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-032",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 9.547918011776346e-15,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-033",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 1.0658141036401503e-14,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-034",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 1.7053025658242404e-13,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-035",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 9.547918011776346e-15,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-036",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 1.4432899320127035e-14,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-037",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 1.4210854715202004e-13,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-038",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 1.4210854715202004e-13,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-039",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 1.4210854715202004e-13,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-040",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 1.8474111129762605e-13,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-041",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 2.842170943040401e-14,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-042",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 1.354472090042691e-14,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-043",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 1.8474111129762605e-13,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-044",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 2.842170943040401e-14,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-045",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 1.0658141036401503e-14,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-046",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 9.947598300641403e-14,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-047",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 9.947598300641403e-14,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-048",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 9.947598300641403e-14,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-049",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 1.4210854715202004e-13,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-050",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 2.8754776337791554e-14,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-051",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 7.105427357601002e-15,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-052",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 1.4210854715202004e-13,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-053",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 2.8754776337791554e-14,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-054",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 1.199040866595169e-14,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-055",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 6.536993168992922e-13,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-056",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 6.536993168992922e-13,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-057",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 6.536993168992922e-13,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-058",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 3.694822225952521e-13,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-059",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 1.9539925233402755e-14,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-060",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 4.263256414560601e-14,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-061",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 3.694822225952521e-13,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-062",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 1.9539925233402755e-14,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-063",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 2.842170943040401e-14,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-064",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 6.821210263296962e-13,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-065",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 6.821210263296962e-13,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-066",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 6.821210263296962e-13,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-067",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 3.694822225952521e-13,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-068",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 2.842170943040401e-14,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-069",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 4.263256414560601e-14,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-070",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 3.694822225952521e-13,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-071",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 2.842170943040401e-14,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-072",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 2.842170943040401e-14,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-073",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 6.821210263296962e-13,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-074",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 6.821210263296962e-13,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-075",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 6.821210263296962e-13,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-076",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 2.2737367544323206e-13,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-077",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 2.842170943040401e-14,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-078",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 8.79296635503124e-14,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-079",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 2.2737367544323206e-13,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-080",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 2.842170943040401e-14,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-081",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 2.842170943040401e-14,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-082",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 8.526512829121202e-13,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-083",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 8.526512829121202e-13,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-084",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 8.526512829121202e-13,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-085",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 1.1368683772161603e-13,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-086",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 4.263256414560601e-14,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-087",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 4.3076653355456074e-14,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-088",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 1.1368683772161603e-13,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-089",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 4.263256414560601e-14,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-090",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 4.263256414560601e-14,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-091",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 7.958078640513122e-13,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-092",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 7.958078640513122e-13,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-093",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 7.958078640513122e-13,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-094",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 1.1368683772161603e-13,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-095",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 5.684341886080802e-14,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-096",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 1.4210854715202004e-13,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-097",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 1.1368683772161603e-13,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-098",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 5.684341886080802e-14,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-099",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 1.4210854715202004e-14,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-100",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 9.094947017729282e-13,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-101",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 9.094947017729282e-13,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-102",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 9.094947017729282e-13,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-103",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 5.684341886080802e-14,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-104",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 8.526512829121202e-14,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-105",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 1.0058620603103918e-13,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-106",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 5.684341886080802e-14,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-107",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 8.526512829121202e-14,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-108",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 4.263256414560601e-14,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "brake-109",
+      "kind": "closed_form_stopping",
+      "pass": true,
+      "maxAbsoluteError": 2.842170943040401e-14,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "curve-36-50",
+      "kind": "radius_first_geometry",
+      "pass": true,
+      "maxAbsoluteError": 0,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "curve-36-100",
+      "kind": "radius_first_geometry",
+      "pass": true,
+      "maxAbsoluteError": 0,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "curve-36-250",
+      "kind": "radius_first_geometry",
+      "pass": true,
+      "maxAbsoluteError": 1.7763568394002505e-15,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "curve-72-50",
+      "kind": "radius_first_geometry",
+      "pass": true,
+      "maxAbsoluteError": 0,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "curve-72-100",
+      "kind": "radius_first_geometry",
+      "pass": true,
+      "maxAbsoluteError": 0,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "curve-72-250",
+      "kind": "radius_first_geometry",
+      "pass": true,
+      "maxAbsoluteError": 1.7763568394002505e-15,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "curve-108-50",
+      "kind": "radius_first_geometry",
+      "pass": true,
+      "maxAbsoluteError": 7.105427357601002e-15,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "curve-108-100",
+      "kind": "radius_first_geometry",
+      "pass": true,
+      "maxAbsoluteError": 0,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "curve-108-250",
+      "kind": "radius_first_geometry",
+      "pass": true,
+      "maxAbsoluteError": 8.881784197001252e-16,
+      "tolerance": 1e-8
+    },
+    {
+      "id": "quintic-2.0-2.0",
+      "kind": "six_boundary_linear_solve",
+      "pass": true,
+      "maxAbsoluteError": 1.7763568394002505e-14,
+      "tolerance": 1e-7
+    },
+    {
+      "id": "quintic-2.0-3.5",
+      "kind": "six_boundary_linear_solve",
+      "pass": true,
+      "maxAbsoluteError": 7.216449660063518e-15,
+      "tolerance": 1e-7
+    },
+    {
+      "id": "quintic-2.0-5.0",
+      "kind": "six_boundary_linear_solve",
+      "pass": true,
+      "maxAbsoluteError": 7.105427357601002e-15,
+      "tolerance": 1e-7
+    },
+    {
+      "id": "quintic-2.0-8.0",
+      "kind": "six_boundary_linear_solve",
+      "pass": true,
+      "maxAbsoluteError": 8.881784197001252e-16,
+      "tolerance": 1e-7
+    },
+    {
+      "id": "quintic-3.5-2.0",
+      "kind": "six_boundary_linear_solve",
+      "pass": true,
+      "maxAbsoluteError": 1.9539925233402755e-14,
+      "tolerance": 1e-7
+    },
+    {
+      "id": "quintic-3.5-3.5",
+      "kind": "six_boundary_linear_solve",
+      "pass": true,
+      "maxAbsoluteError": 1.4210854715202004e-14,
+      "tolerance": 1e-7
+    },
+    {
+      "id": "quintic-3.5-5.0",
+      "kind": "six_boundary_linear_solve",
+      "pass": true,
+      "maxAbsoluteError": 8.43769498715119e-15,
+      "tolerance": 1e-7
+    },
+    {
+      "id": "quintic-3.5-8.0",
+      "kind": "six_boundary_linear_solve",
+      "pass": true,
+      "maxAbsoluteError": 7.993605777301127e-15,
+      "tolerance": 1e-7
+    },
+    {
+      "id": "quintic-5.0-2.0",
+      "kind": "six_boundary_linear_solve",
+      "pass": true,
+      "maxAbsoluteError": 4.618527782440651e-14,
+      "tolerance": 1e-7
+    },
+    {
+      "id": "quintic-5.0-3.5",
+      "kind": "six_boundary_linear_solve",
+      "pass": true,
+      "maxAbsoluteError": 1.7763568394002505e-14,
+      "tolerance": 1e-7
+    },
+    {
+      "id": "quintic-5.0-5.0",
+      "kind": "six_boundary_linear_solve",
+      "pass": true,
+      "maxAbsoluteError": 1.2434497875801753e-14,
+      "tolerance": 1e-7
+    },
+    {
+      "id": "quintic-5.0-8.0",
+      "kind": "six_boundary_linear_solve",
+      "pass": true,
+      "maxAbsoluteError": 9.769962616701378e-15,
+      "tolerance": 1e-7
+    }
+  ]
+}

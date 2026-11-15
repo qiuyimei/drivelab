@@ -3,7 +3,7 @@ import path from 'node:path';
 import assert from 'node:assert/strict';
 import ts from 'typescript';
 const out=path.resolve('.sites-runtime/core-tests');await fs.mkdir(out,{recursive:true});
-for(const name of ['simulation','logs','retrieval']){const code=await fs.readFile(`lib/${name}.ts`,'utf8');const js=ts.transpileModule(code,{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ES2022}}).outputText.replace(/from ['"]\.\/simulation['"]/g,"from './simulation.mjs'");await fs.writeFile(path.join(out,name+'.mjs'),js);}
+for(const name of ['simulation','logs','knowledge-sources','rag','retrieval','evidence','provider','fingerprint','analysis','pdf-report']){const code=await fs.readFile(`lib/${name}.ts`,'utf8');const js=ts.transpileModule(code,{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ES2022}}).outputText.replace(/from ['"]\.\/([a-z-]+)['"]/g,"from './$1.mjs'");await fs.writeFile(path.join(out,name+'.mjs'),js);}
 const {defaults,simulate,templates,validateConfig}=await import(new URL('../.sites-runtime/core-tests/simulation.mjs',import.meta.url));
 const {parseLog,compare,sampleCSV}=await import(new URL('../.sites-runtime/core-tests/logs.mjs',import.meta.url));
 const {retrieve}=await import(new URL('../.sites-runtime/core-tests/retrieval.mjs',import.meta.url));
@@ -30,3 +30,6 @@ test('避障停车后不再出现原地横移',()=>{const s=simulate({...default
 test('未覆盖完整换道轨迹时明确提示',()=>{const s=simulate({...defaults,scenario:'lane',duration:5,laneTime:12});assert.ok(s.findings.some(f=>f.title==='换道覆盖范围'&&f.level==='warn'));assert.notEqual(s.risk,'约束内');});
 test('大写与空白日志列名保持相同的自动单位转换',()=>{const l=parseLog(' TIMESTAMP_MS , SPEED_MPS , YAW_RATE_RAD \n1000,10,1\n2000,20,2','units.csv');assert.equal(l.rows[1].time,1);assert.equal(l.rows[0].speed,36);assert.ok(Math.abs(l.rows[1].yaw-2*180/Math.PI)<1e-9);});
 console.log(`${count} core tests passed`);
+
+
+

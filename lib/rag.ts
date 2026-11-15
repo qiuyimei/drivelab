@@ -1,0 +1,21 @@
+import {engineeringReferences} from './knowledge-sources';
+export type Segment={text:string;page?:number;section?:string};
+export type KnowledgeDoc={id:string;title:string;body:string;basis?:string;category?:string;metadata?:string|null;documentIndex?:string|null};
+export type Chunk={chunkId:string;id:string;title:string;body:string;start:number;end:number;page:number|null;section:string;vector:[number,number][];basis:string;referenceUrl:string|null;locator:string;reviewStatus:string};
+const stop=new Set('的了是在和与及为对有个这那中应能将并或其以由于不需时到下上等'.split(''));
+export function terms(s:string){const tokens=s.toLowerCase().match(/[a-z][a-z0-9_]*|\d+(?:\.\d+)?|[\u4e00-\u9fff]/g)??[];return [...tokens.filter(t=>!stop.has(t)),...tokens.slice(1).flatMap((t,i)=>/^[\u4e00-\u9fff]$/.test(t)&&/^[\u4e00-\u9fff]$/.test(tokens[i])?[tokens[i]+t]:[])];}
+function sparse(text:string):[number,number][]{const values=new Map<number,number>();for(const token of terms(text)){let h=2166136261;for(const c of token)h=Math.imul(h^c.charCodeAt(0),16777619);const k=(h>>>0)%512;values.set(k,(values.get(k)??0)+1);}const norm=Math.hypot(...values.values())||1;return [...values].map(([k,v])=>[k,v/norm]);}
+export function indexDocument(doc:KnowledgeDoc):Chunk[]{
+ let metadata:{segments?:Segment[]};try{metadata=JSON.parse(doc.metadata??'{}');}catch{metadata={};}
+ const segments=Array.isArray(metadata.segments)&&metadata.segments.length?metadata.segments:[{text:doc.body,section:'正文'}];let offset=0;const chunks:Chunk[]=[];
+ for(const [sectionIndex,segment] of segments.entries()){if(typeof segment.text!=='string')continue;const text=segment.text;for(let start=0;start<text.length;start+=560){const body=text.slice(start,start+700);if(!body.trim())continue;const anchor=chunks.length+1,ref=engineeringReferences[doc.id];chunks.push({chunkId:`${doc.id}#c${anchor}`,id:doc.id,title:doc.title,body,start:offset+start,end:offset+Math.min(text.length,start+700),page:Number.isInteger(segment.page)&&segment.page!>0?segment.page!:null,section:segment.section??`段落 ${sectionIndex+1}`,vector:sparse(doc.title+' '+body),basis:doc.basis??'用户上传资料，待工程审核',referenceUrl:ref?.url??null,locator:ref?.locator??(segment.page?'第 '+segment.page+' 页':'导入正文'),reviewStatus:ref?'公开工程依据，车型标定待审核':'用户资料，未审核'});if(start+700>=text.length)break;}offset+=text.length+2;}
+ return chunks;
+}
+function chunksFor(doc:KnowledgeDoc){if(doc.documentIndex){try{const parsed=JSON.parse(doc.documentIndex);if(Array.isArray(parsed)&&parsed.length&&parsed.every(c=>c.id===doc.id&&typeof c.body==='string'&&Array.isArray(c.vector)))return parsed as Chunk[];}catch{}}return indexDocument(doc);}
+export function hybridSearch(query:string,docs:KnowledgeDoc[],limit=3){
+ const chunks=docs.flatMap(chunksFor);const qt=[...new Set(terms(query))];if(!qt.length)return [];
+ const documents=chunks.map(c=>terms(c.title+' '+c.title+' '+c.body));const avg=documents.reduce((s,d)=>s+d.length,0)/Math.max(1,documents.length);const frequency=new Map<string,number>();for(const tokens of documents)for(const t of new Set(tokens))frequency.set(t,(frequency.get(t)??0)+1);
+ const qv=new Map(sparse(query));const candidates=chunks.map((chunk,i)=>{const tokens=documents[i],tf=new Map<string,number>();for(const t of tokens)tf.set(t,(tf.get(t)??0)+1);let bm25=0,overlap=0;for(const t of qt){const n=tf.get(t)??0;if(!n)continue;overlap++;const df=frequency.get(t)??0;const idf=Math.log(1+(chunks.length-df+.5)/(df+.5));bm25+=idf*n*2.2/(n+1.2*(.25+.75*tokens.length/Math.max(avg,1)));}const cosine=chunk.vector.reduce((s,[k,v])=>s+v*(qv.get(k)??0),0);return {...chunk,bm25,cosine,overlap,score:0};});
+ const highest=Math.max(...candidates.map(c=>c.bm25),1);for(const c of candidates)c.score=.75*c.bm25/highest+.25*c.cosine;
+ const perDoc=new Map<string,number>();return candidates.filter(c=>c.bm25>0&&c.overlap>=Math.min(2,qt.length)&&c.score>.1).sort((a,b)=>b.score-a.score).filter(c=>{const count=perDoc.get(c.id)??0;if(count>=2)return false;perDoc.set(c.id,count+1);return true;}).slice(0,limit);
+}

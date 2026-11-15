@@ -1,0 +1,125 @@
+{
+  "checked_on": "2026-11-15",
+  "scope": "只读 DriveLab 的公式与日志协议；核对一手工程来源、准备独立解析基准和一个窄范围的公开实测导入示例；未修改应用目录。",
+  "summary": "可以对公式实现和日志处理提供可复现证据；这些证据不构成实车标定或整车安全认证。已准备 130 个独立解析参考用例和 4973 行公开实测车速/方向盘角样本。",
+  "sources": [
+    {
+      "id": "ENG-001",
+      "title": "Autonomous Driving — ECE 101, University of Illinois Urbana-Champaign",
+      "url": "https://courses.grainger.illinois.edu/ece101/fa2025/lectures/101-024-autonomous-driving.pdf",
+      "publisher": "University of Illinois Urbana-Champaign, Electrical and Computer Engineering",
+      "locators": ["PDF 第 23–26 页，课件页码 22–25"],
+      "supports": "恒定减速度下制动距离为 v²/(2a)；课件明确该结果假定瞬时响应。反应阶段保持速度时额外行程 v×反应时间可由匀速运动独立推导。",
+      "boundary": "水平路面与常值有效减速度的简化基准；不含真实制动执行器瞬态、坡度、风阻、轮胎滑移或轮载转移。",
+      "reproducible_examples": [
+        {"v_mps": 13, "decel_mps2": 8.45, "reaction_s": 0, "expected_stop_distance_m": 10},
+        {"v_mps": 24, "decel_mps2": 7.2, "reaction_s": 0, "expected_stop_distance_m": 40}
+      ],
+      "quotation_policy": "采用中文概述与公式推导，不复制课件的连续英文段落。"
+    },
+    {
+      "id": "ENG-002",
+      "title": "Vehicle Dynamics — CSE291 Physics Simulation, Steve Rotenberg",
+      "url": "https://cseweb.ucsd.edu/classes/sp19/cse291-d/Files/CSE291_14_VehicleDynamics.pdf",
+      "publisher": "University of California San Diego",
+      "locators": ["PDF 第 35 页：Friction Circle", "PDF 第 17 页：Brakes"],
+      "supports": "摩擦圆是纵横向轮胎力合成上限的近似表达，制动/驱动会减少可用横向能力。用总法向力约为 mg 的平路质点近似，可将需求归一化为 sqrt(ax²+ay²)/(μg)。制动压力与制动力矩还涉及接触面积、有效半径及摩擦参数。",
+      "boundary": "需求超出圆周意味着简化可行域被违反，不等于已经模拟了轮胎饱和后的真实运动。当前 N/bar 制动力增益只是可标定的集总映射，不能在未校准时把输出视为真实液压压力。"
+    },
+    {
+      "id": "ENG-003",
+      "title": "Automatic Steering Methods for Autonomous Automobile Path Tracking",
+      "author": "Jarrod M. Snider",
+      "report": "CMU-RI-TR-09-08, February 2009",
+      "url": "https://publications.ri.cmu.edu/storage/publications/pub_files/2009/2/Automatic_Steering_Methods_for_Autonomous_Automobile_Path_Tracking.pdf",
+      "publisher": "Carnegie Mellon University Robotics Institute",
+      "locators": ["PDF 第 25–27 页，正文第 18–20 页，3.1 Kinematic Bicycle Model，式 10"],
+      "supports": "运动学单轨将左右车轮合并，假设无横向滑移、只由前轮转向。以文中后轴参考点的速度 v 和轴距 L 表示，横摆角速度为 v tan(δ)/L；稳态圆周时 tan(δ)=L/R。",
+      "boundary": "该模型是平面、无滑移的几何近似。高速、低附着或明显侧偏时需要动态模型和轮胎/参数识别。方向盘角还需乘转向传动比，不能与前轮角混用。",
+      "independent_numeric_example": {"speed_mps": 20, "radius_m": 100, "wheelbase_m": 2.8, "steering_ratio": 15, "lateral_accel_mps2": 4, "yaw_rate_degps": 11.459155902616464, "steering_wheel_deg": 24.05794156732396}
+    },
+    {
+      "id": "ENG-004",
+      "title": "Quintic Polynomials Planner",
+      "author": "Atsushi Sakai and PythonRobotics contributors",
+      "url": "https://github.com/AtsushiSakai/PythonRobotics/blob/master/PathPlanning/QuinticPolynomialsPlanner/quintic_polynomials_planner.py",
+      "license_url": "https://github.com/AtsushiSakai/PythonRobotics/blob/master/LICENSE",
+      "license": "MIT",
+      "supports": "作者实现通过初末位置、速度、加速度这六个边界条件求解五次多项式系数，再计算一阶至三阶导数。可把独立边界条件求解器作为当前闭式换道公式的交叉校验。",
+      "boundary": "平滑的给定轨迹本身不证明轮胎约束、转向执行器能力、碰撞几何或控制跟踪性能可行。本研究未复制该项目实现，而是独立解 6×6 边界条件线性系统。",
+      "derived_reference": {"lane_width_m": 3.5, "duration_s": 5, "exact_continuous_peak_lateral_mps2": 0.8082903768654761, "peak_times_after_maneuver_start_s": [1.0566243270259357, 3.9433756729740637], "note": "连续峰值未必落在 0.1 秒采样点。"}
+    },
+    {
+      "id": "ENG-005",
+      "title": "Optimal trajectory generation for dynamic street scenarios in a Frenét Frame",
+      "authors": "Moritz Werling, Julius Ziegler, Sören Kammel, Sebastian Thrun",
+      "url": "https://publikationen.bibliothek.kit.edu/1000022393",
+      "publisher": "KIT institutional repository; ICRA 2010, pp. 987–993",
+      "supports": "可核验五次/四次轨迹规划相关研究的原始论文书目信息。当前仅核验到 KIT 书目页，不能把该页面当成已阅读全文或复现论文系统的证明。",
+      "status": "bibliographic_reference_only"
+    },
+    {
+      "id": "DATA-001",
+      "title": "comma2k19 official repository and included one-minute CAN sample",
+      "url": "https://github.com/commaai/comma2k19",
+      "readme_url": "https://github.com/commaai/comma2k19/blob/4c7f1a6e1957745beadc1def0e7225f559b09a2a/README.md#log-format",
+      "license_url": "https://github.com/commaai/comma2k19/blob/4c7f1a6e1957745beadc1def0e7225f559b09a2a/LICENSE",
+      "commit": "4c7f1a6e1957745beadc1def0e7225f559b09a2a",
+      "license": "repository MIT license, copyright comma.ai 2018; original notice retained",
+      "supports": "作者仓库含一段真实道路采集示例。说明文档标明 CAN 车速为 m/s，CAN 转向角为 deg，时间戳为设备启动后的秒。本次仅下载仓库内小型车速、转向角和各自时间数组，不涉及外部全量数据集。",
+      "boundary": "这一片段不是受控的停车/换道实验，不包含本次需要的明确制动压力通道。不能据此证明 DriveLab 动力学模型准确，更不能以任意模拟参数的偏差判定传感器故障。"
+    },
+    {
+      "id": "DATA-002",
+      "title": "CarState schema at comma2k19's pinned openpilot cereal submodule",
+      "url": "https://raw.githubusercontent.com/commaai/cereal/ab79999e5dc2de25c3eb0c9acbed47c9e81f5d79/car.capnp",
+      "locators": ["CarState: steering wheel section, steeringAngle @7"],
+      "supports": "固定版本 schema 将 steeringAngle 置于 steering wheel 分节，单位为 deg；steerRatio 则定义方向盘与前轮角的比例。适合作为示例导入的角度语义依据。",
+      "provenance_chain": "comma2k19 4c7f1a6… pins openpilot 2153d877f454af953a13b46930f5c48a0be4e9ee; that tree pins cereal ab79999e5dc2de25c3eb0c9acbed47c9e81f5d79."
+    }
+  ],
+  "deliverables": {
+    "real_csv": "work/evidence-assets/comma2k19-public-sample.csv",
+    "real_metadata": "work/evidence-assets/comma2k19-public-sample.metadata.json",
+    "real_reproducer": "work/evidence-assets/convert_public_sample.py",
+    "original_files": "work/evidence-assets/original/",
+    "independent_reference_cases": "work/evidence-assets/independent-reference-cases.json",
+    "independent_reproducer": "work/evidence-assets/make_reference_cases.py"
+  },
+  "real_sample_result": {
+    "rows": 4973,
+    "duration_s": 59.98257067500526,
+    "speed_range_mps": [7.974305555555556, 19.840972222222227],
+    "steering_range_deg": [-4.6, 2.459429766203654],
+    "csv_sha256": "e97ef42e65251f5ba0ca9fc2dec334b9870a27638be88710545ac5f1d17cd722",
+    "available_channels": ["time_s", "speed_mps", "steering_angle_deg"],
+    "intentionally_missing": ["yaw_rate", "brake_pressure"],
+    "processing": "固定版本 Git blob SHA-1 核验；保留共同区间内的原始车速采样；转向角线性插值到该时间轴；仅去除 1 个区间外末采样；以第一条保留车速采样归零；不外推、不平滑、不填造通道。",
+    "claim_to_display": "公开实测日志导入示例 · comma2k19（用于解析/单位/时间轴验证，不作模型标定证明）"
+  },
+  "independent_benchmark": {
+    "classification": "independent_analytic_reference",
+    "not_real_vehicle_measurements": true,
+    "not_generated_by_application": true,
+    "counts": {"braking": 109, "steady_curve": 9, "quintic_boundary_solve": 12, "total": 130},
+    "methods": [
+      "停车：直接分段解析式计算速度/位置和完全停车距离，覆盖 30/60/100/120 km/h、0/0.8/1.5 s 反应、0.2/0.55/0.8 附着、2/5/9 m/s² 请求及 0.83 s 非整步反应。",
+      "弯道：从给定几何半径独立计算横摆 r=v/R、前轮角 atan(L/R) 和侧向加速度，不经过应用的 ay→yaw→steering 计算链。",
+      "换道：解 p(0),p'(0),p''(0),p(T),p'(T),p''(T) 六边界条件的 6×6 线性系统；独立求导并比较逐点位置和侧向加速度。"
+    ],
+    "recommended_pass_condition": "各 case 的纯解析标量/对应采样按 JSON 中 absolute_tolerance 比较；换道采样峰值不得高于连续极值，不能要求采样峰值与连续极值逐位相等。",
+    "does_not_prove": ["真实车辆模型误差", "轮胎饱和后的响应", "液压压力映射准确度", "控制器闭环可执行性", "碰撞几何安全性"]
+  },
+  "additional_independent_log_tests": [
+    {"name": "常值偏差恢复", "method": "以独立正弦或分段线性信号生成参考与固定加性偏差日志，验证 MAE=abs(bias)、RMSE=abs(bias)，明确为合成算法夹具，不标实测。"},
+    {"name": "时间偏移恢复", "method": "给相同数学信号两种采样时间与已知时移，在共同区间线性插值；报告对齐前后误差，保留偏移真值。"},
+    {"name": "缺失与停采", "method": "删除整个通道、制造中间长缺口和无重叠时间窗；缺失保持缺失，禁止外推；建议新增最大可插值间隔，避免跨长时间停采构造虚假连续曲线。"}
+  ],
+  "model_review_notes": [
+    "运动学约束阈值与安全裕度（例如 3 m/s²、85% 附着关注阈值）是项目设置，不能写成已核实法规限值。",
+    "现有 lane/avoid 的 yaw=ay/v 和 steering=atan(L ay/v²) 是小横向速度、近似路径方向下的需求估计。对于严格的平面轨迹几何，可用 yawRate=(vx*ay-vy*ax)/(vx²+vy²)，curvature=(vx*ay-vy*ax)/(vx²+vy²)^(3/2)，再由 steering=atan(L*curvature)；不要混淆当前近似与精确几何。此公式为数学推导建议，并非本次改动。",
+    "避障在完全停车前仍有非零规划横向速度时，冻结横向位置只解决示意图继续横移的问题，并不使轨迹动态可执行；现有适用性提示必须保留。",
+    "只有纵向间距而没有车辆外形和侧向避让几何，不能证明避障碰撞已被完整判定。",
+    "公开实测 CSV 的速度与方向盘角可以展示读取、绘制和清洗，不宜用默认理想工况与其比较后直接给出实车模型精度分数。"
+  ]
+}
