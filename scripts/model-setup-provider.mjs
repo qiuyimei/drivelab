@@ -5,7 +5,10 @@ export const providers = {
 
 // Only return our own messages. Provider responses can echo credentials or account data.
 export function diagnoseProviderFailure(status, body) {
-  const message = String(body?.error?.message ?? body?.message ?? '');
+  const message = String(body?.error?.message ?? body?.message ?? body?.Message ?? '');
+  if (/email verification|verify (?:your )?email|邮箱验证|验证邮箱/i.test(message)) {
+    return {reason: 'email_verification_required', status, message: '魔搭要求完成邮箱验证。请打开 https://modelscope.cn/my/settings/account，在账号设置中绑定并验证邮箱；这与阿里云实名认证是不同的一项，验证码由本人填写。完成后再测试，不用重建令牌或充值。'};
+  }
   if (/bind.*(alibaba|aliyun|cloud)|绑定.*(阿里|云账号)/i.test(message)) {
     return {reason: 'account_binding_required', status, message: '请先在魔搭个人中心绑定阿里云账号，并确认已完成实名认证；完成后回到这里重试。无需充值或开通付费服务。'};
   }

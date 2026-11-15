@@ -1,0 +1,11 @@
+import assert from 'node:assert/strict';
+import {defaults} from '../.sites-runtime/core-tests/simulation.mjs';
+import {restoreInputSnapshot,realignSavedLog} from '../.sites-runtime/core-tests/log-state.mjs';
+const log={name:'合成保存恢复夹具.csv',rows:[{time:2,speed:36,yaw:1},{time:3,speed:40,yaw:2}],offset:2,dropped:0,duplicates:0,missing:['pressure','steering']};
+const snapshot=restoreInputSnapshot(JSON.stringify({config:defaults,log,thresholds:{speed:3,yaw:4,pressure:6,steering:12},analysis:'规则分析快照'}));
+assert.equal(snapshot.log.offset,2);assert.equal(snapshot.thresholds.speed,3);assert.equal(snapshot.analysis,'规则分析快照');
+const moved=realignSavedLog(snapshot.log,3.25);assert.deepEqual(moved.rows.map(row=>row.time),[3.25,4.25]);assert.equal(moved.rows[0].speed,36);assert.equal(moved.rows[0].yaw,1);assert.equal(moved.offset,3.25);
+assert.deepEqual(snapshot.log.rows.map(row=>row.time),[2,3]);assert.deepEqual(realignSavedLog(moved,3.25),moved);
+assert.throws(()=>realignSavedLog(log,Infinity));assert.throws(()=>realignSavedLog(log,61));
+assert.throws(()=>restoreInputSnapshot(JSON.stringify({config:{...defaults,speed:-1},log})));assert.throws(()=>restoreInputSnapshot('{invalid json}'));
+console.log('PASS saved workflow: restored offset/tolerance/answer, normalized realignment, immutable source, repeated alignment, invalid snapshot rejection (5 groups)');

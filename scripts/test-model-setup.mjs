@@ -18,4 +18,5 @@ await assert.rejects(providerRequest('modelscope',token,'models',undefined,async
 await assert.rejects(providerRequest('modelscope',token,'models',undefined,async()=>{throw Error(token);}),e=>!e.message.includes(token)&&e.diagnosis.reason==='network_unavailable');
 await assert.rejects(providerRequest('modelscope',token,'models',undefined,async()=>new Response('bad json '+token)),e=>!e.message.includes(token)&&e.diagnosis.reason==='invalid_response');
 assert.equal(diagnoseProviderFailure(404,{}).reason,'model_unavailable');
-console.log('PASS model setup: account/identity/auth/quota diagnostics, credential format, provider-error redaction, network and malformed responses (12 checks)');
+assert.equal(diagnoseProviderFailure(403,{Message:'For account security, please complete your profile via email verification. ModelScope Magicubes is only available to verified accounts.'}).reason,'email_verification_required');
+console.log('PASS model setup: account/identity/email/auth/quota diagnostics, credential format, provider-error redaction, network and malformed responses');

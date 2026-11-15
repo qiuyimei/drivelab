@@ -25,12 +25,12 @@ const token=__NONCE__,status=document.querySelector('#status'),provider=document
 const key=document.querySelector('#key'),save=document.querySelector('#save'),catalog=document.querySelector('#models');
 function guide(){
  document.querySelector('#guide').innerHTML=provider.value==='modelscope'
-  ?'<h2>1. 完成官方账号准备（本人操作）</h2><div class="steps"><ol><li><a href="https://modelscope.cn/my/myaccesstoken" target="_blank" rel="noreferrer">打开魔搭个人中心 / 访问令牌</a>并登录。</li><li>按官方页面提示<strong>绑定阿里云账号并完成实名认证</strong>。若跳到阿里云，请在那里完成后返回魔搭。无需购买套餐、购买服务器或充值。</li><li>在“访问令牌”中复制<strong>ms- 开头的完整令牌内容</strong>，不要只复制名称，也不要复制阿里云 AccessKey 或百炼密钥。</li></ol><p>如果出现 HTTP 401，请先确认第 2 步已经完成，再检查令牌。查询模型目录成功不能证明认证已通过。</p></div>'
+  ?'<h2>1. 完成官方账号准备（本人操作）</h2><div class="steps"><ol><li><a href="https://modelscope.cn/my/myaccesstoken" target="_blank" rel="noreferrer">打开魔搭个人中心 / 访问令牌</a>并登录。</li><li>按官方页面提示<strong>绑定阿里云账号并完成实名认证</strong>。若跳到阿里云，请在那里完成后返回魔搭。无需购买套餐、购买服务器或充值。</li><li>如果免费推理提示邮箱未验证，请打开<a href="https://modelscope.cn/my/settings/account" target="_blank" rel="noreferrer">魔搭账号设置</a>，按提示完成邮箱验证；验证码由本人填写。</li><li>在“访问令牌”中复制<strong>ms- 开头的完整令牌内容</strong>，不要只复制名称，也不要复制阿里云 AccessKey 或百炼密钥。</li></ol><p>如果出现 HTTP 401/403，请按连接结果的具体诊断核对绑定、实名认证或邮箱验证。查询模型目录成功不能证明认证已通过。</p></div>'
   :'<h2>1. 获取官方密钥（本人操作）</h2><div class="steps"><p><a href="https://openrouter.ai/settings/keys" target="_blank" rel="noreferrer">打开 OpenRouter 官方密钥页面</a>，登录后生成密钥。只使用带 :free 后缀的免费模型，额度以官方账户为准。</p></div>';
  key.placeholder=provider.value==='modelscope'?'粘贴 ms- 开头的完整魔搭访问令牌':'粘贴 OpenRouter 官方密钥';
 }
  guide();
-async function send(url,data){const r=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json','X-Setup-Token':token},body:JSON.stringify(data)});const v=await r.json();if(!r.ok)throw Error(v.error+(v.status?'\n诊断编号：HTTP '+v.status+' / '+v.reason:''));return v}
+async function send(url,data){const r=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json','X-Setup-Token':token},body:JSON.stringify(data)});const v=await r.json();if(r.status===403)throw Error('本机向导页面已过期或请求未通过来源校验。请按 Ctrl+R 刷新，重新粘贴令牌后再试；刷新会清空密码框。此错误不能判断令牌是否有效，不用因此新建令牌。');if(!r.ok)throw Error(v.error+(v.status?'\n诊断编号：HTTP '+v.status+' / '+v.reason:''));return v}
 provider.onchange=()=>{document.querySelector('#model').replaceChildren(new Option('先查询，再选择',''));key.value='';guide()};
 catalog.onclick=async()=>{
  catalog.disabled=true;save.disabled=true;

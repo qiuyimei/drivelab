@@ -83,3 +83,5 @@ time_s,speed_kmh,yaw_rate_dps,brake_pressure_bar,steering_angle_deg
 仓库保持 Private。邀请一个共创伙伴：仓库 **Settings → Collaborators → Add people**，输入对方 GitHub 用户名；对方接受后通过独立分支和 Pull Request 协作。提交前另行安排评审只读访问，不能把仅所有者可见的链接当作评审可访问证明。
 
 参赛检查见 COMPETITION-READINESS.md，阶段记录见 DEVELOPMENT.md。
+
+界面验收补充：已在本机模拟 320/390/768/1440 px 宽度，实测文件选择器导入、统一单位、保存恢复与旧分析失效；详情见 docs/competition/INTERFACE-QA.md。另一台电脑与真实设备仍待验收。若魔搭 HTTP 403 提示 email verification，请按官方账号设置完成邮箱验证；诊断时可用 node scripts/diagnose-model.mjs，它只输出脱敏结果，密钥不进入日志。
