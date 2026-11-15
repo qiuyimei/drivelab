@@ -1,0 +1,222 @@
+"""Build the competition technical review draft with the bundled ReportLab runtime."""
+from pathlib import Path
+from xml.sax.saxutils import escape
+import json
+from reportlab.pdfgen import canvas
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, PageBreak, Image, KeepTogether
+from reportlab.lib import colors
+from reportlab.lib.styles import ParagraphStyle
+from reportlab.pdfbase import pdfmetrics
+from reportlab.pdfbase.ttfonts import TTFont
+from reportlab.lib.pagesizes import A4
+
+ROOT = Path(__file__).resolve().parents[1]
+OUT = ROOT.parents[1] / 'outputs'
+OUT.mkdir(parents=True, exist_ok=True)
+pdfmetrics.registerFont(TTFont('NotoSC', str(ROOT / 'public/fonts/NotoSansSC-Regular.ttf')))
+INK=colors.HexColor('#253846'); MUTED=colors.HexColor('#657887'); ORANGE=colors.HexColor('#df6939'); LINE=colors.HexColor('#dbe3e9')
+styles={
+ 'title':ParagraphStyle('title',fontName='NotoSC',fontSize=31,leading=42,textColor=INK,spaceAfter=18),
+ 'heading':ParagraphStyle('heading',fontName='NotoSC',fontSize=20,leading=29,textColor=INK,spaceAfter=18),
+ 'sub':ParagraphStyle('sub',fontName='NotoSC',fontSize=12,leading=20,textColor=INK,spaceBefore=12,spaceAfter=7),
+ 'body':ParagraphStyle('body',fontName='NotoSC',fontSize=10,leading=17,textColor=INK,wordWrap='CJK',spaceAfter=10),
+ 'small':ParagraphStyle('small',fontName='NotoSC',fontSize=8.5,leading=14,textColor=MUTED,wordWrap='CJK',spaceAfter=8),
+ 'cell':ParagraphStyle('cell',fontName='NotoSC',fontSize=9,leading=14,textColor=INK,wordWrap='CJK'),
+ 'headcell':ParagraphStyle('headcell',fontName='NotoSC',fontSize=9,leading=14,textColor=colors.white,wordWrap='CJK'),
+}
+story=[]
+def p(text,kind='body'):
+ return Paragraph(escape(str(text)).replace('\n','<br/>'),styles[kind])
+def add(text,kind='body'): story.append(p(text,kind))
+def table(headers,rows,widths):
+ data=[[p(v,'headcell') for v in headers]]+[[p(v,'cell') for v in row] for row in rows]
+ t=Table(data,colWidths=widths,repeatRows=1,hAlign='LEFT')
+ t.setStyle(TableStyle([('BACKGROUND',(0,0),(-1,0),INK),('ROWBACKGROUNDS',(0,1),(-1,-1),[colors.white,colors.HexColor('#f5f7f9')]),('VALIGN',(0,0),(-1,-1),'TOP'),('LEFTPADDING',(0,0),(-1,-1),9),('RIGHTPADDING',(0,0),(-1,-1),9),('TOPPADDING',(0,0),(-1,-1),8),('BOTTOMPADDING',(0,0),(-1,-1),8),('LINEBELOW',(0,0),(-1,-1),.4,LINE)]))
+ story.extend([t,Spacer(1,12)])
+def page(number,title):
+ story.append(PageBreak());add(f'{number:02d}  /  DRIVELAB','small');add(title,'heading')
+def image(name):
+ file=ROOT/'docs/competition/screenshots'/name
+ if file.exists():
+  from PIL import Image as PILImage
+  with PILImage.open(file) as im: w,h=im.size
+  story.extend([Image(str(file),width=510,height=510*h/w),Spacer(1,12)])
+def footer(c,doc):
+ c.setStrokeColor(LINE);c.line(42,801,553,801);c.line(42,39,553,39)
+ c.setFont('NotoSC',8);c.setFillColor(MUTED)
+ c.drawString(42,814,'DRIVELAB  /  ENGINEERING WITH EVIDENCE')
+ c.drawString(42,25,'参赛技术文档 · 工程验收稿 · 2026-11-15')
+ c.drawRightString(553,25,str(doc.page))
+
+add('AI WEB DEVELOPMENT  /  10037','small');story.append(Spacer(1,65))
+add('DriveLab\n智能驾驶工况仿真\n与辅助分析平台','title')
+add('以可复算的工程证据，连接工况设计、日志对标与 AI 解释。','sub')
+story.append(Spacer(1,24))
+table(['版本','状态'],[['产品 V1.0 / 计算引擎 1.1.1','工程验收稿，供团队复核'],['目标赛道','2026 传智杯 AI WEB 网页开发挑战赛'],['代码仓库','github.com/qiuyimei/drivelab（私有）']],[155,355])
+add('当前结论','sub')
+add('选题可沿 AI Web 方向继续开发，已有可运行的计算、对标、知识索引和报告工作流。当前尚未完成真实免费模型联调、评审访问和最终演示视频，本稿不是已完成提交的证明。')
+add('团队名称、学校、组别、成员和指导教师按报名后台补充；本稿不代填身份，不编造实车实验或人工审核结论。','small')
+
+page(1,'问题、用户与功能闭环')
+add('目标用户是参与智能驾驶前期工况设计、标定学习和数据复盘的学生团队。常见任务是反复改参数、比较数据、寻找依据并保留可追溯报告。')
+table(['环节','实现行为','输出'],[
+ ['工况设计','五类模板；行车、车辆、道路参数可编辑','带单位和范围的输入'],
+ ['模型计算','服务端重算，显示曲线与约束检查','可复算数字和风险等级'],
+ ['日志对标','清洗、换算、对齐、共同区间插值','四通道误差和缺失情况'],
+ ['依据分析','资料检索；可选免费模型与受限工具','引用、执行步骤、候选重算'],
+ ['记录与交付','账号隔离保存；证据 JSON；中文 PDF','参数、日志、阈值和分析快照'],
+ ],[80,265,165])
+add('产品定位','sub')
+add('使用轻量模型快速筛查需求和约束，帮助团队解释“哪个参数导致哪个计算结果”。它不是完整自动驾驶系统，也不替代车型标定、动态车辆模型或整车安全认证。')
+add('界面中的行车动画是运动学示意；紧急避障没有真实车辆外形碰撞几何、规划器或闭环跟踪器。')
+
+page(2,'架构与数据流')
+table(['层','职责','主要实现'],[
+ ['浏览器','React 交互、SVG 曲线、文档正文提取、PDF 下载','app/workbench.tsx；app/ui/*'],
+ ['Worker API','账号识别、输入校验、仿真、分析与 SSE','app/api/[...path]/route.ts'],
+ ['确定性证据','计算时序、误差、候选参数、输入指纹','lib/simulation.ts；evidence.ts；fingerprint.ts'],
+ ['检索与解释','持久化分块、混合词项检索、受限工具、引用校验','lib/rag.ts；retrieval.ts；analysis.ts'],
+ ['存储与模型','D1 按 owner 隔离；免费模型通过服务端调用','Drizzle 迁移；lib/provider.ts'],
+ ],[80,265,165])
+add('一次分析的请求链','sub')
+add('浏览器提交工况 + 日志 + 容差 + 问题 → 服务端重新计算证据 → 检索工程段落 → 可选模型调用受限工具 → 校验结构和引用 → SSE 返回步骤及结果。模型不直接执行 SQL、访问任意 URL 或改写当前工况。')
+add('持久化原则','sub')
+add('列表只返回记录摘要；打开记录才读取本人完整快照。保存时校验输入指纹，包含引擎版本、工况、日志和容差。参数改变后，旧分析会被标记为过期，不作为当前证据保存。')
+add('技术栈：React 19、TypeScript、Vinext、Vite、Cloudflare Worker、D1、Drizzle。前后端共享纯计算模块，但服务端独立校验与复算。','small')
+
+page(3,'物理模型、公式与适用条件')
+table(['模型','公式 / 处理','适用条件'],[
+ ['纵向停车','a = min(a请求, a底盘, mu*g)\ns = v0*tr + v0^2/(2a)\nt停止 = tr + v0/a','水平路面、恒减速，车速不反向'],
+ ['完整跟驰','vc = max(v0-v前车, 0)\ngap最小 = d - vc*tr - vc^2/(2a)','前车恒速，不含前车制动'],
+ ['稳态圆周','ay = v^2/R；r = ay/v\n方向盘角 = atan(L*ay/v^2)*传动比','低侧偏运动学近似'],
+ ['五次换道','y = W*(10u^3-15u^4+6u^5)\nay = W/T^2*(60u-180u^2+120u^3)','给定轨迹需求；u 按响应后时间归一化'],
+ ['附着与压力','利用率 = sqrt(ax^2+ay^2)/(mu*g)\np = abs(ax)*质量/制动力增益','摩擦圆需求检查；压力为集总估算'],
+ ],[80,265,165])
+add('数值与边界处理','sub')
+add('内部使用 m、s、m/s 和 m/s²；车速输入/输出 km/h，横摆 °/s，方向盘 °，压力 bar。按 0.1 s 采样，窗口末段精确截止；反应开始和停车落在两个采样点间时，纵向位移分段精确积分。')
+add('短显示窗口之外的完整制动间距另行解析预测。零速换道/避障被拒绝；避障提前停车后冻结横向示意位置，并提示轨迹不完整。变速换道的横摆和转向仅是近似需求，不是高动态实车响应。')
+add('默认侧向阈值、误差容差与制动增益是项目初始值，不是法规限值或经车型审核的标定值。','small')
+
+page(4,'AI、RAG 与受限工具')
+add('AI 负责解释已计算的证据、连接文档依据和提出可复算候选；确定性引擎负责数字和约束等级。未接通模型时明确显示规则分析，不用预写文本冒充联网模型。')
+table(['工具','输入与行为','约束'],[
+ ['inspect_simulation','读取服务端工况、风险和事实卡','不能覆盖风险等级'],
+ ['compare_measurement','读取本次日志误差、偏差和覆盖范围','无日志时如实返回'],
+ ['search_knowledge','根据问题检索资料分块','保留页码、段落和来源定位'],
+ ['evaluate_parameters','独立重算速度/间距/响应/换道时间','白名单参数，不改附着条件，不修改基线'],
+ ],[125,230,155])
+add('检索实现','sub')
+add('中文单字/双字与英文词项，BM25 结合 512 维稀疏词项哈希向量余弦相似度。约 700 字分块、560 字步进；索引保留 docId#cN、字符范围、PDF 页码或段落。该方法不是语义 embedding。')
+add('生成校验与失败行为','sub')
+add('模型最多请求 3 轮、每轮至多 4 个工具；最终输出结构化 JSON。观察和建议必须引用有效 factId 或 chunkId；拒绝不存在的引用和绝对安全承诺。额度、网络或格式失败时保留规则结果。引用标识有效不等于文字语义已被完全证明，仍需人工复核。')
+add('当前真实模型状态：账号尚未完成绑定/实名，未通过实际联网验收。已有模拟传输回归仅用于验证工具执行、降级和结构校验。','small')
+
+page(5,'日志协议与公开数据')
+image('public-log.jpg')
+add('页面实测截图：公开实测导入示例与仿真比较。两者工况不同，图中的差异不能用于评估模型精度。','small')
+table(['处理','规则'],[
+ ['字段','time_s；speed_kmh；yaw_rate_dps；brake_pressure_bar；steering_angle_deg'],
+ ['清洗与对齐','去无效行；时间排序；重复时间保留最后一行；首时刻归零后应用偏移'],
+ ['对标','仅共同时间区间线性插值；按通道计算 MAE、RMSE、最大绝对误差、平均偏差与覆盖范围'],
+ ['缺失','缺失通道和空值不补零，区间外不外推；先检查方向盘/前轮角定义'],
+ ],[85,425])
+
+page(6,'独立验证与结果')
+bench=json.loads((ROOT/'public/validation/benchmark-results.json').read_text(encoding='utf-8-sig'))
+table(['验证','结果','证明范围'],[
+ ['核心回归','23 项通过','计算、短窗口、单位、导入、数值边界'],
+ ['分析回归','14 项通过','模拟工具调用、引用、降级、指纹'],
+ ['独立解析参考',f"{bench['summary']['passed']} / {bench['summary']['total']}",'公式与给定轨迹边界实现一致性'],
+ ['固定检索回归','12/12 Hit@3；12/12 Top1','小样本回归，不代表泛化准确率'],
+ ['公开 CAN 样例','4,973 行；约 59.98 s','哈希、单位、时间轴与缺失通道'],
+ ['本地 API','六组验收通过','登录门禁、误差、SSE、快照、页码、夹具清理'],
+ ['本地数据库','新库/重复初始化/旧库升级通过','保留旧记录，迁移不会重复建表'],
+ ['中文 PDF','实际下载与渲染检查','中文、公式转写、图表、分页'],
+ ],[115,170,225])
+add('独立参考如何避免自证','sub')
+add('参考生成器不调用应用计算模块。109 组停车参考由闭式解生成，9 组弯道参考从圆周几何生成，12 组换道参考通过六个边界条件的线性方程独立求解。最大绝对数值差约 9.095e-13。')
+add('这些测试不证明真实车辆的模型精度、超限后的运动、安全性或大模型生成质量。尚无受控实车数据闭环标定；真实模型联网测试仍待完成。','small')
+
+page(7,'数据来源、许可与复现')
+add('公开数据来源为 comma.ai 官方 comma2k19 仓库中的示例 CAN 片段，MIT 许可。仅保留速度与方向盘转角，没有伪造横摆角速度或制动压力。')
+add('固定源提交\n4c7f1a6e1957745beadc1def0e7225f559b09a2a','small')
+add('CSV SHA-256\ne97ef42e65251f5ba0ca9fc2dec334b9870a27638be88710545ac5f1d17cd722','small')
+add('转换将原始速度从 m/s 换成 km/h，把方向盘角插值到共同时间区间；不外推、不平滑。原始文件哈希、处理说明和转换脚本一并保留。这个路段不是本项目停车/换道实验。')
+table(['资料','位置'],[
+ ['样例与许可','public/data/，含 CSV、metadata 和 MIT 许可'],
+ ['参考基准','validation/independent-reference-cases.json 与生成脚本'],
+ ['验证结果','public/validation/benchmark-results.json'],
+ ['工程依据','docs/evidence/engineering-sources.json'],
+ ['字体','Noto Sans SC，SIL OFL 1.1；来源、变体转换和哈希保留于 public/fonts/'],
+ ],[110,400])
+add('专业审核','sub')
+add('内置知识来源可定位，但默认参数与阈值尚未由团队车辆工程成员签署审核。团队应记录审核人、日期、采用车型、单位、参数来源和不适用条件；不能把公开课程引用当成车型标定证明。')
+
+page(8,'运行环境与可靠性')
+add('首次运行：Node.js 24；pnpm 11.25.0。执行下列命令后访问 127.0.0.1:5173。','body')
+table(['命令','作用'],[
+ ['pnpm install --frozen-lockfile','按锁文件安装依赖'],
+ ['pnpm run db:local','创建或升级本地 D1；可重复执行'],
+ ['pnpm run dev','准备文档解析资源并启动本地预览'],
+ ['pnpm test / pnpm run typecheck','核心、分析、参考数据、检索、向导检查与类型检查'],
+ ['pnpm run test:db / pnpm run test:api','独立数据库启动验收；服务启动后的 API 验收'],
+ ['pnpm run build','生成生产 Worker 与浏览器资源'],
+ ],[200,310])
+add('密钥与故障处理','sub')
+add('本机连接向导运行在回环地址 5174，采用密码输入框、来源校验与请求令牌。密钥写入忽略的 .dev.vars；服务商原始错误不能原样返回，避免回显凭证。公开目录查询与真实鉴权测试分开。')
+add('ModelScope 免费入口需要本人按官方页面完成账号准备；未认证、鉴权失败、额度和服务错误分别提示。免费保护不选择提供方付费后缀，也不自动切换付费。线上仅使用服务端 secret。')
+add('数据库初始化先检查旧结构，再接入迁移记录；不删除或重建现有用户表。桌面启动器自动准备解析资源和数据库，开发工具与安装包继续保留。')
+
+page(9,'竞赛展示与团队复核')
+table(['评价方向','可展示内容','仍需补齐'],[
+ ['AI 深度 / 创新','计算证据 + 日志 + RAG + 工具重算 + 来源与输入指纹','真实模型联网演示、生成质量评价'],
+ ['前端 / 体验','完整工作台、对标曲线、执行步骤、报告下载','另一设备与评审账户端到端验收'],
+ ['实用性 / 社会价值','车辆工程与软件工程交叉学习、前期复盘可追溯','实际使用反馈，不编造节省时间指标'],
+ ],[110,245,155])
+add('建议 6 分钟演示顺序','sub')
+table(['时间','演示内容'],[
+ ['0:00–0:40','说明用户问题、产品定位与适用边界'],
+ ['0:40–1:50','从案例创建，修改附着/速度，展示确定性约束变化'],
+ ['1:50–3:00','导入日志、单位与时间对齐、缺失通道与误差'],
+ ['3:00–4:30','真实免费模型调用工具与来源；此段待联调后录制'],
+ ['4:30–5:25','候选重算、过期分析提醒、保存与恢复'],
+ ['5:25–6:00','PDF 下载、独立验证结果、局限与后续计划'],
+ ],[105,405])
+add('车辆工程角色审核公式、单位、参数、数据与边界；软件工程角色解释前后端、检索、工具约束、存储与测试。实际成员、学校、组别、指导教师、开发过程和分工由团队如实填写。')
+
+page(10,'最终提交前的验收门槛')
+table(['门槛','当前状态','完成条件'],[
+ ['真实免费模型','待完成','本人完成账号认证；实际工具/RAG 请求成功；多问题人工复核并保留证据'],
+ ['工程审核','待完成','确认阈值、增益、公式适用范围和公开/合成数据的用途'],
+ ['访问与运行','本地已验收；评审未验收','另一台电脑复现；安排指定评审只读权限；验证链接可访问'],
+ ['提交材料','技术验收稿已准备','补团队信息；真实 AI 截图；录制 5–8 分钟 1080p MP4；最终 PDF ≤30 页'],
+ ['报名规则','待团队核对','按学校、报名后台及组委会最新要求确认资格和截止时间'],
+ ],[105,140,265])
+add('私有协作','sub')
+add('GitHub 仓库继续 Private。所有者在 Settings → Collaborators → Add people 输入共创伙伴用户名，对方接受后协作；推荐独立分支与 Pull Request。没有自动邀请任何人，也没有将仓库或网站改为公开。')
+add('交付态度','sub')
+add('通过的测试有明确范围，发现的问题有修复记录。项目可以继续正常推进；在真实模型、工程审核和评审演示完成前，不对“零差错”“实车精度”或“比赛一定通过”作承诺。')
+
+page(11,'主要来源与工程许可')
+refs=[
+ ('赛事方发布页','https://m.saikr.com/vse/2026AIWEBKF'),
+ ('传智杯官网','https://www.boxuegu.com/match/'),
+ ('UIUC 制动距离课程，PDF 23–26 页','https://courses.grainger.illinois.edu/ece101/fa2025/lectures/101-024-autonomous-driving.pdf'),
+ ('UCSD Vehicle Dynamics，摩擦圆课程资料','https://cseweb.ucsd.edu/classes/sp19/cse291-d/Files/CSE291_14_VehicleDynamics.pdf'),
+ ('CMU Snider，运动学单轨，正文 18–20 页','https://publications.ri.cmu.edu/storage/publications/pub_files/2009/2/Automatic_Steering_Methods_for_Autonomous_Automobile_Path_Tracking.pdf'),
+ ('PythonRobotics，五次轨迹实现，MIT','https://github.com/AtsushiSakai/PythonRobotics/tree/master/PathPlanning/QuinticPolynomialsPlanner'),
+ ('comma.ai 数据集和 MIT 许可','https://github.com/commaai/comma2k19'),
+ ('Google Fonts Noto Sans SC，SIL OFL 1.1','https://github.com/google/fonts/tree/main/ofl/notosanssc'),
+ ('ModelScope API-Inference 官方文档','https://modelscope.cn/docs/model-service/API-Inference/intro'),
+ ]
+for title,url in refs: add(title,'sub');add(url,'small')
+add('赛事信息还对照了用户提供的参赛资料汇编第 2.2 节；最终提交应以学校和报名后台要求为准。页面截图来自本机实际运行，规则分析不被描述为真实大模型联网结果。','small')
+
+file=OUT/'DriveLab-参赛技术文档-验收稿.pdf'
+doc=SimpleDocTemplate(str(file),pagesize=A4,rightMargin=42,leftMargin=42,topMargin=61,bottomMargin=57,title='DriveLab 参赛技术文档·工程验收稿',author='DriveLab')
+doc.build(story,onFirstPage=footer,onLaterPages=footer)
+from pypdf import PdfReader
+reader=PdfReader(file)
+assert len(reader.pages)<=30
+assert all(len(page.extract_text().strip())>60 for page in reader.pages)
+print(json.dumps({'file':str(file),'pages':len(reader.pages)},ensure_ascii=False))

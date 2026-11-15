@@ -12,7 +12,10 @@
     "lint": "eslint . --ignore-pattern dist --ignore-pattern .next",
     "db:generate": "drizzle-kit generate",
     "test": "node scripts/test-all.mjs",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "db:local": "node scripts/init-local-db.mjs",
+    "test:api": "node scripts/test-api.mjs",
+    "test:db": "node scripts/test-local-db.mjs"
   },
   "dependencies": {
     "@base-ui/react": "^1.7.0",
