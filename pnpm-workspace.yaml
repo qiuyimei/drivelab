@@ -4,7 +4,10 @@ storeDir: .sites-runtime/pnpm-store
 nodeLinker: hoisted
 enableGlobalVirtualStore: false
 packageImportMethod: copy
-
 fetchTimeout: 300000
 networkConcurrency: 8
 fetchRetries: 1
+allowBuilds:
+  esbuild: true
+  sharp: true
+  workerd: true
