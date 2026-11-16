@@ -496,8 +496,8 @@
       },
       {
         "path": "C:\\Users\\Zllyh\\Documents\\Codex\\2026-10-11\\n-h\\work\\drivelab\\docs\\competition\\FINAL-VALIDATION.json",
-        "bytes": 3854,
-        "sha256": "00cc89db81952a760d6625a9f181dbf5dfa0092f3a117a7df49853530d9ca17c"
+        "bytes": 4864,
+        "sha256": "584dc1aab9affb4df34bdb4eb2c9ff50ed0db12ac4aad2b4cc190e227b57f435"
       },
       {
         "path": "C:\\Users\\Zllyh\\Documents\\Codex\\2026-10-11\\n-h\\work\\drivelab\\docs\\competition\\LIVE-ENGINE-113-QA.json",
@@ -541,8 +541,8 @@
       },
       {
         "path": "C:\\Users\\Zllyh\\Documents\\Codex\\2026-10-11\\n-h\\work\\drivelab\\docs\\evidence\\analysis-final-review-20261117.json",
-        "bytes": 1800,
-        "sha256": "52265d0cf8061ed612e9215b7b869111c6341b9f1465c52a28735dc81389399a"
+        "bytes": 2106,
+        "sha256": "6cc7a2330a7e6a1203d8eece3dcddcd025e649388005b5659760890517ffbf1f"
       }
     ],
     "historicalPackageBefore113": {
@@ -592,39 +592,15 @@
     "原2026-11-16规则记录保留作为历史，不覆盖。"
   ],
   "inProgressRevalidation": {
-    "status": "source_and_pdf_resolved_final_package_pending",
+    "status": "completed_software_and_material_source_review",
     "engineVersion": "1.1.3",
-    "updatedAt": "2026-11-17T02:24:05.925774+08:00",
-    "resolvedIn113": [
-      "正速低速弯道不再用零横摆和零转向保护伪通过",
-      "去重后整列缺值与服务端missing一致",
-      "短制动事件有解析压力/附着需求及采样覆盖告警",
-      "静止车辆解析停车时间为零",
-      "窗口外仅接触边界的采样间隔不再引发稀疏警告"
-    ],
-    "sourceFrozenReportedBy": "root",
-    "checks": {
-      "coreTests": 36,
-      "analysisTests": 27,
-      "savedWorkflowGroups": 5,
-      "independentCases": 130,
-      "retrievalCases": 12,
-      "publicRows": 4973,
-      "independentExtendedReview": {
-        "longitudinalCases": 624,
-        "timeSamples": 32448,
-        "asynchronousLogCases": 120,
-        "record": "docs/evidence/engineering-final-review-20261117.json"
-      },
-      "apiIntegration": "passed: authentication gate, server comparison, SSE, snapshot fingerprint, indexed page metadata and fixture cleanup (6 checks)",
-      "localDatabase": "fresh/repeat/legacy-preservation passed; sandbox log-directory restriction resolved by normal local process permissions",
-      "lint": "passed, zero errors and warnings; generated PDF parser excluded",
-      "typecheck": "passed",
-      "build": "passed via Sites build-site helper"
-    },
-    "technicalPdf": "15页全页QA与本次明确内容条款复核通过",
-    "online": "本人私有站点1.1.3部署/访问复验由root负责，本记录不越权认证外部评审可访问。",
-    "remaining": "新源码包/总包未重建；本人报名/资格/评审访问仍未知。"
+    "privateDeployment": "appgdep_6afb4b2846a88191b5822b9091116996",
+    "newPackageReceipt": "由最终源码提交之后生成的文件校验清单与DriveLab-材料包验收.json提供，避免自指哈希。",
+    "unverified": [
+      "队伍资格与实际报名",
+      "指定评审访问",
+      "报名后台时点"
+    ]
   },
   "currentResolution": {
     "engineVersion": "1.1.3",
@@ -656,6 +632,19 @@
       "报名阶段/缴费/晋级及精确提交时点",
       "指定评审仓库访问",
       "若主张在线演示加分，指定评审可访问与可用性"
-    ]
+    ],
+    "onlineSite": {
+      "projectId": "appgprj_6af9751c44388191b7b99d0646dbd840",
+      "deploymentId": "appgdep_6afb4b2846a88191b5822b9091116996",
+      "versionId": "appgprj_6af9751c44388191b7b99d0646dbd840~appgver_c790907330148191acce6113a466ca38",
+      "sourceCommit": "0567f02579273a2a70e6dba712e4c05aa864e327",
+      "status": "succeeded",
+      "url": "https://drivelab-sim-v1-zllyh.qingjiugptproflb.chatgpt.site",
+      "audience": "owner-only private",
+      "envRevision": 1,
+      "ownerPageContentLoaded": true,
+      "postDeploymentInteractionAudit": "未全量复做：浏览器自动化会话随后发生桌面访问拒绝，未把交互超时归因为应用故障。",
+      "local113Workflow": "UI低速弯道约束、显示与真实模型比较已实测；API/SSE/保存恢复等另有通过记录。"
+    }
   }
 }

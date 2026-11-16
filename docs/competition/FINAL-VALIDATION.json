@@ -32,7 +32,17 @@
     "sha256": "e97ef42e65251f5ba0ca9fc2dec334b9870a27638be88710545ac5f1d17cd722"
   },
   "currentOnlineUi": {
-    "status": "1.1.3 deployment and browser access check pending; 1.1.2 historical evidence separate"
+    "projectId": "appgprj_6af9751c44388191b7b99d0646dbd840",
+    "deploymentId": "appgdep_6afb4b2846a88191b5822b9091116996",
+    "versionId": "appgprj_6af9751c44388191b7b99d0646dbd840~appgver_c790907330148191acce6113a466ca38",
+    "sourceCommit": "0567f02579273a2a70e6dba712e4c05aa864e327",
+    "status": "succeeded",
+    "url": "https://drivelab-sim-v1-zllyh.qingjiugptproflb.chatgpt.site",
+    "audience": "owner-only private",
+    "envRevision": 1,
+    "ownerPageContentLoaded": true,
+    "postDeploymentInteractionAudit": "未全量复做：浏览器自动化会话随后发生桌面访问拒绝，未把交互超时归因为应用故障。",
+    "local113Workflow": "UI低速弯道约束、显示与真实模型比较已实测；API/SSE/保存恢复等另有通过记录。"
   },
   "externalReviewerAccess": "private owner-only; not authorized or verified for reviewers",
   "teamIdentity": "awaiting owner confirmation",
@@ -86,7 +96,8 @@
   },
   "localUi": {
     "status": "passed low-speed curve risk 234.6 degrees / limit 90 and 0.1 km/h display",
-    "screenshot": "outputs/DriveLab-113-低速弯道复验.jpg"
+    "screenshot": "docs/competition/screenshots/final-113-curve.jpg",
+    "screenshotSha256": "fc7e6c8f9975c0b56a101078b4827a6d74c258dc9f4619c5f41b3b5e281fec45"
   },
   "resolvedIn113": [
     "正速低速弯道不再用零横摆和零转向保护伪通过",
@@ -94,5 +105,15 @@
     "短制动事件有解析压力/附着需求及采样覆盖告警",
     "静止车辆解析停车时间为零",
     "窗口外仅接触边界的采样间隔不再引发稀疏警告"
-  ]
+  ],
+  "materialFormats": {
+    "technicalPdfPages": 15,
+    "reportPdfPages": 7,
+    "videoDurationSeconds": 387.54,
+    "videoResolution": [
+      1920,
+      1080
+    ],
+    "videoNumericRevalidation": "VIDEO-113-REVALIDATION.json"
+  }
 }
