@@ -45,7 +45,9 @@ export async function runAnalysis(input:AnalysisInput,docs:KnowledgeDoc[],env:Mo
    const messages:any[]=[{role:'system',content:system},{role:'user',content:JSON.stringify({question,evidence:compactEvidence(e),sources:sources.map(({vector,...s})=>s),alternatives})}];
    for(let round=0;round<3;round++){
     const requestStarted=Date.now();const requestStep=trace(round===0?'模型阅读证据':'模型归纳结果','model','running',`第 ${round+1} 次免费模型请求，上限 3 次；无付费回退`);
-    const payload:any={__key:env.LLM_API_KEY,model:settings.model,messages,max_tokens:1800,temperature:.2,...(round<2?{tools,tool_choice:'auto'}:{response_format:{type:'json_object'}}),...(settings.provider==='modelscope'?{enable_thinking:false}:{provider:{require_parameters:true,allow_fallbacks:false}})};
+    // ModelScope/Qwen's JSON mode returned scalar numbers in live tool-loop checks.
+    // Keep local schema/reference validation; only omit this provider's decoding hint.
+    const payload:any={__key:env.LLM_API_KEY,model:settings.model,messages,max_tokens:1800,temperature:.2,...(round<2?{tools,tool_choice:'auto'}:settings.provider==='modelscope'?{}:{response_format:{type:'json_object'}}),...(settings.provider==='modelscope'?{enable_thinking:false}:{provider:{require_parameters:true,allow_fallbacks:false}})};
     modelCalls++;const response=await transport(settings,payload);Object.assign(requestStep,{status:'complete',detail:`第 ${round+1} 次请求已返回`,durationMs:Date.now()-requestStarted});onProgress?.({...requestStep});usage.input+=Number(response.usage?.prompt_tokens??0);usage.output+=Number(response.usage?.completion_tokens??0);const message=response.choices?.[0]?.message;if(!message)throw Error('模型没有返回有效消息');
     if(Array.isArray(message.tool_calls)&&message.tool_calls.length){if(round===2)throw Error('模型超过工具调用轮次限制');if(message.tool_calls.length>4)throw Error('模型单轮工具调用过多');messages.push({role:'assistant',content:message.content??null,tool_calls:message.tool_calls});
      for(const call of message.tool_calls){let result:unknown;const args=JSON.parse(call.function.arguments||'{}');const name=call.function.name;

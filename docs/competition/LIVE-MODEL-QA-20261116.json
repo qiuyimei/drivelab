@@ -1,0 +1,292 @@
+{
+  "at": "2026-11-16T05:19:12.004Z",
+  "provider": "modelscope",
+  "model": "Qwen/Qwen3.5-27B",
+  "engineVersion": "1.1.1",
+  "mode": "llm",
+  "fallbackReason": null,
+  "checks": {
+    "modelMode": true,
+    "structured": true,
+    "noFallback": true,
+    "realTransport": true,
+    "requestLimit": true,
+    "comparisonTool": true,
+    "candidateTool": true,
+    "rmse": true,
+    "bias": true,
+    "baselineUnchanged": true,
+    "noRunningTraces": true,
+    "toolRoundtrip": true
+  },
+  "passed": true,
+  "modelCalls": 3,
+  "usage": {
+    "input": 9826,
+    "output": 920
+  },
+  "durationMs": 19525,
+  "exchanges": [
+    {
+      "round": 1,
+      "returnedTools": [
+        {
+          "id": "call_695d1bc9fb8a41c08a242e8d",
+          "name": "compare_measurement"
+        }
+      ],
+      "submittedToolResults": [],
+      "finishReason": "tool_calls"
+    },
+    {
+      "round": 2,
+      "returnedTools": [
+        {
+          "id": "call_d05b9d9077324153821be327",
+          "name": "evaluate_parameters"
+        }
+      ],
+      "submittedToolResults": [
+        "call_695d1bc9fb8a41c08a242e8d"
+      ],
+      "finishReason": "tool_calls"
+    },
+    {
+      "round": 3,
+      "returnedTools": [],
+      "submittedToolResults": [
+        "call_695d1bc9fb8a41c08a242e8d",
+        "call_d05b9d9077324153821be327"
+      ],
+      "finishReason": "stop"
+    }
+  ],
+  "structured": {
+    "summary": "基于合成固定偏差夹具的验收分析显示，基线工况（36 km/h）下车速日志存在 2 km/h 的恒定偏差（MAE/RMSE/Max/Bias均为2），横摆角速度、制动压力及方向盘转角通道缺失。将车速调整为32 km/h的候选方案计算表明，峰值附着利用率降至约10.1%，侧向加速度降至约0.79 m/s²，仍满足当前工程初始阈值约束。所有数据均源自仿真与合成日志，未进行实车标定验证。",
+    "observations": [
+      {
+        "text": "基线工况下，车速测量日志在共同区间（0-5s）内呈现2 km/h的平均偏差、RMSE及最大绝对误差，符合预设容差但需关注系统性偏移。",
+        "factIds": [
+          "LOG_SPEED_MAE",
+          "LOG_SPEED_RMSE",
+          "LOG_SPEED_MAX",
+          "LOG_SPEED_BIAS"
+        ],
+        "sourceIds": [
+          "KB-006#c1"
+        ]
+      },
+      {
+        "text": "日志中横摆角速度、制动压力和方向盘转角通道完全缺失（覆盖率0%），无法评估相关动态性能指标。",
+        "factIds": [],
+        "sourceIds": [
+          "KB-006#c1"
+        ]
+      },
+      {
+        "text": "基线工况（36 km/h）下，峰值附着利用率为12.74%，峰值侧向加速度为1.00 m/s²，均在摩擦圆近似和工程初始阈值范围内。",
+        "factIds": [
+          "SIM_UTILIZATION",
+          "SIM_LATERAL"
+        ],
+        "sourceIds": [
+          "KB-001#c1",
+          "KB-002#c1"
+        ]
+      },
+      {
+        "text": "候选工况（32 km/h）重算结果显示，峰值附着利用率降至10.07%，峰值侧向加速度降至0.79 m/s²，转向物理约束未变。",
+        "factIds": [
+          "SIM_UTILIZATION",
+          "SIM_LATERAL",
+          "SIM_STEERING"
+        ],
+        "sourceIds": [
+          "KB-001#c1",
+          "KB-002#c1"
+        ]
+      }
+    ],
+    "recommendations": [
+      {
+        "text": "建议采用32 km/h作为候选车速进行后续仿真迭代，以降低侧向动力学负载，但需注意该数值仅基于运动学模型推算，未经过实车闭环验证。",
+        "factIds": [
+          "SIM_UTILIZATION",
+          "SIM_LATERAL"
+        ],
+        "sourceIds": [
+          "KB-002#c1"
+        ]
+      },
+      {
+        "text": "需补充横摆角速度、制动压力及方向盘转角的传感器数据或高保真仿真输出，以完善多通道一致性校验。",
+        "factIds": [],
+        "sourceIds": [
+          "KB-006#c1"
+        ]
+      },
+      {
+        "text": "当前工程阈值（如侧向加速度3 m/s²）为可配置初始值，必须结合具体车型标定与专业审核后方可用于实车安全判定。",
+        "factIds": [
+          "SIM_LATERAL"
+        ],
+        "sourceIds": [
+          "KB-002#c1"
+        ]
+      }
+    ],
+    "limitations": [
+      "本分析基于水平路面与运动学需求模型，不包含轮胎非线性、载荷转移和闭环控制效应。",
+      "工程阈值与制动力增益为可配置初始值，需要车型标定与专业审核，不能直接代表法规限值或实车极限。",
+      "误差分析仅描述两组数据的差异；未经工况、车型和采样一致性确认，不能当成模型精度或传感器故障证据。",
+      "缺少通道：横摆角速度、制动压力、方向盘转角，系统不会补造数据。",
+      "所有结论基于合成夹具数据，严禁声称已完成实车标定或承诺实车安全。"
+    ]
+  },
+  "facts": [
+    {
+      "id": "SIM_UTILIZATION",
+      "label": "峰值附着利用率",
+      "value": 12.7420998980632,
+      "unit": "%",
+      "origin": "simulation"
+    },
+    {
+      "id": "SIM_LATERAL",
+      "label": "峰值侧向加速度",
+      "value": 1,
+      "unit": "m/s²",
+      "origin": "simulation"
+    },
+    {
+      "id": "SIM_STEERING",
+      "label": "方向盘转角峰值",
+      "value": 24.05794156732396,
+      "unit": "°",
+      "origin": "simulation"
+    },
+    {
+      "id": "LOG_SPEED_MAE",
+      "label": "车速 MAE",
+      "value": 2,
+      "unit": "km/h",
+      "origin": "log",
+      "detail": "共同区间 0.00–5.00 s，51 个采样点"
+    },
+    {
+      "id": "LOG_SPEED_RMSE",
+      "label": "车速 RMSE",
+      "value": 2,
+      "unit": "km/h",
+      "origin": "log",
+      "detail": "共同区间 0.00–5.00 s，51 个采样点"
+    },
+    {
+      "id": "LOG_SPEED_MAX",
+      "label": "车速 最大绝对误差",
+      "value": 2,
+      "unit": "km/h",
+      "origin": "log",
+      "detail": "共同区间 0.00–5.00 s，51 个采样点"
+    },
+    {
+      "id": "LOG_SPEED_BIAS",
+      "label": "车速 平均偏差",
+      "value": 2,
+      "unit": "km/h",
+      "origin": "log",
+      "detail": "共同区间 0.00–5.00 s，51 个采样点"
+    }
+  ],
+  "sources": [
+    {
+      "chunkId": "KB-006#c1",
+      "title": "采集日志时间对齐与偏差",
+      "referenceUrl": "https://github.com/commaai/comma2k19/blob/4c7f1a6e1957745beadc1def0e7225f559b09a2a/README.md#log-format"
+    },
+    {
+      "chunkId": "KB-002#c1",
+      "title": "弯道侧向稳定与舒适性",
+      "referenceUrl": "https://publications.ri.cmu.edu/storage/publications/pub_files/2009/2/Automatic_Steering_Methods_for_Autonomous_Automobile_Path_Tracking.pdf"
+    },
+    {
+      "chunkId": "KB-001#c1",
+      "title": "附着与制动边界",
+      "referenceUrl": "https://cseweb.ucsd.edu/classes/sp19/cse291-d/Files/CSE291_14_VehicleDynamics.pdf"
+    }
+  ],
+  "trace": [
+    {
+      "id": "step-1",
+      "label": "复算工况与日志证据",
+      "kind": "calculation",
+      "status": "complete",
+      "detail": "51 个仿真点；51 行日志；服务端重新计算误差",
+      "durationMs": 1
+    },
+    {
+      "id": "step-2",
+      "label": "检索工程依据",
+      "kind": "retrieval",
+      "status": "complete",
+      "detail": "BM25 + 词项向量检索到 3 个段落，保留页码/段落锚点"
+    },
+    {
+      "id": "step-3",
+      "label": "候选方案重算",
+      "kind": "calculation",
+      "status": "complete",
+      "detail": "1 个候选，仅计算而不修改当前基线"
+    },
+    {
+      "id": "step-4",
+      "label": "模型阅读证据",
+      "kind": "model",
+      "status": "complete",
+      "detail": "第 1 次请求已返回",
+      "durationMs": 3074
+    },
+    {
+      "id": "step-5",
+      "label": "执行工具：compare_measurement",
+      "kind": "calculation",
+      "status": "complete",
+      "detail": "真实执行受限工具并返回计算/检索结果，未更改基线"
+    },
+    {
+      "id": "step-6",
+      "label": "模型归纳结果",
+      "kind": "model",
+      "status": "complete",
+      "detail": "第 2 次请求已返回",
+      "durationMs": 2054
+    },
+    {
+      "id": "step-7",
+      "label": "执行工具：evaluate_parameters",
+      "kind": "calculation",
+      "status": "complete",
+      "detail": "真实执行受限工具并返回计算/检索结果，未更改基线"
+    },
+    {
+      "id": "step-8",
+      "label": "模型归纳结果",
+      "kind": "model",
+      "status": "complete",
+      "detail": "第 3 次请求已返回",
+      "durationMs": 14333
+    },
+    {
+      "id": "step-9",
+      "label": "引用与工程边界检查",
+      "kind": "validation",
+      "status": "complete",
+      "detail": "引用标识有效；工程风险由计算引擎固定，模型不能覆盖"
+    }
+  ],
+  "limitations": [
+    "合成固定偏差夹具，只证明一次真实模型分析流程，不代表实车准确率。",
+    "引用校验检查标识存在与工程禁语；文本数值和语义仍需人工复核。",
+    "本机令牌未部署线上，也未纳入此报告。"
+  ]
+}

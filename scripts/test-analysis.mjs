@@ -22,4 +22,19 @@ await test('完全无关问题不捏造检索命中',()=>{assert.equal(hybridSea
 await test('规范化日志的键顺序不改变分析指纹',async()=>{const ordered={...log,rows:log.rows.map(({time,speed})=>({speed,time}))};assert.equal(await fingerprint(c,ordered,defaultThresholds),await fingerprint(c,validatedLog(ordered),defaultThresholds));});
 await test('失败请求计数准确，流式步骤更新至完成或警告状态',async()=>{const events=[];const r=await runAnalysis({config:c,question:'分析',log},[],settings,t=>events.push({...t}),async()=>{throw Error('免费额度达到上限');});assert.equal(r.modelCalls,1);assert.ok(r.trace.every(t=>t.status!=='running'));const modelEvents=events.filter(t=>t.kind==='model');assert.equal(modelEvents[0].id,modelEvents.at(-1).id);assert.equal(modelEvents.at(-1).status,'warning');});
 await test('候选参数触及边界时描述准确，静止工况不自动加速',()=>{const a=scenarioAlternatives(evidenceFor({...c,scenario:'urban',speed:0,distance:1000}));assert.equal(a.length,0);const b=scenarioAlternatives(evidenceFor({...c,scenario:'avoid',distance:990,laneTime:11}));assert.ok(b.some(p=>p.patch.distance===1000&&p.label.includes('1000')));assert.ok(b.some(p=>p.patch.laneTime===12&&p.label.includes('12')));});
+for(const provider of ['modelscope','openrouter'])await test(provider+' 三轮工具分析保持服务商兼容参数和严格校验',async()=>{
+ const env=provider==='modelscope'?{LLM_API_KEY:'fixture-not-real',LLM_BASE_URL:'https://api-inference.modelscope.cn/v1',LLM_MODEL:'Qwen/Qwen3.5-27B',LLM_PROVIDER:'modelscope'}:{...settings,LLM_PROVIDER:'openrouter'};
+ let round=0;const r=await runAnalysis({config:c,question:'分析对标偏差',log},[],env,undefined,async(_,payload)=>{
+  round++;assert.equal(payload.enable_thinking,provider==='modelscope'?false:undefined);
+  if(round<3){assert.ok(Array.isArray(payload.tools));assert.equal(payload.tool_choice,'auto');assert.equal(Object.hasOwn(payload,'response_format'),false);if(round===2)assert.ok(payload.messages.some(m=>m.role==='tool'&&m.tool_call_id==='round-1'));return {choices:[{message:{tool_calls:[{id:'round-'+round,type:'function',function:{name:'compare_measurement',arguments:'{}'}}]}}]};}
+  assert.equal(Object.hasOwn(payload,'tools'),false);assert.equal(Object.hasOwn(payload,'response_format'),provider!=='modelscope');if(provider!=='modelscope')assert.deepEqual(payload.response_format,{type:'json_object'});
+  assert.ok(payload.messages.some(m=>m.role==='tool'&&m.tool_call_id==='round-2'));
+  return {choices:[{message:{content:JSON.stringify(valid)}}]};
+ });assert.equal(round,3);assert.equal(r.modelCalls,3);assert.equal(r.mode,'llm');assert.ok(r.structured);assert.equal(r.fallbackReason,null);
+});
+await test('魔搭返回非对象 JSON 仍被拒绝并保留规则结果',async()=>{
+ let round=0;const env={LLM_API_KEY:'fixture-not-real',LLM_BASE_URL:'https://api-inference.modelscope.cn/v1',LLM_MODEL:'Qwen/Qwen3.5-27B',LLM_PROVIDER:'modelscope'};
+ const r=await runAnalysis({config:c,question:'分析',log},[],env,undefined,async()=>++round<3?{choices:[{message:{tool_calls:[{id:'scalar-'+round,type:'function',function:{name:'compare_measurement',arguments:'{}'}}]}}]}:{choices:[{message:{content:'5000000000'}}]});
+ assert.equal(r.mode,'fallback');assert.equal(r.structured,null);assert.equal(r.modelCalls,3);assert.match(r.fallbackReason,/结构不符合/);assert.ok(r.answer.includes('2.000'));assert.ok(r.trace.every(t=>t.status!=='running'));
+});
 console.log(`${count} analysis tests passed`);
