@@ -37,4 +37,24 @@ await test('魔搭返回非对象 JSON 仍被拒绝并保留规则结果',async(
  const r=await runAnalysis({config:c,question:'分析',log},[],env,undefined,async()=>++round<3?{choices:[{message:{tool_calls:[{id:'scalar-'+round,type:'function',function:{name:'compare_measurement',arguments:'{}'}}]}}]}:{choices:[{message:{content:'5000000000'}}]});
  assert.equal(r.mode,'fallback');assert.equal(r.structured,null);assert.equal(r.modelCalls,3);assert.match(r.fallbackReason,/结构不符合/);assert.ok(r.answer.includes('2.000'));assert.ok(r.trace.every(t=>t.status!=='running'));
 });
+await test('工具后缺引用时利用剩余轮次纠正并保留新增资料标识',async()=>{
+ let round=0;const broken={...valid,observations:[{text:'遗漏引用',factIds:[],sourceIds:[]}]};const docs=[{id:'REPAIR',title:'QA_REPAIR_SOURCE_XYZ',body:'QA_REPAIR_SOURCE_XYZ'}];
+ const r=await runAnalysis({config:c,question:'分析对标偏差',log},docs,settings,undefined,async(_,payload)=>{
+  round++;
+  if(round===1)return {choices:[{message:{tool_calls:[{id:'repair-search',type:'function',function:{name:'search_knowledge',arguments:JSON.stringify({query:'QA_REPAIR_SOURCE_XYZ'})}}]}}]};
+  if(round===2)return {choices:[{message:{content:JSON.stringify(broken)}}]};
+  assert.equal(Object.hasOwn(payload,'tools'),false);const feedback=JSON.parse(payload.messages.at(-1).content);assert.match(feedback.reason,/没有引用/);assert.ok(feedback.factIds.includes('LOG_SPEED_RMSE'));assert.ok(feedback.sourceIds.includes('REPAIR#c1'));assert.ok(payload.messages.some(m=>m.role==='assistant'&&m.content===JSON.stringify(broken)));assert.ok(payload.messages.some(m=>m.role==='tool'&&m.tool_call_id==='repair-search'));
+  return {choices:[{message:{content:JSON.stringify(valid)}}]};
+ });assert.equal(r.modelCalls,3);assert.equal(r.mode,'llm');assert.ok(r.structured);assert.ok(r.trace.some(t=>t.label==='纠正模型输出'));assert.ok(r.trace.every(t=>t.status!=='running'));
+});
+await test('坏 JSON 可在剩余轮次内纠正，纠正阶段不再提供工具',async()=>{
+ let calls=0;const r=await runAnalysis({config:c,question:'分析',log},[],settings,undefined,async(_,payload)=>{
+  if(++calls===1)return {choices:[{message:{content:'{"summary":'}}]};
+  assert.equal(Object.hasOwn(payload,'tools'),false);assert.equal(JSON.parse(payload.messages.at(-1).content).reason,'JSON格式无效');return {choices:[{message:{content:JSON.stringify(valid)}}]};
+ });assert.equal(r.mode,'llm');assert.equal(r.modelCalls,2);
+});
+await test('连续格式失败最多三次请求后降级，纠正不能绕过工具轮次',async()=>{
+ const r=await runAnalysis({config:c,question:'分析',log},[],settings,undefined,async()=>({choices:[{message:{content:'5000000000'}}]}));assert.equal(r.modelCalls,3);assert.equal(r.mode,'fallback');assert.equal(r.structured,null);assert.ok(r.answer.includes('2.000'));assert.ok(r.trace.every(t=>t.status!=='running'));
+ let count=0;const tool=await runAnalysis({config:c,question:'分析',log},[],settings,undefined,async()=>++count===1?{choices:[{message:{content:'bad-json'}}]}:{choices:[{message:{tool_calls:[{id:'unexpected-repair-tool',function:{name:'inspect_simulation',arguments:'{}'}}]}}]});assert.equal(tool.mode,'fallback');assert.equal(tool.modelCalls,2);assert.match(tool.fallbackReason,/轮次限制/);
+});
 console.log(`${count} analysis tests passed`);

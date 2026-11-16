@@ -1,0 +1,271 @@
+{
+  "at": "2026-11-16T06:12:35.663Z",
+  "model": "Qwen/Qwen3.5-27B",
+  "provider": "modelscope",
+  "mode": "llm",
+  "fallbackReason": null,
+  "modelCalls": 3,
+  "usage": {
+    "input": 11280,
+    "output": 1586
+  },
+  "trace": [
+    {
+      "id": "step-1",
+      "label": "复算工况与日志证据",
+      "kind": "calculation",
+      "status": "complete",
+      "detail": "201 个仿真点；0 行日志；服务端重新计算误差",
+      "durationMs": 1
+    },
+    {
+      "id": "step-2",
+      "label": "检索工程依据",
+      "kind": "retrieval",
+      "status": "complete",
+      "detail": "BM25 + 词项向量检索到 3 个段落，保留页码/段落锚点"
+    },
+    {
+      "id": "step-3",
+      "label": "候选方案重算",
+      "kind": "calculation",
+      "status": "complete",
+      "detail": "2 个候选，仅计算而不修改当前基线"
+    },
+    {
+      "id": "step-4",
+      "label": "模型阅读证据",
+      "kind": "model",
+      "status": "complete",
+      "detail": "第 1 次请求已返回",
+      "durationMs": 3198
+    },
+    {
+      "id": "step-5",
+      "label": "执行工具：inspect_simulation",
+      "kind": "calculation",
+      "status": "complete",
+      "detail": "真实执行受限工具并返回计算/检索结果，未更改基线"
+    },
+    {
+      "id": "step-6",
+      "label": "执行工具：search_knowledge",
+      "kind": "retrieval",
+      "status": "complete",
+      "detail": "真实执行受限工具并返回计算/检索结果，未更改基线"
+    },
+    {
+      "id": "step-7",
+      "label": "模型归纳结果",
+      "kind": "model",
+      "status": "complete",
+      "detail": "第 2 次请求已返回",
+      "durationMs": 15214
+    },
+    {
+      "id": "step-8",
+      "label": "纠正模型输出",
+      "kind": "validation",
+      "status": "warning",
+      "detail": "输出未通过结构或引用检查，在剩余请求次数内要求纠正；不会放宽校验"
+    },
+    {
+      "id": "step-9",
+      "label": "模型归纳结果",
+      "kind": "model",
+      "status": "complete",
+      "detail": "第 3 次请求已返回",
+      "durationMs": 11176
+    },
+    {
+      "id": "step-10",
+      "label": "引用与工程边界检查",
+      "kind": "validation",
+      "status": "complete",
+      "detail": "引用标识有效；工程风险由计算引擎固定，模型不能覆盖"
+    }
+  ],
+  "structured": {
+    "summary": "当前高速跟驰工况（初速100km/h，前车60km/h，初始间距80m）在仿真模型下风险等级为“约束内”。解析计算显示完全停车需99.4m/6.4s，全过程预测最小间距为58.8m。峰值附着利用率为63.7%，未触及摩擦圆极限。本次计算未绑定测量日志，无法进行实车偏差诊断，所有结论基于水平路面恒减速运动学假设，非实车验证结果。",
+    "observations": [
+      {
+        "text": "当前工况下，车辆从100km/h减速至停止的理论距离为99.4米，耗时6.4秒，该数值包含0.8秒的反应时间行程，依据恒定减速度公式推导。",
+        "factIds": [
+          "SIM_STOPPING_DISTANCE",
+          "SIM_STOP_TIME"
+        ],
+        "sourceIds": [
+          "KB-004#c1"
+        ]
+      },
+      {
+        "text": "在全时序制动过程中，预测的最小跟车间距为58.8米，高于零值，表明在当前参数设定下未发生碰撞。",
+        "factIds": [
+          "SIM_GAP"
+        ],
+        "sourceIds": [
+          "KB-004#c1"
+        ]
+      },
+      {
+        "text": "轮胎附着利用率峰值为63.7%，依据摩擦圆近似理论，当前纵向减速度需求未超过附着系数μ=0.8提供的物理极限。",
+        "factIds": [
+          "SIM_UTILIZATION"
+        ],
+        "sourceIds": [
+          "KB-001#c1"
+        ]
+      },
+      {
+        "text": "系统未导入任何测量日志，因此无法提供四通道误差、覆盖率或平均偏差等实测数据对比，不能诊断具体实车偏差。",
+        "factIds": [],
+        "sourceIds": [
+          "KB-006#c1"
+        ]
+      }
+    ],
+    "recommendations": [
+      {
+        "text": "建议将初始车速降低20%（至80km/h）进行独立重算，此时预测最小间距可提升至约72.5米，进一步增加安全裕度。",
+        "factIds": [
+          "SIM_GAP"
+        ],
+        "sourceIds": [
+          "KB-004#c1"
+        ]
+      },
+      {
+        "text": "若保持当前车速，建议将初始间距增加至100米，重算后最小间距可达78.8米，以应对更极端的响应延迟或附着下降情况。",
+        "factIds": [
+          "SIM_GAP"
+        ],
+        "sourceIds": [
+          "KB-004#c1"
+        ]
+      },
+      {
+        "text": "需明确工程阈值（如侧向加速度3m/s²）与制动力增益为初始配置值，必须结合具体车型标定与专业审核后方可用于实车控制策略。",
+        "factIds": [
+          "SIM_LATERAL"
+        ],
+        "sourceIds": [
+          "KB-001#c1",
+          "KB-006#c1"
+        ]
+      }
+    ],
+    "limitations": [
+      "模型基于水平路面与运动学需求，未包含轮胎非线性特性、载荷转移效应及闭环控制系统动态。",
+      "工程阈值与制动力增益为可配置初始值，未经过特定车型的实车标定与专业审核。",
+      "本次分析未绑定测量日志，不能诊断具体实车偏差，所有结论仅适用于当前仿真假设条件，不可直接作为实车安全承诺。"
+    ]
+  },
+  "evidence": {
+    "engineVersion": "1.1.1",
+    "config": {
+      "name": "高速跟驰制动评估",
+      "scenario": "highway",
+      "speed": 100,
+      "leadSpeed": 60,
+      "distance": 80,
+      "decel": 5,
+      "reaction": 0.8,
+      "mu": 0.8,
+      "radius": 250,
+      "mass": 1800,
+      "wheelbase": 2.8,
+      "steeringRatio": 15,
+      "steeringLimit": 540,
+      "brakeLimit": 8,
+      "brakeGain": 200,
+      "lateralLimit": 3,
+      "duration": 20,
+      "laneWidth": 3.5,
+      "laneTime": 5
+    },
+    "risk": "约束内",
+    "findings": [
+      {
+        "level": "pass",
+        "title": "轮胎附着约束",
+        "detail": "峰值附着利用率 63.7%，依据纵横向加速度的摩擦圆近似。",
+        "source": "KB-001"
+      },
+      {
+        "level": "pass",
+        "title": "侧向加速度",
+        "detail": "峰值 0.00 m/s²，设置阈值 3 m/s²（工程初始值，需标定）。",
+        "source": "KB-002"
+      },
+      {
+        "level": "pass",
+        "title": "转向物理约束",
+        "detail": "方向盘峰值 0.0°，设置极限 540°。",
+        "source": "KB-003"
+      },
+      {
+        "level": "pass",
+        "title": "完整制动过程预测",
+        "detail": "相同恒减速与目标运动假设下，全过程最小间距 58.8 m；此项包含显示时间窗之外的解析预测。",
+        "source": "KB-004"
+      },
+      {
+        "level": "pass",
+        "title": "制动与间距",
+        "detail": "仿真 20 s 内最小间距 58.8 m；理论完全停车需 99.4 m / 6.4 s。前车按恒速运动，静态目标按固定障碍物计算。",
+        "source": "KB-004"
+      }
+    ],
+    "facts": [
+      {
+        "id": "SIM_UTILIZATION",
+        "label": "峰值附着利用率",
+        "value": 63.710499490315996,
+        "unit": "%",
+        "origin": "simulation"
+      },
+      {
+        "id": "SIM_LATERAL",
+        "label": "峰值侧向加速度",
+        "value": 0,
+        "unit": "m/s²",
+        "origin": "simulation"
+      },
+      {
+        "id": "SIM_STEERING",
+        "label": "方向盘转角峰值",
+        "value": 0,
+        "unit": "°",
+        "origin": "simulation"
+      },
+      {
+        "id": "SIM_STOPPING_DISTANCE",
+        "label": "解析停车距离",
+        "value": 99.38271604938272,
+        "unit": "m",
+        "origin": "simulation"
+      },
+      {
+        "id": "SIM_STOP_TIME",
+        "label": "解析停车时间",
+        "value": 6.355555555555555,
+        "unit": "s",
+        "origin": "simulation"
+      },
+      {
+        "id": "SIM_GAP",
+        "label": "全过程预测最小间距",
+        "value": 58.76543209876544,
+        "unit": "m",
+        "origin": "simulation"
+      }
+    ],
+    "comparison": [],
+    "log": null,
+    "limitations": [
+      "水平路面与运动学需求模型，不包含轮胎非线性、载荷转移和闭环控制。",
+      "工程阈值与制动力增益为可配置初始值，需要车型标定与专业审核。",
+      "本次未绑定测量日志，不能诊断具体实车偏差。"
+    ]
+  }
+}
