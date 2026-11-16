@@ -49,7 +49,7 @@ pnpm run test:api
 node scripts/create-sample-report.mjs
 ```
 
-`pnpm test` 包含 31 项核心回归、26 项分析回归、独立解析参考、检索回归、公开数据哈希/单位检查和模型向导诊断。模型逻辑回归使用模拟传输，**不等于实际模型联网测试**；独立真实调用记录另存 docs/competition。`test:db` 验证新库、重复初始化和旧库升级的数据保留。GitHub Actions 执行测试、类型检查、数据库验收和生产构建。最终本轮执行结果见 docs/competition/FINAL-VALIDATION.json。
+`pnpm test` 包含 31 项核心回归、27 项分析回归、独立解析参考、检索回归、公开数据哈希/单位检查和模型向导诊断。模型逻辑回归使用模拟传输，**不等于实际模型联网测试**；独立真实调用记录另存 docs/competition。`test:db` 验证新库、重复初始化和旧库升级的数据保留。GitHub Actions 执行测试、类型检查、数据库验收和生产构建。最终本轮执行结果见 docs/competition/FINAL-VALIDATION.json。
 
 ## 日志协议
 

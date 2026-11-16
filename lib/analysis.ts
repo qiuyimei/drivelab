@@ -34,7 +34,8 @@ export function groundedRules(question:string,e:Evidence,sources:ReturnType<type
 export function validateNarrative(input:unknown,e:Evidence,sources:ReturnType<typeof retrieve>,registeredFacts:readonly Fact[]=e.facts){
  const parsed=narrative.safeParse(input);if(!parsed.success)throw Error('模型返回结构不符合约定');const value=parsed.data;const factIds=new Set(registeredFacts.map(f=>f.id)),sourceIds=new Set(sources.map(s=>s.chunkId));
  for(const item of [...value.observations,...value.recommendations]){if(!item.factIds.length&&!item.sourceIds.length)throw Error('模型结论没有引用本次证据');if(item.factIds.some(id=>!factIds.has(id))||item.sourceIds.some(id=>!sourceIds.has(id)))throw Error('模型引用了不存在的证据');}
- if(/绝对安全|(?<!不|不能|无法)保证安全|无需实车验证|(?<!未|没有|不|不能|无法)通过.{0,8}安全(?:认证|审核|评审)|(?:已经?|现已)完成.{0,8}安全(?:认证|审核|评审)|不存在任何风险/.test(JSON.stringify(value)))throw Error('模型作出了超出工程边界的承诺');
+ // A negative prefix exempts only its own occurrence; other promises remain checked.
+ if(/(?<!(?:不|不能|无法)保证|不代表)绝对安全|(?<!不|不能|无法)保证安全|无需实车验证|(?<!未|没有|不|不能|无法)通过.{0,8}安全(?:认证|审核|评审)|(?:已经?|现已)完成.{0,8}安全(?:认证|审核|评审)|不存在任何风险/.test(JSON.stringify(value)))throw Error('模型作出了超出工程边界的承诺');
  return value;
 }
 export async function defaultTransport(settings:ReturnType<typeof providerSettings>,payload:Record<string,unknown>){

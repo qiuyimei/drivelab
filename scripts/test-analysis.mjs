@@ -96,6 +96,13 @@ await test('报告入口复核指纹和引擎版本，重新计算当前输入',
  const r=await runAnalysis({config:c,question:'分析',log,mode:'rules'},[],{});const same=await prepareReportEvidence(sim,log,defaultThresholds,r);assert.equal(same.analysis,r);assert.equal(same.rejectionReason,null);
  for(const changed of [simulate({...c,speed:30}),sim]){const bundle=changed===sim?{...r,engineVersion:'old-engine'}:r;const snapshot=await prepareReportEvidence(changed,log,defaultThresholds,bundle);assert.equal(snapshot.analysis,null);assert.match(snapshot.rejectionReason,/未采用旧分析/);assert.equal(snapshot.evidence.simulation.config.speed,changed.config.speed);}
 });
+await test('明确否定绝对安全的限制可通过，其他出现位置的肯定承诺仍被拒绝',async()=>{
+ const e=evidenceFor(c,log);
+ for(const limitation of ['本分析不能保证绝对安全','本分析不保证绝对安全','本分析无法保证绝对安全','本分析不代表绝对安全','本分析不构成安全认证'])assert.ok(validateNarrative({...valid,limitations:[limitation]},e,[]));
+ for(const limitation of ['本方案绝对安全','本分析保证绝对安全','已经完成车辆安全审核','不代表绝对安全，但本方案绝对安全','本方案绝对安全，但本分析不代表绝对安全','本分析不能保证绝对安全，但已经完成车辆安全审核'])assert.throws(()=>validateNarrative({...valid,limitations:[limitation]},e,[]),/承诺/);
+ assert.throws(()=>validateNarrative({...valid,summary:'本分析不代表绝对安全',observations:[{text:'本方案绝对安全',factIds:['LOG_SPEED_BIAS'],sourceIds:[]}]},e,[]),/承诺/);
+ const r=await runAnalysis({config:c,question:'分析',log},[],settings,undefined,async()=>({choices:[{message:{content:JSON.stringify({...valid,limitations:['本分析不能保证绝对安全，不构成安全认证。']})}}]}));assert.equal(r.mode,'llm');assert.equal(r.modelCalls,1);assert.equal(r.fallbackReason,null);
+});
 await test('PDF保留事实字典和候选重算，错配时排除旧答案',async()=>{
  const fs=await import('node:fs/promises');const {getDocument}=await import('pdfjs-dist/legacy/build/pdf.mjs');let calls=0;
  const r=await runAnalysis({config:c,question:'分析日志',log},[],settings,undefined,async()=>++calls===1?{choices:[{message:{tool_calls:[{id:'pdf-candidate',type:'function',function:{name:'evaluate_parameters',arguments:'{"speed":27}'}}]}}]}:{choices:[{message:{content:JSON.stringify({...valid,summary:'PDF_MATCH_ONLY 验收解释'})}}]});

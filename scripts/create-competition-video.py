@@ -6,8 +6,8 @@ Run with the bundled Python and retained video-tool package directory on PYTHONP
 No browser automation, secrets, paid API, fabricated UI or member impersonation.
 """
 from __future__ import annotations
-import argparse, asyncio, hashlib, html, json, math, re, subprocess
-from datetime import datetime
+import argparse, asyncio, hashlib, html, json, math, re, shutil, subprocess
+from datetime import datetime, timezone, timedelta
 from pathlib import Path
 
 import edge_tts
@@ -28,6 +28,7 @@ W, H, FPS = 1920, 1080, 24
 NAVY, ORANGE, TEAL = '#173147', '#ee6a36', '#238e83'
 BG, MUTED = '#f1f5f8', '#607489'
 PREFIX, TAIL = .4, 1.1
+CLIENT_ZONE = timezone(timedelta(hours=8))
 
 def write_json(path, data):
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -45,7 +46,8 @@ def run(command, log=None, check=True, cwd=None):
     return result
 
 def probe(path):
-    result = run([FFMPEG, '-hide_banner', '-i', path], check=False)
+    path=Path(path)
+    result = run([FFMPEG, '-hide_banner', '-i', path.name], check=False,cwd=path.parent)
     text = result.stderr
     match = re.search(r'Duration: (\d+):(\d+):(\d+(?:\.\d+)?)', text)
     if not match:
@@ -122,7 +124,7 @@ async def synthesize(scene, semaphore, proxy):
                         elif chunk['type']=='WordBoundary': events.append({k:chunk[k] for k in ['offset','duration','text']})
                 temporary.replace(audio)
                 duration=probe(audio)['durationSeconds']
-                result={'signature':signature,'voice':VOICE,'rate':RATE,'durationSeconds':duration,'cues':make_cues(events),'wordEvents':events,'synthesizedAt':datetime.now().astimezone().isoformat()}
+                result={'signature':signature,'voice':VOICE,'rate':RATE,'durationSeconds':duration,'cues':make_cues(events),'wordEvents':events,'synthesizedAt':datetime.now(CLIENT_ZONE).isoformat()}
                 write_json(metadata,result)
                 print(f'VOICE {scene["id"]} ready {duration:.2f}s',flush=True);return result
             except Exception:
@@ -169,7 +171,7 @@ def draw_shot(image, scene, variant, draft):
     fitted=ImageOps.contain(shot,(box[2]-box[0]-20,box[3]-box[1]-20),Image.Resampling.LANCZOS)
     image.paste(fitted,(box[0]+(box[2]-box[0]-fitted.width)//2,box[1]+(box[3]-box[1]-fitted.height)//2))
     old=path.name not in ['final-ai.jpg','final-report.jpg']
-    date='2026-11-15（历史界面）' if old else datetime.fromtimestamp(path.stat().st_mtime).astimezone().strftime('%Y-%m-%d')
+    date='2026-11-15（历史界面）' if old else datetime.fromtimestamp(path.stat().st_mtime,CLIENT_ZONE).strftime('%Y-%m-%d')
     return f'实际界面/报告截图：{date} · '+('局部放大' if variant else '全景')+' · 剪辑展示，不代表实时操作耗时'
 
 def plot(draw, box, lines, xlim, ylim, xlabel, ylabel):
@@ -182,6 +184,13 @@ def plot(draw, box, lines, xlim, ylim, xlabel, ylabel):
         x=x0+(x1-x0)*i/3;draw.text((x-18,y1+12),f'{xlim[0]+(xlim[1]-xlim[0])*i/3:.2f}',font=font(19),fill=MUTED)
     def map_point(p): return (x0+(p[0]-xlim[0])/(xlim[1]-xlim[0])*(x1-x0),y1-(p[1]-ylim[0])/(ylim[1]-ylim[0])*(y1-y0))
     for points,color in lines:
+        original=sorted(points)
+        points=list(original)
+        for boundary in xlim:
+            for before,after in zip(original,original[1:]):
+                if before[0]<boundary<after[0]:
+                    ratio=(boundary-before[0])/(after[0]-before[0]);points.append((boundary,before[1]+ratio*(after[1]-before[1])));break
+        points.sort()
         points=[map_point(p) for p in points if xlim[0]<=p[0]<=xlim[1]]
         if len(points)>1: draw.line(points,fill=color,width=5)
         for x,y in points:
@@ -196,7 +205,8 @@ def draw_engineering(image, scene, variant, data):
         draw.text((100,205),'0.05 s 合成尖峰回归夹具',font=font(38),fill=NAVY)
         draw.text((100,264),'基线 36 km/h；日志单点升至 136 km/h',font=font(27),fill=MUTED)
         log=[(r['time'],r['speed']) for r in spike['log']['rows']]
-        plot(draw,(170,365,1290,655),[([(0,36),(.1,36),(.15,36)],'#3681bf'),(log,ORANGE)],(0,.15),(0,150),'时间 / s','车速 / km/h（局部时间窗）')
+        simulation=[(r[0],r[1]) for r in spike['simulation']['curves']]
+        plot(draw,(170,365,1290,655),[(simulation,'#3681bf'),(log,ORANGE)],(0,.15),(0,150),'时间 / s','车速 / km/h（局部时间窗）')
         draw.text((120,748),f'MAE {comparison["mae"]:.0f}    RMSE {comparison["rmse"]:.0f}    最大误差 {comparison["max"]:.0f} km/h',font=font(35),fill=NAVY)
         draw.text((120,806),'原网格平均仍为零；并集峰值触发超差',font=font(28),fill=ORANGE)
     elif variant==1:
@@ -212,6 +222,7 @@ def draw_engineering(image, scene, variant, data):
         pair=data['acceptedLaneComparison']
         draw.text((100,205),'低速换道：输入被接受 ≠ 约束通过',font=font(36),fill=NAVY)
         draw.text((105,275),'0.1 km/h：拒绝计算，超出当前软件适用范围',font=font(30),fill=ORANGE)
+        for x,label in [(110,'初始车速'),(420,'采样方向盘需求峰值'),(855,'模型判断')]:draw.text((x,347),label,font=font(24),fill=MUTED)
         for index,key in enumerate(['at5Kmh','at60Kmh']):
             item=pair[key];y=395+index*165
             draw.text((110,y),f'{item["config"]["speed"]:g} km/h',font=font(40),fill=NAVY)
@@ -267,26 +278,62 @@ def write_ass(path,cues):
 
 def encode_scene(scene,duration):
     directory=CACHE/scene['id'];target=directory/'scene.mp4'
+    signature=hashlib.sha256(('|'.join(sha(directory/f'card-{i}.png') for i in range(3))+sha(directory/'narration.mp3')+sha(directory/'subtitles.ass')+f'{duration}:{FPS}:x264-veryfast-crf20-fps-before-ass-v2').encode()).hexdigest()
+    encode_metadata=directory/'scene-encode.json'
+    if target.exists() and encode_metadata.exists():
+        previous=json.loads(encode_metadata.read_text(encoding='utf-8'))
+        if previous.get('signature')==signature:
+            actual=probe(target)
+            if actual['width']==W and actual['height']==H and actual['hasAudio']:
+                print(f'ENCODE {scene["id"]} cached {actual["durationSeconds"]:.2f}s',flush=True);return target
     inputs=directory/'images.ffconcat'
     lines=['ffconcat version 1.0']
     for i in range(3): lines += [f"file 'card-{i}.png'",f'duration {duration/3:.6f}']
     lines += ["file 'card-2.png'"]
     inputs.write_text('\n'.join(lines)+'\n',encoding='utf-8')
     command=[FFMPEG,'-hide_banner','-loglevel','warning','-y','-f','concat','-safe','0','-i',inputs.name,'-i','narration.mp3',
-             '-vf','ass=filename=subtitles.ass:fontsdir=../../../public/fonts','-af',f'adelay=400,apad,atrim=duration={duration:.6f}',
+             '-vf',f'fps={FPS},ass=filename=subtitles.ass:fontsdir=../fonts','-af',f'adelay=400,apad,atrim=duration={duration:.6f}',
              '-t',f'{duration:.6f}','-r',str(FPS),'-c:v','libx264','-threads','3','-preset','veryfast','-tune','stillimage','-crf','20','-pix_fmt','yuv420p',
              '-c:a','aac','-b:a','96k','-ar','24000','-ac','1','-movflags','+faststart',target.name]
     run(command,log=directory/'ffmpeg-encode.log',cwd=directory)
     actual=probe(target)
     if actual['width']!=W or actual['height']!=H or not actual['hasAudio']: raise RuntimeError('Invalid encoded scene format')
+    write_json(encode_metadata,{'signature':signature,'durationSeconds':actual['durationSeconds'],'sha256':sha(target)})
     print(f'ENCODE {scene["id"]} ready {actual["durationSeconds"]:.2f}s',flush=True)
     return target
 
+def verify_rendered_subtitles(scenes,audio):
+    """Inspect real encoded pixels at two different caption times per scene.
+
+    This catches a still-image VFR bug where subtitles were rendered before
+    output-only frame duplication and froze for an entire image interval.
+    It is a sampled rendering check, not speech recognition or human listening.
+    """
+    records=[]
+    for scene,meta in zip(scenes,audio):
+        directory=CACHE/scene['id'];samples=[]
+        for index,cue in enumerate(meta['cues'][:2]):
+            timestamp=PREFIX+(cue['start']+cue['end'])/2
+            frame=directory/f'qa-caption-{index+1}.png'
+            run([FFMPEG,'-hide_banner','-loglevel','error','-y','-ss',f'{timestamp:.4f}','-i',directory/'scene.mp4','-frames:v','1','-update','1',frame])
+            crop=Image.open(frame).convert('RGB').crop((90,938,1830,1035))
+            bright=sum(1 for r,g,b in crop.getdata() if r>165 and g>165 and b>165)
+            if bright<200:raise RuntimeError('No readable burned subtitle pixels: '+scene['id'])
+            samples.append({'seconds':timestamp,'brightTextPixels':bright,'subtitleCropSha256':hashlib.sha256(crop.tobytes()).hexdigest()})
+        if len(samples)>1 and samples[0]['subtitleCropSha256']==samples[1]['subtitleCropSha256']:raise RuntimeError('Subtitles appear frozen: '+scene['id'])
+        records.append({'scene':scene['id'],'captionSamples':samples,'changingSubtitlePixels':True})
+    write_json(CACHE/'subtitle-render-qa.json',records)
+    return records
+
 async def main():
-    parser=argparse.ArgumentParser();parser.add_argument('--prepare',action='store_true');parser.add_argument('--render',action='store_true');parser.add_argument('--proxy',default='http://127.0.0.1:7897')
+    parser=argparse.ArgumentParser();parser.add_argument('--prepare',action='store_true');parser.add_argument('--render',action='store_true');parser.add_argument('--encode-ready',action='store_true');parser.add_argument('--proxy',default='http://127.0.0.1:7897')
     args=parser.parse_args()
-    if not args.prepare and not args.render: parser.error('Use --prepare or --render')
+    if not args.prepare and not args.render and not args.encode_ready: parser.error('Use --prepare, --encode-ready or --render')
     CACHE.mkdir(parents=True,exist_ok=True);OUTPUTS.mkdir(parents=True,exist_ok=True)
+    (CACHE/'fonts').mkdir(exist_ok=True)
+    cached_font=CACHE/'fonts'/FONT.name
+    if not cached_font.exists() or sha(cached_font)!=sha(FONT):shutil.copyfile(FONT,cached_font)
+    shutil.copyfile(ROOT/'public/fonts/OFL-NotoSansSC.txt',CACHE/'OFL-NotoSansSC.txt')
     script=json.loads(SCRIPT.read_text(encoding='utf-8'));scenes=script['scenes']
     if len(scenes)!=12: raise RuntimeError('Expected twelve editorial scenes')
     data=engineering_data(required=args.render)
@@ -295,6 +342,10 @@ async def main():
             if not (SHOTS/name).exists(): raise RuntimeError(f'Final source not ready: {name}')
     semaphore=asyncio.Semaphore(2)
     audio=await asyncio.gather(*(synthesize(scene,semaphore,args.proxy) for scene in scenes))
+    normalize=lambda value: ''.join(re.findall(r'[\w]',value)).casefold()
+    for scene,meta in zip(scenes,audio):
+        if normalize(scene['narration'])!=normalize(''.join(w['text'] for w in meta['wordEvents'])):raise RuntimeError('TTS timing words do not match narration: '+scene['id'])
+        if meta['cues'][-1]['end']>meta['durationSeconds']+.1:raise RuntimeError('Subtitle extends beyond audio: '+scene['id'])
     durations=[math.ceil((meta['durationSeconds']+PREFIX+TAIL)*FPS)/FPS for meta in audio]
     total=sum(durations)
     if not 300<=total<=480: raise RuntimeError(f'Natural narrated duration {total:.1f}s is outside official range; adjust RATE and resynthesize, do not pad blank minutes.')
@@ -307,9 +358,17 @@ async def main():
         offset+=duration
     (OUTPUTS/'DriveLab-参赛演示.srt').write_text('\n\n'.join(f'{i+1}\n{srt_time(c["start"])} --> {srt_time(c["end"])}\n{c["text"]}' for i,c in enumerate(global_cues))+'\n',encoding='utf-8')
     (OUTPUTS/'DriveLab-参赛演示-逐字稿.txt').write_text('DriveLab 普通话合成解说逐字稿\n'+script['narrationDisclosure']+'\n\n'+'\n'.join(transcript),encoding='utf-8')
-    metadata={'preparedAt':datetime.now().astimezone().isoformat(),'mode':'render' if args.render else 'draft-prepare','scriptSha256':sha(SCRIPT),'voice':VOICE,'rate':RATE,'plannedDurationSeconds':total,'resolution':[W,H],'fps':FPS,'narrationDisclosure':script['narrationDisclosure'],'sceneDurations':dict(zip([s['id'] for s in scenes],durations)),'audioSeconds':sum(m['durationSeconds'] for m in audio),'subtitleCues':len(global_cues),'sourceScreenshotSha256':{p.name:sha(p) for p in SHOTS.glob('*.jpg')},'engineeringDataSha256':sha(ENGINEERING) if data else None,'limitations':['界面截图按日期标注；局部放大与图表属于剪辑展示，非连续操作或真实耗时。','工程图来自当前应用输出和合成回归夹具，不是实车实验。','普通话为AI合成解说；不模拟成员本人声音。']}
+    metadata={'preparedAt':datetime.now(CLIENT_ZONE).isoformat(),'mode':'render' if args.render else 'draft-prepare','scriptSha256':sha(SCRIPT),'voice':VOICE,'rate':RATE,'plannedDurationSeconds':total,'resolution':[W,H],'fps':FPS,'narrationDisclosure':script['narrationDisclosure'],'sceneDurations':dict(zip([s['id'] for s in scenes],durations)),'audioSeconds':sum(m['durationSeconds'] for m in audio),'subtitleCues':len(global_cues),'narrationWordsMatchTimingEvents':True,'sourceScreenshotSha256':{p.name:sha(p) for p in SHOTS.glob('*.jpg')},'engineeringDataSha256':sha(ENGINEERING) if data else None,'limitations':['界面截图按日期标注；局部放大与图表属于剪辑展示，非连续操作或真实耗时。','工程图来自当前应用输出和合成回归夹具，不是实车实验。','普通话为AI合成解说；不模拟成员本人声音。']}
     write_json(CACHE/'video-metadata.json',metadata)
     print(f'PREPARED {total:.2f}s; {len(global_cues)} subtitle cues',flush=True)
+    if args.encode_ready and not args.render:
+        for scene,duration in zip(scenes,durations):
+            if scene['id']=='06' and not data:continue
+            if all(source_shot(scene,variant).exists() for variant in range(3)):
+                for variant in range(3):make_card(scene,scenes.index(scene),variant,data,draft=False)
+                encode_scene(scene,duration)
+            else:print(f'ENCODE {scene["id"]} waiting for final source screenshot',flush=True)
+        return
     if not args.render: return
     for scene,duration in zip(scenes,durations): encode_scene(scene,duration)
     concat=CACHE/'video.ffconcat'
@@ -319,7 +378,12 @@ async def main():
     actual=probe(video)
     if not(actual['width']==W and actual['height']==H and actual['hasAudio'] and 300<=actual['durationSeconds']<=480): raise RuntimeError('Final MP4 format acceptance failed')
     if abs(actual['durationSeconds']-total)>1: raise RuntimeError('Final timing drift exceeds one second')
-    metadata.update({'mode':'rendered-awaiting-visual-audio-review','output':str(video),'fileSize':video.stat().st_size,'outputSha256':sha(video),'formatChecks':{k:actual[k] for k in ['durationSeconds','width','height','hasAudio']},'ffmpegInspection':actual['ffmpegInspection']})
+    subtitle_checks=verify_rendered_subtitles(scenes,audio)
+    decoded=run([FFMPEG,'-hide_banner','-loglevel','info','-xerror','-threads','3','-i',video.name,'-af','volumedetect','-f','null','NUL'],log=CACHE/'ffmpeg-full-decode.log',cwd=video.parent)
+    peak=re.search(r'max_volume: ([\-\d.]+) dB',decoded.stderr)
+    mean=re.search(r'mean_volume: ([\-\d.]+) dB',decoded.stderr)
+    if not peak or float(peak[1])>=0:raise RuntimeError('Audio peak check failed or clipping needs review')
+    metadata.update({'mode':'rendered-awaiting-visual-audio-review','output':video.name,'fileSize':video.stat().st_size,'outputSha256':sha(video),'formatChecks':{k:actual[k] for k in ['durationSeconds','width','height','hasAudio']},'subtitleRenderChecks':{'sampledScenes':len(subtitle_checks),'sampledCaptionTimes':sum(len(r['captionSamples']) for r in subtitle_checks),'changingSubtitlePixels':True},'fullDecodeExitCode':decoded.returncode,'audioVolumeChecks':{'peakDb':float(peak[1]),'meanDb':float(mean[1]) if mean else None,'noDigitalPeakClipping':True},'ffmpegInspection':actual['ffmpegInspection']})
     write_json(CACHE/'video-metadata.json',metadata);write_json(OUTPUTS/'DriveLab-参赛演示-制作与格式验收.json',metadata)
     print('FINAL '+json.dumps(metadata['formatChecks'],ensure_ascii=False),flush=True)
 
