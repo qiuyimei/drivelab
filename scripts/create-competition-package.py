@@ -21,7 +21,7 @@ scan_result=json.loads(scan.stdout)
 revision=git('rev-parse','HEAD')
 team=json.loads((ROOT/'docs/competition/team.json').read_text(encoding='utf-8'))
 validation=json.loads((ROOT/'docs/competition/FINAL-VALIDATION.json').read_text(encoding='utf-8'))
-video_meta=json.loads((ROOT/'.sites-runtime/competition-video/video-metadata.json').read_text(encoding='utf-8'))
+video_meta=json.loads((OUT/'DriveLab-参赛演示-制作与格式验收.json').read_text(encoding='utf-8'))
 technical=OUT/'DriveLab-参赛技术文档.pdf'
 pdf=PdfReader(technical)
 assert 1<=len(pdf.pages)<=30
@@ -37,6 +37,20 @@ assert media_checks.get('width')==1920 and media_checks.get('height')==1080 and 
 assert video_meta.get('fullDecodeExitCode')==0
 assert video_meta.get('audioVolumeChecks',{}).get('noDigitalPeakClipping')
 assert video_meta.get('subtitleRenderChecks',{}).get('changingSubtitlePixels')
+assert video_meta.get('outputSha256')==hashlib.sha256(video.read_bytes()).hexdigest()
+sentence_checks=video_meta.get('sentenceSubtitleChecks',{})
+assert all(sentence_checks.get(key) for key in ['oneToOne','textExactMatch','noCrossSentenceConcatenation','noTimeOverlap','quantizedNoTimeOverlap'])
+assert sentence_checks.get('boundaryRenderChecks'), '必须完成实际字幕交界帧检查'
+assert video_meta.get('mode')=='product_video_and_subtitles_acceptance_passed'
+assert video_meta.get('acceptance',{}).get('independentSentenceAuditPassed')
+independent_qa=ROOT/'docs/competition/VIDEO-SUBTITLE-QA.json'
+independent=json.loads(independent_qa.read_text(encoding='utf-8'))
+assert independent['stage']=='final-mp4-sentence-audit-passed'
+assert independent['outputSha256']==video_meta['outputSha256']
+assert independent['scriptSha256']==hashlib.sha256((ROOT/'docs/competition/video-script.json').read_bytes()).hexdigest()
+assert independent['allSentenceAndSceneTransitionsIncluded']
+assert video_meta['acceptance']['independentQaSha256']==hashlib.sha256(independent_qa.read_bytes()).hexdigest()
+assert video_meta['acceptance']['visualReviewPassed']
 
 assets=[(technical,'01-参赛技术文档.pdf'),(video,'02-项目演示.mp4'),
        (OUT/'DriveLab-参赛演示.srt','03-演示字幕.srt'),
@@ -49,7 +63,7 @@ assets=[(technical,'01-参赛技术文档.pdf'),(video,'02-项目演示.mp4'),
        (ROOT/'docs/evidence/analysis-review-20261116.json','10-AI证据链复核记录.json'),
        (ROOT/'docs/competition/RULES-REVIEW-20261116.json','11-赛事要求核对.json'),
        (ROOT/'docs/competition/team.json','12-报名信息核对.json'),
-       (ROOT/'.sites-runtime/competition-video/video-metadata.json','13-视频验收.json')]
+       (OUT/'DriveLab-参赛演示-制作与格式验收.json','13-视频验收.json')]
 for source,name in assets:
     if not source.is_file(): raise RuntimeError('缺少交付文件：'+source.name)
     shutil.copy2(source,DEST/name)
@@ -82,7 +96,7 @@ pnpm run dev
 
 证据与边界
 工程复核验证假设内的软件实现，不等同实车标定、持证工程签署或车辆安全认证。
-视频为真实界面与实际计算结果剪辑，普通话采用AI合成解说，不是连续实时录屏或真人配音。
+视频由真实界面、实际计算结果与功能流程示意剪辑而成，普通话采用AI合成解说，不是连续实时录屏或真人配音。
 结构和引用校验不证明所有自然语言语义。0.1s采样需求峰值不保证连续时间极值；公开路段仅作数据导入演示。
 不以测试数量、单次模型通过或公开数据对比宣称实车准确率或保证获奖。
 '''
@@ -92,7 +106,7 @@ expected_names={name for _,name in assets}|{source_zip.name,bundle.name,'00-提�
 for name in sorted(expected_names):
     file=DEST/name
     files.append({'name':file.name,'bytes':file.stat().st_size,'sha256':hashlib.sha256(file.read_bytes()).hexdigest()})
-manifest={'preparedOn':'2026-11-16','sourceCommit':revision,'engineVersion':validation['engineVersion'],
+manifest={'preparedOn':'2026-11-17','revision':'产品演示与逐句字幕修订版','sourceCommit':revision,'engineVersion':validation['engineVersion'],
           'technicalPdfPages':len(pdf.pages),'videoDurationSeconds':duration,'sourceAndHistoryScan':scan_result,
           'fileArtifactsPrepared':True,'teamConfirmed':team['confirmed'],
           'reviewerAccessVerified':False,'registrationVerified':False,'submissionReady':False,

@@ -1,0 +1,3702 @@
+{
+  "stage": "final-mp4-sentence-audit-passed",
+  "notFinalVideoAcceptance": false,
+  "scriptSha256": "e7a28a1dc07cddbad9edbd6df537747c50fa8c0b6a73862aa8b91bac0759df18",
+  "sentenceCount": 98,
+  "sceneCount": 12,
+  "totalFrames": 9301,
+  "durationSeconds": 387.5416666666667,
+  "pcmSamples": 9301000,
+  "exactTextAndAudioClipMapping": true,
+  "exactPcmAssembly": true,
+  "perSentencePcmHashesPassed": 98,
+  "withinSceneSixFrameGapsPassed": 86,
+  "crossSceneBlankGapsPassed": 11,
+  "quantizedAssAndSrtNoOverlap": true,
+  "maxSubtitleWidthAt42px": 966.0,
+  "scenes": [
+    {
+      "scene": "01",
+      "frames": 772,
+      "sentences": 8,
+      "startFrame": 0
+    },
+    {
+      "scene": "02",
+      "frames": 778,
+      "sentences": 8,
+      "startFrame": 772
+    },
+    {
+      "scene": "03",
+      "frames": 756,
+      "sentences": 8,
+      "startFrame": 1550
+    },
+    {
+      "scene": "04",
+      "frames": 764,
+      "sentences": 8,
+      "startFrame": 2306
+    },
+    {
+      "scene": "05",
+      "frames": 757,
+      "sentences": 8,
+      "startFrame": 3070
+    },
+    {
+      "scene": "06",
+      "frames": 750,
+      "sentences": 8,
+      "startFrame": 3827
+    },
+    {
+      "scene": "07",
+      "frames": 826,
+      "sentences": 9,
+      "startFrame": 4577
+    },
+    {
+      "scene": "08",
+      "frames": 897,
+      "sentences": 9,
+      "startFrame": 5403
+    },
+    {
+      "scene": "09",
+      "frames": 704,
+      "sentences": 8,
+      "startFrame": 6300
+    },
+    {
+      "scene": "10",
+      "frames": 719,
+      "sentences": 8,
+      "startFrame": 7004
+    },
+    {
+      "scene": "11",
+      "frames": 762,
+      "sentences": 8,
+      "startFrame": 7723
+    },
+    {
+      "scene": "12",
+      "frames": 816,
+      "sentences": 8,
+      "startFrame": 8485
+    }
+  ],
+  "limitations": [
+    "No human listening/pronunciation, ASR transcript, screenshot-claim or final whole-frame editorial audit claimed.",
+    "Glyph comparison verifies canonical caption text; it does not establish the truth of the narration."
+  ],
+  "outputSha256": "ade01c2980118805c79413de0f11b4d47b4b43f206bec5681a9d67b35a470ee5",
+  "output": "DriveLab-参赛演示.mp4",
+  "decodedBoundaryFrames": 394,
+  "blankFramesVerified": 198,
+  "captionFramesComparedToCanonicalGlyphs": 196,
+  "minCaptionGlyphMaskIoU": 0.9291941875825628,
+  "allSentenceAndSceneTransitionsIncluded": true,
+  "maxSelectedFramePtsErrorSeconds": 3.333333342681044e-07,
+  "decodedFinalAudioSamples": 9301000,
+  "minimumPerSentencePcmAacCorrelation": 0.9996642298474547,
+  "frameChecks": [
+    {
+      "frame": 0,
+      "actualPtsSeconds": 0.0,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0001.png"
+    },
+    {
+      "frame": 3,
+      "actualPtsSeconds": 0.125,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0002.png"
+    },
+    {
+      "frame": 4,
+      "actualPtsSeconds": 0.166667,
+      "sentenceIndex": 1,
+      "expectedText": "下面由AI为大家介绍DriveLab。",
+      "brightPixels": 2239,
+      "expectedGlyphMaskIoU": 0.9595176571920758,
+      "image": "independent-qa\\final-20261117-013311\\actual-0003.png"
+    },
+    {
+      "frame": 80,
+      "actualPtsSeconds": 3.333333,
+      "sentenceIndex": 1,
+      "expectedText": "下面由AI为大家介绍DriveLab。",
+      "brightPixels": 2238,
+      "expectedGlyphMaskIoU": 0.959931064196467,
+      "image": "independent-qa\\final-20261117-013311\\actual-0004.png"
+    },
+    {
+      "frame": 81,
+      "actualPtsSeconds": 3.375,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0005.png"
+    },
+    {
+      "frame": 86,
+      "actualPtsSeconds": 3.583333,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0006.png"
+    },
+    {
+      "frame": 87,
+      "actualPtsSeconds": 3.625,
+      "sentenceIndex": 2,
+      "expectedText": "它是一款智能驾驶工况辅助分析平台。",
+      "brightPixels": 3024,
+      "expectedGlyphMaskIoU": 0.9585062240663901,
+      "image": "independent-qa\\final-20261117-013311\\actual-0007.png"
+    },
+    {
+      "frame": 164,
+      "actualPtsSeconds": 6.833333,
+      "sentenceIndex": 2,
+      "expectedText": "它是一款智能驾驶工况辅助分析平台。",
+      "brightPixels": 3018,
+      "expectedGlyphMaskIoU": 0.9590923617769256,
+      "image": "independent-qa\\final-20261117-013311\\actual-0008.png"
+    },
+    {
+      "frame": 165,
+      "actualPtsSeconds": 6.875,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0009.png"
+    },
+    {
+      "frame": 170,
+      "actualPtsSeconds": 7.083333,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0010.png"
+    },
+    {
+      "frame": 171,
+      "actualPtsSeconds": 7.125,
+      "sentenceIndex": 3,
+      "expectedText": "它面向工况设计、车辆工程学习和数据复盘。",
+      "brightPixels": 3559,
+      "expectedGlyphMaskIoU": 0.9501347708894878,
+      "image": "independent-qa\\final-20261117-013311\\actual-0011.png"
+    },
+    {
+      "frame": 271,
+      "actualPtsSeconds": 11.291667,
+      "sentenceIndex": 3,
+      "expectedText": "它面向工况设计、车辆工程学习和数据复盘。",
+      "brightPixels": 3525,
+      "expectedGlyphMaskIoU": 0.9562618853572399,
+      "image": "independent-qa\\final-20261117-013311\\actual-0012.png"
+    },
+    {
+      "frame": 272,
+      "actualPtsSeconds": 11.333333,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0013.png"
+    },
+    {
+      "frame": 277,
+      "actualPtsSeconds": 11.541667,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0014.png"
+    },
+    {
+      "frame": 278,
+      "actualPtsSeconds": 11.583333,
+      "sentenceIndex": 4,
+      "expectedText": "不同参数下的行车表现，可以在网页中查看。",
+      "brightPixels": 3357,
+      "expectedGlyphMaskIoU": 0.9502133712660028,
+      "image": "independent-qa\\final-20261117-013311\\actual-0015.png"
+    },
+    {
+      "frame": 367,
+      "actualPtsSeconds": 15.291667,
+      "sentenceIndex": 4,
+      "expectedText": "不同参数下的行车表现，可以在网页中查看。",
+      "brightPixels": 3361,
+      "expectedGlyphMaskIoU": 0.9519066590779738,
+      "image": "independent-qa\\final-20261117-013311\\actual-0016.png"
+    },
+    {
+      "frame": 368,
+      "actualPtsSeconds": 15.333333,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0017.png"
+    },
+    {
+      "frame": 373,
+      "actualPtsSeconds": 15.541667,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0018.png"
+    },
+    {
+      "frame": 374,
+      "actualPtsSeconds": 15.583333,
+      "sentenceIndex": 5,
+      "expectedText": "仿真、日志、知识资料和智能分析由此连接。",
+      "brightPixels": 3483,
+      "expectedGlyphMaskIoU": 0.9582521569718898,
+      "image": "independent-qa\\final-20261117-013311\\actual-0019.png"
+    },
+    {
+      "frame": 477,
+      "actualPtsSeconds": 19.875,
+      "sentenceIndex": 5,
+      "expectedText": "仿真、日志、知识资料和智能分析由此连接。",
+      "brightPixels": 3482,
+      "expectedGlyphMaskIoU": 0.9585189309576837,
+      "image": "independent-qa\\final-20261117-013311\\actual-0020.png"
+    },
+    {
+      "frame": 478,
+      "actualPtsSeconds": 19.916667,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0021.png"
+    },
+    {
+      "frame": 483,
+      "actualPtsSeconds": 20.125,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0022.png"
+    },
+    {
+      "frame": 484,
+      "actualPtsSeconds": 20.166667,
+      "sentenceIndex": 6,
+      "expectedText": "用户可以在一个工作台里完成主要操作。",
+      "brightPixels": 2992,
+      "expectedGlyphMaskIoU": 0.9716612377850163,
+      "image": "independent-qa\\final-20261117-013311\\actual-0023.png"
+    },
+    {
+      "frame": 565,
+      "actualPtsSeconds": 23.541667,
+      "sentenceIndex": 6,
+      "expectedText": "用户可以在一个工作台里完成主要操作。",
+      "brightPixels": 2983,
+      "expectedGlyphMaskIoU": 0.968729641693811,
+      "image": "independent-qa\\final-20261117-013311\\actual-0024.png"
+    },
+    {
+      "frame": 566,
+      "actualPtsSeconds": 23.583333,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0025.png"
+    },
+    {
+      "frame": 571,
+      "actualPtsSeconds": 23.791667,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0026.png"
+    },
+    {
+      "frame": 572,
+      "actualPtsSeconds": 23.833333,
+      "sentenceIndex": 7,
+      "expectedText": "从输入条件到结果解释，重要信息集中呈现。",
+      "brightPixels": 3863,
+      "expectedGlyphMaskIoU": 0.9581256231306082,
+      "image": "independent-qa\\final-20261117-013311\\actual-0027.png"
+    },
+    {
+      "frame": 670,
+      "actualPtsSeconds": 27.916667,
+      "sentenceIndex": 7,
+      "expectedText": "从输入条件到结果解释，重要信息集中呈现。",
+      "brightPixels": 3861,
+      "expectedGlyphMaskIoU": 0.9576271186440678,
+      "image": "independent-qa\\final-20261117-013311\\actual-0028.png"
+    },
+    {
+      "frame": 671,
+      "actualPtsSeconds": 27.958333,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0029.png"
+    },
+    {
+      "frame": 676,
+      "actualPtsSeconds": 28.166667,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0030.png"
+    },
+    {
+      "frame": 677,
+      "actualPtsSeconds": 28.208333,
+      "sentenceIndex": 8,
+      "expectedText": "不用在多个文件之间反复查找和搬运数据。",
+      "brightPixels": 3619,
+      "expectedGlyphMaskIoU": 0.9735278227984873,
+      "image": "independent-qa\\final-20261117-013311\\actual-0031.png"
+    },
+    {
+      "frame": 763,
+      "actualPtsSeconds": 31.791667,
+      "sentenceIndex": 8,
+      "expectedText": "不用在多个文件之间反复查找和搬运数据。",
+      "brightPixels": 3612,
+      "expectedGlyphMaskIoU": 0.9759068760151597,
+      "image": "independent-qa\\final-20261117-013311\\actual-0032.png"
+    },
+    {
+      "frame": 764,
+      "actualPtsSeconds": 31.833333,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0033.png"
+    },
+    {
+      "frame": 775,
+      "actualPtsSeconds": 32.291667,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0034.png"
+    },
+    {
+      "frame": 776,
+      "actualPtsSeconds": 32.333333,
+      "sentenceIndex": 9,
+      "expectedText": "平台提供五类常见行车工况作为起点。",
+      "brightPixels": 3002,
+      "expectedGlyphMaskIoU": 0.9675745784695201,
+      "image": "independent-qa\\final-20261117-013311\\actual-0035.png"
+    },
+    {
+      "frame": 862,
+      "actualPtsSeconds": 35.916667,
+      "sentenceIndex": 9,
+      "expectedText": "平台提供五类常见行车工况作为起点。",
+      "brightPixels": 3003,
+      "expectedGlyphMaskIoU": 0.9678988326848249,
+      "image": "independent-qa\\final-20261117-013311\\actual-0036.png"
+    },
+    {
+      "frame": 863,
+      "actualPtsSeconds": 35.958333,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0037.png"
+    },
+    {
+      "frame": 868,
+      "actualPtsSeconds": 36.166667,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0038.png"
+    },
+    {
+      "frame": 869,
+      "actualPtsSeconds": 36.208333,
+      "sentenceIndex": 10,
+      "expectedText": "高速跟驰用于观察车速、制动与车距变化。",
+      "brightPixels": 3575,
+      "expectedGlyphMaskIoU": 0.9507362784471218,
+      "image": "independent-qa\\final-20261117-013311\\actual-0039.png"
+    },
+    {
+      "frame": 962,
+      "actualPtsSeconds": 40.083333,
+      "sentenceIndex": 10,
+      "expectedText": "高速跟驰用于观察车速、制动与车距变化。",
+      "brightPixels": 3576,
+      "expectedGlyphMaskIoU": 0.951004016064257,
+      "image": "independent-qa\\final-20261117-013311\\actual-0040.png"
+    },
+    {
+      "frame": 963,
+      "actualPtsSeconds": 40.125,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0041.png"
+    },
+    {
+      "frame": 968,
+      "actualPtsSeconds": 40.333333,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0042.png"
+    },
+    {
+      "frame": 969,
+      "actualPtsSeconds": 40.375,
+      "sentenceIndex": 11,
+      "expectedText": "弯道稳态用于查看侧向加速度和转向需求。",
+      "brightPixels": 3889,
+      "expectedGlyphMaskIoU": 0.9505413385826772,
+      "image": "independent-qa\\final-20261117-013311\\actual-0043.png"
+    },
+    {
+      "frame": 1064,
+      "actualPtsSeconds": 44.333333,
+      "sentenceIndex": 11,
+      "expectedText": "弯道稳态用于查看侧向加速度和转向需求。",
+      "brightPixels": 3868,
+      "expectedGlyphMaskIoU": 0.953545836422041,
+      "image": "independent-qa\\final-20261117-013311\\actual-0044.png"
+    },
+    {
+      "frame": 1065,
+      "actualPtsSeconds": 44.375,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0045.png"
+    },
+    {
+      "frame": 1070,
+      "actualPtsSeconds": 44.583333,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0046.png"
+    },
+    {
+      "frame": 1071,
+      "actualPtsSeconds": 44.625,
+      "sentenceIndex": 12,
+      "expectedText": "动态换道可以展示车辆横向位移的过程。",
+      "brightPixels": 3460,
+      "expectedGlyphMaskIoU": 0.9503311258278145,
+      "image": "independent-qa\\final-20261117-013311\\actual-0047.png"
+    },
+    {
+      "frame": 1154,
+      "actualPtsSeconds": 48.083333,
+      "sentenceIndex": 12,
+      "expectedText": "动态换道可以展示车辆横向位移的过程。",
+      "brightPixels": 3460,
+      "expectedGlyphMaskIoU": 0.9503311258278145,
+      "image": "independent-qa\\final-20261117-013311\\actual-0048.png"
+    },
+    {
+      "frame": 1155,
+      "actualPtsSeconds": 48.125,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0049.png"
+    },
+    {
+      "frame": 1160,
+      "actualPtsSeconds": 48.333333,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0050.png"
+    },
+    {
+      "frame": 1161,
+      "actualPtsSeconds": 48.375,
+      "sentenceIndex": 13,
+      "expectedText": "紧急避障同时关注制动和横向运动需求。",
+      "brightPixels": 3540,
+      "expectedGlyphMaskIoU": 0.9291941875825628,
+      "image": "independent-qa\\final-20261117-013311\\actual-0051.png"
+    },
+    {
+      "frame": 1250,
+      "actualPtsSeconds": 52.083333,
+      "sentenceIndex": 13,
+      "expectedText": "紧急避障同时关注制动和横向运动需求。",
+      "brightPixels": 3537,
+      "expectedGlyphMaskIoU": 0.9299312533051296,
+      "image": "independent-qa\\final-20261117-013311\\actual-0052.png"
+    },
+    {
+      "frame": 1251,
+      "actualPtsSeconds": 52.125,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0053.png"
+    },
+    {
+      "frame": 1256,
+      "actualPtsSeconds": 52.333333,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0054.png"
+    },
+    {
+      "frame": 1257,
+      "actualPtsSeconds": 52.375,
+      "sentenceIndex": 14,
+      "expectedText": "城市路口用于分析面向静态目标的制动。",
+      "brightPixels": 3496,
+      "expectedGlyphMaskIoU": 0.9566529492455418,
+      "image": "independent-qa\\final-20261117-013311\\actual-0055.png"
+    },
+    {
+      "frame": 1342,
+      "actualPtsSeconds": 55.916667,
+      "sentenceIndex": 14,
+      "expectedText": "城市路口用于分析面向静态目标的制动。",
+      "brightPixels": 3513,
+      "expectedGlyphMaskIoU": 0.9527451515979241,
+      "image": "independent-qa\\final-20261117-013311\\actual-0056.png"
+    },
+    {
+      "frame": 1343,
+      "actualPtsSeconds": 55.958333,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0057.png"
+    },
+    {
+      "frame": 1348,
+      "actualPtsSeconds": 56.166667,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0058.png"
+    },
+    {
+      "frame": 1349,
+      "actualPtsSeconds": 56.208333,
+      "sentenceIndex": 15,
+      "expectedText": "选择模板后，相关参数会自动载入工作台。",
+      "brightPixels": 3408,
+      "expectedGlyphMaskIoU": 0.9533634821933296,
+      "image": "independent-qa\\final-20261117-013311\\actual-0059.png"
+    },
+    {
+      "frame": 1441,
+      "actualPtsSeconds": 60.041667,
+      "sentenceIndex": 15,
+      "expectedText": "选择模板后，相关参数会自动载入工作台。",
+      "brightPixels": 3408,
+      "expectedGlyphMaskIoU": 0.9533634821933296,
+      "image": "independent-qa\\final-20261117-013311\\actual-0060.png"
+    },
+    {
+      "frame": 1442,
+      "actualPtsSeconds": 60.083333,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0061.png"
+    },
+    {
+      "frame": 1447,
+      "actualPtsSeconds": 60.291667,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0062.png"
+    },
+    {
+      "frame": 1448,
+      "actualPtsSeconds": 60.333333,
+      "sentenceIndex": 16,
+      "expectedText": "用户可以继续修改条件，形成自己的分析方案。",
+      "brightPixels": 3654,
+      "expectedGlyphMaskIoU": 0.9611624834874505,
+      "image": "independent-qa\\final-20261117-013311\\actual-0063.png"
+    },
+    {
+      "frame": 1541,
+      "actualPtsSeconds": 64.208333,
+      "sentenceIndex": 16,
+      "expectedText": "用户可以继续修改条件，形成自己的分析方案。",
+      "brightPixels": 3638,
+      "expectedGlyphMaskIoU": 0.9595238095238096,
+      "image": "independent-qa\\final-20261117-013311\\actual-0064.png"
+    },
+    {
+      "frame": 1542,
+      "actualPtsSeconds": 64.25,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0065.png"
+    },
+    {
+      "frame": 1553,
+      "actualPtsSeconds": 64.708333,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0066.png"
+    },
+    {
+      "frame": 1554,
+      "actualPtsSeconds": 64.75,
+      "sentenceIndex": 17,
+      "expectedText": "工况参数按照行车、车辆和道路分组展示。",
+      "brightPixels": 3470,
+      "expectedGlyphMaskIoU": 0.9530775600331217,
+      "image": "independent-qa\\final-20261117-013311\\actual-0067.png"
+    },
+    {
+      "frame": 1650,
+      "actualPtsSeconds": 68.75,
+      "sentenceIndex": 17,
+      "expectedText": "工况参数按照行车、车辆和道路分组展示。",
+      "brightPixels": 3470,
+      "expectedGlyphMaskIoU": 0.9530775600331217,
+      "image": "independent-qa\\final-20261117-013311\\actual-0068.png"
+    },
+    {
+      "frame": 1651,
+      "actualPtsSeconds": 68.791667,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0069.png"
+    },
+    {
+      "frame": 1656,
+      "actualPtsSeconds": 69.0,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0070.png"
+    },
+    {
+      "frame": 1657,
+      "actualPtsSeconds": 69.041667,
+      "sentenceIndex": 18,
+      "expectedText": "初始车速、车距和响应时间可以直接调整。",
+      "brightPixels": 3570,
+      "expectedGlyphMaskIoU": 0.9630635524171646,
+      "image": "independent-qa\\final-20261117-013311\\actual-0071.png"
+    },
+    {
+      "frame": 1754,
+      "actualPtsSeconds": 73.083333,
+      "sentenceIndex": 18,
+      "expectedText": "初始车速、车距和响应时间可以直接调整。",
+      "brightPixels": 3570,
+      "expectedGlyphMaskIoU": 0.9630635524171646,
+      "image": "independent-qa\\final-20261117-013311\\actual-0072.png"
+    },
+    {
+      "frame": 1755,
+      "actualPtsSeconds": 73.125,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0073.png"
+    },
+    {
+      "frame": 1760,
+      "actualPtsSeconds": 73.333333,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0074.png"
+    },
+    {
+      "frame": 1761,
+      "actualPtsSeconds": 73.375,
+      "sentenceIndex": 19,
+      "expectedText": "车辆质量、轴距和转向参数也能配置。",
+      "brightPixels": 3322,
+      "expectedGlyphMaskIoU": 0.9326351542598358,
+      "image": "independent-qa\\final-20261117-013311\\actual-0075.png"
+    },
+    {
+      "frame": 1849,
+      "actualPtsSeconds": 77.041667,
+      "sentenceIndex": 19,
+      "expectedText": "车辆质量、轴距和转向参数也能配置。",
+      "brightPixels": 3332,
+      "expectedGlyphMaskIoU": 0.9426136363636364,
+      "image": "independent-qa\\final-20261117-013311\\actual-0076.png"
+    },
+    {
+      "frame": 1850,
+      "actualPtsSeconds": 77.083333,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0077.png"
+    },
+    {
+      "frame": 1855,
+      "actualPtsSeconds": 77.291667,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0078.png"
+    },
+    {
+      "frame": 1856,
+      "actualPtsSeconds": 77.333333,
+      "sentenceIndex": 20,
+      "expectedText": "道路附着条件用于表达不同路面情况。",
+      "brightPixels": 3418,
+      "expectedGlyphMaskIoU": 0.9694634703196348,
+      "image": "independent-qa\\final-20261117-013311\\actual-0079.png"
+    },
+    {
+      "frame": 1934,
+      "actualPtsSeconds": 80.583333,
+      "sentenceIndex": 20,
+      "expectedText": "道路附着条件用于表达不同路面情况。",
+      "brightPixels": 3418,
+      "expectedGlyphMaskIoU": 0.9694634703196348,
+      "image": "independent-qa\\final-20261117-013311\\actual-0080.png"
+    },
+    {
+      "frame": 1935,
+      "actualPtsSeconds": 80.625,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0081.png"
+    },
+    {
+      "frame": 1940,
+      "actualPtsSeconds": 80.833333,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0082.png"
+    },
+    {
+      "frame": 1941,
+      "actualPtsSeconds": 80.875,
+      "sentenceIndex": 21,
+      "expectedText": "输入旁边保留单位，便于理解数值含义。",
+      "brightPixels": 3336,
+      "expectedGlyphMaskIoU": 0.9474735940622324,
+      "image": "independent-qa\\final-20261117-013311\\actual-0083.png"
+    },
+    {
+      "frame": 2026,
+      "actualPtsSeconds": 84.416667,
+      "sentenceIndex": 21,
+      "expectedText": "输入旁边保留单位，便于理解数值含义。",
+      "brightPixels": 3336,
+      "expectedGlyphMaskIoU": 0.9474735940622324,
+      "image": "independent-qa\\final-20261117-013311\\actual-0084.png"
+    },
+    {
+      "frame": 2027,
+      "actualPtsSeconds": 84.458333,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0085.png"
+    },
+    {
+      "frame": 2032,
+      "actualPtsSeconds": 84.666667,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0086.png"
+    },
+    {
+      "frame": 2033,
+      "actualPtsSeconds": 84.708333,
+      "sentenceIndex": 22,
+      "expectedText": "超出允许范围时，页面会提示用户修改。",
+      "brightPixels": 3261,
+      "expectedGlyphMaskIoU": 0.9518496770405167,
+      "image": "independent-qa\\final-20261117-013311\\actual-0087.png"
+    },
+    {
+      "frame": 2119,
+      "actualPtsSeconds": 88.291667,
+      "sentenceIndex": 22,
+      "expectedText": "超出允许范围时，页面会提示用户修改。",
+      "brightPixels": 3271,
+      "expectedGlyphMaskIoU": 0.9576595119082623,
+      "image": "independent-qa\\final-20261117-013311\\actual-0088.png"
+    },
+    {
+      "frame": 2120,
+      "actualPtsSeconds": 88.333333,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0089.png"
+    },
+    {
+      "frame": 2125,
+      "actualPtsSeconds": 88.541667,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0090.png"
+    },
+    {
+      "frame": 2126,
+      "actualPtsSeconds": 88.583333,
+      "sentenceIndex": 23,
+      "expectedText": "点击运行后，系统重新计算当前输入。",
+      "brightPixels": 2965,
+      "expectedGlyphMaskIoU": 0.9650669278485146,
+      "image": "independent-qa\\final-20261117-013311\\actual-0091.png"
+    },
+    {
+      "frame": 2208,
+      "actualPtsSeconds": 92.0,
+      "sentenceIndex": 23,
+      "expectedText": "点击运行后，系统重新计算当前输入。",
+      "brightPixels": 2965,
+      "expectedGlyphMaskIoU": 0.9650669278485146,
+      "image": "independent-qa\\final-20261117-013311\\actual-0092.png"
+    },
+    {
+      "frame": 2209,
+      "actualPtsSeconds": 92.041667,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0093.png"
+    },
+    {
+      "frame": 2214,
+      "actualPtsSeconds": 92.25,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0094.png"
+    },
+    {
+      "frame": 2215,
+      "actualPtsSeconds": 92.291667,
+      "sentenceIndex": 24,
+      "expectedText": "不同方案因而可以建立在清楚的条件之上。",
+      "brightPixels": 3406,
+      "expectedGlyphMaskIoU": 0.952020202020202,
+      "image": "independent-qa\\final-20261117-013311\\actual-0095.png"
+    },
+    {
+      "frame": 2297,
+      "actualPtsSeconds": 95.708333,
+      "sentenceIndex": 24,
+      "expectedText": "不同方案因而可以建立在清楚的条件之上。",
+      "brightPixels": 3404,
+      "expectedGlyphMaskIoU": 0.9514590347923682,
+      "image": "independent-qa\\final-20261117-013311\\actual-0096.png"
+    },
+    {
+      "frame": 2298,
+      "actualPtsSeconds": 95.75,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0097.png"
+    },
+    {
+      "frame": 2309,
+      "actualPtsSeconds": 96.208333,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0098.png"
+    },
+    {
+      "frame": 2310,
+      "actualPtsSeconds": 96.25,
+      "sentenceIndex": 25,
+      "expectedText": "计算结果通过运动预览和时序曲线共同呈现。",
+      "brightPixels": 3810,
+      "expectedGlyphMaskIoU": 0.9599898708533806,
+      "image": "independent-qa\\final-20261117-013311\\actual-0099.png"
+    },
+    {
+      "frame": 2409,
+      "actualPtsSeconds": 100.375,
+      "sentenceIndex": 25,
+      "expectedText": "计算结果通过运动预览和时序曲线共同呈现。",
+      "brightPixels": 3810,
+      "expectedGlyphMaskIoU": 0.9599898708533806,
+      "image": "independent-qa\\final-20261117-013311\\actual-0100.png"
+    },
+    {
+      "frame": 2410,
+      "actualPtsSeconds": 100.416667,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0101.png"
+    },
+    {
+      "frame": 2415,
+      "actualPtsSeconds": 100.625,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0102.png"
+    },
+    {
+      "frame": 2416,
+      "actualPtsSeconds": 100.666667,
+      "sentenceIndex": 26,
+      "expectedText": "预览帮助用户理解车辆在工况中的运动。",
+      "brightPixels": 3428,
+      "expectedGlyphMaskIoU": 0.9666195190947666,
+      "image": "independent-qa\\final-20261117-013311\\actual-0103.png"
+    },
+    {
+      "frame": 2499,
+      "actualPtsSeconds": 104.125,
+      "sentenceIndex": 26,
+      "expectedText": "预览帮助用户理解车辆在工况中的运动。",
+      "brightPixels": 3426,
+      "expectedGlyphMaskIoU": 0.9654977375565611,
+      "image": "independent-qa\\final-20261117-013311\\actual-0104.png"
+    },
+    {
+      "frame": 2500,
+      "actualPtsSeconds": 104.166667,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0105.png"
+    },
+    {
+      "frame": 2505,
+      "actualPtsSeconds": 104.375,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0106.png"
+    },
+    {
+      "frame": 2506,
+      "actualPtsSeconds": 104.416667,
+      "sentenceIndex": 27,
+      "expectedText": "车速、距离和横摆等曲线支持切换查看。",
+      "brightPixels": 3654,
+      "expectedGlyphMaskIoU": 0.9588173178458289,
+      "image": "independent-qa\\final-20261117-013311\\actual-0107.png"
+    },
+    {
+      "frame": 2599,
+      "actualPtsSeconds": 108.291667,
+      "sentenceIndex": 27,
+      "expectedText": "车速、距离和横摆等曲线支持切换查看。",
+      "brightPixels": 3648,
+      "expectedGlyphMaskIoU": 0.9618946811325747,
+      "image": "independent-qa\\final-20261117-013311\\actual-0108.png"
+    },
+    {
+      "frame": 2600,
+      "actualPtsSeconds": 108.333333,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0109.png"
+    },
+    {
+      "frame": 2605,
+      "actualPtsSeconds": 108.541667,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0110.png"
+    },
+    {
+      "frame": 2606,
+      "actualPtsSeconds": 108.583333,
+      "sentenceIndex": 28,
+      "expectedText": "制动压力和转向需求也能按时间展开。",
+      "brightPixels": 3254,
+      "expectedGlyphMaskIoU": 0.9459538416593631,
+      "image": "independent-qa\\final-20261117-013311\\actual-0111.png"
+    },
+    {
+      "frame": 2691,
+      "actualPtsSeconds": 112.125,
+      "sentenceIndex": 28,
+      "expectedText": "制动压力和转向需求也能按时间展开。",
+      "brightPixels": 3254,
+      "expectedGlyphMaskIoU": 0.9459538416593631,
+      "image": "independent-qa\\final-20261117-013311\\actual-0112.png"
+    },
+    {
+      "frame": 2692,
+      "actualPtsSeconds": 112.166667,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0113.png"
+    },
+    {
+      "frame": 2697,
+      "actualPtsSeconds": 112.375,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0114.png"
+    },
+    {
+      "frame": 2698,
+      "actualPtsSeconds": 112.416667,
+      "sentenceIndex": 29,
+      "expectedText": "停车距离和车距判断，可以在结果中查看。",
+      "brightPixels": 3598,
+      "expectedGlyphMaskIoU": 0.9536741214057508,
+      "image": "independent-qa\\final-20261117-013311\\actual-0115.png"
+    },
+    {
+      "frame": 2786,
+      "actualPtsSeconds": 116.083333,
+      "sentenceIndex": 29,
+      "expectedText": "停车距离和车距判断，可以在结果中查看。",
+      "brightPixels": 3597,
+      "expectedGlyphMaskIoU": 0.9534078807241747,
+      "image": "independent-qa\\final-20261117-013311\\actual-0116.png"
+    },
+    {
+      "frame": 2787,
+      "actualPtsSeconds": 116.125,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0117.png"
+    },
+    {
+      "frame": 2792,
+      "actualPtsSeconds": 116.333333,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0118.png"
+    },
+    {
+      "frame": 2793,
+      "actualPtsSeconds": 116.375,
+      "sentenceIndex": 30,
+      "expectedText": "约束评估会突出需要关注的项目。",
+      "brightPixels": 2836,
+      "expectedGlyphMaskIoU": 0.9488135593220339,
+      "image": "independent-qa\\final-20261117-013311\\actual-0119.png"
+    },
+    {
+      "frame": 2862,
+      "actualPtsSeconds": 119.25,
+      "sentenceIndex": 30,
+      "expectedText": "约束评估会突出需要关注的项目。",
+      "brightPixels": 2842,
+      "expectedGlyphMaskIoU": 0.9588155207624234,
+      "image": "independent-qa\\final-20261117-013311\\actual-0120.png"
+    },
+    {
+      "frame": 2863,
+      "actualPtsSeconds": 119.291667,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0121.png"
+    },
+    {
+      "frame": 2868,
+      "actualPtsSeconds": 119.5,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0122.png"
+    },
+    {
+      "frame": 2869,
+      "actualPtsSeconds": 119.541667,
+      "sentenceIndex": 31,
+      "expectedText": "改变弯道车速后，侧向需求也会相应变化。",
+      "brightPixels": 3578,
+      "expectedGlyphMaskIoU": 0.9530201342281879,
+      "image": "independent-qa\\final-20261117-013311\\actual-0123.png"
+    },
+    {
+      "frame": 2964,
+      "actualPtsSeconds": 123.5,
+      "sentenceIndex": 31,
+      "expectedText": "改变弯道车速后，侧向需求也会相应变化。",
+      "brightPixels": 3580,
+      "expectedGlyphMaskIoU": 0.9530327428878154,
+      "image": "independent-qa\\final-20261117-013311\\actual-0124.png"
+    },
+    {
+      "frame": 2965,
+      "actualPtsSeconds": 123.541667,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0125.png"
+    },
+    {
+      "frame": 2970,
+      "actualPtsSeconds": 123.75,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0126.png"
+    },
+    {
+      "frame": 2971,
+      "actualPtsSeconds": 123.791667,
+      "sentenceIndex": 32,
+      "expectedText": "用户可以先看整体趋势，再查看具体指标。",
+      "brightPixels": 3647,
+      "expectedGlyphMaskIoU": 0.9623442057809599,
+      "image": "independent-qa\\final-20261117-013311\\actual-0127.png"
+    },
+    {
+      "frame": 3061,
+      "actualPtsSeconds": 127.541667,
+      "sentenceIndex": 32,
+      "expectedText": "用户可以先看整体趋势，再查看具体指标。",
+      "brightPixels": 3658,
+      "expectedGlyphMaskIoU": 0.9663040594322101,
+      "image": "independent-qa\\final-20261117-013311\\actual-0128.png"
+    },
+    {
+      "frame": 3062,
+      "actualPtsSeconds": 127.583333,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0129.png"
+    },
+    {
+      "frame": 3073,
+      "actualPtsSeconds": 128.041667,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0130.png"
+    },
+    {
+      "frame": 3074,
+      "actualPtsSeconds": 128.083333,
+      "sentenceIndex": 33,
+      "expectedText": "除了仿真结果，平台还能导入已有采集日志。",
+      "brightPixels": 3427,
+      "expectedGlyphMaskIoU": 0.9606299212598425,
+      "image": "independent-qa\\final-20261117-013311\\actual-0131.png"
+    },
+    {
+      "frame": 3169,
+      "actualPtsSeconds": 132.041667,
+      "sentenceIndex": 33,
+      "expectedText": "除了仿真结果，平台还能导入已有采集日志。",
+      "brightPixels": 3424,
+      "expectedGlyphMaskIoU": 0.9608891389983117,
+      "image": "independent-qa\\final-20261117-013311\\actual-0132.png"
+    },
+    {
+      "frame": 3170,
+      "actualPtsSeconds": 132.083333,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0133.png"
+    },
+    {
+      "frame": 3175,
+      "actualPtsSeconds": 132.291667,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0134.png"
+    },
+    {
+      "frame": 3176,
+      "actualPtsSeconds": 132.333333,
+      "sentenceIndex": 34,
+      "expectedText": "常见表格文本和结构化记录都能接入。",
+      "brightPixels": 3280,
+      "expectedGlyphMaskIoU": 0.9633894301741954,
+      "image": "independent-qa\\final-20261117-013311\\actual-0135.png"
+    },
+    {
+      "frame": 3261,
+      "actualPtsSeconds": 135.875,
+      "sentenceIndex": 34,
+      "expectedText": "常见表格文本和结构化记录都能接入。",
+      "brightPixels": 3280,
+      "expectedGlyphMaskIoU": 0.9633894301741954,
+      "image": "independent-qa\\final-20261117-013311\\actual-0136.png"
+    },
+    {
+      "frame": 3262,
+      "actualPtsSeconds": 135.916667,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0137.png"
+    },
+    {
+      "frame": 3267,
+      "actualPtsSeconds": 136.125,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0138.png"
+    },
+    {
+      "frame": 3268,
+      "actualPtsSeconds": 136.166667,
+      "sentenceIndex": 35,
+      "expectedText": "系统识别时间列和可用的测量通道。",
+      "brightPixels": 3228,
+      "expectedGlyphMaskIoU": 0.9450807635829662,
+      "image": "independent-qa\\final-20261117-013311\\actual-0139.png"
+    },
+    {
+      "frame": 3345,
+      "actualPtsSeconds": 139.375,
+      "sentenceIndex": 35,
+      "expectedText": "系统识别时间列和可用的测量通道。",
+      "brightPixels": 3221,
+      "expectedGlyphMaskIoU": 0.9458823529411765,
+      "image": "independent-qa\\final-20261117-013311\\actual-0140.png"
+    },
+    {
+      "frame": 3346,
+      "actualPtsSeconds": 139.416667,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0141.png"
+    },
+    {
+      "frame": 3351,
+      "actualPtsSeconds": 139.625,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0142.png"
+    },
+    {
+      "frame": 3352,
+      "actualPtsSeconds": 139.666667,
+      "sentenceIndex": 36,
+      "expectedText": "毫秒时间与米每秒车速可以换算为统一单位。",
+      "brightPixels": 3591,
+      "expectedGlyphMaskIoU": 0.9638521715673051,
+      "image": "independent-qa\\final-20261117-013311\\actual-0143.png"
+    },
+    {
+      "frame": 3447,
+      "actualPtsSeconds": 143.625,
+      "sentenceIndex": 36,
+      "expectedText": "毫秒时间与米每秒车速可以换算为统一单位。",
+      "brightPixels": 3591,
+      "expectedGlyphMaskIoU": 0.9638521715673051,
+      "image": "independent-qa\\final-20261117-013311\\actual-0144.png"
+    },
+    {
+      "frame": 3448,
+      "actualPtsSeconds": 143.666667,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0145.png"
+    },
+    {
+      "frame": 3453,
+      "actualPtsSeconds": 143.875,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0146.png"
+    },
+    {
+      "frame": 3454,
+      "actualPtsSeconds": 143.916667,
+      "sentenceIndex": 37,
+      "expectedText": "数据会按时间整理，并处理重复记录。",
+      "brightPixels": 3429,
+      "expectedGlyphMaskIoU": 0.9632872070036713,
+      "image": "independent-qa\\final-20261117-013311\\actual-0147.png"
+    },
+    {
+      "frame": 3536,
+      "actualPtsSeconds": 147.333333,
+      "sentenceIndex": 37,
+      "expectedText": "数据会按时间整理，并处理重复记录。",
+      "brightPixels": 3429,
+      "expectedGlyphMaskIoU": 0.9632872070036713,
+      "image": "independent-qa\\final-20261117-013311\\actual-0148.png"
+    },
+    {
+      "frame": 3537,
+      "actualPtsSeconds": 147.375,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0149.png"
+    },
+    {
+      "frame": 3542,
+      "actualPtsSeconds": 147.583333,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0150.png"
+    },
+    {
+      "frame": 3543,
+      "actualPtsSeconds": 147.625,
+      "sentenceIndex": 38,
+      "expectedText": "缺失通道保持缺失，避免混成测量结果。",
+      "brightPixels": 3614,
+      "expectedGlyphMaskIoU": 0.9473407056345445,
+      "image": "independent-qa\\final-20261117-013311\\actual-0151.png"
+    },
+    {
+      "frame": 3633,
+      "actualPtsSeconds": 151.375,
+      "sentenceIndex": 38,
+      "expectedText": "缺失通道保持缺失，避免混成测量结果。",
+      "brightPixels": 3622,
+      "expectedGlyphMaskIoU": 0.9509881422924901,
+      "image": "independent-qa\\final-20261117-013311\\actual-0152.png"
+    },
+    {
+      "frame": 3634,
+      "actualPtsSeconds": 151.416667,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0153.png"
+    },
+    {
+      "frame": 3639,
+      "actualPtsSeconds": 151.625,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0154.png"
+    },
+    {
+      "frame": 3640,
+      "actualPtsSeconds": 151.666667,
+      "sentenceIndex": 39,
+      "expectedText": "公开数据样例可以帮助用户熟悉导入流程。",
+      "brightPixels": 3515,
+      "expectedGlyphMaskIoU": 0.9626968775904946,
+      "image": "independent-qa\\final-20261117-013311\\actual-0155.png"
+    },
+    {
+      "frame": 3730,
+      "actualPtsSeconds": 155.416667,
+      "sentenceIndex": 39,
+      "expectedText": "公开数据样例可以帮助用户熟悉导入流程。",
+      "brightPixels": 3512,
+      "expectedGlyphMaskIoU": 0.9629527232513132,
+      "image": "independent-qa\\final-20261117-013311\\actual-0156.png"
+    },
+    {
+      "frame": 3731,
+      "actualPtsSeconds": 155.458333,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0157.png"
+    },
+    {
+      "frame": 3736,
+      "actualPtsSeconds": 155.666667,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0158.png"
+    },
+    {
+      "frame": 3737,
+      "actualPtsSeconds": 155.708333,
+      "sentenceIndex": 40,
+      "expectedText": "自己的采集文件也能按照同一协议准备。",
+      "brightPixels": 3413,
+      "expectedGlyphMaskIoU": 0.9698005698005698,
+      "image": "independent-qa\\final-20261117-013311\\actual-0159.png"
+    },
+    {
+      "frame": 3818,
+      "actualPtsSeconds": 159.083333,
+      "sentenceIndex": 40,
+      "expectedText": "自己的采集文件也能按照同一协议准备。",
+      "brightPixels": 3413,
+      "expectedGlyphMaskIoU": 0.9698005698005698,
+      "image": "independent-qa\\final-20261117-013311\\actual-0160.png"
+    },
+    {
+      "frame": 3819,
+      "actualPtsSeconds": 159.125,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0161.png"
+    },
+    {
+      "frame": 3830,
+      "actualPtsSeconds": 159.583333,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0162.png"
+    },
+    {
+      "frame": 3831,
+      "actualPtsSeconds": 159.625,
+      "sentenceIndex": 41,
+      "expectedText": "导入之后，可以调整日志与仿真的时间偏移。",
+      "brightPixels": 3324,
+      "expectedGlyphMaskIoU": 0.9568491167101072,
+      "image": "independent-qa\\final-20261117-013311\\actual-0163.png"
+    },
+    {
+      "frame": 3918,
+      "actualPtsSeconds": 163.25,
+      "sentenceIndex": 41,
+      "expectedText": "导入之后，可以调整日志与仿真的时间偏移。",
+      "brightPixels": 3324,
+      "expectedGlyphMaskIoU": 0.9568491167101072,
+      "image": "independent-qa\\final-20261117-013311\\actual-0164.png"
+    },
+    {
+      "frame": 3919,
+      "actualPtsSeconds": 163.291667,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0165.png"
+    },
+    {
+      "frame": 3924,
+      "actualPtsSeconds": 163.5,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0166.png"
+    },
+    {
+      "frame": 3925,
+      "actualPtsSeconds": 163.541667,
+      "sentenceIndex": 42,
+      "expectedText": "两组曲线会在同一张时序图中展示。",
+      "brightPixels": 2970,
+      "expectedGlyphMaskIoU": 0.9394711691621536,
+      "image": "independent-qa\\final-20261117-013311\\actual-0167.png"
+    },
+    {
+      "frame": 4010,
+      "actualPtsSeconds": 167.083333,
+      "sentenceIndex": 42,
+      "expectedText": "两组曲线会在同一张时序图中展示。",
+      "brightPixels": 2970,
+      "expectedGlyphMaskIoU": 0.9394711691621536,
+      "image": "independent-qa\\final-20261117-013311\\actual-0168.png"
+    },
+    {
+      "frame": 4011,
+      "actualPtsSeconds": 167.125,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0169.png"
+    },
+    {
+      "frame": 4016,
+      "actualPtsSeconds": 167.333333,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0170.png"
+    },
+    {
+      "frame": 4017,
+      "actualPtsSeconds": 167.375,
+      "sentenceIndex": 43,
+      "expectedText": "对标只在共同时间区间内进行。",
+      "brightPixels": 2498,
+      "expectedGlyphMaskIoU": 0.9684579439252337,
+      "image": "independent-qa\\final-20261117-013311\\actual-0171.png"
+    },
+    {
+      "frame": 4085,
+      "actualPtsSeconds": 170.208333,
+      "sentenceIndex": 43,
+      "expectedText": "对标只在共同时间区间内进行。",
+      "brightPixels": 2514,
+      "expectedGlyphMaskIoU": 0.9777691107644306,
+      "image": "independent-qa\\final-20261117-013311\\actual-0172.png"
+    },
+    {
+      "frame": 4086,
+      "actualPtsSeconds": 170.25,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0173.png"
+    },
+    {
+      "frame": 4091,
+      "actualPtsSeconds": 170.458333,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0174.png"
+    },
+    {
+      "frame": 4092,
+      "actualPtsSeconds": 170.5,
+      "sentenceIndex": 44,
+      "expectedText": "车速、横摆、制动和转向可以分别查看。",
+      "brightPixels": 3099,
+      "expectedGlyphMaskIoU": 0.9622229160162348,
+      "image": "independent-qa\\final-20261117-013311\\actual-0175.png"
+    },
+    {
+      "frame": 4183,
+      "actualPtsSeconds": 174.291667,
+      "sentenceIndex": 44,
+      "expectedText": "车速、横摆、制动和转向可以分别查看。",
+      "brightPixels": 3099,
+      "expectedGlyphMaskIoU": 0.9628357276702061,
+      "image": "independent-qa\\final-20261117-013311\\actual-0176.png"
+    },
+    {
+      "frame": 4184,
+      "actualPtsSeconds": 174.333333,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0177.png"
+    },
+    {
+      "frame": 4189,
+      "actualPtsSeconds": 174.541667,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0178.png"
+    },
+    {
+      "frame": 4190,
+      "actualPtsSeconds": 174.583333,
+      "sentenceIndex": 45,
+      "expectedText": "平均误差、均方根误差和最大误差同时提供。",
+      "brightPixels": 3679,
+      "expectedGlyphMaskIoU": 0.930806410582549,
+      "image": "independent-qa\\final-20261117-013311\\actual-0179.png"
+    },
+    {
+      "frame": 4290,
+      "actualPtsSeconds": 178.75,
+      "sentenceIndex": 45,
+      "expectedText": "平均误差、均方根误差和最大误差同时提供。",
+      "brightPixels": 3677,
+      "expectedGlyphMaskIoU": 0.9302976341897736,
+      "image": "independent-qa\\final-20261117-013311\\actual-0180.png"
+    },
+    {
+      "frame": 4291,
+      "actualPtsSeconds": 178.791667,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0181.png"
+    },
+    {
+      "frame": 4296,
+      "actualPtsSeconds": 179.0,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0182.png"
+    },
+    {
+      "frame": 4297,
+      "actualPtsSeconds": 179.041667,
+      "sentenceIndex": 46,
+      "expectedText": "差异明显的位置，可以沿时间轴继续查看。",
+      "brightPixels": 3585,
+      "expectedGlyphMaskIoU": 0.9500800854244528,
+      "image": "independent-qa\\final-20261117-013311\\actual-0183.png"
+    },
+    {
+      "frame": 4381,
+      "actualPtsSeconds": 182.541667,
+      "sentenceIndex": 46,
+      "expectedText": "差异明显的位置，可以沿时间轴继续查看。",
+      "brightPixels": 3561,
+      "expectedGlyphMaskIoU": 0.9514875368533905,
+      "image": "independent-qa\\final-20261117-013311\\actual-0184.png"
+    },
+    {
+      "frame": 4382,
+      "actualPtsSeconds": 182.583333,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0185.png"
+    },
+    {
+      "frame": 4387,
+      "actualPtsSeconds": 182.791667,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0186.png"
+    },
+    {
+      "frame": 4388,
+      "actualPtsSeconds": 182.833333,
+      "sentenceIndex": 47,
+      "expectedText": "用户也可以继续核对数据是否覆盖目标区间。",
+      "brightPixels": 3898,
+      "expectedGlyphMaskIoU": 0.9652000994282873,
+      "image": "independent-qa\\final-20261117-013311\\actual-0187.png"
+    },
+    {
+      "frame": 4485,
+      "actualPtsSeconds": 186.875,
+      "sentenceIndex": 47,
+      "expectedText": "用户也可以继续核对数据是否覆盖目标区间。",
+      "brightPixels": 3899,
+      "expectedGlyphMaskIoU": 0.9659373446046743,
+      "image": "independent-qa\\final-20261117-013311\\actual-0188.png"
+    },
+    {
+      "frame": 4486,
+      "actualPtsSeconds": 186.916667,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0189.png"
+    },
+    {
+      "frame": 4491,
+      "actualPtsSeconds": 187.125,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0190.png"
+    },
+    {
+      "frame": 4492,
+      "actualPtsSeconds": 187.166667,
+      "sentenceIndex": 48,
+      "expectedText": "这些信息让后续排查更有针对性。",
+      "brightPixels": 2897,
+      "expectedGlyphMaskIoU": 0.9732566012186865,
+      "image": "independent-qa\\final-20261117-013311\\actual-0191.png"
+    },
+    {
+      "frame": 4568,
+      "actualPtsSeconds": 190.333333,
+      "sentenceIndex": 48,
+      "expectedText": "这些信息让后续排查更有针对性。",
+      "brightPixels": 2897,
+      "expectedGlyphMaskIoU": 0.9732566012186865,
+      "image": "independent-qa\\final-20261117-013311\\actual-0192.png"
+    },
+    {
+      "frame": 4569,
+      "actualPtsSeconds": 190.375,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0193.png"
+    },
+    {
+      "frame": 4580,
+      "actualPtsSeconds": 190.833333,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0194.png"
+    },
+    {
+      "frame": 4581,
+      "actualPtsSeconds": 190.875,
+      "sentenceIndex": 49,
+      "expectedText": "专业知识库用于管理与项目相关的资料。",
+      "brightPixels": 3405,
+      "expectedGlyphMaskIoU": 0.9543661971830986,
+      "image": "independent-qa\\final-20261117-013311\\actual-0195.png"
+    },
+    {
+      "frame": 4665,
+      "actualPtsSeconds": 194.375,
+      "sentenceIndex": 49,
+      "expectedText": "专业知识库用于管理与项目相关的资料。",
+      "brightPixels": 3405,
+      "expectedGlyphMaskIoU": 0.9543661971830986,
+      "image": "independent-qa\\final-20261117-013311\\actual-0196.png"
+    },
+    {
+      "frame": 4666,
+      "actualPtsSeconds": 194.416667,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0197.png"
+    },
+    {
+      "frame": 4671,
+      "actualPtsSeconds": 194.625,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0198.png"
+    },
+    {
+      "frame": 4672,
+      "actualPtsSeconds": 194.666667,
+      "sentenceIndex": 50,
+      "expectedText": "支持导入可提取文字的PDF和DOCX文档。",
+      "brightPixels": 3176,
+      "expectedGlyphMaskIoU": 0.9543254688445251,
+      "image": "independent-qa\\final-20261117-013311\\actual-0199.png"
+    },
+    {
+      "frame": 4764,
+      "actualPtsSeconds": 198.5,
+      "sentenceIndex": 50,
+      "expectedText": "支持导入可提取文字的PDF和DOCX文档。",
+      "brightPixels": 3173,
+      "expectedGlyphMaskIoU": 0.9540090771558245,
+      "image": "independent-qa\\final-20261117-013311\\actual-0200.png"
+    },
+    {
+      "frame": 4765,
+      "actualPtsSeconds": 198.541667,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0201.png"
+    },
+    {
+      "frame": 4770,
+      "actualPtsSeconds": 198.75,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0202.png"
+    },
+    {
+      "frame": 4771,
+      "actualPtsSeconds": 198.791667,
+      "sentenceIndex": 51,
+      "expectedText": "文本与Markdown资料也能加入知识库。",
+      "brightPixels": 2992,
+      "expectedGlyphMaskIoU": 0.955849178214631,
+      "image": "independent-qa\\final-20261117-013311\\actual-0203.png"
+    },
+    {
+      "frame": 4847,
+      "actualPtsSeconds": 201.958333,
+      "sentenceIndex": 51,
+      "expectedText": "文本与Markdown资料也能加入知识库。",
+      "brightPixels": 2958,
+      "expectedGlyphMaskIoU": 0.9562398703403565,
+      "image": "independent-qa\\final-20261117-013311\\actual-0204.png"
+    },
+    {
+      "frame": 4848,
+      "actualPtsSeconds": 202.0,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0205.png"
+    },
+    {
+      "frame": 4853,
+      "actualPtsSeconds": 202.208333,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0206.png"
+    },
+    {
+      "frame": 4854,
+      "actualPtsSeconds": 202.25,
+      "sentenceIndex": 52,
+      "expectedText": "资料经过分段索引，可以参与相关问题检索。",
+      "brightPixels": 3479,
+      "expectedGlyphMaskIoU": 0.9547586206896552,
+      "image": "independent-qa\\final-20261117-013311\\actual-0207.png"
+    },
+    {
+      "frame": 4945,
+      "actualPtsSeconds": 206.041667,
+      "sentenceIndex": 52,
+      "expectedText": "资料经过分段索引，可以参与相关问题检索。",
+      "brightPixels": 3478,
+      "expectedGlyphMaskIoU": 0.9544827586206897,
+      "image": "independent-qa\\final-20261117-013311\\actual-0208.png"
+    },
+    {
+      "frame": 4946,
+      "actualPtsSeconds": 206.083333,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0209.png"
+    },
+    {
+      "frame": 4951,
+      "actualPtsSeconds": 206.291667,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0210.png"
+    },
+    {
+      "frame": 4952,
+      "actualPtsSeconds": 206.333333,
+      "sentenceIndex": 53,
+      "expectedText": "制动、附着和日志对齐等知识可以集中整理。",
+      "brightPixels": 3686,
+      "expectedGlyphMaskIoU": 0.9654899894625922,
+      "image": "independent-qa\\final-20261117-013311\\actual-0211.png"
+    },
+    {
+      "frame": 5052,
+      "actualPtsSeconds": 210.5,
+      "sentenceIndex": 53,
+      "expectedText": "制动、附着和日志对齐等知识可以集中整理。",
+      "brightPixels": 3689,
+      "expectedGlyphMaskIoU": 0.9652448657187994,
+      "image": "independent-qa\\final-20261117-013311\\actual-0212.png"
+    },
+    {
+      "frame": 5053,
+      "actualPtsSeconds": 210.541667,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0213.png"
+    },
+    {
+      "frame": 5058,
+      "actualPtsSeconds": 210.75,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0214.png"
+    },
+    {
+      "frame": 5059,
+      "actualPtsSeconds": 210.791667,
+      "sentenceIndex": 54,
+      "expectedText": "回答时可以连接到相关的资料段落。",
+      "brightPixels": 3058,
+      "expectedGlyphMaskIoU": 0.946875,
+      "image": "independent-qa\\final-20261117-013311\\actual-0215.png"
+    },
+    {
+      "frame": 5133,
+      "actualPtsSeconds": 213.875,
+      "sentenceIndex": 54,
+      "expectedText": "回答时可以连接到相关的资料段落。",
+      "brightPixels": 3056,
+      "expectedGlyphMaskIoU": 0.9474671669793621,
+      "image": "independent-qa\\final-20261117-013311\\actual-0216.png"
+    },
+    {
+      "frame": 5134,
+      "actualPtsSeconds": 213.916667,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0217.png"
+    },
+    {
+      "frame": 5139,
+      "actualPtsSeconds": 214.125,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0218.png"
+    },
+    {
+      "frame": 5140,
+      "actualPtsSeconds": 214.166667,
+      "sentenceIndex": 55,
+      "expectedText": "页面保留标题、段落和可用的页码。",
+      "brightPixels": 2999,
+      "expectedGlyphMaskIoU": 0.9487750556792873,
+      "image": "independent-qa\\final-20261117-013311\\actual-0219.png"
+    },
+    {
+      "frame": 5219,
+      "actualPtsSeconds": 217.458333,
+      "sentenceIndex": 55,
+      "expectedText": "页面保留标题、段落和可用的页码。",
+      "brightPixels": 2999,
+      "expectedGlyphMaskIoU": 0.9487750556792873,
+      "image": "independent-qa\\final-20261117-013311\\actual-0220.png"
+    },
+    {
+      "frame": 5220,
+      "actualPtsSeconds": 217.5,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0221.png"
+    },
+    {
+      "frame": 5225,
+      "actualPtsSeconds": 217.708333,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0222.png"
+    },
+    {
+      "frame": 5226,
+      "actualPtsSeconds": 217.75,
+      "sentenceIndex": 56,
+      "expectedText": "用户因此能够继续查看和核对依据。",
+      "brightPixels": 3232,
+      "expectedGlyphMaskIoU": 0.9575992833681696,
+      "image": "independent-qa\\final-20261117-013311\\actual-0223.png"
+    },
+    {
+      "frame": 5307,
+      "actualPtsSeconds": 221.125,
+      "sentenceIndex": 56,
+      "expectedText": "用户因此能够继续查看和核对依据。",
+      "brightPixels": 3230,
+      "expectedGlyphMaskIoU": 0.9575866188769414,
+      "image": "independent-qa\\final-20261117-013311\\actual-0224.png"
+    },
+    {
+      "frame": 5308,
+      "actualPtsSeconds": 221.166667,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0225.png"
+    },
+    {
+      "frame": 5313,
+      "actualPtsSeconds": 221.375,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0226.png"
+    },
+    {
+      "frame": 5314,
+      "actualPtsSeconds": 221.416667,
+      "sentenceIndex": 57,
+      "expectedText": "同一批资料不必为每个问题重复翻找。",
+      "brightPixels": 3111,
+      "expectedGlyphMaskIoU": 0.9559593470896212,
+      "image": "independent-qa\\final-20261117-013311\\actual-0227.png"
+    },
+    {
+      "frame": 5394,
+      "actualPtsSeconds": 224.75,
+      "sentenceIndex": 57,
+      "expectedText": "同一批资料不必为每个问题重复翻找。",
+      "brightPixels": 3110,
+      "expectedGlyphMaskIoU": 0.958063521430774,
+      "image": "independent-qa\\final-20261117-013311\\actual-0228.png"
+    },
+    {
+      "frame": 5395,
+      "actualPtsSeconds": 224.791667,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0229.png"
+    },
+    {
+      "frame": 5406,
+      "actualPtsSeconds": 225.25,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0230.png"
+    },
+    {
+      "frame": 5407,
+      "actualPtsSeconds": 225.291667,
+      "sentenceIndex": 58,
+      "expectedText": "智能分析围绕当前工况和已绑定日志展开。",
+      "brightPixels": 3575,
+      "expectedGlyphMaskIoU": 0.9675395526459356,
+      "image": "independent-qa\\final-20261117-013311\\actual-0231.png"
+    },
+    {
+      "frame": 5499,
+      "actualPtsSeconds": 229.125,
+      "sentenceIndex": 58,
+      "expectedText": "智能分析围绕当前工况和已绑定日志展开。",
+      "brightPixels": 3574,
+      "expectedGlyphMaskIoU": 0.967266775777414,
+      "image": "independent-qa\\final-20261117-013311\\actual-0232.png"
+    },
+    {
+      "frame": 5500,
+      "actualPtsSeconds": 229.166667,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0233.png"
+    },
+    {
+      "frame": 5505,
+      "actualPtsSeconds": 229.375,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0234.png"
+    },
+    {
+      "frame": 5506,
+      "actualPtsSeconds": 229.416667,
+      "sentenceIndex": 59,
+      "expectedText": "系统先生成计算证据，再检索相关资料。",
+      "brightPixels": 3363,
+      "expectedGlyphMaskIoU": 0.9497587283565143,
+      "image": "independent-qa\\final-20261117-013311\\actual-0235.png"
+    },
+    {
+      "frame": 5594,
+      "actualPtsSeconds": 233.083333,
+      "sentenceIndex": 59,
+      "expectedText": "系统先生成计算证据，再检索相关资料。",
+      "brightPixels": 3363,
+      "expectedGlyphMaskIoU": 0.9497587283565143,
+      "image": "independent-qa\\final-20261117-013311\\actual-0236.png"
+    },
+    {
+      "frame": 5595,
+      "actualPtsSeconds": 233.125,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0237.png"
+    },
+    {
+      "frame": 5600,
+      "actualPtsSeconds": 233.333333,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0238.png"
+    },
+    {
+      "frame": 5601,
+      "actualPtsSeconds": 233.375,
+      "sentenceIndex": 60,
+      "expectedText": "模型可以按需读取结果、比较日志和搜索知识。",
+      "brightPixels": 3894,
+      "expectedGlyphMaskIoU": 0.9580454096742349,
+      "image": "independent-qa\\final-20261117-013311\\actual-0239.png"
+    },
+    {
+      "frame": 5704,
+      "actualPtsSeconds": 237.666667,
+      "sentenceIndex": 60,
+      "expectedText": "模型可以按需读取结果、比较日志和搜索知识。",
+      "brightPixels": 3911,
+      "expectedGlyphMaskIoU": 0.9617567234147545,
+      "image": "independent-qa\\final-20261117-013311\\actual-0240.png"
+    },
+    {
+      "frame": 5705,
+      "actualPtsSeconds": 237.708333,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0241.png"
+    },
+    {
+      "frame": 5710,
+      "actualPtsSeconds": 237.916667,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0242.png"
+    },
+    {
+      "frame": 5711,
+      "actualPtsSeconds": 237.958333,
+      "sentenceIndex": 61,
+      "expectedText": "它也能调用工具，对候选参数进行独立计算。",
+      "brightPixels": 3500,
+      "expectedGlyphMaskIoU": 0.9522633744855967,
+      "image": "independent-qa\\final-20261117-013311\\actual-0243.png"
+    },
+    {
+      "frame": 5807,
+      "actualPtsSeconds": 241.958333,
+      "sentenceIndex": 61,
+      "expectedText": "它也能调用工具，对候选参数进行独立计算。",
+      "brightPixels": 3501,
+      "expectedGlyphMaskIoU": 0.9520021941854087,
+      "image": "independent-qa\\final-20261117-013311\\actual-0244.png"
+    },
+    {
+      "frame": 5808,
+      "actualPtsSeconds": 242.0,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0245.png"
+    },
+    {
+      "frame": 5813,
+      "actualPtsSeconds": 242.208333,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0246.png"
+    },
+    {
+      "frame": 5814,
+      "actualPtsSeconds": 242.25,
+      "sentenceIndex": 62,
+      "expectedText": "页面显示分析进度，用户可以了解处理过程。",
+      "brightPixels": 3530,
+      "expectedGlyphMaskIoU": 0.9550898203592815,
+      "image": "independent-qa\\final-20261117-013311\\actual-0247.png"
+    },
+    {
+      "frame": 5907,
+      "actualPtsSeconds": 246.125,
+      "sentenceIndex": 62,
+      "expectedText": "页面显示分析进度，用户可以了解处理过程。",
+      "brightPixels": 3536,
+      "expectedGlyphMaskIoU": 0.9615279672578445,
+      "image": "independent-qa\\final-20261117-013311\\actual-0248.png"
+    },
+    {
+      "frame": 5908,
+      "actualPtsSeconds": 246.166667,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0249.png"
+    },
+    {
+      "frame": 5913,
+      "actualPtsSeconds": 246.375,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0250.png"
+    },
+    {
+      "frame": 5914,
+      "actualPtsSeconds": 246.416667,
+      "sentenceIndex": 63,
+      "expectedText": "生成的观察与建议会带上相应引用编号。",
+      "brightPixels": 3371,
+      "expectedGlyphMaskIoU": 0.9485294117647058,
+      "image": "independent-qa\\final-20261117-013311\\actual-0251.png"
+    },
+    {
+      "frame": 5999,
+      "actualPtsSeconds": 249.958333,
+      "sentenceIndex": 63,
+      "expectedText": "生成的观察与建议会带上相应引用编号。",
+      "brightPixels": 3372,
+      "expectedGlyphMaskIoU": 0.9488122171945701,
+      "image": "independent-qa\\final-20261117-013311\\actual-0252.png"
+    },
+    {
+      "frame": 6000,
+      "actualPtsSeconds": 250.0,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0253.png"
+    },
+    {
+      "frame": 6005,
+      "actualPtsSeconds": 250.208333,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0254.png"
+    },
+    {
+      "frame": 6006,
+      "actualPtsSeconds": 250.25,
+      "sentenceIndex": 64,
+      "expectedText": "计算证据和模型解释在页面中分开展示。",
+      "brightPixels": 3555,
+      "expectedGlyphMaskIoU": 0.9590785907859078,
+      "image": "independent-qa\\final-20261117-013311\\actual-0255.png"
+    },
+    {
+      "frame": 6097,
+      "actualPtsSeconds": 254.041667,
+      "sentenceIndex": 64,
+      "expectedText": "计算证据和模型解释在页面中分开展示。",
+      "brightPixels": 3556,
+      "expectedGlyphMaskIoU": 0.958818748306692,
+      "image": "independent-qa\\final-20261117-013311\\actual-0256.png"
+    },
+    {
+      "frame": 6098,
+      "actualPtsSeconds": 254.083333,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0257.png"
+    },
+    {
+      "frame": 6103,
+      "actualPtsSeconds": 254.291667,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0258.png"
+    },
+    {
+      "frame": 6104,
+      "actualPtsSeconds": 254.333333,
+      "sentenceIndex": 65,
+      "expectedText": "用户既能阅读结论，也能继续查看引用依据。",
+      "brightPixels": 3892,
+      "expectedGlyphMaskIoU": 0.9641434262948207,
+      "image": "independent-qa\\final-20261117-013311\\actual-0259.png"
+    },
+    {
+      "frame": 6195,
+      "actualPtsSeconds": 258.125,
+      "sentenceIndex": 65,
+      "expectedText": "用户既能阅读结论，也能继续查看引用依据。",
+      "brightPixels": 3881,
+      "expectedGlyphMaskIoU": 0.9643391521197008,
+      "image": "independent-qa\\final-20261117-013311\\actual-0260.png"
+    },
+    {
+      "frame": 6196,
+      "actualPtsSeconds": 258.166667,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0261.png"
+    },
+    {
+      "frame": 6201,
+      "actualPtsSeconds": 258.375,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0262.png"
+    },
+    {
+      "frame": 6202,
+      "actualPtsSeconds": 258.416667,
+      "sentenceIndex": 66,
+      "expectedText": "没有日志时，回答会说明可用信息的范围。",
+      "brightPixels": 3490,
+      "expectedGlyphMaskIoU": 0.9523679167807282,
+      "image": "independent-qa\\final-20261117-013311\\actual-0263.png"
+    },
+    {
+      "frame": 6291,
+      "actualPtsSeconds": 262.125,
+      "sentenceIndex": 66,
+      "expectedText": "没有日志时，回答会说明可用信息的范围。",
+      "brightPixels": 3490,
+      "expectedGlyphMaskIoU": 0.9523679167807282,
+      "image": "independent-qa\\final-20261117-013311\\actual-0264.png"
+    },
+    {
+      "frame": 6292,
+      "actualPtsSeconds": 262.166667,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0265.png"
+    },
+    {
+      "frame": 6303,
+      "actualPtsSeconds": 262.625,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0266.png"
+    },
+    {
+      "frame": 6304,
+      "actualPtsSeconds": 262.666667,
+      "sentenceIndex": 67,
+      "expectedText": "分析不只停留在一段文字建议上。",
+      "brightPixels": 2410,
+      "expectedGlyphMaskIoU": 0.9576,
+      "image": "independent-qa\\final-20261117-013311\\actual-0267.png"
+    },
+    {
+      "frame": 6371,
+      "actualPtsSeconds": 265.458333,
+      "sentenceIndex": 67,
+      "expectedText": "分析不只停留在一段文字建议上。",
+      "brightPixels": 2408,
+      "expectedGlyphMaskIoU": 0.9568,
+      "image": "independent-qa\\final-20261117-013311\\actual-0268.png"
+    },
+    {
+      "frame": 6372,
+      "actualPtsSeconds": 265.5,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0269.png"
+    },
+    {
+      "frame": 6377,
+      "actualPtsSeconds": 265.708333,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0270.png"
+    },
+    {
+      "frame": 6378,
+      "actualPtsSeconds": 265.75,
+      "sentenceIndex": 68,
+      "expectedText": "平台可以对候选参数进行独立重算。",
+      "brightPixels": 2935,
+      "expectedGlyphMaskIoU": 0.9561374795417349,
+      "image": "independent-qa\\final-20261117-013311\\actual-0271.png"
+    },
+    {
+      "frame": 6460,
+      "actualPtsSeconds": 269.166667,
+      "sentenceIndex": 68,
+      "expectedText": "平台可以对候选参数进行独立重算。",
+      "brightPixels": 2935,
+      "expectedGlyphMaskIoU": 0.9561374795417349,
+      "image": "independent-qa\\final-20261117-013311\\actual-0272.png"
+    },
+    {
+      "frame": 6461,
+      "actualPtsSeconds": 269.208333,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0273.png"
+    },
+    {
+      "frame": 6466,
+      "actualPtsSeconds": 269.416667,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0274.png"
+    },
+    {
+      "frame": 6467,
+      "actualPtsSeconds": 269.458333,
+      "sentenceIndex": 69,
+      "expectedText": "例如降低初始车速，查看停车距离的变化。",
+      "brightPixels": 3700,
+      "expectedGlyphMaskIoU": 0.9643044619422572,
+      "image": "independent-qa\\final-20261117-013311\\actual-0275.png"
+    },
+    {
+      "frame": 6555,
+      "actualPtsSeconds": 273.125,
+      "sentenceIndex": 69,
+      "expectedText": "例如降低初始车速，查看停车距离的变化。",
+      "brightPixels": 3673,
+      "expectedGlyphMaskIoU": 0.9592748292170258,
+      "image": "independent-qa\\final-20261117-013311\\actual-0276.png"
+    },
+    {
+      "frame": 6556,
+      "actualPtsSeconds": 273.166667,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0277.png"
+    },
+    {
+      "frame": 6561,
+      "actualPtsSeconds": 273.375,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0278.png"
+    },
+    {
+      "frame": 6562,
+      "actualPtsSeconds": 273.416667,
+      "sentenceIndex": 70,
+      "expectedText": "也可以调整初始间距，观察跟驰结果。",
+      "brightPixels": 3282,
+      "expectedGlyphMaskIoU": 0.9513969732246799,
+      "image": "independent-qa\\final-20261117-013311\\actual-0279.png"
+    },
+    {
+      "frame": 6641,
+      "actualPtsSeconds": 276.708333,
+      "sentenceIndex": 70,
+      "expectedText": "也可以调整初始间距，观察跟驰结果。",
+      "brightPixels": 3282,
+      "expectedGlyphMaskIoU": 0.9513969732246799,
+      "image": "independent-qa\\final-20261117-013311\\actual-0280.png"
+    },
+    {
+      "frame": 6642,
+      "actualPtsSeconds": 276.75,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0281.png"
+    },
+    {
+      "frame": 6647,
+      "actualPtsSeconds": 276.958333,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0282.png"
+    },
+    {
+      "frame": 6648,
+      "actualPtsSeconds": 277.0,
+      "sentenceIndex": 71,
+      "expectedText": "候选方案与当前基线分别保留计算证据。",
+      "brightPixels": 3484,
+      "expectedGlyphMaskIoU": 0.9552197802197803,
+      "image": "independent-qa\\final-20261117-013311\\actual-0283.png"
+    },
+    {
+      "frame": 6735,
+      "actualPtsSeconds": 280.625,
+      "sentenceIndex": 71,
+      "expectedText": "候选方案与当前基线分别保留计算证据。",
+      "brightPixels": 3484,
+      "expectedGlyphMaskIoU": 0.9552197802197803,
+      "image": "independent-qa\\final-20261117-013311\\actual-0284.png"
+    },
+    {
+      "frame": 6736,
+      "actualPtsSeconds": 280.666667,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0285.png"
+    },
+    {
+      "frame": 6741,
+      "actualPtsSeconds": 280.875,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0286.png"
+    },
+    {
+      "frame": 6742,
+      "actualPtsSeconds": 280.916667,
+      "sentenceIndex": 72,
+      "expectedText": "用户能够对照两种条件下的关键指标。",
+      "brightPixels": 3181,
+      "expectedGlyphMaskIoU": 0.9375743162901308,
+      "image": "independent-qa\\final-20261117-013311\\actual-0287.png"
+    },
+    {
+      "frame": 6822,
+      "actualPtsSeconds": 284.25,
+      "sentenceIndex": 72,
+      "expectedText": "用户能够对照两种条件下的关键指标。",
+      "brightPixels": 3140,
+      "expectedGlyphMaskIoU": 0.9345878136200717,
+      "image": "independent-qa\\final-20261117-013311\\actual-0288.png"
+    },
+    {
+      "frame": 6823,
+      "actualPtsSeconds": 284.291667,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0289.png"
+    },
+    {
+      "frame": 6828,
+      "actualPtsSeconds": 284.5,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0290.png"
+    },
+    {
+      "frame": 6829,
+      "actualPtsSeconds": 284.541667,
+      "sentenceIndex": 73,
+      "expectedText": "确认需要的方案后，可以载入对应参数。",
+      "brightPixels": 3105,
+      "expectedGlyphMaskIoU": 0.9495539833897262,
+      "image": "independent-qa\\final-20261117-013311\\actual-0291.png"
+    },
+    {
+      "frame": 6907,
+      "actualPtsSeconds": 287.791667,
+      "sentenceIndex": 73,
+      "expectedText": "确认需要的方案后，可以载入对应参数。",
+      "brightPixels": 3107,
+      "expectedGlyphMaskIoU": 0.9489701813710422,
+      "image": "independent-qa\\final-20261117-013311\\actual-0292.png"
+    },
+    {
+      "frame": 6908,
+      "actualPtsSeconds": 287.833333,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0293.png"
+    },
+    {
+      "frame": 6913,
+      "actualPtsSeconds": 288.041667,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0294.png"
+    },
+    {
+      "frame": 6914,
+      "actualPtsSeconds": 288.083333,
+      "sentenceIndex": 74,
+      "expectedText": "再运行计算，就能继续开展下一轮比较。",
+      "brightPixels": 3056,
+      "expectedGlyphMaskIoU": 0.9638210092034275,
+      "image": "independent-qa\\final-20261117-013311\\actual-0295.png"
+    },
+    {
+      "frame": 6995,
+      "actualPtsSeconds": 291.458333,
+      "sentenceIndex": 74,
+      "expectedText": "再运行计算，就能继续开展下一轮比较。",
+      "brightPixels": 3055,
+      "expectedGlyphMaskIoU": 0.9635036496350365,
+      "image": "independent-qa\\final-20261117-013311\\actual-0296.png"
+    },
+    {
+      "frame": 6996,
+      "actualPtsSeconds": 291.5,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0297.png"
+    },
+    {
+      "frame": 7007,
+      "actualPtsSeconds": 291.958333,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0298.png"
+    },
+    {
+      "frame": 7008,
+      "actualPtsSeconds": 292.0,
+      "sentenceIndex": 75,
+      "expectedText": "工况记录让一次分析可以在之后继续使用。",
+      "brightPixels": 3078,
+      "expectedGlyphMaskIoU": 0.9505443234836704,
+      "image": "independent-qa\\final-20261117-013311\\actual-0299.png"
+    },
+    {
+      "frame": 7095,
+      "actualPtsSeconds": 295.625,
+      "sentenceIndex": 75,
+      "expectedText": "工况记录让一次分析可以在之后继续使用。",
+      "brightPixels": 3076,
+      "expectedGlyphMaskIoU": 0.9499222395023328,
+      "image": "independent-qa\\final-20261117-013311\\actual-0300.png"
+    },
+    {
+      "frame": 7096,
+      "actualPtsSeconds": 295.666667,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0301.png"
+    },
+    {
+      "frame": 7101,
+      "actualPtsSeconds": 295.875,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0302.png"
+    },
+    {
+      "frame": 7102,
+      "actualPtsSeconds": 295.916667,
+      "sentenceIndex": 76,
+      "expectedText": "保存时会保留参数、日志配置和容差。",
+      "brightPixels": 3166,
+      "expectedGlyphMaskIoU": 0.9502412545235223,
+      "image": "independent-qa\\final-20261117-013311\\actual-0303.png"
+    },
+    {
+      "frame": 7191,
+      "actualPtsSeconds": 299.625,
+      "sentenceIndex": 76,
+      "expectedText": "保存时会保留参数、日志配置和容差。",
+      "brightPixels": 3161,
+      "expectedGlyphMaskIoU": 0.9499094749547374,
+      "image": "independent-qa\\final-20261117-013311\\actual-0304.png"
+    },
+    {
+      "frame": 7192,
+      "actualPtsSeconds": 299.666667,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0305.png"
+    },
+    {
+      "frame": 7197,
+      "actualPtsSeconds": 299.875,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0306.png"
+    },
+    {
+      "frame": 7198,
+      "actualPtsSeconds": 299.916667,
+      "sentenceIndex": 77,
+      "expectedText": "已经生成的分析信息也能随记录查看。",
+      "brightPixels": 3382,
+      "expectedGlyphMaskIoU": 0.9547781569965871,
+      "image": "independent-qa\\final-20261117-013311\\actual-0307.png"
+    },
+    {
+      "frame": 7277,
+      "actualPtsSeconds": 303.208333,
+      "sentenceIndex": 77,
+      "expectedText": "已经生成的分析信息也能随记录查看。",
+      "brightPixels": 3405,
+      "expectedGlyphMaskIoU": 0.9663530082691759,
+      "image": "independent-qa\\final-20261117-013311\\actual-0308.png"
+    },
+    {
+      "frame": 7278,
+      "actualPtsSeconds": 303.25,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0309.png"
+    },
+    {
+      "frame": 7283,
+      "actualPtsSeconds": 303.458333,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0310.png"
+    },
+    {
+      "frame": 7284,
+      "actualPtsSeconds": 303.5,
+      "sentenceIndex": 78,
+      "expectedText": "重新打开记录，可以恢复对应的工作条件。",
+      "brightPixels": 3232,
+      "expectedGlyphMaskIoU": 0.9608838459241564,
+      "image": "independent-qa\\final-20261117-013311\\actual-0311.png"
+    },
+    {
+      "frame": 7367,
+      "actualPtsSeconds": 306.958333,
+      "sentenceIndex": 78,
+      "expectedText": "重新打开记录，可以恢复对应的工作条件。",
+      "brightPixels": 3234,
+      "expectedGlyphMaskIoU": 0.9614810391161541,
+      "image": "independent-qa\\final-20261117-013311\\actual-0312.png"
+    },
+    {
+      "frame": 7368,
+      "actualPtsSeconds": 307.0,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0313.png"
+    },
+    {
+      "frame": 7373,
+      "actualPtsSeconds": 307.208333,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0314.png"
+    },
+    {
+      "frame": 7374,
+      "actualPtsSeconds": 307.25,
+      "sentenceIndex": 79,
+      "expectedText": "输入变化后，旧分析会提示需要更新。",
+      "brightPixels": 3117,
+      "expectedGlyphMaskIoU": 0.9636758770568147,
+      "image": "independent-qa\\final-20261117-013311\\actual-0315.png"
+    },
+    {
+      "frame": 7453,
+      "actualPtsSeconds": 310.541667,
+      "sentenceIndex": 79,
+      "expectedText": "输入变化后，旧分析会提示需要更新。",
+      "brightPixels": 3117,
+      "expectedGlyphMaskIoU": 0.9636758770568147,
+      "image": "independent-qa\\final-20261117-013311\\actual-0316.png"
+    },
+    {
+      "frame": 7454,
+      "actualPtsSeconds": 310.583333,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0317.png"
+    },
+    {
+      "frame": 7459,
+      "actualPtsSeconds": 310.791667,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0318.png"
+    },
+    {
+      "frame": 7460,
+      "actualPtsSeconds": 310.833333,
+      "sentenceIndex": 80,
+      "expectedText": "这样能够减少把不同工况结论混用的情况。",
+      "brightPixels": 3674,
+      "expectedGlyphMaskIoU": 0.9653163886682552,
+      "image": "independent-qa\\final-20261117-013311\\actual-0319.png"
+    },
+    {
+      "frame": 7542,
+      "actualPtsSeconds": 314.25,
+      "sentenceIndex": 80,
+      "expectedText": "这样能够减少把不同工况结论混用的情况。",
+      "brightPixels": 3628,
+      "expectedGlyphMaskIoU": 0.9624900239425379,
+      "image": "independent-qa\\final-20261117-013311\\actual-0320.png"
+    },
+    {
+      "frame": 7543,
+      "actualPtsSeconds": 314.291667,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0321.png"
+    },
+    {
+      "frame": 7548,
+      "actualPtsSeconds": 314.5,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0322.png"
+    },
+    {
+      "frame": 7549,
+      "actualPtsSeconds": 314.541667,
+      "sentenceIndex": 81,
+      "expectedText": "用户可以为不同方案保留独立记录。",
+      "brightPixels": 2819,
+      "expectedGlyphMaskIoU": 0.9612216884008236,
+      "image": "independent-qa\\final-20261117-013311\\actual-0323.png"
+    },
+    {
+      "frame": 7624,
+      "actualPtsSeconds": 317.666667,
+      "sentenceIndex": 81,
+      "expectedText": "用户可以为不同方案保留独立记录。",
+      "brightPixels": 2819,
+      "expectedGlyphMaskIoU": 0.9612216884008236,
+      "image": "independent-qa\\final-20261117-013311\\actual-0324.png"
+    },
+    {
+      "frame": 7625,
+      "actualPtsSeconds": 317.708333,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0325.png"
+    },
+    {
+      "frame": 7630,
+      "actualPtsSeconds": 317.916667,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0326.png"
+    },
+    {
+      "frame": 7631,
+      "actualPtsSeconds": 317.958333,
+      "sentenceIndex": 82,
+      "expectedText": "团队交流时，也更容易说明结果的前提。",
+      "brightPixels": 3494,
+      "expectedGlyphMaskIoU": 0.9616551724137931,
+      "image": "independent-qa\\final-20261117-013311\\actual-0327.png"
+    },
+    {
+      "frame": 7714,
+      "actualPtsSeconds": 321.416667,
+      "sentenceIndex": 82,
+      "expectedText": "团队交流时，也更容易说明结果的前提。",
+      "brightPixels": 3494,
+      "expectedGlyphMaskIoU": 0.9616551724137931,
+      "image": "independent-qa\\final-20261117-013311\\actual-0328.png"
+    },
+    {
+      "frame": 7715,
+      "actualPtsSeconds": 321.458333,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0329.png"
+    },
+    {
+      "frame": 7726,
+      "actualPtsSeconds": 321.916667,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0330.png"
+    },
+    {
+      "frame": 7727,
+      "actualPtsSeconds": 321.958333,
+      "sentenceIndex": 83,
+      "expectedText": "完成分析后，可以直接导出中文PDF报告。",
+      "brightPixels": 3208,
+      "expectedGlyphMaskIoU": 0.9666160849772383,
+      "image": "independent-qa\\final-20261117-013311\\actual-0331.png"
+    },
+    {
+      "frame": 7820,
+      "actualPtsSeconds": 325.833333,
+      "sentenceIndex": 83,
+      "expectedText": "完成分析后，可以直接导出中文PDF报告。",
+      "brightPixels": 3207,
+      "expectedGlyphMaskIoU": 0.966909532483303,
+      "image": "independent-qa\\final-20261117-013311\\actual-0332.png"
+    },
+    {
+      "frame": 7821,
+      "actualPtsSeconds": 325.875,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0333.png"
+    },
+    {
+      "frame": 7826,
+      "actualPtsSeconds": 326.083333,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0334.png"
+    },
+    {
+      "frame": 7827,
+      "actualPtsSeconds": 326.125,
+      "sentenceIndex": 84,
+      "expectedText": "报告包含当前参数、计算结果和时序曲线。",
+      "brightPixels": 3610,
+      "expectedGlyphMaskIoU": 0.9636071715279636,
+      "image": "independent-qa\\final-20261117-013311\\actual-0335.png"
+    },
+    {
+      "frame": 7922,
+      "actualPtsSeconds": 330.083333,
+      "sentenceIndex": 84,
+      "expectedText": "报告包含当前参数、计算结果和时序曲线。",
+      "brightPixels": 3608,
+      "expectedGlyphMaskIoU": 0.9630719828739631,
+      "image": "independent-qa\\final-20261117-013311\\actual-0336.png"
+    },
+    {
+      "frame": 7923,
+      "actualPtsSeconds": 330.125,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0337.png"
+    },
+    {
+      "frame": 7928,
+      "actualPtsSeconds": 330.333333,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0338.png"
+    },
+    {
+      "frame": 7929,
+      "actualPtsSeconds": 330.375,
+      "sentenceIndex": 85,
+      "expectedText": "已经绑定日志时，也会加入对标误差信息。",
+      "brightPixels": 3346,
+      "expectedGlyphMaskIoU": 0.9549239161642262,
+      "image": "independent-qa\\final-20261117-013311\\actual-0339.png"
+    },
+    {
+      "frame": 8014,
+      "actualPtsSeconds": 333.916667,
+      "sentenceIndex": 85,
+      "expectedText": "已经绑定日志时，也会加入对标误差信息。",
+      "brightPixels": 3329,
+      "expectedGlyphMaskIoU": 0.9573487031700288,
+      "image": "independent-qa\\final-20261117-013311\\actual-0340.png"
+    },
+    {
+      "frame": 8015,
+      "actualPtsSeconds": 333.958333,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0341.png"
+    },
+    {
+      "frame": 8020,
+      "actualPtsSeconds": 334.166667,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0342.png"
+    },
+    {
+      "frame": 8021,
+      "actualPtsSeconds": 334.208333,
+      "sentenceIndex": 86,
+      "expectedText": "相关依据和分析记录可以一起保留。",
+      "brightPixels": 2909,
+      "expectedGlyphMaskIoU": 0.9516129032258065,
+      "image": "independent-qa\\final-20261117-013311\\actual-0343.png"
+    },
+    {
+      "frame": 8097,
+      "actualPtsSeconds": 337.375,
+      "sentenceIndex": 86,
+      "expectedText": "相关依据和分析记录可以一起保留。",
+      "brightPixels": 2909,
+      "expectedGlyphMaskIoU": 0.9516129032258065,
+      "image": "independent-qa\\final-20261117-013311\\actual-0344.png"
+    },
+    {
+      "frame": 8098,
+      "actualPtsSeconds": 337.416667,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0345.png"
+    },
+    {
+      "frame": 8103,
+      "actualPtsSeconds": 337.625,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0346.png"
+    },
+    {
+      "frame": 8104,
+      "actualPtsSeconds": 337.666667,
+      "sentenceIndex": 87,
+      "expectedText": "中文字体随报告嵌入，便于正常阅读。",
+      "brightPixels": 2976,
+      "expectedGlyphMaskIoU": 0.9637373407383208,
+      "image": "independent-qa\\final-20261117-013311\\actual-0347.png"
+    },
+    {
+      "frame": 8184,
+      "actualPtsSeconds": 341.0,
+      "sentenceIndex": 87,
+      "expectedText": "中文字体随报告嵌入，便于正常阅读。",
+      "brightPixels": 2975,
+      "expectedGlyphMaskIoU": 0.9634106501143417,
+      "image": "independent-qa\\final-20261117-013311\\actual-0348.png"
+    },
+    {
+      "frame": 8185,
+      "actualPtsSeconds": 341.041667,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0349.png"
+    },
+    {
+      "frame": 8190,
+      "actualPtsSeconds": 341.25,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0350.png"
+    },
+    {
+      "frame": 8191,
+      "actualPtsSeconds": 341.291667,
+      "sentenceIndex": 88,
+      "expectedText": "用户不用再次手工整理零散截图和数值。",
+      "brightPixels": 3534,
+      "expectedGlyphMaskIoU": 0.9328716036228023,
+      "image": "independent-qa\\final-20261117-013311\\actual-0351.png"
+    },
+    {
+      "frame": 8280,
+      "actualPtsSeconds": 345.0,
+      "sentenceIndex": 88,
+      "expectedText": "用户不用再次手工整理零散截图和数值。",
+      "brightPixels": 3522,
+      "expectedGlyphMaskIoU": 0.9400107123727905,
+      "image": "independent-qa\\final-20261117-013311\\actual-0352.png"
+    },
+    {
+      "frame": 8281,
+      "actualPtsSeconds": 345.041667,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0353.png"
+    },
+    {
+      "frame": 8286,
+      "actualPtsSeconds": 345.25,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0354.png"
+    },
+    {
+      "frame": 8287,
+      "actualPtsSeconds": 345.291667,
+      "sentenceIndex": 89,
+      "expectedText": "同一份报告可以用于项目交流和方案讨论。",
+      "brightPixels": 3303,
+      "expectedGlyphMaskIoU": 0.9624743476986221,
+      "image": "independent-qa\\final-20261117-013311\\actual-0355.png"
+    },
+    {
+      "frame": 8373,
+      "actualPtsSeconds": 348.875,
+      "sentenceIndex": 89,
+      "expectedText": "同一份报告可以用于项目交流和方案讨论。",
+      "brightPixels": 3303,
+      "expectedGlyphMaskIoU": 0.9624743476986221,
+      "image": "independent-qa\\final-20261117-013311\\actual-0356.png"
+    },
+    {
+      "frame": 8374,
+      "actualPtsSeconds": 348.916667,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0357.png"
+    },
+    {
+      "frame": 8379,
+      "actualPtsSeconds": 349.125,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0358.png"
+    },
+    {
+      "frame": 8380,
+      "actualPtsSeconds": 349.166667,
+      "sentenceIndex": 90,
+      "expectedText": "从网页操作到结果交付，工作流程更加连贯。",
+      "brightPixels": 3594,
+      "expectedGlyphMaskIoU": 0.9572810317033853,
+      "image": "independent-qa\\final-20261117-013311\\actual-0359.png"
+    },
+    {
+      "frame": 8476,
+      "actualPtsSeconds": 353.166667,
+      "sentenceIndex": 90,
+      "expectedText": "从网页操作到结果交付，工作流程更加连贯。",
+      "brightPixels": 3589,
+      "expectedGlyphMaskIoU": 0.9596231493943472,
+      "image": "independent-qa\\final-20261117-013311\\actual-0360.png"
+    },
+    {
+      "frame": 8477,
+      "actualPtsSeconds": 353.208333,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0361.png"
+    },
+    {
+      "frame": 8488,
+      "actualPtsSeconds": 353.666667,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0362.png"
+    },
+    {
+      "frame": 8489,
+      "actualPtsSeconds": 353.708333,
+      "sentenceIndex": 91,
+      "expectedText": "DriveLab把多项常见任务连接成一个工作台。",
+      "brightPixels": 3353,
+      "expectedGlyphMaskIoU": 0.9688953488372093,
+      "image": "independent-qa\\final-20261117-013311\\actual-0363.png"
+    },
+    {
+      "frame": 8579,
+      "actualPtsSeconds": 357.458333,
+      "sentenceIndex": 91,
+      "expectedText": "DriveLab把多项常见任务连接成一个工作台。",
+      "brightPixels": 3353,
+      "expectedGlyphMaskIoU": 0.9688953488372093,
+      "image": "independent-qa\\final-20261117-013311\\actual-0364.png"
+    },
+    {
+      "frame": 8580,
+      "actualPtsSeconds": 357.5,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0365.png"
+    },
+    {
+      "frame": 8585,
+      "actualPtsSeconds": 357.708333,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0366.png"
+    },
+    {
+      "frame": 8586,
+      "actualPtsSeconds": 357.75,
+      "sentenceIndex": 92,
+      "expectedText": "工况设计可以更直观，数据复盘也更集中。",
+      "brightPixels": 3502,
+      "expectedGlyphMaskIoU": 0.9558662280701754,
+      "image": "independent-qa\\final-20261117-013311\\actual-0367.png"
+    },
+    {
+      "frame": 8675,
+      "actualPtsSeconds": 361.458333,
+      "sentenceIndex": 92,
+      "expectedText": "工况设计可以更直观，数据复盘也更集中。",
+      "brightPixels": 3504,
+      "expectedGlyphMaskIoU": 0.9564144736842105,
+      "image": "independent-qa\\final-20261117-013311\\actual-0368.png"
+    },
+    {
+      "frame": 8676,
+      "actualPtsSeconds": 361.5,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0369.png"
+    },
+    {
+      "frame": 8681,
+      "actualPtsSeconds": 361.708333,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0370.png"
+    },
+    {
+      "frame": 8682,
+      "actualPtsSeconds": 361.75,
+      "sentenceIndex": 93,
+      "expectedText": "智能分析帮助用户把计算结果与专业资料联系起来。",
+      "brightPixels": 4522,
+      "expectedGlyphMaskIoU": 0.95810293492131,
+      "image": "independent-qa\\final-20261117-013311\\actual-0371.png"
+    },
+    {
+      "frame": 8789,
+      "actualPtsSeconds": 366.208333,
+      "sentenceIndex": 93,
+      "expectedText": "智能分析帮助用户把计算结果与专业资料联系起来。",
+      "brightPixels": 4520,
+      "expectedGlyphMaskIoU": 0.9593444018731375,
+      "image": "independent-qa\\final-20261117-013311\\actual-0372.png"
+    },
+    {
+      "frame": 8790,
+      "actualPtsSeconds": 366.25,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0373.png"
+    },
+    {
+      "frame": 8795,
+      "actualPtsSeconds": 366.458333,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0374.png"
+    },
+    {
+      "frame": 8796,
+      "actualPtsSeconds": 366.5,
+      "sentenceIndex": 94,
+      "expectedText": "候选比较和报告输出，让分析更容易继续和交流。",
+      "brightPixels": 4232,
+      "expectedGlyphMaskIoU": 0.9638195557591024,
+      "image": "independent-qa\\final-20261117-013311\\actual-0375.png"
+    },
+    {
+      "frame": 8897,
+      "actualPtsSeconds": 370.708333,
+      "sentenceIndex": 94,
+      "expectedText": "候选比较和报告输出，让分析更容易继续和交流。",
+      "brightPixels": 4231,
+      "expectedGlyphMaskIoU": 0.9635905656056789,
+      "image": "independent-qa\\final-20261117-013311\\actual-0376.png"
+    },
+    {
+      "frame": 8898,
+      "actualPtsSeconds": 370.75,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0377.png"
+    },
+    {
+      "frame": 8903,
+      "actualPtsSeconds": 370.958333,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0378.png"
+    },
+    {
+      "frame": 8904,
+      "actualPtsSeconds": 371.0,
+      "sentenceIndex": 95,
+      "expectedText": "平台用于前期辅助评估，不能代替车型实测。",
+      "brightPixels": 3685,
+      "expectedGlyphMaskIoU": 0.944717127357272,
+      "image": "independent-qa\\final-20261117-013311\\actual-0379.png"
+    },
+    {
+      "frame": 8999,
+      "actualPtsSeconds": 374.958333,
+      "sentenceIndex": 95,
+      "expectedText": "平台用于前期辅助评估，不能代替车型实测。",
+      "brightPixels": 3657,
+      "expectedGlyphMaskIoU": 0.9445164635727249,
+      "image": "independent-qa\\final-20261117-013311\\actual-0380.png"
+    },
+    {
+      "frame": 9000,
+      "actualPtsSeconds": 375.0,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0381.png"
+    },
+    {
+      "frame": 9005,
+      "actualPtsSeconds": 375.208333,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0382.png"
+    },
+    {
+      "frame": 9006,
+      "actualPtsSeconds": 375.25,
+      "sentenceIndex": 96,
+      "expectedText": "后续可以围绕具体车型和实际需求继续扩展。",
+      "brightPixels": 3811,
+      "expectedGlyphMaskIoU": 0.9591991890522048,
+      "image": "independent-qa\\final-20261117-013311\\actual-0383.png"
+    },
+    {
+      "frame": 9105,
+      "actualPtsSeconds": 379.375,
+      "sentenceIndex": 96,
+      "expectedText": "后续可以围绕具体车型和实际需求继续扩展。",
+      "brightPixels": 3808,
+      "expectedGlyphMaskIoU": 0.9594320486815415,
+      "image": "independent-qa\\final-20261117-013311\\actual-0384.png"
+    },
+    {
+      "frame": 9106,
+      "actualPtsSeconds": 379.416667,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0385.png"
+    },
+    {
+      "frame": 9111,
+      "actualPtsSeconds": 379.625,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0386.png"
+    },
+    {
+      "frame": 9112,
+      "actualPtsSeconds": 379.666667,
+      "sentenceIndex": 97,
+      "expectedText": "课程项目和早期方案讨论，都能在这里开始。",
+      "brightPixels": 3820,
+      "expectedGlyphMaskIoU": 0.9559748427672956,
+      "image": "independent-qa\\final-20261117-013311\\actual-0387.png"
+    },
+    {
+      "frame": 9203,
+      "actualPtsSeconds": 383.458333,
+      "sentenceIndex": 97,
+      "expectedText": "课程项目和早期方案讨论，都能在这里开始。",
+      "brightPixels": 3820,
+      "expectedGlyphMaskIoU": 0.9559748427672956,
+      "image": "independent-qa\\final-20261117-013311\\actual-0388.png"
+    },
+    {
+      "frame": 9204,
+      "actualPtsSeconds": 383.5,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0389.png"
+    },
+    {
+      "frame": 9209,
+      "actualPtsSeconds": 383.708333,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0390.png"
+    },
+    {
+      "frame": 9210,
+      "actualPtsSeconds": 383.75,
+      "sentenceIndex": 98,
+      "expectedText": "从一组参数出发，逐步形成清晰的分析。",
+      "brightPixels": 3101,
+      "expectedGlyphMaskIoU": 0.9610349127182045,
+      "image": "independent-qa\\final-20261117-013311\\actual-0391.png"
+    },
+    {
+      "frame": 9292,
+      "actualPtsSeconds": 387.166667,
+      "sentenceIndex": 98,
+      "expectedText": "从一组参数出发，逐步形成清晰的分析。",
+      "brightPixels": 3101,
+      "expectedGlyphMaskIoU": 0.9690140845070423,
+      "image": "independent-qa\\final-20261117-013311\\actual-0392.png"
+    },
+    {
+      "frame": 9293,
+      "actualPtsSeconds": 387.208333,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0393.png"
+    },
+    {
+      "frame": 9300,
+      "actualPtsSeconds": 387.5,
+      "sentenceIndex": null,
+      "expectedText": "",
+      "brightPixels": 0,
+      "expectedGlyphMaskIoU": null,
+      "image": "independent-qa\\final-20261117-013311\\actual-0394.png"
+    }
+  ],
+  "boundaryContactSheets": [
+    "independent-qa\\final-20261117-013311\\within-scene-01.png",
+    "independent-qa\\final-20261117-013311\\within-scene-02.png",
+    "independent-qa\\final-20261117-013311\\within-scene-03.png",
+    "independent-qa\\final-20261117-013311\\within-scene-04.png",
+    "independent-qa\\final-20261117-013311\\within-scene-05.png",
+    "independent-qa\\final-20261117-013311\\within-scene-06.png",
+    "independent-qa\\final-20261117-013311\\within-scene-07.png",
+    "independent-qa\\final-20261117-013311\\within-scene-08.png",
+    "independent-qa\\final-20261117-013311\\within-scene-09.png",
+    "independent-qa\\final-20261117-013311\\within-scene-10.png",
+    "independent-qa\\final-20261117-013311\\within-scene-11.png",
+    "independent-qa\\final-20261117-013311\\within-scene-12.png",
+    "independent-qa\\final-20261117-013311\\scene-join-01-02.png",
+    "independent-qa\\final-20261117-013311\\scene-join-02-03.png",
+    "independent-qa\\final-20261117-013311\\scene-join-03-04.png",
+    "independent-qa\\final-20261117-013311\\scene-join-04-05.png",
+    "independent-qa\\final-20261117-013311\\scene-join-05-06.png",
+    "independent-qa\\final-20261117-013311\\scene-join-06-07.png",
+    "independent-qa\\final-20261117-013311\\scene-join-07-08.png",
+    "independent-qa\\final-20261117-013311\\scene-join-08-09.png",
+    "independent-qa\\final-20261117-013311\\scene-join-09-10.png",
+    "independent-qa\\final-20261117-013311\\scene-join-10-11.png",
+    "independent-qa\\final-20261117-013311\\scene-join-11-12.png"
+  ],
+  "visualSpotReview": {
+    "result": "passed",
+    "reviewType": "Independent visual inspection of decoded final-MP4 subtitle contact sheets",
+    "videoSha256": "ade01c2980118805c79413de0f11b4d47b4b43f206bec5681a9d67b35a470ee5",
+    "auditedContacts": [
+      "final-20261117-012921/within-scene-01.png",
+      "final-20261117-012921/scene-join-04-05.png",
+      "final-20261117-012921/scene-join-07-08.png",
+      "final-20261117-012921/scene-join-08-09.png",
+      "final-20261117-012921/scene-join-11-12.png",
+      "final-20261117-012921/within-scene-12.png"
+    ],
+    "observations": [
+      "Each displayed caption is the expected complete sentence, on one readable line.",
+      "The previous caption is absent on its end frame and on the last blank frame before the next caption.",
+      "The following caption starts as the correct new complete sentence, without a fragment of the previous sentence.",
+      "The inspected cross-scene transitions behave the same as within-scene transitions."
+    ],
+    "scope": "Six visual contact sheets supplement the automated final audit of all 394 selected boundary frames, 98 PCM clips, ASS/SRT text, global PTS and AAC alignment.",
+    "limitations": [
+      "This is a subtitle-boundary visual inspection, not a full editorial or screenshot-claim audit.",
+      "No human listening, pronunciation audit or speech-recognition transcript is claimed."
+    ]
+  }
+}

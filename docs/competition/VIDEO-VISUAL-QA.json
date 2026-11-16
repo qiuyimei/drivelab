@@ -1,0 +1,1443 @@
+{
+  "source": "actual final MP4 decoded frames",
+  "outputSha256": "ade01c2980118805c79413de0f11b4d47b4b43f206bec5681a9d67b35a470ee5",
+  "framesChecked": 108,
+  "allExpectedVisualVariantsMatched": true,
+  "exactSentenceBoundaryTransitionsPassed": true,
+  "actualContactSheet": ".sites-runtime/competition-video-v2/actual-video-contact-sheet.jpg",
+  "checks": [
+    {
+      "scene": "01",
+      "variant": 0,
+      "frame": 0,
+      "kind": "firstFrame",
+      "file": "actual-render-frames\\frame-0001.png",
+      "maePerVariant": [
+        0.9950273087630114,
+        7.049347161704188,
+        7.286929995763738
+      ],
+      "passed": true
+    },
+    {
+      "scene": "01",
+      "variant": 0,
+      "frame": 277,
+      "kind": "lastFrame",
+      "file": "actual-render-frames\\frame-0003.png",
+      "maePerVariant": [
+        0.9229877753570565,
+        7.0110725308641975,
+        7.260222630718954
+      ],
+      "passed": true
+    },
+    {
+      "scene": "01",
+      "variant": 0,
+      "frame": 42,
+      "kind": "captionSample",
+      "file": "actual-render-frames\\frame-0002.png",
+      "maePerVariant": [
+        0.9941316418542726,
+        7.048750680827887,
+        7.2864795146453645
+      ],
+      "passed": true
+    },
+    {
+      "scene": "01",
+      "variant": 1,
+      "frame": 278,
+      "kind": "firstFrame",
+      "file": "actual-render-frames\\frame-0004.png",
+      "maePerVariant": [
+        7.024265840595497,
+        1.0231307492132655,
+        7.592560442386831
+      ],
+      "passed": true
+    },
+    {
+      "scene": "01",
+      "variant": 1,
+      "frame": 571,
+      "kind": "lastFrame",
+      "file": "actual-render-frames\\frame-0006.png",
+      "maePerVariant": [
+        7.049098092168966,
+        0.9653770651779231,
+        7.599996784979424
+      ],
+      "passed": true
+    },
+    {
+      "scene": "01",
+      "variant": 1,
+      "frame": 323,
+      "kind": "captionSample",
+      "file": "actual-render-frames\\frame-0005.png",
+      "maePerVariant": [
+        7.02592933006536,
+        1.0209207062454613,
+        7.59294019305253
+      ],
+      "passed": true
+    },
+    {
+      "scene": "01",
+      "variant": 2,
+      "frame": 572,
+      "kind": "firstFrame",
+      "file": "actual-render-frames\\frame-0007.png",
+      "maePerVariant": [
+        7.2574927000121034,
+        7.550749099794238,
+        1.0000372564149116
+      ],
+      "passed": true
+    },
+    {
+      "scene": "01",
+      "variant": 2,
+      "frame": 771,
+      "kind": "lastFrame",
+      "file": "actual-render-frames\\frame-0009.png",
+      "maePerVariant": [
+        7.267818211389494,
+        7.570378124243525,
+        0.9406543134229
+      ],
+      "passed": true
+    },
+    {
+      "scene": "01",
+      "variant": 2,
+      "frame": 621,
+      "kind": "captionSample",
+      "file": "actual-render-frames\\frame-0008.png",
+      "maePerVariant": [
+        7.257001747458243,
+        7.5512131974703465,
+        0.9981468243161462
+      ],
+      "passed": true
+    },
+    {
+      "scene": "02",
+      "variant": 0,
+      "frame": 772,
+      "kind": "firstFrame",
+      "file": "actual-render-frames\\frame-0010.png",
+      "maePerVariant": [
+        1.219759327342048,
+        5.082253653776325,
+        4.509120256899056
+      ],
+      "passed": true
+    },
+    {
+      "scene": "02",
+      "variant": 0,
+      "frame": 1070,
+      "kind": "lastFrame",
+      "file": "actual-render-frames\\frame-0012.png",
+      "maePerVariant": [
+        1.1380457970225126,
+        5.027321623093682,
+        4.439713825344953
+      ],
+      "passed": true
+    },
+    {
+      "scene": "02",
+      "variant": 0,
+      "frame": 819,
+      "kind": "captionSample",
+      "file": "actual-render-frames\\frame-0011.png",
+      "maePerVariant": [
+        1.2188390749818445,
+        5.081252836782862,
+        4.508176553800532
+      ],
+      "passed": true
+    },
+    {
+      "scene": "02",
+      "variant": 1,
+      "frame": 1071,
+      "kind": "firstFrame",
+      "file": "actual-render-frames\\frame-0013.png",
+      "maePerVariant": [
+        4.952715935911402,
+        1.1908827690026629,
+        4.44627189996369
+      ],
+      "passed": true
+    },
+    {
+      "scene": "02",
+      "variant": 1,
+      "frame": 1256,
+      "kind": "lastFrame",
+      "file": "actual-render-frames\\frame-0015.png",
+      "maePerVariant": [
+        4.963910448438635,
+        1.1888094589687725,
+        4.446548580852094
+      ],
+      "passed": true
+    },
+    {
+      "scene": "02",
+      "variant": 1,
+      "frame": 1113,
+      "kind": "captionSample",
+      "file": "actual-render-frames\\frame-0014.png",
+      "maePerVariant": [
+        4.960171946865166,
+        1.184334906802227,
+        4.445578779351247
+      ],
+      "passed": true
+    },
+    {
+      "scene": "02",
+      "variant": 2,
+      "frame": 1257,
+      "kind": "firstFrame",
+      "file": "actual-render-frames\\frame-0016.png",
+      "maePerVariant": [
+        4.272828915516825,
+        4.297585708666182,
+        1.161609628419269
+      ],
+      "passed": true
+    },
+    {
+      "scene": "02",
+      "variant": 2,
+      "frame": 1549,
+      "kind": "lastFrame",
+      "file": "actual-render-frames\\frame-0018.png",
+      "maePerVariant": [
+        4.294512527233116,
+        4.310553210481724,
+        1.0934451404018397
+      ],
+      "passed": true
+    },
+    {
+      "scene": "02",
+      "variant": 2,
+      "frame": 1300,
+      "kind": "captionSample",
+      "file": "actual-render-frames\\frame-0017.png",
+      "maePerVariant": [
+        4.294512527233116,
+        4.310553210481724,
+        1.0934451404018397
+      ],
+      "passed": true
+    },
+    {
+      "scene": "03",
+      "variant": 0,
+      "frame": 1550,
+      "kind": "firstFrame",
+      "file": "actual-render-frames\\frame-0019.png",
+      "maePerVariant": [
+        1.0101038640764948,
+        7.048329134894698,
+        7.291527853425321
+      ],
+      "passed": true
+    },
+    {
+      "scene": "03",
+      "variant": 0,
+      "frame": 1855,
+      "kind": "lastFrame",
+      "file": "actual-render-frames\\frame-0021.png",
+      "maePerVariant": [
+        0.9355846042120551,
+        7.008372102699105,
+        7.262093772694263
+      ],
+      "passed": true
+    },
+    {
+      "scene": "03",
+      "variant": 0,
+      "frame": 1602,
+      "kind": "captionSample",
+      "file": "actual-render-frames\\frame-0020.png",
+      "maePerVariant": [
+        1.0087756823408376,
+        7.047471102638586,
+        7.290537437969014
+      ],
+      "passed": true
+    },
+    {
+      "scene": "03",
+      "variant": 1,
+      "frame": 1856,
+      "kind": "firstFrame",
+      "file": "actual-render-frames\\frame-0022.png",
+      "maePerVariant": [
+        7.018140280803681,
+        1.0379090640885984,
+        7.601615831517793
+      ],
+      "passed": true
+    },
+    {
+      "scene": "03",
+      "variant": 1,
+      "frame": 2125,
+      "kind": "lastFrame",
+      "file": "actual-render-frames\\frame-0024.png",
+      "maePerVariant": [
+        7.045033171447591,
+        0.9788568899782136,
+        7.610664223251029
+      ],
+      "passed": true
+    },
+    {
+      "scene": "03",
+      "variant": 1,
+      "frame": 1895,
+      "kind": "captionSample",
+      "file": "actual-render-frames\\frame-0023.png",
+      "maePerVariant": [
+        7.020109008109416,
+        1.0357190677196806,
+        7.601942250665698
+      ],
+      "passed": true
+    },
+    {
+      "scene": "03",
+      "variant": 2,
+      "frame": 2126,
+      "kind": "firstFrame",
+      "file": "actual-render-frames\\frame-0025.png",
+      "maePerVariant": [
+        7.258210027838295,
+        7.560604083454369,
+        1.014499742798354
+      ],
+      "passed": true
+    },
+    {
+      "scene": "03",
+      "variant": 2,
+      "frame": 2305,
+      "kind": "lastFrame",
+      "file": "actual-render-frames\\frame-0027.png",
+      "maePerVariant": [
+        7.28890345104091,
+        7.607957743282498,
+        0.9969644532195594
+      ],
+      "passed": true
+    },
+    {
+      "scene": "03",
+      "variant": 2,
+      "frame": 2167,
+      "kind": "captionSample",
+      "file": "actual-render-frames\\frame-0026.png",
+      "maePerVariant": [
+        7.258181281771968,
+        7.5614244810578555,
+        1.012549170902929
+      ],
+      "passed": true
+    },
+    {
+      "scene": "04",
+      "variant": 0,
+      "frame": 2306,
+      "kind": "firstFrame",
+      "file": "actual-render-frames\\frame-0028.png",
+      "maePerVariant": [
+        1.014283390825466,
+        6.126611481784072,
+        11.627681516279353
+      ],
+      "passed": true
+    },
+    {
+      "scene": "04",
+      "variant": 0,
+      "frame": 2505,
+      "kind": "lastFrame",
+      "file": "actual-render-frames\\frame-0030.png",
+      "maePerVariant": [
+        1.0155552151416123,
+        6.122834589082546,
+        11.629169692568384
+      ],
+      "passed": true
+    },
+    {
+      "scene": "04",
+      "variant": 0,
+      "frame": 2360,
+      "kind": "captionSample",
+      "file": "actual-render-frames\\frame-0029.png",
+      "maePerVariant": [
+        1.0136042650084724,
+        6.12603183248608,
+        11.627440011498427
+      ],
+      "passed": true
+    },
+    {
+      "scene": "04",
+      "variant": 1,
+      "frame": 2506,
+      "kind": "firstFrame",
+      "file": "actual-render-frames\\frame-0031.png",
+      "maePerVariant": [
+        6.012258306100217,
+        0.9049887663398692,
+        9.95042003298233
+      ],
+      "passed": true
+    },
+    {
+      "scene": "04",
+      "variant": 1,
+      "frame": 2868,
+      "kind": "lastFrame",
+      "file": "actual-render-frames\\frame-0033.png",
+      "maePerVariant": [
+        5.989665600036311,
+        0.8333042090292908,
+        9.916215050835149
+      ],
+      "passed": true
+    },
+    {
+      "scene": "04",
+      "variant": 1,
+      "frame": 2553,
+      "kind": "captionSample",
+      "file": "actual-render-frames\\frame-0032.png",
+      "maePerVariant": [
+        6.013449376664245,
+        0.9037125922900024,
+        9.950597048232874
+      ],
+      "passed": true
+    },
+    {
+      "scene": "04",
+      "variant": 2,
+      "frame": 2869,
+      "kind": "firstFrame",
+      "file": "actual-render-frames\\frame-0034.png",
+      "maePerVariant": [
+        11.499379879266522,
+        9.886334649600581,
+        0.8386055888404744
+      ],
+      "passed": true
+    },
+    {
+      "scene": "04",
+      "variant": 2,
+      "frame": 3069,
+      "kind": "lastFrame",
+      "file": "actual-render-frames\\frame-0036.png",
+      "maePerVariant": [
+        11.505617586540788,
+        9.904779222645848,
+        0.8039077629508594
+      ],
+      "passed": true
+    },
+    {
+      "scene": "04",
+      "variant": 2,
+      "frame": 2917,
+      "kind": "captionSample",
+      "file": "actual-render-frames\\frame-0035.png",
+      "maePerVariant": [
+        11.498298686758654,
+        9.889746542907288,
+        0.8360776370733478
+      ],
+      "passed": true
+    },
+    {
+      "scene": "05",
+      "variant": 0,
+      "frame": 3070,
+      "kind": "firstFrame",
+      "file": "actual-render-frames\\frame-0037.png",
+      "maePerVariant": [
+        0.9883512239772451,
+        4.73189640825466,
+        4.8932325708060995
+      ],
+      "passed": true
+    },
+    {
+      "scene": "05",
+      "variant": 0,
+      "frame": 3267,
+      "kind": "lastFrame",
+      "file": "actual-render-frames\\frame-0039.png",
+      "maePerVariant": [
+        0.9881562424352457,
+        4.732289586359236,
+        4.894711669389978
+      ],
+      "passed": true
+    },
+    {
+      "scene": "05",
+      "variant": 0,
+      "frame": 3122,
+      "kind": "captionSample",
+      "file": "actual-render-frames\\frame-0038.png",
+      "maePerVariant": [
+        0.9879045252360203,
+        4.73179087993222,
+        4.892939436577101
+      ],
+      "passed": true
+    },
+    {
+      "scene": "05",
+      "variant": 1,
+      "frame": 3268,
+      "kind": "firstFrame",
+      "file": "actual-render-frames\\frame-0040.png",
+      "maePerVariant": [
+        4.70863554526749,
+        0.9812131218228032,
+        4.666602933611716
+      ],
+      "passed": true
+    },
+    {
+      "scene": "05",
+      "variant": 1,
+      "frame": 3542,
+      "kind": "lastFrame",
+      "file": "actual-render-frames\\frame-0042.png",
+      "maePerVariant": [
+        4.698554564572743,
+        0.9016854272573226,
+        4.640733554224159
+      ],
+      "passed": true
+    },
+    {
+      "scene": "05",
+      "variant": 1,
+      "frame": 3307,
+      "kind": "captionSample",
+      "file": "actual-render-frames\\frame-0041.png",
+      "maePerVariant": [
+        4.712924193597192,
+        0.9778140885984024,
+        4.668910372791092
+      ],
+      "passed": true
+    },
+    {
+      "scene": "05",
+      "variant": 2,
+      "frame": 3543,
+      "kind": "firstFrame",
+      "file": "actual-render-frames\\frame-0043.png",
+      "maePerVariant": [
+        4.785804360324376,
+        4.579068513979666,
+        0.8675939164245946
+      ],
+      "passed": true
+    },
+    {
+      "scene": "05",
+      "variant": 2,
+      "frame": 3826,
+      "kind": "lastFrame",
+      "file": "actual-render-frames\\frame-0045.png",
+      "maePerVariant": [
+        4.808733697954491,
+        4.6153057673686755,
+        0.8635480967078188
+      ],
+      "passed": true
+    },
+    {
+      "scene": "05",
+      "variant": 2,
+      "frame": 3588,
+      "kind": "captionSample",
+      "file": "actual-render-frames\\frame-0044.png",
+      "maePerVariant": [
+        4.795913330610022,
+        4.601261044541274,
+        0.8373982540547082
+      ],
+      "passed": true
+    },
+    {
+      "scene": "06",
+      "variant": 0,
+      "frame": 3827,
+      "kind": "firstFrame",
+      "file": "actual-render-frames\\frame-0046.png",
+      "maePerVariant": [
+        1.0061524146695715,
+        4.730490687787461,
+        4.899385552832244
+      ],
+      "passed": true
+    },
+    {
+      "scene": "06",
+      "variant": 0,
+      "frame": 4016,
+      "kind": "lastFrame",
+      "file": "actual-render-frames\\frame-0048.png",
+      "maePerVariant": [
+        1.0058815964657468,
+        4.730724438695231,
+        4.90065000151295
+      ],
+      "passed": true
+    },
+    {
+      "scene": "06",
+      "variant": 0,
+      "frame": 3875,
+      "kind": "captionSample",
+      "file": "actual-render-frames\\frame-0047.png",
+      "maePerVariant": [
+        1.0056342290002422,
+        4.730242942084241,
+        4.898876066630356
+      ],
+      "passed": true
+    },
+    {
+      "scene": "06",
+      "variant": 1,
+      "frame": 4017,
+      "kind": "firstFrame",
+      "file": "actual-render-frames\\frame-0049.png",
+      "maePerVariant": [
+        4.704317583514887,
+        0.998084036855483,
+        4.66168584331881
+      ],
+      "passed": true
+    },
+    {
+      "scene": "06",
+      "variant": 1,
+      "frame": 4189,
+      "kind": "lastFrame",
+      "file": "actual-render-frames\\frame-0051.png",
+      "maePerVariant": [
+        4.693247700314694,
+        0.91638279926168,
+        4.6425825692931495
+      ],
+      "passed": true
+    },
+    {
+      "scene": "06",
+      "variant": 1,
+      "frame": 4051,
+      "kind": "captionSample",
+      "file": "actual-render-frames\\frame-0050.png",
+      "maePerVariant": [
+        4.708505242374728,
+        0.9949028685548292,
+        4.664843560881143
+      ],
+      "passed": true
+    },
+    {
+      "scene": "06",
+      "variant": 2,
+      "frame": 4190,
+      "kind": "firstFrame",
+      "file": "actual-render-frames\\frame-0052.png",
+      "maePerVariant": [
+        4.790676818566933,
+        4.574461200375212,
+        0.8863064708908254
+      ],
+      "passed": true
+    },
+    {
+      "scene": "06",
+      "variant": 2,
+      "frame": 4576,
+      "kind": "lastFrame",
+      "file": "actual-render-frames\\frame-0054.png",
+      "maePerVariant": [
+        4.801513518215928,
+        4.599682280319535,
+        0.8537298021060277
+      ],
+      "passed": true
+    },
+    {
+      "scene": "06",
+      "variant": 2,
+      "frame": 4240,
+      "kind": "captionSample",
+      "file": "actual-render-frames\\frame-0053.png",
+      "maePerVariant": [
+        4.793811652747519,
+        4.578863130900508,
+        0.8849005613047688
+      ],
+      "passed": true
+    },
+    {
+      "scene": "07",
+      "variant": 0,
+      "frame": 4577,
+      "kind": "firstFrame",
+      "file": "actual-render-frames\\frame-0055.png",
+      "maePerVariant": [
+        1.0860451086298717,
+        2.429318718228032,
+        2.437207433127572
+      ],
+      "passed": true
+    },
+    {
+      "scene": "07",
+      "variant": 0,
+      "frame": 4853,
+      "kind": "lastFrame",
+      "file": "actual-render-frames\\frame-0057.png",
+      "maePerVariant": [
+        1.0208927166545632,
+        2.36799220073832,
+        2.375730377027354
+      ],
+      "passed": true
+    },
+    {
+      "scene": "07",
+      "variant": 0,
+      "frame": 4623,
+      "kind": "captionSample",
+      "file": "actual-render-frames\\frame-0056.png",
+      "maePerVariant": [
+        1.084626149842653,
+        2.4278309201767123,
+        2.435766158315178
+      ],
+      "passed": true
+    },
+    {
+      "scene": "07",
+      "variant": 1,
+      "frame": 4854,
+      "kind": "firstFrame",
+      "file": "actual-render-frames\\frame-0058.png",
+      "maePerVariant": [
+        2.3547101942628905,
+        1.0282307174412975,
+        2.3498154199951586
+      ],
+      "passed": true
+    },
+    {
+      "scene": "07",
+      "variant": 1,
+      "frame": 5139,
+      "kind": "lastFrame",
+      "file": "actual-render-frames\\frame-0060.png",
+      "maePerVariant": [
+        2.3679927680948922,
+        1.0210755945896877,
+        2.3572126149842654
+      ],
+      "passed": true
+    },
+    {
+      "scene": "07",
+      "variant": 1,
+      "frame": 4900,
+      "kind": "captionSample",
+      "file": "actual-render-frames\\frame-0059.png",
+      "maePerVariant": [
+        2.355209846284193,
+        1.0276225111958364,
+        2.3496769849915276
+      ],
+      "passed": true
+    },
+    {
+      "scene": "07",
+      "variant": 2,
+      "frame": 5140,
+      "kind": "firstFrame",
+      "file": "actual-render-frames\\frame-0061.png",
+      "maePerVariant": [
+        2.370671258472525,
+        2.3432885499878964,
+        1.0293972025538611
+      ],
+      "passed": true
+    },
+    {
+      "scene": "07",
+      "variant": 2,
+      "frame": 5402,
+      "kind": "lastFrame",
+      "file": "actual-render-frames\\frame-0063.png",
+      "maePerVariant": [
+        2.3763017050956186,
+        2.3577833756959574,
+        1.0210672733599613
+      ],
+      "passed": true
+    },
+    {
+      "scene": "07",
+      "variant": 2,
+      "frame": 5180,
+      "kind": "captionSample",
+      "file": "actual-render-frames\\frame-0062.png",
+      "maePerVariant": [
+        2.371658269789397,
+        2.3451572334180586,
+        1.0281851397966595
+      ],
+      "passed": true
+    },
+    {
+      "scene": "08",
+      "variant": 0,
+      "frame": 5403,
+      "kind": "firstFrame",
+      "file": "actual-render-frames\\frame-0064.png",
+      "maePerVariant": [
+        0.9469956578310338,
+        8.118698559670781,
+        6.94619568506415
+      ],
+      "passed": true
+    },
+    {
+      "scene": "08",
+      "variant": 0,
+      "frame": 5600,
+      "kind": "lastFrame",
+      "file": "actual-render-frames\\frame-0066.png",
+      "maePerVariant": [
+        0.9446946486928104,
+        8.112098500665699,
+        6.940082039760348
+      ],
+      "passed": true
+    },
+    {
+      "scene": "08",
+      "variant": 0,
+      "frame": 5453,
+      "kind": "captionSample",
+      "file": "actual-render-frames\\frame-0065.png",
+      "maePerVariant": [
+        0.946544987593803,
+        8.118189262587752,
+        6.945923921266037
+      ],
+      "passed": true
+    },
+    {
+      "scene": "08",
+      "variant": 1,
+      "frame": 5601,
+      "kind": "firstFrame",
+      "file": "actual-render-frames\\frame-0067.png",
+      "maePerVariant": [
+        8.263136763192932,
+        1.145562704248366,
+        9.5008500892641
+      ],
+      "passed": true
+    },
+    {
+      "scene": "08",
+      "variant": 1,
+      "frame": 5913,
+      "kind": "lastFrame",
+      "file": "actual-render-frames\\frame-0069.png",
+      "maePerVariant": [
+        8.245334626906319,
+        1.0527874228395062,
+        9.464661439421448
+      ],
+      "passed": true
+    },
+    {
+      "scene": "08",
+      "variant": 1,
+      "frame": 5653,
+      "kind": "captionSample",
+      "file": "actual-render-frames\\frame-0068.png",
+      "maePerVariant": [
+        8.246017913338173,
+        1.0536813876785283,
+        9.465524010530139
+      ],
+      "passed": true
+    },
+    {
+      "scene": "08",
+      "variant": 2,
+      "frame": 5914,
+      "kind": "firstFrame",
+      "file": "actual-render-frames\\frame-0070.png",
+      "maePerVariant": [
+        6.856098137557492,
+        9.224107548111837,
+        0.936617760530138
+      ],
+      "passed": true
+    },
+    {
+      "scene": "08",
+      "variant": 2,
+      "frame": 6299,
+      "kind": "lastFrame",
+      "file": "actual-render-frames\\frame-0072.png",
+      "maePerVariant": [
+        6.855923769970951,
+        9.248802688513678,
+        0.8791415138586297
+      ],
+      "passed": true
+    },
+    {
+      "scene": "08",
+      "variant": 2,
+      "frame": 5957,
+      "kind": "captionSample",
+      "file": "actual-render-frames\\frame-0071.png",
+      "maePerVariant": [
+        6.857141884531591,
+        9.225636574074073,
+        0.9341983629871701
+      ],
+      "passed": true
+    },
+    {
+      "scene": "09",
+      "variant": 0,
+      "frame": 6300,
+      "kind": "firstFrame",
+      "file": "actual-render-frames\\frame-0073.png",
+      "maePerVariant": [
+        1.1465786507504236,
+        4.171960292604696,
+        6.75615619704672
+      ],
+      "passed": true
+    },
+    {
+      "scene": "09",
+      "variant": 0,
+      "frame": 6561,
+      "kind": "lastFrame",
+      "file": "actual-render-frames\\frame-0075.png",
+      "maePerVariant": [
+        1.066446343197773,
+        4.107496860626967,
+        6.704001755022997
+      ],
+      "passed": true
+    },
+    {
+      "scene": "09",
+      "variant": 0,
+      "frame": 6338,
+      "kind": "captionSample",
+      "file": "actual-render-frames\\frame-0074.png",
+      "maePerVariant": [
+        1.1454435593681918,
+        4.1709685533163885,
+        6.7556588144517065
+      ],
+      "passed": true
+    },
+    {
+      "scene": "09",
+      "variant": 1,
+      "frame": 6562,
+      "kind": "firstFrame",
+      "file": "actual-render-frames\\frame-0076.png",
+      "maePerVariant": [
+        4.102383275841201,
+        1.1080534374243525,
+        6.741235664790608
+      ],
+      "passed": true
+    },
+    {
+      "scene": "09",
+      "variant": 1,
+      "frame": 6828,
+      "kind": "lastFrame",
+      "file": "actual-render-frames\\frame-0078.png",
+      "maePerVariant": [
+        4.111885174594529,
+        1.068706313543936,
+        6.742910312273057
+      ],
+      "passed": true
+    },
+    {
+      "scene": "09",
+      "variant": 1,
+      "frame": 6602,
+      "kind": "captionSample",
+      "file": "actual-render-frames\\frame-0077.png",
+      "maePerVariant": [
+        4.10452920751634,
+        1.105062522694263,
+        6.742366406439118
+      ],
+      "passed": true
+    },
+    {
+      "scene": "09",
+      "variant": 2,
+      "frame": 6829,
+      "kind": "firstFrame",
+      "file": "actual-render-frames\\frame-0079.png",
+      "maePerVariant": [
+        6.687000347978697,
+        6.714168406560155,
+        1.0873613758775116
+      ],
+      "passed": true
+    },
+    {
+      "scene": "09",
+      "variant": 2,
+      "frame": 7003,
+      "kind": "lastFrame",
+      "file": "actual-render-frames\\frame-0081.png",
+      "maePerVariant": [
+        6.688986474219317,
+        6.716654184822077,
+        1.0850730377027353
+      ],
+      "passed": true
+    },
+    {
+      "scene": "09",
+      "variant": 2,
+      "frame": 6868,
+      "kind": "captionSample",
+      "file": "actual-render-frames\\frame-0080.png",
+      "maePerVariant": [
+        6.688986474219317,
+        6.716654184822077,
+        1.0850730377027353
+      ],
+      "passed": true
+    },
+    {
+      "scene": "10",
+      "variant": 0,
+      "frame": 7004,
+      "kind": "firstFrame",
+      "file": "actual-render-frames\\frame-0082.png",
+      "maePerVariant": [
+        1.1075517050956185,
+        2.4440140099249574,
+        2.446015265674171
+      ],
+      "passed": true
+    },
+    {
+      "scene": "10",
+      "variant": 0,
+      "frame": 7283,
+      "kind": "lastFrame",
+      "file": "actual-render-frames\\frame-0084.png",
+      "maePerVariant": [
+        1.035858259198741,
+        2.3759660191236986,
+        2.3767936032437667
+      ],
+      "passed": true
+    },
+    {
+      "scene": "10",
+      "variant": 0,
+      "frame": 7052,
+      "kind": "captionSample",
+      "file": "actual-render-frames\\frame-0083.png",
+      "maePerVariant": [
+        1.106375764040184,
+        2.4428422294843863,
+        2.444801879084967
+      ],
+      "passed": true
+    },
+    {
+      "scene": "10",
+      "variant": 1,
+      "frame": 7284,
+      "kind": "firstFrame",
+      "file": "actual-render-frames\\frame-0085.png",
+      "maePerVariant": [
+        2.362420191842169,
+        1.04414355634229,
+        2.354117684882595
+      ],
+      "passed": true
+    },
+    {
+      "scene": "10",
+      "variant": 1,
+      "frame": 7548,
+      "kind": "lastFrame",
+      "file": "actual-render-frames\\frame-0087.png",
+      "maePerVariant": [
+        2.3762909253207454,
+        1.0348370173686758,
+        2.359302945715323
+      ],
+      "passed": true
+    },
+    {
+      "scene": "10",
+      "variant": 1,
+      "frame": 7326,
+      "kind": "captionSample",
+      "file": "actual-render-frames\\frame-0086.png",
+      "maePerVariant": [
+        2.3644851806463323,
+        1.042676183127572,
+        2.3549923595981603
+      ],
+      "passed": true
+    },
+    {
+      "scene": "10",
+      "variant": 2,
+      "frame": 7549,
+      "kind": "firstFrame",
+      "file": "actual-render-frames\\frame-0088.png",
+      "maePerVariant": [
+        2.369928966957153,
+        2.3431680812757203,
+        1.044126913882837
+      ],
+      "passed": true
+    },
+    {
+      "scene": "10",
+      "variant": 2,
+      "frame": 7722,
+      "kind": "lastFrame",
+      "file": "actual-render-frames\\frame-0090.png",
+      "maePerVariant": [
+        2.3705594892277895,
+        2.3448240059912853,
+        1.0431230709876542
+      ],
+      "passed": true
+    },
+    {
+      "scene": "10",
+      "variant": 2,
+      "frame": 7587,
+      "kind": "captionSample",
+      "file": "actual-render-frames\\frame-0089.png",
+      "maePerVariant": [
+        2.3705594892277895,
+        2.3448240059912853,
+        1.0431230709876542
+      ],
+      "passed": true
+    },
+    {
+      "scene": "11",
+      "variant": 0,
+      "frame": 7723,
+      "kind": "firstFrame",
+      "file": "actual-render-frames\\frame-0091.png",
+      "maePerVariant": [
+        0.8598150795812153,
+        10.76242964778504,
+        13.798002526627934
+      ],
+      "passed": true
+    },
+    {
+      "scene": "11",
+      "variant": 0,
+      "frame": 7928,
+      "kind": "lastFrame",
+      "file": "actual-render-frames\\frame-0093.png",
+      "maePerVariant": [
+        0.858622117828613,
+        10.761051727789882,
+        13.797019865044783
+      ],
+      "passed": true
+    },
+    {
+      "scene": "11",
+      "variant": 0,
+      "frame": 7774,
+      "kind": "captionSample",
+      "file": "actual-render-frames\\frame-0092.png",
+      "maePerVariant": [
+        0.8591435185185187,
+        10.761912407709998,
+        13.79757039003873
+      ],
+      "passed": true
+    },
+    {
+      "scene": "11",
+      "variant": 1,
+      "frame": 7929,
+      "kind": "firstFrame",
+      "file": "actual-render-frames\\frame-0094.png",
+      "maePerVariant": [
+        10.792588431977729,
+        0.9781047642822561,
+        18.754957750847254
+      ],
+      "passed": true
+    },
+    {
+      "scene": "11",
+      "variant": 1,
+      "frame": 8190,
+      "kind": "lastFrame",
+      "file": "actual-render-frames\\frame-0096.png",
+      "maePerVariant": [
+        10.770405168240137,
+        0.8859963159646576,
+        18.718447598946984
+      ],
+      "passed": true
+    },
+    {
+      "scene": "11",
+      "variant": 1,
+      "frame": 7972,
+      "kind": "captionSample",
+      "file": "actual-render-frames\\frame-0095.png",
+      "maePerVariant": [
+        10.793917370188817,
+        0.9760458272815299,
+        18.754917846768336
+      ],
+      "passed": true
+    },
+    {
+      "scene": "11",
+      "variant": 2,
+      "frame": 8191,
+      "kind": "firstFrame",
+      "file": "actual-render-frames\\frame-0097.png",
+      "maePerVariant": [
+        13.860901189179375,
+        18.757861481784072,
+        1.050407551137739
+      ],
+      "passed": true
+    },
+    {
+      "scene": "11",
+      "variant": 2,
+      "frame": 8484,
+      "kind": "lastFrame",
+      "file": "actual-render-frames\\frame-0099.png",
+      "maePerVariant": [
+        13.873188619583637,
+        18.78632008744856,
+        0.9659705201525055
+      ],
+      "passed": true
+    },
+    {
+      "scene": "11",
+      "variant": 2,
+      "frame": 8236,
+      "kind": "captionSample",
+      "file": "actual-render-frames\\frame-0098.png",
+      "maePerVariant": [
+        13.873245922597434,
+        18.786407649479546,
+        0.9660244190268701
+      ],
+      "passed": true
+    },
+    {
+      "scene": "12",
+      "variant": 0,
+      "frame": 8485,
+      "kind": "firstFrame",
+      "file": "actual-render-frames\\frame-0100.png",
+      "maePerVariant": [
+        1.0684672673081579,
+        8.326882299987895,
+        8.332545464173323
+      ],
+      "passed": true
+    },
+    {
+      "scene": "12",
+      "variant": 0,
+      "frame": 8681,
+      "kind": "lastFrame",
+      "file": "actual-render-frames\\frame-0102.png",
+      "maePerVariant": [
+        1.0677193022270637,
+        8.326692992011619,
+        8.332331570745582
+      ],
+      "passed": true
+    },
+    {
+      "scene": "12",
+      "variant": 0,
+      "frame": 8534,
+      "kind": "captionSample",
+      "file": "actual-render-frames\\frame-0101.png",
+      "maePerVariant": [
+        1.0677571259985477,
+        8.32655380053256,
+        8.332192379266521
+      ],
+      "passed": true
+    },
+    {
+      "scene": "12",
+      "variant": 1,
+      "frame": 8682,
+      "kind": "firstFrame",
+      "file": "actual-render-frames\\frame-0103.png",
+      "maePerVariant": [
+        8.441459392398935,
+        1.136090308036795,
+        2.4490315223311545
+      ],
+      "passed": true
+    },
+    {
+      "scene": "12",
+      "variant": 1,
+      "frame": 9005,
+      "kind": "lastFrame",
+      "file": "actual-render-frames\\frame-0105.png",
+      "maePerVariant": [
+        8.441189898027112,
+        1.0640101140764948,
+        2.3951982722101186
+      ],
+      "passed": true
+    },
+    {
+      "scene": "12",
+      "variant": 1,
+      "frame": 8736,
+      "kind": "captionSample",
+      "file": "actual-render-frames\\frame-0104.png",
+      "maePerVariant": [
+        8.441235664790607,
+        1.0641712433430162,
+        2.395310230573711
+      ],
+      "passed": true
+    },
+    {
+      "scene": "12",
+      "variant": 2,
+      "frame": 9006,
+      "kind": "firstFrame",
+      "file": "actual-render-frames\\frame-0106.png",
+      "maePerVariant": [
+        8.440673603546356,
+        2.3802739575768577,
+        1.0726042423142097
+      ],
+      "passed": true
+    },
+    {
+      "scene": "12",
+      "variant": 2,
+      "frame": 9300,
+      "kind": "lastFrame",
+      "file": "actual-render-frames\\frame-0108.png",
+      "maePerVariant": [
+        8.446877080307432,
+        2.3958830715928348,
+        1.0633052680948925
+      ],
+      "passed": true
+    },
+    {
+      "scene": "12",
+      "variant": 2,
+      "frame": 9056,
+      "kind": "captionSample",
+      "file": "actual-render-frames\\frame-0107.png",
+      "maePerVariant": [
+        8.441588938816267,
+        2.3821314829944322,
+        1.0715580367949649
+      ],
+      "passed": true
+    }
+  ],
+  "manualVisualInspection": {
+    "actualSampledFramesViewed": 36,
+    "contactSheets": [
+      "C:\\Users\\Zllyh\\Documents\\Codex\\2026-10-11\\n-h\\work\\drivelab\\.sites-runtime\\competition-video-v2\\actual-video-contact-1.jpg",
+      "C:\\Users\\Zllyh\\Documents\\Codex\\2026-10-11\\n-h\\work\\drivelab\\.sites-runtime\\competition-video-v2\\actual-video-contact-2.jpg",
+      "C:\\Users\\Zllyh\\Documents\\Codex\\2026-10-11\\n-h\\work\\drivelab\\.sites-runtime\\competition-video-v2\\actual-video-contact-3.jpg"
+    ],
+    "noRecurringAIDisclosureOnCards": true,
+    "noEngineeringAuditOrBugfixPromotionOnCards": true,
+    "noClippedTextObservedInSampledCards": true,
+    "scope": "Visual review of 36 actual decoded product card samples; does not claim human listening audit."
+  },
+  "rendererSha256": "7799fdf8ae53e669143955e20fd5749f6e767b8ea75d9bd92a1a9232a810d94c",
+  "editorialReview": {
+    "passed": true,
+    "actualVariantsReviewed": 36,
+    "reviewedBy": [
+      "producer",
+      "root"
+    ],
+    "focus": [
+      "产品用途、功能和价值",
+      "实际计算结果与引用",
+      "画面和旁白主题一致",
+      "无内部工程复核或修复叙事",
+      "无重复配音提示"
+    ],
+    "independentProductCardsReviewPassed": true
+  }
+}
