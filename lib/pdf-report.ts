@@ -1,4 +1,4 @@
-import {PDFDocument,rgb,type PDFPage,type PDFFont} from 'pdf-lib';
+import {PDFDocument,rgb,type PDFPage} from 'pdf-lib';
 import fontkit from '@pdf-lib/fontkit';
 import {scenarioNames,type Simulation} from './simulation';
 import {channelMeta,compare,type LogData,type Channel} from './logs';

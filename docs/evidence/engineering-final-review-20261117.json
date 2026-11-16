@@ -1,0 +1,467 @@
+{
+  "schemaVersion": "engineering-final-review-v1",
+  "reviewedOn": "2026-11-17",
+  "timezone": "Asia/Shanghai",
+  "initialEngineVersion": "1.1.2",
+  "finalEngineVersion": "1.1.3",
+  "scope": {
+    "repository": "C:/Users/Zllyh/Documents/Codex/2026-10-11/n-h/work/drivelab",
+    "reviewedFiles": [
+      "lib/simulation.ts",
+      "lib/logs.ts",
+      "lib/evidence.ts",
+      "lib/fingerprint.ts",
+      "lib/log-state.ts",
+      "lib/analysis.ts (candidate tool path)",
+      "scripts/test-core.mjs",
+      "scripts/validate-benchmarks.mjs",
+      "validation/",
+      "public/data/",
+      "README.md"
+    ],
+    "authorizedChanges": [
+      "lib/simulation.ts",
+      "lib/logs.ts",
+      "lib/evidence.ts",
+      "scripts/test-core.mjs",
+      "docs/evidence/engineering-final-review-20261117.json"
+    ],
+    "unchangedByThisReview": [
+      "Application UI",
+      "Existing saved records and older review JSON",
+      "Public benchmark-results.json",
+      "Public/validation source data CSVs",
+      "Deployment and remote model configuration"
+    ],
+    "method": "先独立只读审查和复现；主代理明确授权、完成 Sites source open 后，修复五项可复现边界并自检。数学与数据复核使用当前源码内存转译或只读原始数据，没有外部模型调用。",
+    "independenceLimit": "修复后的回归属于修复代理自检与独立数学交叉核验，不是第三方实验室、持证工程签署或实车标定。"
+  },
+  "conclusion": {
+    "summary": "用途与实现基本相符：这是面向学习和前期方案讨论的工况需求估算、日志对比与资料辅助解释工具。已发现并修复一项可能误判全部约束通过的低速弯道缺陷，以及四项采样/缺失/静止边界；当前核心回归与独立数值交叉核验通过。",
+    "competitionQuality": "具备可演示的软件闭环和可追溯工程证据。比赛材料应继续准确说明水平路面、给定轨迹需求、采样与公开数据用途；本审查不判断报名资格、评委评分或获奖结果。",
+    "remainingBlockingEngineeringFindings": [],
+    "usefulFor": [
+      "五类模板下的初步需求与约束比较",
+      "输入条件变化后的可复算方案讨论",
+      "规范日志的单位、时间轴与误差检查",
+      "将计算事实与资料段落连接并输出报告"
+    ],
+    "notValidatedFor": [
+      "真实车辆闭环控制或路径跟踪",
+      "轮胎饱和后的实际运动",
+      "车辆外形碰撞/避障成功判定",
+      "坡度、横风、悬架与载荷转移",
+      "车型真实液压压力或传感器故障诊断",
+      "实车模型精度、安全认证或持证签署"
+    ]
+  },
+  "sourceSha256": {
+    "lib/simulation.ts": "c281443f7722589772ed2b738b03d2ae5603a7ba4727ca35437d99b90ea9be51",
+    "lib/logs.ts": "28d8f4c0710c58bd35706f8495856eccfe83f6d9b6be87b892390cde6d5132a9",
+    "lib/evidence.ts": "925f8bed2198d326db3da4d7b12227390304c000ce0c971c2fa228f7daabe9f4",
+    "scripts/test-core.mjs": "c1e2f99cc746af9df263b1486a7d75b957de773ebfbff5ce705ad5a6c90524ca",
+    "validation/independent-reference-cases.json": "fd39ae03d895a6129da5927ec6bde1d7160da422fa31ad91a25352cf1a869b70"
+  },
+  "fixedFindings": [
+    {
+      "id": "FINAL-CURVE-LOW-SPEED",
+      "priority": "P1",
+      "status": "fixed",
+      "issue": "通用 v>0.1 m/s 数值保护也用于稳态圆周，非零低速下把有转向需求的圆周计算为零方向盘角并判全部约束通过。",
+      "inputPatch": {
+        "scenario": "curve",
+        "speed": 0.1,
+        "radius": 10,
+        "steeringLimit": 90,
+        "duration": 12
+      },
+      "before": {
+        "risk": "约束内",
+        "maxSteerDeg": 0,
+        "yawDegps": 0
+      },
+      "independentReference": {
+        "steeringFormula": "atan(wheelbase/radius)*180/pi*steeringRatio",
+        "steeringDeg": 234.63369685813092,
+        "yawFormula": "(speed_kmh/3.6)/radius*180/pi",
+        "yawDegps": 0.15915494309189535
+      },
+      "after": {
+        "risk": "高风险",
+        "maxSteerDeg": 234.63369685813092,
+        "yawDegps": 0.15915494309189535
+      },
+      "change": "正速度 curve 直接使用有限的圆周几何 r=v/R 和方向盘角 atan(L/R)·传动比；静止时输出零运动，不套用横向加速度除速度的保护分支。",
+      "regression": "0.1、0.36、0.361、36 km/h 的同半径约束与零速度边界。"
+    },
+    {
+      "id": "FINAL-EMPTY-CHANNEL",
+      "priority": "P2",
+      "status": "fixed",
+      "issue": "parseLog 原来只根据列名判断 missing；整列为空/无效，或有效值在重复行去重时被末行覆盖，导入 UI 的缺失清单会与服务器不一致。",
+      "reproducibleCsv": "time,speed,yaw\n0,10,\n1,10,",
+      "beforeMissing": [
+        "pressure",
+        "steering"
+      ],
+      "afterMissing": [
+        "yaw",
+        "pressure",
+        "steering"
+      ],
+      "change": "按去重后实际保留的有效通道值判定缺失，与 validatedLog 的口径一致。",
+      "regression": "空白列、全部无效数字列和去重后有效值消失三种情况；不补零。"
+    },
+    {
+      "id": "FINAL-SUBGRID-BRAKING",
+      "priority": "P2",
+      "status": "fixed_with_explicit_sampling_limit",
+      "issue": "很短制动脉冲可能完全发生在 0.1 s 行网格之间，原时序压力/附着利用率全为零，需求被遗漏。",
+      "inputPatch": {
+        "scenario": "urban",
+        "speed": 1,
+        "reaction": 0.01,
+        "decel": 5,
+        "duration": 5
+      },
+      "analyticBrakingIntervalS": [
+        0.01,
+        0.06555555555555556
+      ],
+      "before": {
+        "rowCount": 51,
+        "maximumSampledPressureBar": 0,
+        "maxUtil": 0,
+        "risk": "约束内"
+      },
+      "after": {
+        "rowCount": 51,
+        "maximumSampledPressureBar": 0,
+        "maxPressureBar": 45,
+        "maxUtil": 0.63710499490316,
+        "brakingEventMissedByGrid": true,
+        "risk": "需关注"
+      },
+      "change": "保留原 0.1 s 网格与 MAE/RMSE 兼容口径。maxPressure 表示恒有效减速度下解析压力需求峰值；maxUtil 至少包含解析纵向 a/(mu*g)。脉冲未被行采样捕捉时明确给出制动事件采样覆盖告警，解释曲线零值不代表没有需求。新增 SIM_PRESSURE 事实，明示为集总增益估计而非实测液压压力。",
+      "applicability": "仍不把不在网格上的事件伪造为采集数据，也不把联合纵横向连续极值声称为已精确求解。"
+    },
+    {
+      "id": "FINAL-ALREADY-STOPPED",
+      "priority": "P3",
+      "status": "fixed",
+      "issue": "初速为零时原停车时间仍等于响应时间，虽车辆已静止。",
+      "inputPatch": {
+        "scenario": "urban",
+        "speed": 0,
+        "reaction": 5
+      },
+      "before": {
+        "stopTimeS": 5,
+        "stoppingDistanceM": 0
+      },
+      "after": {
+        "stopTimeS": 0,
+        "stoppingDistanceM": 0,
+        "maxPressureBar": 0
+      },
+      "change": "仅正初速使用 reaction+v0/a；初速零返回停车时间零。",
+      "regression": "城市与高速两个允许静止的场景。"
+    },
+    {
+      "id": "FINAL-OUTSIDE-GAP-WARNING",
+      "priority": "P3",
+      "status": "fixed",
+      "issue": "只在共同比较窗边界接触、完全位于窗外的长采样间隔也被计入最大插值间隔，造成停采提醒误报。",
+      "input": {
+        "csv": "time,speed\n0,36\n60,36\n61,36",
+        "offset": -60,
+        "canonicalTimes": [
+          -60,
+          0,
+          1
+        ],
+        "commonInterval": [
+          0,
+          1
+        ]
+      },
+      "beforeMaxInterpolationGapS": 60,
+      "afterMaxInterpolationGapS": 1,
+      "change": "仅统计与共同比较区间有严格正长度重叠的原始相邻采样段；仍保留真正跨过比较窗的长间隔。"
+    }
+  ],
+  "remainingBoundaries": [
+    {
+      "id": "FINAL-CONTINUOUS-PEAK",
+      "priority": "P2",
+      "status": "documented_model_limit",
+      "issue": "五次换道和联合需求的采样峰值不等于连续时间严格峰值；贴边阈值可出现采样通过而连续值微超。",
+      "inputPatch": {
+        "scenario": "lane",
+        "speed": 90,
+        "duration": 12,
+        "laneWidth": 3.5,
+        "laneTime": 5,
+        "lateralLimit": 0.808
+      },
+      "sampledPeakLateral": 0.8072064000000011,
+      "independentContinuousPeakLateral": 0.8082903768654761,
+      "continuousFormula": "10*sqrt(3)/3 * laneWidth / laneTime^2",
+      "observedRisk": "约束内",
+      "acceptance": "材料与使用说明应称采样需求峰值；贴近阈值加密或解析极值评估。当前不得把约束内解释为连续时间或实车安全保证。",
+      "futureImprovement": "针对五次多项式和复合利用率增加独立连续极值求解与回归。"
+    },
+    {
+      "id": "FINAL-LOG-PROVENANCE",
+      "priority": "P2",
+      "status": "remaining_metadata_limit",
+      "issue": "LogData 没有持久化显式来源类型；来源特定限制仍通过文件名“演示”或“comma2k19”推断，重命名会丢失特定来源提示。",
+      "mitigation": "所有绑定日志均有一般误差用途限制；公开样例附来源、固定提交、许可和哈希；缺失通道不会补造。",
+      "acceptance": "用户导入只能默认来源未经核验，文件名不能证明实测；公开片段只能作为导入/单位/时间轴示例。",
+      "futureImprovement": "显式持久化 app_synthetic、known_public_sample、user_import_unverified 及原始 hash/来源元数据。"
+    }
+  ],
+  "modelAndUseReview": {
+    "longitudinal": "水平路面、恒有效减速度；有效减速度 min(请求,底盘极限,mu*g)，精确分段积分位置，速度不反向。",
+    "highway": "前车恒速；全过程最小间距通过闭式相对运动求取，不把自车停车距离直接和初始车距相减判碰撞。",
+    "urban": "固定目标的纵向停车需求；没有交通灯、感知或行为决策仿真。",
+    "curve": "稳态圆周需求 ay=v²/R；横摆 v/R，方向盘角由轴距/半径与传动比计算。没有动态侧偏或轮胎饱和求解。",
+    "lane": "五次时间轨迹给定 W/T，侧向加速度为二阶时间导数；固定 W/T 时单纯降速不会降低该 ay，反而可能增加几何转向角需求。",
+    "avoid": "叠加纵向制动和给定横向需求，检查摩擦圆与转向。默认避障模板已报告转向超限/低速适用性/停车早于轨迹结束，未伪称可执行路径或成功避障。",
+    "roadSlope": "没有坡度参数和路坡动力学；README 明确排除坡度。当前“道路”参数表达附着与半径，不能宣传上/下坡制动评估。",
+    "pressure": "F=ma 与 N/bar 集总增益转换为 bar；maxPressure 为解析需求，不是液压系统仿真或实测。",
+    "units": "内部速度 m/s，界面/日志标准 km/h；横摆 rad/s→°/s；方向盘角°与前轮角经传动比区分；ms→s；质量kg、长度m、压力bar。",
+    "candidateSemantics": "默认与受限工具候选独立 simulate，保持路面条件，保留 CAND_n 事实范围和基线指纹，applied=false；候选不自动更改基线。候选计算不自动构成改进或安全证明。",
+    "logs": "统一单位后排序/去重/时间归零加偏移，共同区间内插值。MAE/RMSE/偏差按原仿真网格等点权；峰值/时刻在两网格并集判定。缺测不补零、不外推；插值不代表真实连续测量。"
+  },
+  "nominalTemplates": [
+    {
+      "id": "highway",
+      "risk": "约束内",
+      "rows": 201,
+      "maxLat": 0,
+      "maxSteer": 0,
+      "maxUtil": 0.63710499490316,
+      "maxPressure": 45,
+      "stoppingDistance": 99.38271604938272,
+      "stopTime": 6.355555555555555,
+      "predictedMinGap": 58.76543209876544,
+      "finite": true,
+      "findings": []
+    },
+    {
+      "id": "curve",
+      "risk": "约束内",
+      "rows": 201,
+      "maxLat": 2.5205761316872426,
+      "maxSteer": 16.040955309496756,
+      "maxUtil": 0.4671626599364734,
+      "maxPressure": 0,
+      "stoppingDistance": null,
+      "stopTime": null,
+      "predictedMinGap": null,
+      "finite": true,
+      "findings": []
+    },
+    {
+      "id": "lane",
+      "risk": "约束内",
+      "rows": 121,
+      "maxLat": 0.8072064000000011,
+      "maxSteer": 3.1079541902933485,
+      "maxUtil": 0.10285504587155976,
+      "maxPressure": 0,
+      "stoppingDistance": null,
+      "stopTime": null,
+      "predictedMinGap": null,
+      "finite": true,
+      "findings": []
+    },
+    {
+      "id": "avoid",
+      "risk": "高风险",
+      "rows": 121,
+      "maxLat": 1.6457142857142855,
+      "maxSteer": 1309.294033095454,
+      "maxUtil": 0.9060150780825762,
+      "maxPressure": 54,
+      "stoppingDistance": 33.14814814814815,
+      "stopTime": 3.377777777777778,
+      "predictedMinGap": 11.851851851851848,
+      "finite": true,
+      "findings": [
+        "轮胎附着约束",
+        "转向物理约束",
+        "低速横向模型适用性",
+        "避障轨迹适用性"
+      ]
+    },
+    {
+      "id": "urban",
+      "risk": "需关注",
+      "rows": 121,
+      "maxLat": 0,
+      "maxSteer": 0,
+      "maxUtil": 0.509683995922528,
+      "maxPressure": 36,
+      "stoppingDistance": 26.54320987654321,
+      "stopTime": 3.7777777777777777,
+      "predictedMinGap": 3.4567901234567913,
+      "finite": true,
+      "findings": [
+        "完整制动过程预测",
+        "制动与间距"
+      ]
+    }
+  ],
+  "freshVerification": {
+    "testedEngine": "1.1.3",
+    "coreRegression": {
+      "command": "node scripts/test-core.mjs",
+      "passed": 36,
+      "failed": 0,
+      "addedBoundaryRegressions": 5
+    },
+    "typecheck": {
+      "command": "node node_modules/typescript/bin/tsc --noEmit",
+      "exitCode": 0
+    },
+    "independentLongitudinalSweep": {
+      "method": "不调用应用解析输出作为期望；用独立分段闭式位置/速度与恒速目标位置逐点核对当前 simulate 的行输出。应用源码仅在内存转译，未写测试缓存或旧记录。",
+      "scenarios": [
+        "urban",
+        "highway",
+        "avoid"
+      ],
+      "speedsKmh": [
+        0,
+        1,
+        5,
+        36,
+        180
+      ],
+      "reactionS": [
+        0,
+        0.01,
+        0.83,
+        5
+      ],
+      "mu": [
+        0.05,
+        0.2,
+        0.8,
+        1.2
+      ],
+      "requestedDecel": [
+        0.1,
+        5,
+        12
+      ],
+      "durationS": 5.001,
+      "initialGapM": 200,
+      "exclusions": "avoid 初速低于 5 km/h 是明确非法输入，不计入有效 sweep。",
+      "cases": 624,
+      "samplePoints": 32448,
+      "maxDistanceErrorM": 3.410605131648481e-13,
+      "maxSpeedErrorMps": 1.0658141036401503e-13,
+      "maxGapErrorM": 3.410605131648481e-13,
+      "pass": true
+    },
+    "independentLogReference": {
+      "method": "固定 seed 的随机两组异步分段线性速度曲线；用独立顺序扫描插值核对 MAE、RMSE、联合节点峰值与阈值判定。",
+      "seed": 1729,
+      "cases": 120,
+      "simulationTimes": "0:0.1:5",
+      "measurementTimes": [
+        0,
+        0.05,
+        0.17,
+        0.81,
+        1.83,
+        2.29,
+        4.51,
+        5
+      ],
+      "maxStatisticsDifference": 1.4210854715202004e-14,
+      "pass": true
+    },
+    "legacyBehaviorChecks": [
+      "五模板原行数与有限性保留",
+      "0.05 s 合成 +100 km/h 尖峰仍 max=100、MAE=RMSE=0、判超差",
+      "短于采样步长的共同区间保留峰值而均方统计为null",
+      "无共同区间不外推",
+      "低速lane/avoid非法候选跳过"
+    ],
+    "fingerprintUpgrade": {
+      "method": "同一输入分别调用实际 fingerprint 模块，仅替换其依赖的引擎版本为旧1.1.2与当前1.1.3，不读取旧保存记录。",
+      "beforeVersion": "1.1.2",
+      "beforeFingerprint": "b7283ad06e093143c9b6d51d",
+      "currentVersion": "1.1.3",
+      "currentFingerprint": "4d8988ad590eb903d51d0fc6",
+      "oldAnalysisBecomesStale": true
+    },
+    "integrationScope": "完整pnpm test/API/构建/部署由主代理另行执行；此文件不冒称已代替主代理完成其后续验收。scripts/validate-benchmarks.mjs 是实际参考脚本名，会改写public/validation/benchmark-results.json，因此本代理未直接重跑该写入脚本。"
+  },
+  "publicDataReconstruction": {
+    "method": "只读四个原始NPY，allow_pickle=False；核验Git blob与SHA256、严格递增时间；在内存生成CSV，不写旧文件。",
+    "verifiedOriginalFiles": [
+      "speed_t.npy",
+      "speed_value.npy",
+      "steering_t.npy",
+      "steering_value.npy"
+    ],
+    "sourceCommit": "4c7f1a6e1957745beadc1def0e7225f559b09a2a",
+    "rows": 4973,
+    "durationS": 59.98257067500526,
+    "csvFields": [
+      "time_s",
+      "speed_mps",
+      "steering_angle_deg"
+    ],
+    "reconstructedCsvSha256": "e97ef42e65251f5ba0ca9fc2dec334b9870a27638be88710545ac5f1d17cd722",
+    "matchesPublicAndValidationCopies": true,
+    "license": "MIT, comma.ai notice retained",
+    "missingChannels": [
+      "yaw",
+      "pressure"
+    ],
+    "transforms": "保留原始车速m/s及其时间戳；仅在共同区间将方向盘角线性插值到速度时刻；相对首时刻归零；不外推、不平滑。应用导入时才把m/s换为km/h。",
+    "priorRawAssetReconstructionGap": "已闭合：validation/original 当前含四个数组，内存重建与两份成品CSV哈希相同。",
+    "modelValidationClaim": false
+  },
+  "primaryEngineeringReferences": [
+    {
+      "id": "ENG-001",
+      "url": "https://courses.grainger.illinois.edu/ece101/fa2025/lectures/101-024-autonomous-driving.pdf",
+      "supports": "恒减速停车距离；响应行程另由匀速运动推导。"
+    },
+    {
+      "id": "ENG-002",
+      "url": "https://cseweb.ucsd.edu/classes/sp19/cse291-d/Files/CSE291_14_VehicleDynamics.pdf",
+      "supports": "摩擦圆与制动的工程近似和限制。"
+    },
+    {
+      "id": "ENG-003",
+      "url": "https://publications.ri.cmu.edu/storage/publications/pub_files/2009/2/Automatic_Steering_Methods_for_Autonomous_Automobile_Path_Tracking.pdf",
+      "supports": "无侧滑运动学单轨、r=v*tan(delta)/L、tan(delta)=L/R。"
+    },
+    {
+      "id": "ENG-004",
+      "url": "https://github.com/AtsushiSakai/PythonRobotics/blob/master/PathPlanning/QuinticPolynomialsPlanner/quintic_polynomials_planner.py",
+      "supports": "六边界五次轨迹与导数交叉验证思路。"
+    },
+    {
+      "id": "DATA-001",
+      "url": "https://github.com/commaai/comma2k19/tree/4c7f1a6e1957745beadc1def0e7225f559b09a2a",
+      "supports": "固定官方公开样例与仓库MIT许可。"
+    }
+  ],
+  "referenceScope": "来源已在既有engineering-sources.json研究中核验；本轮做本地代码/数学/数据复核，没有新增实车实验。",
+  "operationalCompliance": [
+    "未调用外部模型或网络服务",
+    "未读取密钥",
+    "未修改旧记录、旧审查JSON或公开基准结果",
+    "未提交、部署或发布",
+    "新增审查JSON使用LF换行"
+  ]
+}

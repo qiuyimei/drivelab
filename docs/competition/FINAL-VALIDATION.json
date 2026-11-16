@@ -1,8 +1,8 @@
 {
-  "reviewedOn": "2026-11-16",
-  "engineVersion": "1.1.2",
+  "reviewedOn": "2026-11-17",
+  "engineVersion": "1.1.3",
   "softwareChecksPassed": true,
-  "coreTests": 31,
+  "coreTests": 36,
   "analysisTests": 27,
   "savedWorkflowGroups": 5,
   "independentCases": 130,
@@ -10,18 +10,21 @@
   "retrievalCases": 12,
   "publicRows": 4973,
   "typecheck": "passed",
-  "build": "passed",
-  "localDatabase": "fresh/repeat/legacy-preservation passed",
+  "build": "passed via Sites build-site helper",
+  "localDatabase": "fresh/repeat/legacy-preservation passed; sandbox log-directory restriction resolved by normal local process permissions",
   "realModel": {
+    "engineVersion": "1.1.3",
     "provider": "modelscope",
     "model": "Qwen/Qwen3.5-27B",
-    "cases": 2,
+    "completedCases": 2,
+    "initialSemanticIssueRetained": true,
+    "afterPromptSelectedCase": "reviewed against actual computed facts",
     "requests": [
-      3,
-      3
+      1,
+      1
     ],
-    "candidateRegistryVerified": true,
-    "records": "LIVE-ENGINE-112-QA.json"
+    "newToolExecutionInFinalCase": false,
+    "records": "LIVE-ENGINE-113-QA.json"
   },
   "publicRawReproduction": {
     "status": "passed",
@@ -29,22 +32,16 @@
     "sha256": "e97ef42e65251f5ba0ca9fc2dec334b9870a27638be88710545ac5f1d17cd722"
   },
   "currentOnlineUi": {
-    "status": "passed",
-    "engineVersion": "1.1.2",
-    "question": "分析当前工况风险",
-    "modelCalls": 2,
-    "correction": true,
-    "generatedAtLocal": "2026-11-16 16:25:39 Asia/Shanghai",
-    "screenshot": "screenshots/final-ai.jpg",
-    "toolStepsInThisCase": false
+    "status": "1.1.3 deployment and browser access check pending; 1.1.2 historical evidence separate"
   },
-  "externalReviewerAccess": "not authorized or verified",
+  "externalReviewerAccess": "private owner-only; not authorized or verified for reviewers",
   "teamIdentity": "awaiting owner confirmation",
   "limits": [
     "软件复核不等同实车标定或专家签署。",
-    "0.1s采样的需求峰值不保证连续时间极值。",
-    "模型自然语言语义仍需人工复核。",
-    "公开日志只作导入与单位演示。"
+    "0.1s采样的横向/联合需求峰值不保证连续时间极值；解析纵向制动需求单独纳入。",
+    "结构及引用校验不证明所有自然语言语义；本轮已实际记录一例措辞问题并收紧提示。",
+    "公开日志只作导入与单位演示，不证明车型精度。",
+    "文件名来源提示不作为日志真实来源或工况一致性证明。"
   ],
   "resolvedAfterInitialReview": [
     "四个公开原始CAN NPY及MIT许可已补齐并完成相同CSV哈希重建。",
@@ -57,5 +54,45 @@
     "requests": 3,
     "rawAnswerRetained": false,
     "attribution": "不把此案例擅自归因为否定句误拦"
-  }
+  },
+  "historicalRealModel112": {
+    "provider": "modelscope",
+    "model": "Qwen/Qwen3.5-27B",
+    "cases": 2,
+    "requests": [
+      3,
+      3
+    ],
+    "candidateRegistryVerified": true,
+    "records": "LIVE-ENGINE-112-QA.json"
+  },
+  "historicalOnlineUi112": {
+    "status": "passed",
+    "engineVersion": "1.1.2",
+    "question": "分析当前工况风险",
+    "modelCalls": 2,
+    "correction": true,
+    "generatedAtLocal": "2026-11-16 16:25:39 Asia/Shanghai",
+    "screenshot": "screenshots/final-ai.jpg",
+    "toolStepsInThisCase": false
+  },
+  "lint": "passed, zero errors and warnings; generated PDF parser excluded",
+  "apiIntegration": "passed: authentication gate, server comparison, SSE, snapshot fingerprint, indexed page metadata and fixture cleanup (6 checks)",
+  "independentExtendedReview": {
+    "longitudinalCases": 624,
+    "timeSamples": 32448,
+    "asynchronousLogCases": 120,
+    "record": "docs/evidence/engineering-final-review-20261117.json"
+  },
+  "localUi": {
+    "status": "passed low-speed curve risk 234.6 degrees / limit 90 and 0.1 km/h display",
+    "screenshot": "outputs/DriveLab-113-低速弯道复验.jpg"
+  },
+  "resolvedIn113": [
+    "正速低速弯道不再用零横摆和零转向保护伪通过",
+    "去重后整列缺值与服务端missing一致",
+    "短制动事件有解析压力/附着需求及采样覆盖告警",
+    "静止车辆解析停车时间为零",
+    "窗口外仅接触边界的采样间隔不再引发稀疏警告"
+  ]
 }

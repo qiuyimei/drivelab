@@ -1,0 +1,915 @@
+{
+  "reviewedOn": "2026-11-17",
+  "engineVersion": "1.1.3",
+  "provider": "modelscope",
+  "model": "Qwen/Qwen3.5-27B",
+  "scope": "本机真实免费模型候选比较，非线上访问/所有问题准确率证明",
+  "secretsIncluded": false,
+  "initialCase": {
+    "modelCalls": 1,
+    "generatedAt": "2026-11-16T18:05:20.168Z",
+    "structured": {
+      "summary": "在高速跟驰制动评估工况下，对比基线（车速100km/h，间距80m）与两个候选方案：降低车速20%至80km/h（CAND_1）和增加初始间距至100m（CAND_2）。重算结果显示，两种措施均能提升全过程最小安全间距，其中增加间距对最小间距的绝对提升量更大，而降低车速同时显著缩短了理论停车距离和时间。所有方案在当前模型假设下风险等级均为“约束内”，附着利用率保持不变。",
+      "observations": [
+        {
+          "text": "基线工况下，全过程预测最小间距为58.8 m，解析停车距离为99.4 m，峰值附着利用率为63.7%。",
+          "factIds": [
+            "SIM_GAP",
+            "SIM_STOPPING_DISTANCE",
+            "SIM_UTILIZATION"
+          ],
+          "sourceIds": [
+            "KB-004#c1"
+          ]
+        },
+        {
+          "text": "候选方案CAND_1（车速降至80 km/h）将全过程预测最小间距提升至72.5 m，解析停车距离缩短至67.2 m，停车时间缩短至5.2 s，附着利用率保持63.7%不变。",
+          "factIds": [
+            "CAND_1__SIM_GAP",
+            "CAND_1__SIM_STOPPING_DISTANCE",
+            "CAND_1__SIM_STOP_TIME",
+            "CAND_1__SIM_UTILIZATION"
+          ],
+          "sourceIds": [
+            "KB-004#c1"
+          ]
+        },
+        {
+          "text": "候选方案CAND_2（间距增至100 m）将全过程预测最小间距提升至78.8 m，解析停车距离仍为99.4 m，停车时间仍为6.4 s，附着利用率保持63.7%不变。",
+          "factIds": [
+            "CAND_2__SIM_GAP",
+            "CAND_2__SIM_STOPPING_DISTANCE",
+            "CAND_2__SIM_STOP_TIME",
+            "CAND_2__SIM_UTILIZATION"
+          ],
+          "sourceIds": [
+            "KB-004#c1"
+          ]
+        },
+        {
+          "text": "比较两者效果，增加间距（CAND_2）使最小间距增加了约20.0 m，而降低车速（CAND_1）使最小间距增加了约13.7 m；但降低车速额外带来了停车距离减少32.2 m的收益。",
+          "factIds": [
+            "SIM_GAP",
+            "CAND_1__SIM_GAP",
+            "CAND_2__SIM_GAP",
+            "SIM_STOPPING_DISTANCE",
+            "CAND_1__SIM_STOPPING_DISTANCE"
+          ],
+          "sourceIds": [
+            "KB-004#c1"
+          ]
+        }
+      ],
+      "recommendations": [
+        {
+          "text": "若主要目标是最大化瞬时最小安全间距以应对突发近距离障碍，优先选择增加初始间距至100 m的方案（CAND_2），其最小间距增益最大。",
+          "factIds": [
+            "CAND_2__SIM_GAP",
+            "SIM_GAP"
+          ],
+          "sourceIds": [
+            "KB-004#c1"
+          ]
+        },
+        {
+          "text": "若需兼顾缩短紧急制动所需的总停车距离和响应时间，降低车速至80 km/h的方案（CAND_1）更为有效，可显著减少停车距离和所需时间。",
+          "factIds": [
+            "CAND_1__SIM_STOPPING_DISTANCE",
+            "CAND_1__SIM_STOP_TIME",
+            "SIM_STOPPING_DISTANCE",
+            "SIM_STOP_TIME"
+          ],
+          "sourceIds": [
+            "KB-004#c1"
+          ]
+        },
+        {
+          "text": "无论采取何种措施，当前模型下的峰值附着利用率均未超过阈值，但需注意该模型未包含轮胎非线性与载荷转移，实际附着需求可能更高。",
+          "factIds": [
+            "SIM_UTILIZATION",
+            "CAND_1__SIM_UTILIZATION",
+            "CAND_2__SIM_UTILIZATION"
+          ],
+          "sourceIds": [
+            "KB-001#c1"
+          ]
+        }
+      ],
+      "limitations": [
+        "本分析基于水平路面运动学模型，未考虑轮胎非线性、动态载荷转移及闭环控制延迟，实际车辆表现可能存在偏差。",
+        "工程阈值（如侧向加速度限值、制动力增益）为可配置初始值，尚未经过具体车型的实车标定与专业审核。",
+        "本次计算未绑定实测日志数据，无法诊断或修正具体实车的传感器偏差或执行器误差。",
+        "候选方案仅为独立重算结果，不代表已修改当前基线工况，且不能直接作为实车安全认证依据。"
+      ]
+    },
+    "structureAndReferenceValidationPassed": true,
+    "semanticReview": "发现一条将停车时间与响应时间混用的建议；保留此失败观察，不算语义全通过。"
+  },
+  "mitigation": "系统提示明确固定reaction与派生stopTime的区别，候选输入变化限定于实际patch；统一预测最小间距措辞。提示约束不是通用语义验证器。",
+  "finalCase": {
+    "answer": "计算引擎基线评估：约束内。\n以下为模型解释，已检查结构和引用编号，文字语义仍需工程审核。\n\n在高速跟驰制动评估工况下，对比基线（车速100 km/h，间距80 m）与两个独立候选方案：CAND_1（车速降至80 km/h）和CAND_2（间距增至100 m）。重算结果显示，降低车速使预测最小间距从58.8 m提升至72.5 m，同时解析停车距离缩短；增加初始间距使预测最小间距线性提升至78.8 m，但停车距离不变。两种方案均保持附着利用率63.7%且风险等级为“约束内”。\n\n基线工况下，全过程预测最小间距为58.8 m，解析停车距离为99.4 m，峰值附着利用率为63.7%。 [SIM_GAP，SIM_STOPPING_DISTANCE，SIM_UTILIZATION，KB-004#c1]\n\n候选CAND_1将初始车速从100 km/h降至80 km/h后，预测最小间距增加至72.5 m，解析停车距离缩短至67.2 m，停车时间缩短至5.2 s，附着利用率保持不变。 [CAND_1__SIM_GAP，CAND_1__SIM_STOPPING_DISTANCE，CAND_1__SIM_STOP_TIME，CAND_1__SIM_UTILIZATION，KB-004#c1]\n\n候选CAND_2将初始间距从80 m增至100 m后，预测最小间距增加至78.8 m，解析停车距离仍为99.4 m，停车时间仍为6.4 s，附着利用率保持不变。 [CAND_2__SIM_GAP，CAND_2__SIM_STOPPING_DISTANCE，CAND_2__SIM_STOP_TIME，CAND_2__SIM_UTILIZATION，KB-004#c1]\n\n降低车速通过减少反应行程和制动行程双重作用提升最小间距，而增加初始间距仅直接平移安全裕度，不改变车辆动力学需求。 [SIM_STOPPING_DISTANCE，CAND_1__SIM_STOPPING_DISTANCE，CAND_2__SIM_STOPPING_DISTANCE，KB-004#c1]\n\n若需在不改变初始跟车距离的前提下提升安全裕度，优先考虑降低车速，因其能同时减小停车距离并增大最小间距。 [CAND_1__SIM_GAP，CAND_1__SIM_STOPPING_DISTANCE，KB-004#c1]\n\n若受限于道路通行效率无法降速，可通过增加初始间距直接提升最小间距，但需注意这不会减少理论停车距离。 [CAND_2__SIM_GAP，CAND_2__SIM_STOPPING_DISTANCE，KB-004#c1]\n\n两种方案均未触及附着极限（63.7%），表明在当前摩擦系数下仍有纵向制动潜力，但模型未考虑载荷转移对实际附着的影响。 [SIM_UTILIZATION，CAND_1__SIM_UTILIZATION，CAND_2__SIM_UTILIZATION，KB-001#c1]\n\n工程边界：\n水平路面与运动学需求模型，不包含轮胎非线性、载荷转移和闭环控制。\n工程阈值与制动力增益为可配置初始值，需要车型标定与专业审核。\n本次未绑定测量日志，不能诊断具体实车偏差。\n\n模型补充限制：\n本分析基于水平路面恒减速运动学模型，未包含轮胎非线性、载荷转移及闭环控制动态，实际实车表现可能偏离仿真结果。\n工程阈值（如侧向加速度3 m/s²）与制动力增益为可配置初始值，尚未经过具体车型标定与专业审核。\n本次计算未绑定实测日志，无法诊断传感器偏差或执行器延迟等实车因素对制动过程的影响。",
+    "structured": {
+      "summary": "在高速跟驰制动评估工况下，对比基线（车速100 km/h，间距80 m）与两个独立候选方案：CAND_1（车速降至80 km/h）和CAND_2（间距增至100 m）。重算结果显示，降低车速使预测最小间距从58.8 m提升至72.5 m，同时解析停车距离缩短；增加初始间距使预测最小间距线性提升至78.8 m，但停车距离不变。两种方案均保持附着利用率63.7%且风险等级为“约束内”。",
+      "observations": [
+        {
+          "text": "基线工况下，全过程预测最小间距为58.8 m，解析停车距离为99.4 m，峰值附着利用率为63.7%。",
+          "factIds": [
+            "SIM_GAP",
+            "SIM_STOPPING_DISTANCE",
+            "SIM_UTILIZATION"
+          ],
+          "sourceIds": [
+            "KB-004#c1"
+          ]
+        },
+        {
+          "text": "候选CAND_1将初始车速从100 km/h降至80 km/h后，预测最小间距增加至72.5 m，解析停车距离缩短至67.2 m，停车时间缩短至5.2 s，附着利用率保持不变。",
+          "factIds": [
+            "CAND_1__SIM_GAP",
+            "CAND_1__SIM_STOPPING_DISTANCE",
+            "CAND_1__SIM_STOP_TIME",
+            "CAND_1__SIM_UTILIZATION"
+          ],
+          "sourceIds": [
+            "KB-004#c1"
+          ]
+        },
+        {
+          "text": "候选CAND_2将初始间距从80 m增至100 m后，预测最小间距增加至78.8 m，解析停车距离仍为99.4 m，停车时间仍为6.4 s，附着利用率保持不变。",
+          "factIds": [
+            "CAND_2__SIM_GAP",
+            "CAND_2__SIM_STOPPING_DISTANCE",
+            "CAND_2__SIM_STOP_TIME",
+            "CAND_2__SIM_UTILIZATION"
+          ],
+          "sourceIds": [
+            "KB-004#c1"
+          ]
+        },
+        {
+          "text": "降低车速通过减少反应行程和制动行程双重作用提升最小间距，而增加初始间距仅直接平移安全裕度，不改变车辆动力学需求。",
+          "factIds": [
+            "SIM_STOPPING_DISTANCE",
+            "CAND_1__SIM_STOPPING_DISTANCE",
+            "CAND_2__SIM_STOPPING_DISTANCE"
+          ],
+          "sourceIds": [
+            "KB-004#c1"
+          ]
+        }
+      ],
+      "recommendations": [
+        {
+          "text": "若需在不改变初始跟车距离的前提下提升安全裕度，优先考虑降低车速，因其能同时减小停车距离并增大最小间距。",
+          "factIds": [
+            "CAND_1__SIM_GAP",
+            "CAND_1__SIM_STOPPING_DISTANCE"
+          ],
+          "sourceIds": [
+            "KB-004#c1"
+          ]
+        },
+        {
+          "text": "若受限于道路通行效率无法降速，可通过增加初始间距直接提升最小间距，但需注意这不会减少理论停车距离。",
+          "factIds": [
+            "CAND_2__SIM_GAP",
+            "CAND_2__SIM_STOPPING_DISTANCE"
+          ],
+          "sourceIds": [
+            "KB-004#c1"
+          ]
+        },
+        {
+          "text": "两种方案均未触及附着极限（63.7%），表明在当前摩擦系数下仍有纵向制动潜力，但模型未考虑载荷转移对实际附着的影响。",
+          "factIds": [
+            "SIM_UTILIZATION",
+            "CAND_1__SIM_UTILIZATION",
+            "CAND_2__SIM_UTILIZATION"
+          ],
+          "sourceIds": [
+            "KB-001#c1"
+          ]
+        }
+      ],
+      "limitations": [
+        "本分析基于水平路面恒减速运动学模型，未包含轮胎非线性、载荷转移及闭环控制动态，实际实车表现可能偏离仿真结果。",
+        "工程阈值（如侧向加速度3 m/s²）与制动力增益为可配置初始值，尚未经过具体车型标定与专业审核。",
+        "本次计算未绑定实测日志，无法诊断传感器偏差或执行器延迟等实车因素对制动过程的影响。"
+      ]
+    },
+    "sources": [
+      {
+        "chunkId": "KB-004#c1",
+        "id": "KB-004",
+        "title": "制动距离与响应时间",
+        "body": "恒定减速度停车距离 s = v₀t反应 + v₀²/(2a)，停车时间 t = t反应 + v₀/a。高速跟驰采用前车恒速假设，最小间距必须结合全时序判断。制动压力用 F = ma 与可配置制动力增益 N/bar 估算，不代替液压系统模型。",
+        "start": 0,
+        "end": 120,
+        "page": null,
+        "section": "正文",
+        "basis": "水平路面恒减速；忽略空气阻力与执行器延迟变化。",
+        "referenceUrl": "https://courses.grainger.illinois.edu/ece101/fa2025/lectures/101-024-autonomous-driving.pdf",
+        "locator": "PDF 第 23–26 页，制动距离；反应行程另以匀速运动推导",
+        "reviewStatus": "项目工程摘要，车型标定待审核",
+        "textKind": "project_summary",
+        "referenceNote": "本段为项目编写的工程摘要，链接是延伸依据，并非来源逐字原文。",
+        "bm25": 17.0799955735275,
+        "cosine": 0.2912876325017675,
+        "overlap": 12,
+        "score": 0.8228219081254419
+      },
+      {
+        "chunkId": "KB-001#c1",
+        "id": "KB-001",
+        "title": "附着与制动边界",
+        "body": "轮胎摩擦圆近似：√(ax²+ay²) ≤ μg。纯纵向减速度上限取附着极限 μg 与底盘减速度极限的较小值。质量相同时，附着系数下降会增加理论制动距离。联合制动转向超出摩擦圆时应降低车速或减小控制需求。本模型只评估请求，不闭环求解轮胎饱和。",
+        "start": 0,
+        "end": 120,
+        "page": null,
+        "section": "正文",
+        "basis": "基础质点力学；忽略载荷转移、坡度与轮胎非线性。",
+        "referenceUrl": "https://cseweb.ucsd.edu/classes/sp19/cse291-d/Files/CSE291_14_VehicleDynamics.pdf",
+        "locator": "PDF 第 35 页：Friction Circle",
+        "reviewStatus": "项目工程摘要，车型标定待审核",
+        "textKind": "project_summary",
+        "referenceNote": "本段为项目编写的工程摘要，链接是延伸依据，并非来源逐字原文。",
+        "bm25": 11.967101237649741,
+        "cosine": 0.25085094711680883,
+        "overlap": 12,
+        "score": 0.5882003394896078
+      },
+      {
+        "chunkId": "KB-006#c1",
+        "id": "KB-006",
+        "title": "采集日志时间对齐与偏差",
+        "body": "采集日志先排序、剔除无效时间行、重复时间保留最后一行，以首个有效时间归零，再应用用户设置的时间偏移。通过线性插值在共同时间区间逐点比较，计算 MAE、RMSE 与最大绝对误差。没有覆盖的数据不补零、不外推。检查时间单位、传感器标定、方向盘/车轮角定义与制动增益。默认容差均为可编辑项目初始值。",
+        "start": 0,
+        "end": 146,
+        "page": null,
+        "section": "正文",
+        "basis": "V1.0 日志导入与对标协议 v1；需实车标定阈值。",
+        "referenceUrl": "https://github.com/commaai/comma2k19/blob/4c7f1a6e1957745beadc1def0e7225f559b09a2a/README.md#log-format",
+        "locator": "Log format；CAN/IMU 单位与设备启动秒时间戳",
+        "reviewStatus": "项目工程摘要，车型标定待审核",
+        "textKind": "project_summary",
+        "referenceNote": "本段为项目编写的工程摘要，链接是延伸依据，并非来源逐字原文。",
+        "bm25": 6.7599068961031294,
+        "cosine": 0.23793416250053426,
+        "overlap": 7,
+        "score": 0.3563179367613536
+      }
+    ],
+    "mode": "llm",
+    "fallbackReason": null,
+    "evidence": {
+      "engineVersion": "1.1.3",
+      "config": {
+        "name": "高速跟驰制动评估",
+        "scenario": "highway",
+        "speed": 100,
+        "leadSpeed": 60,
+        "distance": 80,
+        "decel": 5,
+        "reaction": 0.8,
+        "mu": 0.8,
+        "radius": 250,
+        "mass": 1800,
+        "wheelbase": 2.8,
+        "steeringRatio": 15,
+        "steeringLimit": 540,
+        "brakeLimit": 8,
+        "brakeGain": 200,
+        "lateralLimit": 3,
+        "duration": 20,
+        "laneWidth": 3.5,
+        "laneTime": 5
+      },
+      "risk": "约束内",
+      "findings": [
+        {
+          "level": "pass",
+          "title": "轮胎附着约束",
+          "detail": "峰值附着需求利用率 63.7%，采用摩擦圆需求近似，并包含解析纵向制动需求。",
+          "source": "KB-001"
+        },
+        {
+          "level": "pass",
+          "title": "侧向加速度",
+          "detail": "峰值 0.00 m/s²，设置阈值 3 m/s²（工程初始值，需标定）。",
+          "source": "KB-002"
+        },
+        {
+          "level": "pass",
+          "title": "转向物理约束",
+          "detail": "采样方向盘需求峰值 0.0°，设置极限 540°。",
+          "source": "KB-003"
+        },
+        {
+          "level": "pass",
+          "title": "完整制动过程预测",
+          "detail": "相同恒减速与目标运动假设下，全过程最小间距 58.8 m；此项包含显示时间窗之外的解析预测。",
+          "source": "KB-004"
+        },
+        {
+          "level": "pass",
+          "title": "制动与间距",
+          "detail": "仿真 20 s 内最小间距 58.8 m；理论完全停车需 99.4 m / 6.4 s。前车按恒速运动，静态目标按固定障碍物计算。",
+          "source": "KB-004"
+        }
+      ],
+      "facts": [
+        {
+          "id": "SIM_UTILIZATION",
+          "label": "峰值附着利用率",
+          "value": 63.710499490315996,
+          "unit": "%",
+          "origin": "simulation"
+        },
+        {
+          "id": "SIM_LATERAL",
+          "label": "峰值侧向加速度",
+          "value": 0,
+          "unit": "m/s²",
+          "origin": "simulation"
+        },
+        {
+          "id": "SIM_STEERING",
+          "label": "方向盘转角峰值",
+          "value": 0,
+          "unit": "°",
+          "origin": "simulation"
+        },
+        {
+          "id": "SIM_STOPPING_DISTANCE",
+          "label": "解析停车距离",
+          "value": 99.38271604938272,
+          "unit": "m",
+          "origin": "simulation"
+        },
+        {
+          "id": "SIM_STOP_TIME",
+          "label": "解析停车时间",
+          "value": 6.355555555555555,
+          "unit": "s",
+          "origin": "simulation"
+        },
+        {
+          "id": "SIM_GAP",
+          "label": "全过程预测最小间距",
+          "value": 58.76543209876544,
+          "unit": "m",
+          "origin": "simulation"
+        },
+        {
+          "id": "SIM_PRESSURE",
+          "label": "解析制动压力需求峰值",
+          "value": 45,
+          "unit": "bar",
+          "origin": "simulation",
+          "detail": "由恒有效减速度、质量与集总制动力增益计算；不是实测液压压力，短制动脉冲可能不落在时序采样点上。"
+        }
+      ],
+      "comparison": [],
+      "log": null,
+      "limitations": [
+        "水平路面与运动学需求模型，不包含轮胎非线性、载荷转移和闭环控制。",
+        "工程阈值与制动力增益为可配置初始值，需要车型标定与专业审核。",
+        "本次未绑定测量日志，不能诊断具体实车偏差。"
+      ]
+    },
+    "factRegistry": [
+      {
+        "id": "SIM_UTILIZATION",
+        "label": "峰值附着利用率",
+        "value": 63.710499490315996,
+        "unit": "%",
+        "origin": "simulation"
+      },
+      {
+        "id": "SIM_LATERAL",
+        "label": "峰值侧向加速度",
+        "value": 0,
+        "unit": "m/s²",
+        "origin": "simulation"
+      },
+      {
+        "id": "SIM_STEERING",
+        "label": "方向盘转角峰值",
+        "value": 0,
+        "unit": "°",
+        "origin": "simulation"
+      },
+      {
+        "id": "SIM_STOPPING_DISTANCE",
+        "label": "解析停车距离",
+        "value": 99.38271604938272,
+        "unit": "m",
+        "origin": "simulation"
+      },
+      {
+        "id": "SIM_STOP_TIME",
+        "label": "解析停车时间",
+        "value": 6.355555555555555,
+        "unit": "s",
+        "origin": "simulation"
+      },
+      {
+        "id": "SIM_GAP",
+        "label": "全过程预测最小间距",
+        "value": 58.76543209876544,
+        "unit": "m",
+        "origin": "simulation"
+      },
+      {
+        "id": "SIM_PRESSURE",
+        "label": "解析制动压力需求峰值",
+        "value": 45,
+        "unit": "bar",
+        "origin": "simulation",
+        "detail": "由恒有效减速度、质量与集总制动力增益计算；不是实测液压压力，短制动脉冲可能不落在时序采样点上。"
+      },
+      {
+        "id": "CAND_1__SIM_UTILIZATION",
+        "label": "峰值附着利用率",
+        "value": 63.710499490315996,
+        "unit": "%",
+        "origin": "simulation"
+      },
+      {
+        "id": "CAND_1__SIM_LATERAL",
+        "label": "峰值侧向加速度",
+        "value": 0,
+        "unit": "m/s²",
+        "origin": "simulation"
+      },
+      {
+        "id": "CAND_1__SIM_STEERING",
+        "label": "方向盘转角峰值",
+        "value": 0,
+        "unit": "°",
+        "origin": "simulation"
+      },
+      {
+        "id": "CAND_1__SIM_STOPPING_DISTANCE",
+        "label": "解析停车距离",
+        "value": 67.1604938271605,
+        "unit": "m",
+        "origin": "simulation"
+      },
+      {
+        "id": "CAND_1__SIM_STOP_TIME",
+        "label": "解析停车时间",
+        "value": 5.2444444444444445,
+        "unit": "s",
+        "origin": "simulation"
+      },
+      {
+        "id": "CAND_1__SIM_GAP",
+        "label": "全过程预测最小间距",
+        "value": 72.46913580246914,
+        "unit": "m",
+        "origin": "simulation"
+      },
+      {
+        "id": "CAND_1__SIM_PRESSURE",
+        "label": "解析制动压力需求峰值",
+        "value": 45,
+        "unit": "bar",
+        "origin": "simulation",
+        "detail": "由恒有效减速度、质量与集总制动力增益计算；不是实测液压压力，短制动脉冲可能不落在时序采样点上。"
+      },
+      {
+        "id": "CAND_2__SIM_UTILIZATION",
+        "label": "峰值附着利用率",
+        "value": 63.710499490315996,
+        "unit": "%",
+        "origin": "simulation"
+      },
+      {
+        "id": "CAND_2__SIM_LATERAL",
+        "label": "峰值侧向加速度",
+        "value": 0,
+        "unit": "m/s²",
+        "origin": "simulation"
+      },
+      {
+        "id": "CAND_2__SIM_STEERING",
+        "label": "方向盘转角峰值",
+        "value": 0,
+        "unit": "°",
+        "origin": "simulation"
+      },
+      {
+        "id": "CAND_2__SIM_STOPPING_DISTANCE",
+        "label": "解析停车距离",
+        "value": 99.38271604938272,
+        "unit": "m",
+        "origin": "simulation"
+      },
+      {
+        "id": "CAND_2__SIM_STOP_TIME",
+        "label": "解析停车时间",
+        "value": 6.355555555555555,
+        "unit": "s",
+        "origin": "simulation"
+      },
+      {
+        "id": "CAND_2__SIM_GAP",
+        "label": "全过程预测最小间距",
+        "value": 78.76543209876543,
+        "unit": "m",
+        "origin": "simulation"
+      },
+      {
+        "id": "CAND_2__SIM_PRESSURE",
+        "label": "解析制动压力需求峰值",
+        "value": 45,
+        "unit": "bar",
+        "origin": "simulation",
+        "detail": "由恒有效减速度、质量与集总制动力增益计算；不是实测液压压力，短制动脉冲可能不落在时序采样点上。"
+      }
+    ],
+    "candidates": [
+      {
+        "id": "CAND_1",
+        "kind": "default",
+        "label": "初始车速降低 20%",
+        "patch": {
+          "speed": 80
+        },
+        "baselineFingerprint": "4d8988ad590eb903d51d0fc6",
+        "applied": false,
+        "evidence": {
+          "engineVersion": "1.1.3",
+          "config": {
+            "name": "高速跟驰制动评估",
+            "scenario": "highway",
+            "speed": 80,
+            "leadSpeed": 60,
+            "distance": 80,
+            "decel": 5,
+            "reaction": 0.8,
+            "mu": 0.8,
+            "radius": 250,
+            "mass": 1800,
+            "wheelbase": 2.8,
+            "steeringRatio": 15,
+            "steeringLimit": 540,
+            "brakeLimit": 8,
+            "brakeGain": 200,
+            "lateralLimit": 3,
+            "duration": 20,
+            "laneWidth": 3.5,
+            "laneTime": 5
+          },
+          "risk": "约束内",
+          "findings": [
+            {
+              "level": "pass",
+              "title": "轮胎附着约束",
+              "detail": "峰值附着需求利用率 63.7%，采用摩擦圆需求近似，并包含解析纵向制动需求。",
+              "source": "KB-001"
+            },
+            {
+              "level": "pass",
+              "title": "侧向加速度",
+              "detail": "峰值 0.00 m/s²，设置阈值 3 m/s²（工程初始值，需标定）。",
+              "source": "KB-002"
+            },
+            {
+              "level": "pass",
+              "title": "转向物理约束",
+              "detail": "采样方向盘需求峰值 0.0°，设置极限 540°。",
+              "source": "KB-003"
+            },
+            {
+              "level": "pass",
+              "title": "完整制动过程预测",
+              "detail": "相同恒减速与目标运动假设下，全过程最小间距 72.5 m；此项包含显示时间窗之外的解析预测。",
+              "source": "KB-004"
+            },
+            {
+              "level": "pass",
+              "title": "制动与间距",
+              "detail": "仿真 20 s 内最小间距 72.5 m；理论完全停车需 67.2 m / 5.2 s。前车按恒速运动，静态目标按固定障碍物计算。",
+              "source": "KB-004"
+            }
+          ],
+          "facts": [
+            {
+              "id": "CAND_1__SIM_UTILIZATION",
+              "label": "峰值附着利用率",
+              "value": 63.710499490315996,
+              "unit": "%",
+              "origin": "simulation"
+            },
+            {
+              "id": "CAND_1__SIM_LATERAL",
+              "label": "峰值侧向加速度",
+              "value": 0,
+              "unit": "m/s²",
+              "origin": "simulation"
+            },
+            {
+              "id": "CAND_1__SIM_STEERING",
+              "label": "方向盘转角峰值",
+              "value": 0,
+              "unit": "°",
+              "origin": "simulation"
+            },
+            {
+              "id": "CAND_1__SIM_STOPPING_DISTANCE",
+              "label": "解析停车距离",
+              "value": 67.1604938271605,
+              "unit": "m",
+              "origin": "simulation"
+            },
+            {
+              "id": "CAND_1__SIM_STOP_TIME",
+              "label": "解析停车时间",
+              "value": 5.2444444444444445,
+              "unit": "s",
+              "origin": "simulation"
+            },
+            {
+              "id": "CAND_1__SIM_GAP",
+              "label": "全过程预测最小间距",
+              "value": 72.46913580246914,
+              "unit": "m",
+              "origin": "simulation"
+            },
+            {
+              "id": "CAND_1__SIM_PRESSURE",
+              "label": "解析制动压力需求峰值",
+              "value": 45,
+              "unit": "bar",
+              "origin": "simulation",
+              "detail": "由恒有效减速度、质量与集总制动力增益计算；不是实测液压压力，短制动脉冲可能不落在时序采样点上。"
+            }
+          ],
+          "comparison": [],
+          "log": null,
+          "limitations": [
+            "水平路面与运动学需求模型，不包含轮胎非线性、载荷转移和闭环控制。",
+            "工程阈值与制动力增益为可配置初始值，需要车型标定与专业审核。",
+            "本次未绑定测量日志，不能诊断具体实车偏差。"
+          ]
+        }
+      },
+      {
+        "id": "CAND_2",
+        "kind": "default",
+        "label": "初始间距增加至 100 m",
+        "patch": {
+          "distance": 100
+        },
+        "baselineFingerprint": "4d8988ad590eb903d51d0fc6",
+        "applied": false,
+        "evidence": {
+          "engineVersion": "1.1.3",
+          "config": {
+            "name": "高速跟驰制动评估",
+            "scenario": "highway",
+            "speed": 100,
+            "leadSpeed": 60,
+            "distance": 100,
+            "decel": 5,
+            "reaction": 0.8,
+            "mu": 0.8,
+            "radius": 250,
+            "mass": 1800,
+            "wheelbase": 2.8,
+            "steeringRatio": 15,
+            "steeringLimit": 540,
+            "brakeLimit": 8,
+            "brakeGain": 200,
+            "lateralLimit": 3,
+            "duration": 20,
+            "laneWidth": 3.5,
+            "laneTime": 5
+          },
+          "risk": "约束内",
+          "findings": [
+            {
+              "level": "pass",
+              "title": "轮胎附着约束",
+              "detail": "峰值附着需求利用率 63.7%，采用摩擦圆需求近似，并包含解析纵向制动需求。",
+              "source": "KB-001"
+            },
+            {
+              "level": "pass",
+              "title": "侧向加速度",
+              "detail": "峰值 0.00 m/s²，设置阈值 3 m/s²（工程初始值，需标定）。",
+              "source": "KB-002"
+            },
+            {
+              "level": "pass",
+              "title": "转向物理约束",
+              "detail": "采样方向盘需求峰值 0.0°，设置极限 540°。",
+              "source": "KB-003"
+            },
+            {
+              "level": "pass",
+              "title": "完整制动过程预测",
+              "detail": "相同恒减速与目标运动假设下，全过程最小间距 78.8 m；此项包含显示时间窗之外的解析预测。",
+              "source": "KB-004"
+            },
+            {
+              "level": "pass",
+              "title": "制动与间距",
+              "detail": "仿真 20 s 内最小间距 78.8 m；理论完全停车需 99.4 m / 6.4 s。前车按恒速运动，静态目标按固定障碍物计算。",
+              "source": "KB-004"
+            }
+          ],
+          "facts": [
+            {
+              "id": "CAND_2__SIM_UTILIZATION",
+              "label": "峰值附着利用率",
+              "value": 63.710499490315996,
+              "unit": "%",
+              "origin": "simulation"
+            },
+            {
+              "id": "CAND_2__SIM_LATERAL",
+              "label": "峰值侧向加速度",
+              "value": 0,
+              "unit": "m/s²",
+              "origin": "simulation"
+            },
+            {
+              "id": "CAND_2__SIM_STEERING",
+              "label": "方向盘转角峰值",
+              "value": 0,
+              "unit": "°",
+              "origin": "simulation"
+            },
+            {
+              "id": "CAND_2__SIM_STOPPING_DISTANCE",
+              "label": "解析停车距离",
+              "value": 99.38271604938272,
+              "unit": "m",
+              "origin": "simulation"
+            },
+            {
+              "id": "CAND_2__SIM_STOP_TIME",
+              "label": "解析停车时间",
+              "value": 6.355555555555555,
+              "unit": "s",
+              "origin": "simulation"
+            },
+            {
+              "id": "CAND_2__SIM_GAP",
+              "label": "全过程预测最小间距",
+              "value": 78.76543209876543,
+              "unit": "m",
+              "origin": "simulation"
+            },
+            {
+              "id": "CAND_2__SIM_PRESSURE",
+              "label": "解析制动压力需求峰值",
+              "value": 45,
+              "unit": "bar",
+              "origin": "simulation",
+              "detail": "由恒有效减速度、质量与集总制动力增益计算；不是实测液压压力，短制动脉冲可能不落在时序采样点上。"
+            }
+          ],
+          "comparison": [],
+          "log": null,
+          "limitations": [
+            "水平路面与运动学需求模型，不包含轮胎非线性、载荷转移和闭环控制。",
+            "工程阈值与制动力增益为可配置初始值，需要车型标定与专业审核。",
+            "本次未绑定测量日志，不能诊断具体实车偏差。"
+          ]
+        }
+      }
+    ],
+    "alternatives": [
+      {
+        "label": "初始车速降低 20%",
+        "patch": {
+          "speed": 80
+        },
+        "before": {
+          "risk": "约束内",
+          "utilization": 0.63710499490316,
+          "lateral": 0,
+          "gap": 58.76543209876544
+        },
+        "after": {
+          "risk": "约束内",
+          "utilization": 0.63710499490316,
+          "lateral": 0,
+          "gap": 72.46913580246914
+        },
+        "note": "独立候选重算，不会自动修改当前工况；不能由此认定实车安全。",
+        "candidateId": "CAND_1",
+        "factIds": [
+          "CAND_1__SIM_UTILIZATION",
+          "CAND_1__SIM_LATERAL",
+          "CAND_1__SIM_STEERING",
+          "CAND_1__SIM_STOPPING_DISTANCE",
+          "CAND_1__SIM_STOP_TIME",
+          "CAND_1__SIM_GAP",
+          "CAND_1__SIM_PRESSURE"
+        ]
+      },
+      {
+        "label": "初始间距增加至 100 m",
+        "patch": {
+          "distance": 100
+        },
+        "before": {
+          "risk": "约束内",
+          "utilization": 0.63710499490316,
+          "lateral": 0,
+          "gap": 58.76543209876544
+        },
+        "after": {
+          "risk": "约束内",
+          "utilization": 0.63710499490316,
+          "lateral": 0,
+          "gap": 78.76543209876543
+        },
+        "note": "独立候选重算，不会自动修改当前工况；不能由此认定实车安全。",
+        "candidateId": "CAND_2",
+        "factIds": [
+          "CAND_2__SIM_UTILIZATION",
+          "CAND_2__SIM_LATERAL",
+          "CAND_2__SIM_STEERING",
+          "CAND_2__SIM_STOPPING_DISTANCE",
+          "CAND_2__SIM_STOP_TIME",
+          "CAND_2__SIM_GAP",
+          "CAND_2__SIM_PRESSURE"
+        ]
+      }
+    ],
+    "trace": [
+      {
+        "id": "step-1",
+        "label": "复算工况与日志证据",
+        "kind": "calculation",
+        "status": "complete",
+        "detail": "201 个仿真点；0 行日志；服务端重新计算误差",
+        "durationMs": 2
+      },
+      {
+        "id": "step-2",
+        "label": "检索工程依据",
+        "kind": "retrieval",
+        "status": "complete",
+        "detail": "BM25 + 词项向量检索到 3 个段落，保留页码/段落锚点"
+      },
+      {
+        "id": "step-3",
+        "label": "候选方案重算",
+        "kind": "calculation",
+        "status": "complete",
+        "detail": "2 个候选已登记独立事实编号，仅计算而不修改当前基线"
+      },
+      {
+        "id": "step-4",
+        "label": "模型阅读证据",
+        "kind": "model",
+        "status": "complete",
+        "detail": "第 1 次请求已返回",
+        "durationMs": 21620
+      },
+      {
+        "id": "step-5",
+        "label": "结构与引用编号检查",
+        "kind": "validation",
+        "status": "complete",
+        "detail": "结构和引用编号有效；保留计算基线与工程限制，文字语义仍需审核"
+      }
+    ],
+    "engineVersion": "1.1.3",
+    "fingerprint": "4d8988ad590eb903d51d0fc6",
+    "generatedAt": "2026-11-16T18:14:30.136Z",
+    "model": "Qwen/Qwen3.5-27B",
+    "provider": "modelscope",
+    "modelCalls": 1,
+    "usage": {
+      "input": 5504,
+      "output": 906
+    },
+    "durationMs": 21655
+  },
+  "finalSelectedSemanticReview": {
+    "result": "本案例主要数字与参数变化复核通过",
+    "baselineSpeedKmh": 100,
+    "candidateSpeedKmh": 80,
+    "reactionSecondsUnchanged": 0.8,
+    "baselineStoppingDistanceM": 99.38271604938271,
+    "candidateStoppingDistanceM": 67.1604938271605,
+    "baselineMinimumGapM": 58.76543209876543,
+    "speedCandidateMinimumGapM": 72.46913580246914,
+    "gapCandidateMinimumGapM": 78.76543209876543,
+    "newToolExecutionInThisCase": false,
+    "limitations": "单次样例手工对照，不证明其他自然语言回答或建议均准确。"
+  },
+  "sourceSha256": {
+    "lib/analysis.ts": "3b05a26210543b6b576be05e76c4db0a068900aa75fa9b6ab3558e4db6831091",
+    "lib/simulation.ts": "c281443f7722589772ed2b738b03d2ae5603a7ba4727ca35437d99b90ea9be51",
+    "lib/evidence.ts": "925f8bed2198d326db3da4d7b12227390304c000ce0c971c2fa228f7daabe9f4"
+  }
+}

@@ -1,0 +1,661 @@
+{
+  "reviewedOn": "2026-11-17",
+  "reviewedAt": "2026-11-17T02:24:05.925774+08:00",
+  "timezone": "Asia/Shanghai",
+  "schemaVersion": 2,
+  "track": {
+    "id": "10037",
+    "name": "AI WEB网页开发挑战赛",
+    "stage": "按公开省赛规则核对材料；本人报名阶段未登录查验"
+  },
+  "scope": "独立只读复核规则、原文件和现有材料；仅新建本规则JSON，未提交比赛、未改仓库或站点权限、未登录报名账户、未读取实际密钥。附文档的项目分工是拟定资料，不代替本人的事实确认。",
+  "conclusion": {
+    "projectDirection": "符合可自拟的AI Web应用方向；具有RAG、Function Calling、计算证据和候选重算，超出单一聊天API展示。原创性与成员理解能力仍须本人如实确认。",
+    "artifacts": "必交类型文件已准备；冻结V2视频仍387.54秒/1080p，当前1.1.3技术PDF15页且显式内容条款已补齐、全页QA通过。新1.1.3源码归档和总包尚待root重建。",
+    "submissionReady": false,
+    "reason": "队伍真实身份/正确组别/报名与提交状态、指定评审仓库访问尚未确认；团队字段待本人确认；1.1.3最终归档/总包及外部评审路径仍待最终验收。",
+    "qualityJudgment": "1.1.3已修复本轮五项边界并补独立/回归验证，AI保留一次真实措辞错误与修正后所选案例的数字复核。具备完整Web产品与AI工程参赛基础，但多模态、泛化解释质量、真实用户收益及外部访问证据仍有限；不预测分数、奖项或保证零缺陷。",
+    "awardPrediction": null,
+    "numericQualityScore": null
+  },
+  "sources": [
+    {
+      "id": "USER_CONTEST",
+      "kind": "用户提供的参赛资料汇编，非官方原始规则",
+      "locator": "第2.2节；OOXML正文段落517–544（零基）；非渲染页码",
+      "path": "C:\\Users\\Zllyh\\xwechat_files\\wxid_lm7en8z7x6sy22_b483\\temp\\RWTemp\\2026-11\\d2ea0b5964203d10afc9a888ce14d2ad\\2026传智杯16赛道参赛资料汇编(1).docx",
+      "bytes": 45165,
+      "sha256": "66a81b2d4c6959b5e8012ccf0b4ff6d197506157e14980c034636cf8c564c5e5"
+    },
+    {
+      "id": "USER_SPEC",
+      "kind": "用户原始V1.0开发范围及拟定分工",
+      "locator": "第四至六节；简历措辞与人员职责不视为已经发生的贡献或签署",
+      "path": "C:\\Users\\Zllyh\\xwechat_files\\wxid_lm7en8z7x6sy22_b483\\temp\\RWTemp\\2026-11\\9e20f478899dc29eb19741386f9343c8\\智能驾驶工况仿真与辅助分析 Web 平台 V1.0 开发文档.docx",
+      "bytes": 14596,
+      "sha256": "201e1b05c744aebb00ebea950e3a43c60d3d2f8973b128e153a8e190fc88df79"
+    },
+    {
+      "id": "ORGANIZER_PUBLISHED",
+      "kind": "标示传智杯全国大学生IT技能大赛发布者的一手赛事正文，赛氪第三方托管",
+      "url": "https://m.saikr.com/vse/2026AIWEBKF",
+      "checkedOn": "2026-11-17",
+      "retrieval": "实际使用web重新打开并读取，当前正文可访问",
+      "locators": {
+        "topic": "第三节命题范围",
+        "team": "第四节",
+        "province": "第五节1–2",
+        "rubric": "第五节4",
+        "national": "第六节1–2",
+        "AI_assistance": "第七节3",
+        "violations": "第八节"
+      }
+    },
+    {
+      "id": "OFFICIAL_HOME",
+      "kind": "传智杯官网",
+      "url": "https://www.boxuegu.com/match/",
+      "checkedOn": "2026-11-17",
+      "retrieval": "主页与赛道选择可读，未从主页推断赛道全文"
+    },
+    {
+      "id": "OFFICIAL_TRACK",
+      "kind": "官网10037赛道详情入口",
+      "url": "https://www.boxuegu.com/matchTrack/detail/?id=10037",
+      "checkedOn": "2026-11-17",
+      "retrieval": "直接打开工具不可读；赛道选择页面仅动态壳，未冒称读取到官网登录后最新规则"
+    },
+    {
+      "id": "UNIVERSITY_CROSSCHECK",
+      "kind": "东莞理工学院官方通知，仅辅助交叉核对",
+      "url": "https://cs.dgut.edu.cn/info/1034/19118.htm",
+      "checkedOn": "2026-11-17",
+      "locator": "第四节AI WEB入口；第六节作品提交要求",
+      "restriction": "该高校链接含损坏尾缀；仅据其标示的10037识别入口。该校至少1位导师、校赛截止与本校资格不套用于未知学校用户。"
+    }
+  ],
+  "sourceAuthorityLimits": [
+    "可访问的一手规则为赛事发布者在赛氪的正文，不等同已读取boxuegu登录后台；最终接收方式及精确时点以本人报名后台/组委会通知为准。",
+    "四组适用对象表在原发布页为图片，本次工具未成功取得图片；不凭其他学校通用描述替用户决定组别。",
+    "未将培训广告、其他赛道要求或历史校赛时间作为本赛道强制依据。"
+  ],
+  "deadlines": {
+    "province": {
+      "registrationDate": "2026-11-18",
+      "workSubmissionDate": "2026-11-18",
+      "exactLocalTime": null,
+      "source": "ORGANIZER_PUBLISHED 第五节1；USER_CONTEST 第2.2节",
+      "unresolved": "公开正文没有精确小时，报名/缴费/已晋级与作品入口未登录查验。"
+    },
+    "national": {
+      "registrationRange": [
+        "2026-12-10",
+        "2026-12-21"
+      ],
+      "workSubmissionDate": "2026-12-27",
+      "exactLocalTime": null,
+      "source": "ORGANIZER_PUBLISHED 第六节1；用户第2.2节同为12-27",
+      "qualification": "不代表当前队伍已晋级或已具备国赛资格。"
+    },
+    "publicHeaderDiscrepancy": {
+      "headerRegistrationEnd": "2026-11-19 00:00",
+      "bodyRegistrationAndSubmissionDate": "2026-11-18",
+      "interpretation": "顶部可能是11月18日结束的右侧时间边界，不能当作延长至11月19日提交的凭据；本次不确定精确时点。"
+    }
+  },
+  "mandatoryRequirements": [
+    {
+      "id": "AI_WEB_ORIGINAL",
+      "requirement": "原创AI Web作品，AI应体现实际核心价值，允许自拟选题。",
+      "sources": [
+        "USER_CONTEST 第2.2节一",
+        "ORGANIZER_PUBLISHED 第三节"
+      ],
+      "status": "supported_with_owner_attestation_pending",
+      "evidence": [
+        "RAG和四类受限工具实现；当前分析回归27项通过。",
+        "1.1.2真实工具执行证据作为历史保留，1.1.3新实际模型案例在LIVE-ENGINE-113-QA.json；最后所选案例没有新工具执行，不能混称。",
+        "当前1.1.3真实模型最初措辞错误已保留；提示修正后一个所选案例数字核对通过，非通用准确率证明。"
+      ],
+      "remaining": "成员确认原创开发事实，解释AI对真实任务的价值；不能将开源项目重新包装或宣称已有实车标定。"
+    },
+    {
+      "id": "TEAM_AND_GROUP",
+      "requirement": "1–3位同校学生，导师至多2位，按真实学籍选正确组别。",
+      "sources": [
+        "USER_CONTEST 第2.2节三",
+        "ORGANIZER_PUBLISHED 第四节"
+      ],
+      "status": "needs_owner_confirmation",
+      "evidence": [
+        "team.json confirmed=false；两名原文拟定成员，不代填学校或组别"
+      ],
+      "remaining": "队名、学校、真实成员与学籍、队长、组别、导师及本校校赛/晋级要求。"
+    },
+    {
+      "id": "CODE_ACCESS",
+      "requirement": "GitHub/Gitee仓库公开或向指定评审提供访问。",
+      "sources": [
+        "USER_CONTEST 第2.2节二",
+        "ORGANIZER_PUBLISHED 第五节2代码仓库"
+      ],
+      "status": "needs_reviewer_access",
+      "evidence": [
+        "GitHub仓库按用户偏好保持Private",
+        "源码ZIP与完整Git bundle已备份"
+      ],
+      "remaining": "按组委会提供的评审账号/认可方式授权并验证实际可读；离线包不能自行代替仓库访问要求。"
+    },
+    {
+      "id": "GIT_HISTORY",
+      "requirement": "保留完整真实开发Git历史。",
+      "sources": [
+        "USER_CONTEST 第2.2节二",
+        "ORGANIZER_PUBLISHED 第五节2代码仓库"
+      ],
+      "status": "base_history_verified_final_archive_pending",
+      "evidence": {
+        "baseCommit": "f83dff8d6500405e8ed6712fda9c8412b1fcb44a",
+        "reviewedWorkingTree": true,
+        "previousHistoryVerification": "本轮早先git bundle verify旧包成功；旧bundle对应基础提交，不假称含尚未打包的1.1.3工作树。",
+        "finalManifest": "最终提交号与新bundle由root后续打包验证。"
+      },
+      "limit": "历史存在性不能代替原创性或每人实际贡献证明；评审远端访问另验。"
+    },
+    {
+      "id": "README_AND_ENV",
+      "requirement": "README说明项目、架构、安装运行、团队，附环境模板和依赖清单。",
+      "sources": [
+        "USER_CONTEST 第2.2节二",
+        "ORGANIZER_PUBLISHED 第五节2代码仓库"
+      ],
+      "status": "technical_content_passed_team_fields_pending",
+      "evidence": [
+        "README包含介绍/架构/API/安装/免费模型/测试和团队待确认；环境模板、依赖和锁文件存在。",
+        "本轮按当前README文件hash复核；当前FINAL-VALIDATION为引擎1.1.3、36核心/27分析及独立扩展记录。"
+      ],
+      "remaining": "本人确认后同步team.json、README及技术PDF的真实队伍字段；不代填。"
+    },
+    {
+      "id": "VIDEO",
+      "requirement": "5–8分钟的MP4，至少1080p，普通话讲解项目、功能和AI亮点；字幕可选。",
+      "sources": [
+        "USER_CONTEST 第2.2节二",
+        "ORGANIZER_PUBLISHED 第五节2演示视频"
+      ],
+      "status": "format_and_content_evidence_passed",
+      "evidence": {
+        "file": "C:\\Users\\Zllyh\\Documents\\Codex\\2026-10-11\\n-h\\outputs\\DriveLab-参赛演示.mp4",
+        "sha256": "ade01c2980118805c79413de0f11b4d47b4b43f206bec5681a9d67b35a470ee5",
+        "bytes": 9174735,
+        "durationSeconds": 387.54,
+        "resolution": [
+          1920,
+          1080
+        ],
+        "fps": 24,
+        "audio": true,
+        "voice": "zh-CN-XiaoxiaoNeural",
+        "sentences": 98,
+        "finalDecodeExitCode": 0,
+        "independentSubtitleAuditPassed": true,
+        "visualReviewPassed": true,
+        "chapters": "12章产品用途、五工况、参数/曲线、日志/对标、知识、真实AI与引用、候选比较、记录、PDF和价值"
+      },
+      "narrationRuleInterpretation": "公开规则未明确要求真人出镜、真人配音或连续实时录屏。现用实际截图/计算与流程示意剪辑，普通话合成解说；制作方法在AI使用说明披露，未把视频配音冒称产品AI多模态能力。",
+      "limit": "未声称真人听审；格式与字幕/时轴检查不保证每句模型语义自动正确。"
+    },
+    {
+      "id": "TECHNICAL_PDF",
+      "requirement": "不超过30页PDF，涵盖需求、架构、AI选型/集成/优化、实现、测试部署、创新及展望。",
+      "sources": [
+        "USER_CONTEST 第2.2节二",
+        "ORGANIZER_PUBLISHED 第五节2技术文档"
+      ],
+      "status": "format_and_explicit_technical_content_passed_team_fields_pending",
+      "evidence": {
+        "file": "C:\\Users\\Zllyh\\Documents\\Codex\\2026-10-11\\n-h\\work\\drivelab\\docs\\competition\\DriveLab-参赛技术文档.pdf",
+        "sha256": "7114bafe73c89be172822faf1aa526a2c879825108d9b0c8325da97af0eda1a7",
+        "pages": 15,
+        "limit": 30,
+        "visualQa": "passed_complete_15_page_visual_and_content_review",
+        "qaFile": "docs/competition/TECHNICAL-PDF-QA.json",
+        "qaSha256": "1dc5d268a57d50cf40196c6593e867bc3bfe9f2571c358fca16bb062a65e4046",
+        "freshTextCheck": "本轮重新读取15页PDF；第14页明确模型选型理由、技术创新点、应用创新点、总结和四项展望计划；第4/7/12页对应1.1.3与本轮边界，第13页将1.1.2截图/调用标为历史。",
+        "sampleReport": {
+          "engineVersion": "1.1.3",
+          "pages": 7,
+          "sha256": "bb2a4e9cedb182dbbabf6a37a0c80da9783faf348106158a9b2a9b1bb9f0c14f"
+        }
+      },
+      "remaining": "真实团队字段待本人确认后同步；文件内容修订已完成，不再把14页旧稿或缺总结展望当当前状态。"
+    },
+    {
+      "id": "AI_ASSISTANCE_AND_EXPLANATION",
+      "requirement": "允许AI辅助开发，参赛成员须能解释代码逻辑。",
+      "sources": [
+        "ORGANIZER_PUBLISHED 第七节3"
+      ],
+      "status": "disclosure_prepared_owner_ability_unverified",
+      "evidence": [
+        "README及AI-AND-LICENSES.txt披露Codex辅助实现/复核/材料制作",
+        "原拟定分工不包装成已完成个人贡献"
+      ],
+      "remaining": "成员实际理解并能解释架构、公式、RAG、Function Calling、存储和失败机制；不能由文件存在性推定通过。"
+    },
+    {
+      "id": "LICENSES_PRIVACY_AND_KEYS",
+      "requirement": "尊重来源与原创，实际凭证不进入公开材料，用户数据做好隔离。",
+      "sources": [
+        "ORGANIZER_PUBLISHED 第五节2提交注意与第七节3、八"
+      ],
+      "status": "documented_evidence_no_fresh_secret_audit",
+      "evidence": [
+        "AI-AND-LICENSES.txt、公开comma2k19 MIT、字体OFL、固定哈希与复现记录",
+        "README说明服务端secret与忽略的本机配置，账户隔离与脱敏验收另见工程材料"
+      ],
+      "limit": "本次不读取真实密钥，不将来源说明替代全部许可证法律审查或全Git历史密钥审计。"
+    },
+    {
+      "id": "OFFICIAL_SUBMISSION",
+      "requirement": "在截止前经官网入口按对应阶段完整提交，提交后改动按组委会程序。",
+      "sources": [
+        "ORGANIZER_PUBLISHED 第五节1–2"
+      ],
+      "status": "not_observed_or_submitted",
+      "evidence": [
+        "本任务仅内部验收；材料包metadata也标submissionReady=false"
+      ],
+      "remaining": "本人确认校赛/省赛阶段、报名缴费、入口可用性、精确截止与字段/大小/命名要求，最终由获授权人员提交。"
+    }
+  ],
+  "optionalAndNonMandatory": [
+    {
+      "item": "在线演示",
+      "officialClassification": "可选加分项",
+      "observed": "私有站点本人路径曾验收；未验证外部指定评审可访问。",
+      "neededIfClaimed": "评审期间可访问并保持可用；若需登录按规则提供指定测试账号或认可授权。不扩大权限，不把所有者截图当外部访问证明。"
+    },
+    {
+      "item": "技术选型",
+      "classification": "主流Web技术必需；Next.js、SDK、框架和端侧推理示例是推荐。",
+      "observation": "不能因未使用某个推荐SDK而判不合格。"
+    },
+    {
+      "item": "MCP与多模态",
+      "classification": "评分考察，不是全部必做功能。",
+      "observation": "本作品有Function Calling，未实现MCP协议；文件文字提取/演示视频配音不等于产品具有图像或语音多模态推理。"
+    },
+    {
+      "item": "材料体积、公开视频平台和硬件",
+      "classification": "未从本赛道公开正文得出固定200MB、必须B站上传或必须实物传感器的要求。",
+      "observation": "本人后台若新增具体限制再执行；原V1.0范围明确只做日志导入，不做硬件驱动或实物采集。"
+    },
+    {
+      "item": "选题方向",
+      "classification": "允许自拟相关AI Web选题。",
+      "observation": "用户汇编提到推荐方向，不意味着必须原样选中十个方向之一。"
+    }
+  ],
+  "qualityByOfficialDimension": [
+    {
+      "dimension": "AI技术深度",
+      "weightPercent": 35,
+      "evidence": "RAG、Function Calling、证据和候选闭环已有实现与历史真实工具记录；1.1.3两次实际模型请求保留初始语义问题与修正后单例数字复核。",
+      "assessment": "有实质工程闭环和可审查证据，可展示集成深度。",
+      "gaps": [
+        "当前RAG是词项检索而非语义embedding；12个固定回归不是泛化证明。",
+        "缺少无RAG/无工具对照、较大人工问题集及生成质量人工评价。",
+        "无产品图像/语音多模态推理，相关5%细项证据不足；无需为凑项冒称。",
+        "三次请求边界下的稳定性和免费服务可用性有限；引用ID有效不保证语义完全正确。",
+        "1.1.3最终所选案例未新执行工具；不能把历史1.1.2工具记录包装为新引擎重新运行。"
+      ],
+      "source": "USER_CONTEST 第2.2节四；ORGANIZER_PUBLISHED 第五节4"
+    },
+    {
+      "dimension": "创新性",
+      "weightPercent": 25,
+      "evidence": "把工程计算、日志差异、专业出处、可复算候选、输入指纹和PDF连成同一工作流。",
+      "assessment": "领域组合与可追溯交互有辨识度；主要是现有技术组合创新。",
+      "gaps": [
+        "尚无充分竞品/传统流程对照或用户证据证明独特性。",
+        "不宜把标准公式、BM25或通用Function Calling称作原创算法。"
+      ]
+    },
+    {
+      "dimension": "前端工程质量",
+      "weightPercent": 10,
+      "evidence": "1.1.3现有验收：36核心、27分析、5保存工作流、130独立解析、12检索、4973公开行；624扩展纵向案例/120异步日志案例，API6、数据库、lint零报错零警告、typecheck和Sites生产构建通过。",
+      "assessment": "工程基础完整，可重现性较好。",
+      "gaps": [
+        "本次独立规则复核没有重新执行全套测试，引用FINAL-VALIDATION现有证据。",
+        "缺少首屏/包大小/性能分布/长日志交互等量化基准。",
+        "首次在另一台干净电脑完整复现仍待验证。",
+        "本规则审查亲自完成过lint/typecheck/27分析回归；36核心、扩展数值、API、db/build结果取当前FINAL-VALIDATION及工程复核记录，未冒称全部由本agent重跑。"
+      ]
+    },
+    {
+      "dimension": "实用性",
+      "weightPercent": 10,
+      "evidence": "五工况、日志清洗对齐、四通道误差、知识检索、记录恢复与中文报告覆盖具体学习/复盘任务。",
+      "assessment": "问题定义清楚、流程可操作，适合前期辅助评估。",
+      "gaps": [
+        "没有受控同工况实车标定精度证据。",
+        "公开路段数据只证明导入/单位/对齐，不能作为模型准确率或诊断有效性证明。",
+        "没有目标用户试用反馈和相对人工流程节省时间数据。"
+      ]
+    },
+    {
+      "dimension": "用户体验",
+      "weightPercent": 10,
+      "evidence": "一致工作台、时序可视化、执行进度、有效/过期分析提醒；320/390/768/1440模拟视口记录；V2逐句字幕与图文对应已验。",
+      "assessment": "展示清楚，主要流程有反馈。",
+      "gaps": [
+        "真实手机、另一设备、指定评审账号端到端尚未验证。",
+        "执行步骤SSE不等于模型逐字token流式输出；不夸大流式能力。",
+        "尚无系统无障碍、键盘和目标用户易用性测试结论。"
+      ]
+    },
+    {
+      "dimension": "社会价值与商业潜力",
+      "weightPercent": 10,
+      "evidence": "跨车辆与软件专业的轻量教学、前期工况讨论和数据复盘可追溯。",
+      "assessment": "教育与辅助分析价值合理；产业价值目前仍为待验证方向。",
+      "gaps": [
+        "无企业真实部署、付费/市场验证或车型专家签署。",
+        "不能宣称替代完整自动驾驶仿真、实车验证或车辆安全认证。"
+      ]
+    }
+  ],
+  "ownerConfirmationItems": [
+    {
+      "priority": "before_submission",
+      "item": "队名、同校学籍、实际成员/队长、正确组别、导师、本校选拔与晋级状态",
+      "reason": "资格及团队信息准确性，不能由拟定分工代填。"
+    },
+    {
+      "priority": "before_submission",
+      "item": "报名、缴费、当前阶段、精确截止、最终提交清单与大小/命名限制",
+      "reason": "未操作后台或推断已报名。"
+    },
+    {
+      "priority": "before_submission",
+      "item": "组委会指定评审账号与仓库实际只读访问",
+      "reason": "私有仓库链接只有所有者可见尚不足以满足评审。"
+    },
+    {
+      "priority": "before_claiming_online_bonus",
+      "item": "私有在线演示对指定评审的访问、测试账号与持续可用",
+      "reason": "属于可选演示加分条件，不是强迫公开站点。"
+    },
+    {
+      "priority": "before_originality_or_defense_attestation",
+      "item": "成员真实分工、理解代码能力与任何原创性/工程签署声明",
+      "reason": "AI辅助允许，但不能代签或虚构完成贡献。"
+    }
+  ],
+  "teamDraftFromUserDocument": {
+    "confirmed": false,
+    "teamName": null,
+    "school": null,
+    "group": null,
+    "captain": null,
+    "members": [
+      {
+        "name": "丁鑫炜",
+        "discipline": "车辆工程",
+        "role": "原开发文档拟定工程职责，实际分工待本人确认"
+      },
+      {
+        "name": "邱益美",
+        "discipline": "软件工程",
+        "role": "原开发文档拟定软件职责，实际分工待本人确认"
+      }
+    ],
+    "advisors": null,
+    "note": "仅整理用户原开发文档；不将拟定分工当作已完成贡献或本人签署。报名字段待用户确认后统一更新材料。",
+    "treatment": "仅为拟定成员与职责；不证明已报名、同校、学籍、实际完成贡献或工程审核。"
+  },
+  "supersedesHistoricalFindings": [
+    {
+      "old": "2026-11-16 VIDEO missing",
+      "current": "V2 MP4、SRT、逐字稿及独立格式/字幕/视觉验收均存在；不得再标缺失。"
+    },
+    {
+      "old": "README真实模型待联调、14分析测试",
+      "current": "README真实模型状态已更新；当前验收为1.1.3、36/27，团队与评审信息仍待本人确认。"
+    },
+    {
+      "old": "PDF12页且模型未接通",
+      "current": "当前1.1.3技术文档15页，明确选型/两类创新/总结展望及当前边界；新QA hash匹配。"
+    },
+    {
+      "old": "14条Git提交",
+      "current": "基础历史已验证；当前1.1.3按冻结工作树source hashes核对，最终提交号由打包manifest确定。"
+    },
+    {
+      "old": "原始公开样例/复现待补",
+      "current": "四个原CAN数组、来源和许可及CSV重建记录已补；仍不是受控实车精度验证。"
+    }
+  ],
+  "artifactSnapshot": {
+    "baseCommit": "f83dff8d6500405e8ed6712fda9c8412b1fcb44a",
+    "reviewedWorkingTree": true,
+    "sourceCommitPolicy": "baseCommit仅是当前工作区基础提交；本审查核对未提交的1.1.3工作树，不把其当作已提交版本。最终打包提交号由后续manifest提供，避免自指哈希。",
+    "reviewedSourceSha256": {
+      "lib/simulation.ts": "c281443f7722589772ed2b738b03d2ae5603a7ba4727ca35437d99b90ea9be51",
+      "lib/logs.ts": "28d8f4c0710c58bd35706f8495856eccfe83f6d9b6be87b892390cde6d5132a9",
+      "lib/evidence.ts": "925f8bed2198d326db3da4d7b12227390304c000ce0c971c2fa228f7daabe9f4",
+      "lib/analysis.ts": "3b05a26210543b6b576be05e76c4db0a068900aa75fa9b6ab3558e4db6831091",
+      "lib/pdf-report.ts": "b80a96ad0fe81310040c55a4cb766410c296ab10bac71b5f552c7302c823e38f",
+      "lib/retrieval.ts": "f08bfbc4aaefedb6be5ba6efdcdd7dcf81b0dd0bee99fc115e3381a133f794e7",
+      "app/workbench.tsx": "f1109e49907c9b1c42e11ddc96b5a2c479c4f4635a516d1a2bfe9be231daebff",
+      "app/ui/SimulationViews.tsx": "4aa43e6777bffc24b5ae1bb53384af837a9a08424a99f63c8dd75e9d32abda23",
+      "eslint.config.mjs": "3228ffa045ef25222742f8832b93cf4a5683ef2ebb3ea454d8818c61fee0c0d1"
+    },
+    "video": {
+      "path": "C:\\Users\\Zllyh\\Documents\\Codex\\2026-10-11\\n-h\\outputs\\DriveLab-参赛演示.mp4",
+      "bytes": 9174735,
+      "sha256": "ade01c2980118805c79413de0f11b4d47b4b43f206bec5681a9d67b35a470ee5"
+    },
+    "technicalPdf": {
+      "path": "C:\\Users\\Zllyh\\Documents\\Codex\\2026-10-11\\n-h\\work\\drivelab\\docs\\competition\\DriveLab-参赛技术文档.pdf",
+      "bytes": 321021,
+      "sha256": "7114bafe73c89be172822faf1aa526a2c879825108d9b0c8325da97af0eda1a7"
+    },
+    "reportSamplePdf": {
+      "path": "C:\\Users\\Zllyh\\Documents\\Codex\\2026-10-11\\n-h\\outputs\\DriveLab-报告样张.pdf",
+      "bytes": 106911,
+      "sha256": "bb2a4e9cedb182dbbabf6a37a0c80da9783faf348106158a9b2a9b1bb9f0c14f"
+    },
+    "referenceFiles": [
+      {
+        "path": "C:\\Users\\Zllyh\\Documents\\Codex\\2026-10-11\\n-h\\work\\drivelab\\README.md",
+        "bytes": 10268,
+        "sha256": "c65fb673df0fd586a9b0afc349de1c5d2f2769096b8e9618211510e3a8950f3c"
+      },
+      {
+        "path": "C:\\Users\\Zllyh\\Documents\\Codex\\2026-10-11\\n-h\\work\\drivelab\\.env.example",
+        "bytes": 304,
+        "sha256": "b81aefa2facf14420e9b446e0b2c32e7365896e1b64c53f56acf5e7dadebef0f"
+      },
+      {
+        "path": "C:\\Users\\Zllyh\\Documents\\Codex\\2026-10-11\\n-h\\work\\drivelab\\package.json",
+        "bytes": 2551,
+        "sha256": "87847504840e67b98fc7cc98319e22ea0f61036dc7b9f74a5c7ab9cb10a3391e"
+      },
+      {
+        "path": "C:\\Users\\Zllyh\\Documents\\Codex\\2026-10-11\\n-h\\work\\drivelab\\pnpm-lock.yaml",
+        "bytes": 367220,
+        "sha256": "d8ad1adc860d41cc5c5af01efc798e9fae9d0a80b4d3be93bcc5dd96d155f2a7"
+      },
+      {
+        "path": "C:\\Users\\Zllyh\\Documents\\Codex\\2026-10-11\\n-h\\work\\drivelab\\docs\\competition\\team.json",
+        "bytes": 557,
+        "sha256": "bbef5ca1b4035df01ef521d505099619b0ef039dc44df50ea9e6aef37388775e"
+      },
+      {
+        "path": "C:\\Users\\Zllyh\\Documents\\Codex\\2026-10-11\\n-h\\work\\drivelab\\docs\\competition\\FINAL-VALIDATION.json",
+        "bytes": 3854,
+        "sha256": "00cc89db81952a760d6625a9f181dbf5dfa0092f3a117a7df49853530d9ca17c"
+      },
+      {
+        "path": "C:\\Users\\Zllyh\\Documents\\Codex\\2026-10-11\\n-h\\work\\drivelab\\docs\\competition\\LIVE-ENGINE-113-QA.json",
+        "bytes": 36845,
+        "sha256": "2f81505157c54c632692dfc0a5950ed9110b32fa47b478f9e81ba3e2c055075a"
+      },
+      {
+        "path": "C:\\Users\\Zllyh\\Documents\\Codex\\2026-10-11\\n-h\\work\\drivelab\\docs\\competition\\VIDEO-QA.json",
+        "bytes": 68470,
+        "sha256": "df6200b8c771b5f002103abedfcacd4eb3008f443a01831e7dc74b05269e0571"
+      },
+      {
+        "path": "C:\\Users\\Zllyh\\Documents\\Codex\\2026-10-11\\n-h\\work\\drivelab\\docs\\competition\\VIDEO-SUBTITLE-QA.json",
+        "bytes": 120881,
+        "sha256": "528a173bd2cf1a45b42a28f2eef96bff8345d283beb0aca93d9dfaf015758d02"
+      },
+      {
+        "path": "C:\\Users\\Zllyh\\Documents\\Codex\\2026-10-11\\n-h\\work\\drivelab\\docs\\competition\\VIDEO-VISUAL-QA.json",
+        "bytes": 33357,
+        "sha256": "20890015c7ed3d15b8a9632cc3962ad5efda25200c87a64d61f84a081cdc3222"
+      },
+      {
+        "path": "C:\\Users\\Zllyh\\Documents\\Codex\\2026-10-11\\n-h\\work\\drivelab\\docs\\competition\\TECHNICAL-PDF-QA.json",
+        "bytes": 8776,
+        "sha256": "1dc5d268a57d50cf40196c6593e867bc3bfe9f2571c358fca16bb062a65e4046"
+      },
+      {
+        "path": "C:\\Users\\Zllyh\\Documents\\Codex\\2026-10-11\\n-h\\work\\drivelab\\docs\\competition\\REPORT-PDF-QA.json",
+        "bytes": 1542,
+        "sha256": "5a3bf3942077a4a05ebba2729f3aab8c5d53a76c6ee9fa000f14289c89d56e42"
+      },
+      {
+        "path": "C:\\Users\\Zllyh\\Documents\\Codex\\2026-10-11\\n-h\\work\\drivelab\\docs\\competition\\AI-AND-LICENSES.txt",
+        "bytes": 2284,
+        "sha256": "e70451023aa57ef8848ecd8a88c1fbe6c7fb39e2aed59b2f19f4cc4b7c097f68"
+      },
+      {
+        "path": "C:\\Users\\Zllyh\\Documents\\Codex\\2026-10-11\\n-h\\work\\drivelab\\docs\\evidence\\engineering-final-review-20261117.json",
+        "bytes": 19242,
+        "sha256": "d266ced4efd87cb6970b5e41e0864af7d3dee3aaf401b6a08860c3e39e6a805f"
+      },
+      {
+        "path": "C:\\Users\\Zllyh\\Documents\\Codex\\2026-10-11\\n-h\\work\\drivelab\\docs\\evidence\\analysis-final-review-20261117.json",
+        "bytes": 1800,
+        "sha256": "52265d0cf8061ed612e9215b7b869111c6341b9f1465c52a28735dc81389399a"
+      }
+    ],
+    "historicalPackageBefore113": {
+      "sourceZip": {
+        "path": "C:\\Users\\Zllyh\\Documents\\Codex\\2026-10-11\\n-h\\outputs\\DriveLab-V1.0-源码.zip",
+        "bytes": 7798691,
+        "sha256": "53754c6c1becbee0cb8bd105914ce8a0d54b4d5ca8a1143eb5358dd5ef01d108"
+      },
+      "gitBundle": {
+        "path": "C:\\Users\\Zllyh\\Documents\\Codex\\2026-10-11\\n-h\\outputs\\DriveLab-完整Git历史.bundle",
+        "bytes": 21403354,
+        "sha256": "00e22f992985251f53c68323577d8f02558a348704beae49cfa655d59c43f9f1"
+      },
+      "materialsArchive": {
+        "path": "C:\\Users\\Zllyh\\Documents\\Codex\\2026-10-11\\n-h\\outputs\\DriveLab-传智杯参赛材料.zip",
+        "bytes": 38004692,
+        "sha256": "525eae7dd9bebb9e6bc3296908a65648d59f16e6209d50b7a54dbd54fd0983bb"
+      },
+      "packageRecord": {
+        "archive": "C:\\Users\\Zllyh\\Documents\\Codex\\2026-10-11\\n-h\\outputs\\DriveLab-传智杯参赛材料.zip",
+        "bytes": 38004692,
+        "sha256": "525eae7dd9bebb9e6bc3296908a65648d59f16e6209d50b7a54dbd54fd0983bb",
+        "files": 17,
+        "sourceCommit": "f83dff8d6500405e8ed6712fda9c8412b1fcb44a",
+        "technicalPdfPages": 14,
+        "videoDurationSeconds": 387.54,
+        "fileArtifactsPrepared": true,
+        "submissionReady": false,
+        "pending": [
+          "报名身份及实际分工",
+          "指定评审仓库访问",
+          "报名后台最终阶段和时点"
+        ]
+      }
+    },
+    "packageTiming": "尚未由root重建1.1.3最终ZIP；以上sourceZip/gitBundle/materialsArchive仅保留为旧包快照，不能称为新包。包最终hash、源码提交号和验收由后续manifest给出。"
+  },
+  "recommendedPriorities": [
+    "先补真实报名身份与评审访问，再完成最终官网提交前核对。",
+    "成员各自完成代码/公式/AI闭环演示与解释演练，核对模型关键语义。",
+    "质量提升优先做有限但真实的用户任务试用、RAG/工具对照评价和另一设备复现；不为凑多模态仓促加功能。"
+  ],
+  "nonClaims": [
+    "未提交比赛或改动账户/权限。",
+    "未许诺资格、分数、晋级、奖项或零差错。",
+    "未把模型调用/公开数据/测试数量等同实车准确率。",
+    "原2026-11-16规则记录保留作为历史，不覆盖。"
+  ],
+  "inProgressRevalidation": {
+    "status": "source_and_pdf_resolved_final_package_pending",
+    "engineVersion": "1.1.3",
+    "updatedAt": "2026-11-17T02:24:05.925774+08:00",
+    "resolvedIn113": [
+      "正速低速弯道不再用零横摆和零转向保护伪通过",
+      "去重后整列缺值与服务端missing一致",
+      "短制动事件有解析压力/附着需求及采样覆盖告警",
+      "静止车辆解析停车时间为零",
+      "窗口外仅接触边界的采样间隔不再引发稀疏警告"
+    ],
+    "sourceFrozenReportedBy": "root",
+    "checks": {
+      "coreTests": 36,
+      "analysisTests": 27,
+      "savedWorkflowGroups": 5,
+      "independentCases": 130,
+      "retrievalCases": 12,
+      "publicRows": 4973,
+      "independentExtendedReview": {
+        "longitudinalCases": 624,
+        "timeSamples": 32448,
+        "asynchronousLogCases": 120,
+        "record": "docs/evidence/engineering-final-review-20261117.json"
+      },
+      "apiIntegration": "passed: authentication gate, server comparison, SSE, snapshot fingerprint, indexed page metadata and fixture cleanup (6 checks)",
+      "localDatabase": "fresh/repeat/legacy-preservation passed; sandbox log-directory restriction resolved by normal local process permissions",
+      "lint": "passed, zero errors and warnings; generated PDF parser excluded",
+      "typecheck": "passed",
+      "build": "passed via Sites build-site helper"
+    },
+    "technicalPdf": "15页全页QA与本次明确内容条款复核通过",
+    "online": "本人私有站点1.1.3部署/访问复验由root负责，本记录不越权认证外部评审可访问。",
+    "remaining": "新源码包/总包未重建；本人报名/资格/评审访问仍未知。"
+  },
+  "currentResolution": {
+    "engineVersion": "1.1.3",
+    "engineering": "五项已复现边界修复并补回归/独立数值复核，具体范围见engineering-final-review-20261117.json。",
+    "ai": {
+      "record": "docs/competition/LIVE-ENGINE-113-QA.json",
+      "initialIssueRetained": true,
+      "afterMitigationSelectedCase": {
+        "result": "本案例主要数字与参数变化复核通过",
+        "baselineSpeedKmh": 100,
+        "candidateSpeedKmh": 80,
+        "reactionSecondsUnchanged": 0.8,
+        "baselineStoppingDistanceM": 99.38271604938271,
+        "candidateStoppingDistanceM": 67.1604938271605,
+        "baselineMinimumGapM": 58.76543209876543,
+        "speedCandidateMinimumGapM": 72.46913580246914,
+        "gapCandidateMinimumGapM": 78.76543209876543,
+        "newToolExecutionInThisCase": false,
+        "limitations": "单次样例手工对照，不证明其他自然语言回答或建议均准确。"
+      },
+      "generalAccuracyClaimed": false
+    },
+    "technicalPdfContentRequirements": "选型理由、技术/应用创新、总结展望已明确补齐；15页≤30页。",
+    "video": "V2按实际历史1.1.2界面与结果制作，继续冻结；没有把其冒充新1.1.3录屏。",
+    "package": "待root重建及manifest确认，不使用旧ZIP作为新包通过证明。",
+    "submissionReady": false,
+    "unresolvedOwnerItems": [
+      "队伍身份/同校学籍/组别/实际贡献",
+      "报名阶段/缴费/晋级及精确提交时点",
+      "指定评审仓库访问",
+      "若主张在线演示加分，指定评审可访问与可用性"
+    ]
+  }
+}

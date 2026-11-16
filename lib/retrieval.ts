@@ -1,7 +1,6 @@
 import {knowledge, type Simulation} from './simulation';
 import {hybridSearch,type KnowledgeDoc} from './rag';
 export type Doc={id:string;title:string;body:string;category?:string;basis?:string};
-function vector(s:string){const v=new Float64Array(512);const words=s.toLowerCase().match(/[a-z0-9]+|[\u4e00-\u9fff]/g)??[];const terms=[...words,...words.slice(1).map((w,i)=>words[i]+w)];for(const t of terms){let h=2166136261;for(const ch of t)h=Math.imul(h^ch.charCodeAt(0),16777619);v[(h>>>0)%v.length]++;}const norm=Math.hypot(...v)||1;return Array.from(v,x=>x/norm);}
 export function retrieve(question:string,extra:KnowledgeDoc[]=[]){return hybridSearch(question,[...knowledge,...extra]);}
 export function ruleAnswer(question:string,s:Simulation,sources:ReturnType<typeof retrieve>){let text=`当前「${s.config.name}」的模型评估为：${s.risk}。\n\n`+s.findings.map(f=>`${f.title}：${f.detail}`).join('\n\n');
  if(s.config.scenario==='curve')text+=`\n\n按当前侧向阈值与附着条件估算，弯道评估速度上限约 ${s.safeCurveSpeed.toFixed(1)} km/h。`;

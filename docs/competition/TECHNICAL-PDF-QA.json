@@ -1,23 +1,29 @@
 {
-  "checkedOn": "2026-11-16",
-  "operation": "read_only_technical_pdf_render_and_visual_review",
+  "checkedOn": "2026-11-17",
+  "operation": "technical_pdf_revision_generation_complete_render_and_visual_review",
   "pdf": "C:/Users/Zllyh/Documents/Codex/2026-10-11/n-h/outputs/DriveLab-参赛技术文档.pdf",
-  "result": "pass_after_two_documentation_corrections",
-  "latestPdfSha256": "b4ac51e3b3c3994455a1623e4167b399a4c443a9baa995c4315cbb45cafc8f8b",
-  "latestFileBytes": 313591,
-  "pageCount": 14,
+  "result": "passed_complete_15_page_visual_and_content_review",
+  "latestPdfSha256": "7114bafe73c89be172822faf1aa526a2c879825108d9b0c8325da97af0eda1a7",
+  "latestFileBytes": 321021,
+  "pageCount": 15,
+  "engineVersion": "1.1.3",
+  "repositoryCopy": {
+    "path": "docs/competition/DriveLab-参赛技术文档.pdf",
+    "byteIdentical": true
+  },
   "method": {
     "renderer": "bundled Poppler pdftoppm",
     "dpi": 130,
-    "renderedDirectory": ".sites-runtime/technical-qa",
-    "completeVisualReview": "初版 14 张完整单页 PNG 均逐页查看。制作者修正后重新渲染全部 14 页；p4/p8 再次逐页查看，其余 12 页 PNG SHA256 与已审版本逐字节一致。",
+    "renderedDirectory": ".sites-runtime/technical-qa-113",
+    "completeVisualReview": "15张完整单页PNG均逐页查看，包含新增p14与修改的工程/AI/截图说明页面。",
     "additionalChecks": [
-      "pypdf 全页文本提取",
-      "pdfplumber 字符页面边界",
-      "前后单页 PNG SHA256 对比"
+      "pypdf全15页文本提取与必须标题/版本/计数断言",
+      "pdfplumber全页字符边界与替代字符检查",
+      "输出PDF与repo副本逐字节一致",
+      "git diff --check on generator"
     ],
-    "markerNotRun": true,
-    "noPdfOrSourceChangesByReviewer": true
+    "authoringMarker": "edit marker executed once before this technical-PDF authoring operation",
+    "authoredByReviewer": true
   },
   "layout": {
     "missingChineseGlyphsObserved": false,
@@ -26,245 +32,208 @@
     "clippingObserved": false,
     "characterOutsidePageCount": 0,
     "textReplacementCharacterCount": 0,
-    "pageNumbers": "1–14 连续且与实际页序一致",
-    "headings": "封面+01–13章节，页眉/页脚一致；表头、列宽与段落均可读。",
-    "screenshots": "p6 公开导入图与 p13 模型执行图均有明确图注。截图为辅助界面证据，非实车验证或连续操作录像。"
+    "pageNumbers": "1–15连续且与实际页序一致",
+    "screenshots": "p6导入图与p13历史模型图有明确图注；不等同实车、连续录像或当前113新工具执行。"
   },
-  "correctedFindings": [
-    {
-      "id": "DOC-PUBLIC-SPEED-UNIT",
-      "priority": "P2",
-      "page": 8,
-      "status": "resolved",
-      "before": "文案将 CSV 转换与应用导入混为一谈，称原始 m/s 已在转换时变为 km/h。",
-      "after": "成品 CSV 保留 speed_mps，应用导入时才换为 km/h；样例生成时将方向盘角插值到共同区间内速度时间戳。",
-      "verification": "新 p8 可见正确叙述，保留原 CSV SHA256。"
-    },
-    {
-      "id": "DOC-ANGLE-DISPLAY-UNIT",
-      "priority": "P3",
-      "page": 4,
-      "status": "resolved",
-      "before": "r=ay/v、atan 几何公式默认角量 rad，但未说明展示到 °/°s 的换算。",
-      "after": "明确公式角量 rad/rad/s，页面与日志展示乘 180/π。",
-      "verification": "新 p4 文案、π、°、°/s 均渲染正常，未造成表格或下方段落挤压。"
-    }
-  ],
   "requiredContent": {
-    "engineeringFixes": {
-      "pages": [
-        1,
-        4,
-        12
+    "modelSelection": {
+      "page": 14,
+      "visible": true,
+      "claimBoundary": "当时免费入口、中文解释需求及工具协议集成条件；无模型横向基准或优越性结论。"
+    },
+    "technicalAndApplicationInnovation": {
+      "page": 14,
+      "visible": true,
+      "claimBoundary": "证据与工具的工程组合及应用交付；不声称新车辆物理算法、语义embedding或效率比例。"
+    },
+    "summaryAndOutlook": {
+      "page": 14,
+      "visible": true,
+      "futureDirections": [
+        "车型参数",
+        "受控实测",
+        "真实用户",
+        "检索与解释评测"
       ],
-      "visible": true,
-      "items": [
-        "低于 5 km/h 的换道/避障初始输入拒绝",
-        "低速残余横向需求提示未完成评估",
-        "非法候选跳过",
-        "0.05 s +100 km/h 合成尖峰的两网格并集峰值",
-        "原始采样数/长间隔提醒",
-        "独立 CAND_n 事实与基线隔离",
-        "PDF 输入指纹与旧分析时效"
-      ]
-    },
-    "lowSpeedPolicy": {
-      "page": 4,
-      "visible": true,
-      "statement": "5 km/h 是当前软件模型适用政策，不是通用车辆限值或法规。"
-    },
-    "sampledExtrema": {
-      "page": 4,
-      "visible": true,
-      "statement": "侧向、附着与方向盘为 0.1 s 采样需求峰值，不保证连续时间极值；贴近阈值需加密验证。"
+      "futureNotCompleted": true
     },
     "testCounts": {
       "page": 7,
-      "core": 31,
+      "core": 36,
       "analysis": 27,
-      "independentReference": "130/130",
-      "retrieval": "12/12 Hit@3 and 12/12 Top1",
-      "publicCanRows": 4973
+      "savedWorkflowGroups": 5,
+      "independentReference": 130,
+      "retrieval": 12,
+      "publicCanRows": 4973,
+      "extendedLongitudinalCases": 624,
+      "extendedTimeSamples": 32448,
+      "extendedAsynchronousLogCases": 120
     },
     "realModelEvidence": {
       "pages": [
         5,
-        13
-      ],
-      "visible": true,
-      "statement": "ModelScope Qwen/Qwen3.5-27B 实际联调已完成并有截图；截图中有工具/请求/格式纠正/引用检查步骤。保留输出校验、纠正和规则降级边界。"
-    },
-    "staleStatus": {
-      "pages": [
-        1,
-        3,
-        5,
         11,
         13
       ],
-      "result": "未见旧版“真实模型尚未接通/工程复核待做”等已过时状态。仍待团队/评审确认的事项保留待确认。"
+      "current113": "LIVE-ENGINE-113-QA.json记录2个各1请求的本机比较；保留首例语义措辞问题；后例数字与参数变化经人工对照。未触发新工具，不证明一般语义正确。",
+      "historical112": "p13图为默认线上2请求及一次纠正，没有inspect_simulation/search_knowledge工具执行步骤；真实工具证据另见LIVE-ENGINE-112-QA.json。",
+      "noHistoricalAttributionTo113": true
     },
-    "teamInformation": {
+    "physicalAndLogs113": {
       "pages": [
-        1,
-        10,
-        11,
-        13
-      ],
-      "honestMissingInformation": true,
-      "statement": "队名、学校、组别、队长、分工和人工签署待本人核实，不代填、不虚构贡献。"
-    },
-    "publicData": {
-      "pages": [
-        6,
-        8
-      ],
-      "clearImportOnly": true,
-      "sourceCommit": "4c7f1a6e1957745beadc1def0e7225f559b09a2a",
-      "csvSha256": "e97ef42e65251f5ba0ca9fc2dec334b9870a27638be88710545ac5f1d17cd722",
-      "noYawOrPressureFabricated": true,
-      "notControlledModelValidation": true
-    },
-    "defaultCase": {
-      "page": 13,
-      "speedKmh": 100,
-      "leadSpeedKmh": 60,
-      "gapM": 80,
-      "reactionS": 0.8,
-      "decelMps2": 5,
-      "stoppingDistanceM": 99.3827,
-      "stopTimeS": 6.3556,
-      "fullBrakingMinimumGapM": 58.7654,
-      "result": "与当前应用已复核计算一致，并解释停车距离大于初始间距不直接判碰撞。"
-    },
-    "noSafetyCertificationClaim": {
-      "pages": [
-        1,
-        2,
         4,
-        7,
-        8,
-        13
+        6,
+        12
       ],
-      "visible": true
+      "allFiveNewBoundariesVisible": true,
+      "notRealVehicleValidation": true
     },
-    "developmentDisclosure": {
+    "teamAndAccess": {
       "pages": [
-        11,
-        13
-      ],
-      "visible": true,
-      "statement": "Codex 辅助代码/测试/材料；合成普通话配音和截图剪辑如实披露，不伪装实车实验或本人配音。"
-    },
-    "competitionStatus": {
-      "pages": [
+        1,
         10,
         11,
-        14
+        13
       ],
-      "statement": "访问、另一台设备/评审账户、报名身份/资格/截止时间仍需团队核实；未声称已经提交或获奖。"
+      "unconfirmedIdentityAndExternalAccessRetained": true,
+      "noFabricatedSignatures": true
+    },
+    "videoVersion": {
+      "page": 10,
+      "mp4Unmodified": true,
+      "historical112MaterialExplicit": true
     }
   },
   "pageReview": [
     {
       "page": 1,
       "result": "pass",
-      "notes": "封面版本/状态和缺团队信息说明真实明确，未伪造身份。"
+      "notes": "封面引擎1.1.3、当前本机与历史模型证据及未确认团队信息明确。"
     },
     {
       "page": 2,
       "result": "pass",
-      "notes": "用户、功能闭环、定位和碰撞几何局限可读。"
+      "notes": "产品定位、五类工况、工作闭环及非实车安全结论边界可读。"
     },
     {
       "page": 3,
       "result": "pass",
-      "notes": "架构表、请求链、持久化与过期分析处理清晰。"
+      "notes": "架构、API重算、持久化和旧分析指纹处理清晰。"
     },
     {
       "page": 4,
-      "result": "pass_after_correction",
-      "notes": "公式与rad→度说明完整；5km/h政策和采样极值局限明确。"
+      "result": "pass",
+      "notes": "正速弯道、静止停车、短脉冲解析需求、采样极值与5km/h软件政策明确，公式未裁切。"
     },
     {
       "page": 5,
       "result": "pass",
-      "notes": "AI/RAG/工具、请求预算、真实模型及本地校验限制说明完整。"
+      "notes": "当前113两个一请求案例与初次措辞问题、112工具历史分列；三请求上限与语义局限准确。"
     },
     {
       "page": 6,
       "result": "pass",
-      "notes": "导入截图及图注、对标两网格口径和缺失协议完整。"
+      "notes": "日志截图、正长度共同窗口、两网格max与全空列缺失说明完整。"
     },
     {
       "page": 7,
       "result": "pass",
-      "notes": "31/27/130/12测试数量正确；未夸大实车/泛化/模型输出证据。"
+      "notes": "36/27/5/130/12及624/32448/120范围分别列示，不冒充实车验证。"
     },
     {
       "page": 8,
-      "result": "pass_after_correction",
-      "notes": "CSV原单位与导入换算准确，哈希/许可/复现说明和非车型标定边界明确。"
+      "result": "pass",
+      "notes": "原CSV单位、导入换算、许可/哈希/原始数组与公开数据用途清晰。"
     },
     {
       "page": 9,
       "result": "pass",
-      "notes": "运行命令、回环向导、数据库迁移与错误处理说明完整。"
+      "notes": "依赖、运行与迁移命令、回环引导及错误说明可读。"
     },
     {
       "page": 10,
       "result": "pass",
-      "notes": "演示时间表与真实待完成项明确，分工未冒充已完成贡献。"
+      "notes": "实际V2章节时间表与112历史素材标识准确；113不冒充视频新测。"
     },
     {
       "page": 11,
       "result": "pass",
-      "notes": "验收门槛、私有协作和合成配音/剪辑披露清晰。"
+      "notes": "真实模型、访问、团队与报名门槛如实保留，合成解说与剪辑披露明确。"
     },
     {
       "page": 12,
       "result": "pass",
-      "notes": "五类复现问题、修复、验证与适用范围表无截断。"
+      "notes": "113五项修复、验证范围及历史112记录分列，无截断。"
     },
     {
       "page": 13,
       "result": "pass",
-      "notes": "真实模型截图、固定算例、指纹时效、开发披露完整。"
+      "notes": "112历史默认2请求截图明确无inspect/search工具；固定算例、事实附录及开发披露可读。"
     },
     {
       "page": 14,
       "result": "pass",
-      "notes": "主要来源 URL可读且换行正常，赛事最终规则核准提示保留。"
+      "notes": "选型理由、技术/应用创新、总结展望及四项未来计划明确，未虚构横向评测或新算法。"
+    },
+    {
+      "page": 15,
+      "result": "pass",
+      "notes": "主要来源URL换行可读、许可和最终规则核实边界保留。"
     }
   ],
-  "versionComparison": {
-    "initialPdfSha256": "3dae7851e98407532f7e87819be8ad234e047fee39cc9b186a123b82cffef8e8",
-    "changedPages": [
-      4,
-      8
-    ],
-    "unchangedPages": [
-      1,
-      2,
-      3,
-      5,
-      6,
-      7,
-      9,
-      10,
-      11,
-      12,
-      13,
-      14
-    ]
-  },
-  "limitations": [
-    "检查对象仅为此版本技术 PDF 的版式与关键可见内容；不是对全部软件、比赛资格、实时服务稳定性或所有截图历史的重新验收。",
-    "真实模型截图与测试通过不构成整车安全、实车精度、车型标定或持证工程签署。",
-    "初次脚本名 inspect.py 与 Python 标准库冲突，已重命名为 inspect_technical_pdf.py 后完成；未影响 PDF 或应用文件。"
+  "requiredTextChecksPassed": [
+    "模型选型理由",
+    "技术创新点",
+    "应用创新点",
+    "总结与展望",
+    "车型参数",
+    "受控实测",
+    "真实用户",
+    "检索与解释评测",
+    "不是新的车辆物理算法或语义嵌入算法",
+    "未做模型横向基准",
+    "1.1.2",
+    "没有inspect_simulation/search_knowledge工具执行步骤",
+    "正长度共同区间",
+    "全为空也标缺失",
+    "pmax",
+    "r=v/R",
+    "静止",
+    "视频不被当作本轮"
   ],
-  "remainingBlockingFindings": [],
-  "reviewerWroteOnly": [
-    ".sites-runtime/technical-qa/ QA脚本、PNG、提取文本与JSON"
-  ]
+  "renderedPngSha256": {
+    "technical-01.png": "2ac3c8d3e6f3c59fc9415ec2c3a30f70c2061d6215ec9a07a7ae4d7c26ff1cc7",
+    "technical-02.png": "91ab1893c1e0c5a55184f24330259b3aea1b0e3f4cc5a3785749cb79b3222e82",
+    "technical-03.png": "892663d104d795309a74bc374d126bbcc52687995ef17f803ced78a19c88f009",
+    "technical-04.png": "3d903bef0c13a6acd71adea3627777805d02a9354b0f5a5243103745ef0bced3",
+    "technical-05.png": "5172be76a627098d11767ee04eda0cf268c4227cfdba9e4a680b9e297e7c1204",
+    "technical-06.png": "cd0c8462ab6690eb8ecb22e240c23cd92845097519d727a7e1c9300a6356cf85",
+    "technical-07.png": "033fc5c55a81b125107b967cee5f6607ec30e47230b11f885454b79b0d433f38",
+    "technical-08.png": "62698b3c23e6046d58075f2cdf520c55d734953cdf1bd1bc29ad3e83639b5480",
+    "technical-09.png": "2ed869440ab2b09a5ac2fdf268ccae1cec4aa1ce981b4b1cbd95b600933da48e",
+    "technical-10.png": "92529b710ff04a777804c46d9d7eb265278b2907c9adede9296ca2cd1b44c569",
+    "technical-11.png": "55ad792624bded3031a5cd6925c11452c027263a98920dd89db0314bcb9b3e51",
+    "technical-12.png": "4ec284c4480a5bf5fab988291e6cdacd1bb041492a30dc8d86e91f896913bc5a",
+    "technical-13.png": "d80a073405b2a074a13b223343f2cfb6d4017eda6a7b1d1800f14bed13cf1382",
+    "technical-14.png": "0fed0d9a3c3d41d9a3800c13c702a49a521d30771767995a2b784dd06e9b4082",
+    "technical-15.png": "0b105305a1fddfc8cfcf0994456ee8c121fc3e6ac4440af674c2ad1c7ea871e4"
+  },
+  "correctedFindings": [
+    {
+      "id": "MAT-03",
+      "status": "resolved",
+      "evidence": "p14明确模型选型、技术/应用创新及总结展望。"
+    },
+    {
+      "id": "MAT-04",
+      "status": "resolved",
+      "evidence": "p13及本QA将112默认截图、112工具记录、113本机比较分开。"
+    }
+  ],
+  "limitations": [
+    "作者完成此版修订与逐页自检，不伪称独立未改作者的外部认证。",
+    "本检查不证明全部输入长度下的PDF布局、实时服务稳定、一般模型语义、车型适用性或实车安全。",
+    "评审访问、真实身份/分工与最终报名/上传仍待实际所有者核实。"
+  ],
+  "remainingBlockingFindings": []
 }

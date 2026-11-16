@@ -1,6 +1,6 @@
 'use client';
 import {useEffect,useState} from 'react';
-import {BookOpen,CheckCircle2,Download,ExternalLink,FileCheck,GitCompareArrows,TriangleAlert} from 'lucide-react';
+import {BookOpen,Download,ExternalLink,FileCheck,GitCompareArrows,TriangleAlert} from 'lucide-react';
 type Result={engineVersion:string;generatedAt:string;summary:{total:number;passed:number;maxAbsoluteError:number};groups:{kind:string;total:number;passed:number}[];retrieval:{total:number;hitAt3:number;top1:number};publicSample:{rows:number;duration:number;sourceCommit:string;sha256:string;missing:string[]};limitations:string};
 export function ValidationPage({onLoadPublic}:{onLoadPublic:()=>void}){
  const [data,setData]=useState<Result|null>(null),[error,setError]=useState('');useEffect(()=>{fetch('/validation/benchmark-results.json').then(r=>{if(!r.ok)throw Error('验证结果尚未生成，请运行项目测试');return r.json();}).then(v=>setData(v as Result)).catch(e=>setError(e.message));},[]);

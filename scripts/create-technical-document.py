@@ -18,6 +18,12 @@ ENGINE=re.search(r"ENGINE_VERSION='([^']+)'",(ROOT/'lib/evidence.ts').read_text(
 TEAM=json.loads((ROOT/'docs/competition/team.json').read_text(encoding='utf-8'))
 VALIDATION=json.loads((ROOT/'docs/competition/FINAL-VALIDATION.json').read_text(encoding='utf-8'))
 assert VALIDATION['engineVersion']==ENGINE and VALIDATION['softwareChecksPassed']
+ENGINEERING_REVIEW=json.loads((ROOT/'docs/evidence/engineering-final-review-20261117.json').read_text(encoding='utf-8'))
+assert ENGINEERING_REVIEW['finalEngineVersion']==ENGINE
+REVIEW_DATE=VALIDATION['reviewedOn']
+VIDEO=json.loads((ROOT/'docs/competition/VIDEO-QA.json').read_text(encoding='utf-8'))
+VIDEO_TIMELINE=json.loads((ROOT/'docs/competition/VIDEO-SUBTITLE-QA.json').read_text(encoding='utf-8'))['scenes']
+HISTORICAL_MODEL_ENGINE='1.1.2'
 pdfmetrics.registerFont(TTFont('NotoSC', str(ROOT / 'public/fonts/NotoSansSC-Regular.ttf')))
 INK=colors.HexColor('#253846'); MUTED=colors.HexColor('#657887'); ORANGE=colors.HexColor('#df6939'); LINE=colors.HexColor('#dbe3e9')
 styles={
@@ -50,16 +56,16 @@ def footer(c,doc):
  c.setStrokeColor(LINE);c.line(42,801,553,801);c.line(42,39,553,39)
  c.setFont('NotoSC',8);c.setFillColor(MUTED)
  c.drawString(42,814,'DRIVELAB  /  ENGINEERING WITH EVIDENCE')
- c.drawString(42,25,'参赛技术文档 · 软件工程复核版 · 2026-11-16')
+ c.drawString(42,25,'参赛技术文档 · 软件工程复核版 · '+REVIEW_DATE)
  c.drawRightString(553,25,str(doc.page))
 
 add('AI WEB DEVELOPMENT  /  10037','small');story.append(Spacer(1,65))
 add('DriveLab\n智能驾驶工况仿真\n与辅助分析平台','title')
 add('以可复算的工程证据，连接工况设计、日志对标与 AI 解释。','sub')
 story.append(Spacer(1,24))
-table(['版本','状态'],[[f'产品 V1.0 / 计算引擎 {ENGINE}','软件复核与实际模型联调已完成'],['目标赛道','2026 传智杯 AI WEB 网页开发挑战赛'],['代码仓库','github.com/qiuyimei/drivelab（私有）']],[155,355])
+table(['版本','状态'],[[f'产品 V1.0 / 计算引擎 {ENGINE}','本轮软件复核；既有模型实测另标版本'],['目标赛道','2026 传智杯 AI WEB 网页开发挑战赛'],['代码仓库','github.com/qiuyimei/drivelab（私有）']],[155,355])
 add('当前结论','sub')
-add('项目已形成工况设计、确定性计算、日志对标、免费模型工具分析、保存与中文报告的工作流。本轮复核修正低速横向模型、采样间尖峰、候选引用和报告时效问题。软件检查与可复算案例有明确记录；不把代码测试等同于实车标定或整车安全认证。')
+add('项目已形成工况设计、确定性计算、日志对标、免费模型工具分析、保存与中文报告的工作流。本轮进一步修正低速弯道、全空列、短制动脉冲、静止停车与区间质量边界。软件检查与可复算案例有记录；既有模型联调另标历史版本，不把代码测试等同于实车标定或整车安全认证。')
 if TEAM['confirmed']:
  add('团队：'+TEAM['teamName']+'；学校：'+TEAM['school']+'；组别：'+TEAM['group'],'small')
  add('成员：'+'；'.join(m['name']+'（'+m['role']+'）' for m in TEAM['members']),'small')
@@ -95,16 +101,17 @@ add('技术栈：React 19、TypeScript、Vinext、Vite、Cloudflare Worker、D1�
 
 page(3,'物理模型、公式与适用条件')
 table(['模型','公式 / 处理','适用条件'],[
- ['纵向停车','a = min(a请求, a底盘, mu*g)\ns = v0*tr + v0^2/(2a)\nt停止 = tr + v0/a','水平路面、恒减速，车速不反向'],
+ ['纵向停车','a = min(a请求, a底盘, mu*g)\ns = v0*tr + v0^2/(2a)\nt停止 = 0（v0=0）；否则 tr + v0/a','水平路面、恒减速，车速不反向'],
  ['完整跟驰','vc = max(v0-v前车, 0)\ngap最小 = d - vc*tr - vc^2/(2a)','前车恒速，不含前车制动'],
- ['稳态圆周','ay = v^2/R；r = ay/v\n方向盘角 = atan(L*ay/v^2)*传动比','低侧偏运动学近似'],
+ ['稳态圆周','ay = v^2/R；r = v/R（v>0）\n方向盘角 = atan(L/R)*传动比（v>0）','静止时模型输出零；低侧偏运动学近似'],
  ['五次换道','y = W*(10u^3-15u^4+6u^5)\nay = W/T^2*(60u-180u^2+120u^3)','给定轨迹需求；u 按响应后时间归一化'],
  ['附着与压力','利用率 = sqrt(ax^2+ay^2)/(mu*g)\np = abs(ax)*质量/制动力增益','摩擦圆需求检查；压力为集总估算'],
  ],[80,265,165])
 add('数值与边界处理','sub')
-add('内部使用 m、s、m/s 和 m/s²；车速输入/输出 km/h，横摆 °/s，方向盘 °，压力 bar。按 0.1 s 采样，窗口末段精确截止；纵向位移分段精确积分。侧向、附着与方向盘峰值为采样需求峰值，不构成连续时间极值保证；贴近阈值时需加密验证。')
+add('内部使用 m、s、m/s 和 m/s²；车速输入/输出 km/h，横摆 °/s，方向盘 °，压力 bar。按 0.1 s 采样，窗口末段精确截止；纵向位移分段精确积分。侧向与方向盘峰值仍为采样需求峰值；附着峰值取采样合成需求与解析纵向 a/(mu*g) 的较大值，不保证联合工况连续极值。')
 add('公式中的角量使用 rad 与 rad/s；页面与日志协议的角度展示乘以 180/π 转为 ° 与 °/s。','small')
 add('短显示窗口之外的完整制动间距另行解析预测。换道/避障初速低于 5 km/h 时明确拒绝；这是本软件的模型适用政策边界，不是车辆通用限值。避障降至低速且仍有横向需求时提示未完成评估，不能把未算出的转向需求当通过。变速换道仍是近似需求。')
+add('短制动脉冲即使落在采样之间，也保留解析压力峰值 pmax = a*质量/制动力增益及纵向附着需求，并给出曲线覆盖提醒，不额外插入网格行。压力是模型估算，不是实际液压测量；不能把曲线零压力当作制动需求为零。','small')
 add('默认侧向阈值、误差容差与制动增益是项目初始值，不是法规限值或经车型审核的标定值。','small')
 
 page(4,'AI、RAG 与受限工具')
@@ -119,7 +126,7 @@ add('检索实现','sub')
 add('中文单字/双字与英文词项，BM25 结合 512 维稀疏词项哈希向量余弦相似度。约 700 字分块、560 字步进；索引保留 docId#cN、字符范围、PDF 页码或段落。该方法不是语义 embedding。')
 add('生成校验与失败行为','sub')
 add('模型最多请求 3 轮、每轮至多 4 个工具；最终输出结构化 JSON。观察和建议必须引用有效 factId 或 chunkId；拒绝不存在的引用和绝对安全承诺。额度、网络或格式失败时保留规则结果。引用标识有效不等于文字语义已被完全证明，仍需人工复核。')
-add('真实模型：ModelScope 免费 API-Inference 的 Qwen/Qwen3.5-27B。已完成账号准备、本机真实工具往返及一次线上 RAG 分析。实测发现 JSON 解码兼容问题后，仅对该服务商省略解码提示，保持本地严格校验；输出有误时在剩余三次请求预算内纠正，仍失败则降级。','small')
+add('本轮 ModelScope Qwen/Qwen3.5-27B 的 1.1.3 本机比较有两条真实单请求记录：初始回答混用了停车/响应术语，收紧提示后另一案例经计算事实对照通过，见 LIVE-ENGINE-113-QA.json；不宣称通用语义准确。1.1.2 的工具案例和默认两请求截图另标历史，不能冒充 1.1.3 新工具实测。服务商解码提示兼容调整仍保留本地校验与三次总请求预算。','small')
 add('默认及工具重算候选使用独立 CAND_n 事实范围，保留参数、基线指纹与结果；基线事实不被候选覆盖。检索只暴露已登记的段落。校验仍不能自动证明所有自然语言语义，关键数值需对照事实字典复核。','small')
 
 page(5,'日志协议与公开数据')
@@ -128,16 +135,17 @@ add('页面实测截图：公开实测导入示例与仿真比较。两者工况
 table(['处理','规则'],[
  ['字段','time_s；speed_kmh；yaw_rate_dps；brake_pressure_bar；steering_angle_deg'],
  ['清洗与对齐','去无效行；时间排序；重复时间保留最后一行；首时刻归零后应用偏移'],
- ['对标','MAE/RMSE/偏差按共同区间内仿真网格等点权计算；最大误差与峰值时间在仿真、采集两网格并集计算'],
- ['缺失','缺失通道和空值不补零，区间外不外推；先检查方向盘/前轮角定义'],
+ ['对标','仅在正长度共同区间比较；MAE/RMSE/偏差按原仿真网格等点权计算，最大误差/时刻按两网格并集计算；间隔提醒只计与共同区间正长度相交的采集间隔'],
+ ['缺失','按有效通道值判断；有列名但全为空也标缺失。空值不补零，区间外不外推；先检查方向盘/前轮角定义'],
  ],[85,425])
 
 page(6,'独立验证与结果')
 bench=json.loads((ROOT/'public/validation/benchmark-results.json').read_text(encoding='utf-8-sig'))
 table(['验证','结果','证明范围'],[
- ['核心回归',str(VALIDATION['coreTests'])+' 项通过','计算、低速边界、短时尖峰、单位与导入'],
+ ['核心回归',str(VALIDATION['coreTests'])+' 项通过','计算、弯道/低速、短脉冲、尖峰、单位与缺失/重叠边界'],
  ['分析回归',str(VALIDATION['analysisTests'])+' 项通过','工具往返、候选事实、引用闭包、有界纠正与降级'],
  ['独立解析参考',f"{bench['summary']['passed']} / {bench['summary']['total']}",'公式与给定轨迹边界实现一致性'],
+ ['本轮扩展交叉核验',f"{ENGINEERING_REVIEW['freshVerification']['independentLongitudinalSweep']['cases']} 组 / {ENGINEERING_REVIEW['freshVerification']['independentLongitudinalSweep']['samplePoints']} 时序点；{ENGINEERING_REVIEW['freshVerification']['independentLogReference']['cases']} 组异步日志",'独立分段闭式参考与随机插值核对；不是实车或模型回答准确率'],
  ['固定检索回归','12/12 Hit@3；12/12 Top1','小样本回归，不代表泛化准确率'],
  ['公开 CAN 样例','4,973 行；约 59.98 s','哈希、单位、时间轴与缺失通道'],
  ['本地 API','六组验收通过','登录门禁、误差、SSE、快照、页码、夹具清理'],
@@ -147,7 +155,7 @@ table(['验证','结果','证明范围'],[
  ],[115,170,225])
 add('独立参考如何避免自证','sub')
 add('参考生成器不调用应用计算模块。109 组停车参考由闭式解生成，9 组弯道参考从圆周几何生成，12 组换道参考通过六个边界条件的线性方程独立求解。最大绝对数值差约 9.095e-13。')
-add('这些测试不证明真实车辆的模型精度、超限后的运动、安全性或所有大模型生成质量。真实免费模型流程已有实测，但不存在受控实车数据闭环标定或工程专家签署。','small')
+add('这些测试不证明真实车辆的模型精度、超限后的运动、安全性或所有生成质量。1.1.2 工具/线上截图、本轮 '+ENGINE+' 软件回归与本机模型比较分别留证；不存在受控实车闭环标定或工程专家签署。','small')
 
 page(7,'数据来源、许可与复现')
 add('公开数据来源为 comma.ai 官方 comma2k19 仓库中的示例 CAN 片段，MIT 许可。仅保留速度与方向盘转角，没有伪造横摆角速度或制动压力。')
@@ -181,24 +189,30 @@ add('数据库初始化先检查旧结构，再接入迁移记录；不删除或
 
 page(9,'竞赛展示与团队复核')
 table(['评价方向','可展示内容','仍需补齐'],[
- ['AI 深度 / 创新','计算证据 + 日志 + RAG + 工具重算 + 来源与输入指纹','已有真实联调；自然语言语义仍需人工核对'],
+ ['AI 深度 / 创新','计算证据 + 日志 + RAG + 工具重算 + 来源与输入指纹','113 本机比较有记录；线上、跨设备与语义仍需复核'],
  ['前端 / 体验','完整工作台、对标曲线、执行步骤、报告下载','另一设备与评审账户端到端验收'],
  ['实用性 / 社会价值','车辆工程与软件工程交叉学习、前期复盘可追溯','实际使用反馈，不编造节省时间指标'],
  ],[110,245,155])
-add('建议 6 分钟演示顺序','sub')
+add('已验收 V2 产品演示','sub')
+def video_range(first,last):
+ selected=[s for s in VIDEO_TIMELINE if first<=s['scene']<=last]
+ def timestamp(frame):
+  seconds=frame//24;return f'{seconds//60}:{seconds%60:02}'
+ return timestamp(selected[0]['startFrame'])+'–'+timestamp(selected[-1]['startFrame']+selected[-1]['frames'])
 table(['时间','演示内容'],[
- ['0:00–0:40','说明用户问题、产品定位与适用边界'],
- ['0:40–1:50','从案例创建，修改附着/速度，展示确定性约束变化'],
- ['1:50–3:00','导入日志、单位与时间对齐、缺失通道与误差'],
- ['3:00–4:30','真实免费模型工具与来源、候选独立事实、有界纠正及规则降级'],
- ['4:30–5:25','候选重算、过期分析提醒、保存与恢复'],
- ['5:25–6:00','PDF 下载、独立验证结果、局限与后续计划'],
+ [video_range('01','02'),'产品用途与五类工况'],
+ [video_range('03','04'),'参数配置、运动预览与时序结果'],
+ [video_range('05','07'),'日志导入、数据对标与专业资料'],
+ [video_range('08','09'),'智能分析流程与独立候选比较'],
+ [video_range('10','11'),'工况记录、恢复与中文报告输出'],
+ [video_range('12','12'),'产品价值、边界与后续需求'],
  ],[105,405])
+add('V2 视频 '+str(VIDEO['formatChecks']['durationSeconds'])+' s、1920×1080，保留 1.1.2 项目素材、98 句音频和已验收字幕。视频不被当作本轮 '+ENGINE+' 新边界或新模型联网验收；制作方式与逐句检查见 VIDEO-QA.json。','small')
 add('车辆工程角色审核公式、单位、参数、数据与边界；软件工程角色解释前后端、检索、工具约束、存储与测试。实际成员、学校、组别、指导教师、开发过程和分工由团队如实填写。')
 
 page(10,'最终提交前的验收门槛')
 table(['门槛','当前状态','完成条件'],[
- ['真实免费模型','已实测，有边界','实际工具/RAG 请求与来源有记录；不将单次通过等同所有问题稳定'],
+ ['真实免费模型','113 本机比较已记录','113 比较未新触发工具；工具与线上截图另列 112 历史，不将单次通过等同稳定'],
  ['工程软件复核','已完成本轮检查','复现缺陷已修复并增加回归；车型参数与实车精度不在本次验收范围'],
  ['访问与运行','本地已验收；评审未验收','另一台电脑复现；安排指定评审只读权限；验证链接可访问'],
  ['提交材料','本轮制作与逐项校核','PDF ≤30 页；普通话 5–8 分钟 1080p MP4；源码与完整 Git 历史；补真实报名信息'],
@@ -211,24 +225,40 @@ add('视频采用真实界面截图、实际计算结果与普通话合成解说
 
 page(11,'工程复核与修复记录')
 table(['复现问题','修复与针对性验证','证据范围'],[
- ['极低速横向评估','拒绝低于 5 km/h 的横向场景，低速剩余横向需求明确警告；非法候选跳过','软件适用边界，非车辆法规阈值'],
- ['采样间瞬态漏峰','36 km/h 平稳基线中，0.05 s 采集尖峰 +100 km/h；并集最大误差应为 100，不能报告全零通过','只证明对输入分段线性数据的峰值处理'],
- ['稀疏日志过度解释','报告原始采样数量、最大采样间隔；超过 1 s 时提醒；不足两个点或无共同区间不给虚构统计','1 s 为提醒政策，不是传感器合格标准'],
- ['候选和基线同名引用','独立 CAND_n 事实登记；保存候选参数和重算值；模型不能将候选值写入基线','标识闭包与可复算性，不是自动语义证明'],
- ['PDF 旧分析及证据缺失','导出时核对输入指纹；不匹配不采用旧分析；附基线事实与候选字典','报告对应本次输入，避免错配'],
+ ['低正速度弯道','正速度按 r=v/R 和 atan(L/R) 求需求；不以数值小阈值伪装成零；静止单独处理','稳态圆周几何，不延伸为动态车辆验证'],
+ ['有列名但全空','按实际有效值识别缺失；全空列与缺列都保留缺失状态，不补测量值','文件解析与缺失协议'],
+ ['短制动脉冲','保留解析压力峰值与纵向附着需求；曲线未覆盖脉冲时提醒，不改变固定网格','压力为估算，复合连续极值仍需加密验证'],
+ ['静止停车时间','初速为零时停车时间为零；仅正初速使用响应时间加减速时间','不将反应时间算作已静止车辆的停车等待'],
+ ['窗口边界与间隔','要求正长度共同区间；只统计与其正长度相交的采集间隔，排除窗外长间隔误报','只证明所给分段线性数据的处理'],
  ],[105,270,135])
-add('记录路径：docs/competition/FINAL-VALIDATION.json；docs/evidence/engineering-review-20261116.json；docs/evidence/analysis-review-20261116.json。','small')
+add('本轮记录：docs/evidence/engineering-final-review-20261117.json 与 FINAL-VALIDATION.json。1.1.2 已有的低速换道限制、两网格日志峰值、候选事实登记及报告指纹保护保留；历史发现和修复见 engineering-review-20261116.json、analysis-review-20261116.json。','small')
 
 page(12,'真实模型与报告交付证据')
 image('final-ai.jpg')
-add('真实界面与执行记录截图；模型只能基于服务端计算、日志和登记段落进行解释。截图的引擎版本与日期见画面，历史测试不会被当作新引擎实车验证。','small')
+add('历史界面：引擎 1.1.2 的线上默认问题，2 次模型请求含一次纠正；没有 inspect_simulation/search_knowledge 工具执行步骤。独立工具案例另见 LIVE-ENGINE-112-QA.json。此图不证明本轮 '+ENGINE+' 已重新联网实测。','small')
 add('固定案例核对','sub')
 add('100 km/h 自车、60 km/h 恒速前车、80 m 间距、0.8 s 响应、5 m/s² 减速：解析停车距离 99.3827 m，停车时间 6.3556 s，全过程最小间距 58.7654 m。停车距离大于初始间距并不直接判碰撞，因为前车持续运动。实际回答需明确未绑定测量日志。')
 add('报告包含参数、时序、约束、日志口径、事实字典、候选登记、资料锚点与执行步骤；旧分析因输入或引擎版本变化失效。完整样张随材料包提供。')
 add('AI 辅助开发披露','sub')
 add('项目使用 Codex 辅助代码、回归、材料和配音脚本制作，并使用公开软件与数据。实际成员须对选题、代码逻辑与交付承担解释责任；拟定分工不作为已完成贡献，原创性或资格声明由本人核实后提交。')
 
-page(13,'主要来源与工程许可')
+page(13,'AI 选型、创新与总结展望')
+add('模型选型理由','sub')
+add('此前选用 ModelScope 提供的 Qwen/Qwen3.5-27B，基于当时可用的免费入口、中文解释需求，以及 OpenAI 兼容接口和工具协议的集成条件。既有联调证明它能完成所记录的案例；应用仍以本地 JSON、引用校验和有界纠正管理输出。未做模型横向基准，不声称其准确率、速度或中文能力优于其他模型。')
+add('技术创新点：证据与工具的工程组合','sub')
+add('将确定性工况计算、日志误差、段落检索和受限模型工具串成同一证据链；用独立候选事实范围、输入指纹、过期提醒与明确降级减少上下文混用。这是面向具体工作流的工程组合与交付设计，不是新的车辆物理算法或语义嵌入算法。')
+add('应用创新点：面向交叉学习的完整工作台','sub')
+add('把工况设计、日志复盘、专业资料与候选比较连接到保存和报告，帮助车辆工程与软件工程学习者说明结果的前提和依据。没有真实用户规模或效率对照试验，不虚构时间节省比例、商业收益或实车精度。')
+add('总结与展望','sub')
+add('当前原型已完成五类轻量工况、文件日志对标、知识检索、受限 AI 解释及证据交付闭环。软件回归支撑假设内的实现；模型文字、车辆适用性和团队实际贡献仍须由相应人员核实。后续计划如下，均不是已完成成果。')
+table(['后续方向','计划与验收方式'],[
+ ['车型参数','由实际工程成员核对参数、阈值和增益，记录适用条件与审核结论'],
+ ['受控实测','在授权、同工况数据基础上核对采样、单位和时间，再评价模型差异'],
+ ['真实用户','开展跨设备与任务流程试用，收集可追查的问题和反馈，不预设收益比例'],
+ ['检索与解释评测','扩展问题集、引用相关性和人工生成质量复核，保留失败案例与版本'],
+ ],[105,405])
+
+page(14,'主要来源与工程许可')
 refs=[
  ('赛事方发布页','https://m.saikr.com/vse/2026AIWEBKF'),
  ('传智杯官网','https://www.boxuegu.com/match/'),
@@ -250,4 +280,5 @@ from pypdf import PdfReader
 reader=PdfReader(file)
 assert len(reader.pages)<=30
 assert all(len(page.extract_text().strip())>60 for page in reader.pages)
+(ROOT/'docs/competition/DriveLab-参赛技术文档.pdf').write_bytes(file.read_bytes())
 print(json.dumps({'file':str(file),'pages':len(reader.pages)},ensure_ascii=False))

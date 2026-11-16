@@ -22,7 +22,7 @@ export function parseLog(text:string,name:string,options:{timeUnit?:string;speed
  rows.sort((a,b)=>a.time-b.time);const unique=[...new Map(rows.map(r=>[r.time,r])).values()];if(unique.length<2)throw Error('至少需要两个不同时间点的有效数据');
  const origin=unique[0].time,offset=options.offset??0;if(!Number.isFinite(offset)||Math.abs(offset)>60)throw Error('偏移必须在 ±60 秒内');
  if(unique.some(r=>!Number.isFinite(r.time-origin+offset)||channels.some(k=>r[k]!==undefined&&Math.abs(r[k]!)>1e6)))throw Error('日志数值超出导入范围，请检查时间格式和采集单位（通道绝对值不超过 1,000,000）');
- return{name,rows:unique.map(r=>({...r,time:r.time-origin+offset})),dropped,duplicates:rows.length-unique.length,missing,offset};
+ return{name,rows:unique.map(r=>({...r,time:r.time-origin+offset})),dropped,duplicates:rows.length-unique.length,missing:channels.filter(k=>!unique.some(r=>r[k]!==undefined)),offset};
 }
 // A quality warning threshold, not a universal sensor sampling requirement.
 export const LONG_INTERPOLATION_GAP_S=1;
@@ -59,7 +59,7 @@ export function compare(sim:Sample[],log:LogData,thresholds:Record<Channel,numbe
   }
   let maxInterpolationGap:number|null=null;
   if(hasOverlap)for(let j=1;j<data.length;j++){
-   if(data[j].time>=start!&&data[j-1].time<=end!)maxInterpolationGap=Math.max(maxInterpolationGap??0,data[j].time-data[j-1].time);
+   if(Math.min(data[j].time,end!)>Math.max(data[j-1].time,start!))maxInterpolationGap=Math.max(maxInterpolationGap??0,data[j].time-data[j-1].time);
   }
   const overlapSourceSamples=hasOverlap?data.filter(r=>r.time>=start!&&r.time<=end!).length:0;
   const qualityWarnings:string[]=[];

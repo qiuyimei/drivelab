@@ -1,0 +1,323 @@
+{
+  "reviewedOn": "2026-11-17",
+  "timezone": "Asia/Shanghai",
+  "reviewer": "email_verification_help",
+  "reviewType": "Independent current-material consistency and product-claim review",
+  "outcome": "Current material-source issues resolved for the next package; actual new ZIP gets a separate post-commit acceptance receipt; eligibility and reviewer access remain unverified.",
+  "submissionReady": false,
+  "method": {
+    "materialsAndApplicationModified": "Follow-up authorized revision of technical-PDF generator/PDF and own QA only; application unchanged by this follow-up.",
+    "newFileWritten": "docs/competition/MATERIALS-FINAL-REVIEW-20261117.json",
+    "uploadsOrAccessChanges": false,
+    "secretsOrPrivateRuntimeLogsRead": false,
+    "networkCalled": false,
+    "pdfSkillRead": true,
+    "pdfReview": "Initial historical14-page/7-page hash review followed by authorized generation and full15-page visual/text/bounds review of current technical PDF; current7-page sample uses root complete-page QA record.",
+    "videoReview": "Did not repeat full video/subtitle QA. Matched current script, SRT, renderer/checker source hashes, frozen MP4 hash and published independent/editorial QA records.",
+    "archiveReview": "Read ZIP manifests and all listed file bytes for hash/length checks; tested CRCs, inspected source ZIP identity and compared key source files; verified the Git bundle without network or repository mutation.",
+    "competitionRulesBasis": "Applied the locally retained RULES-REVIEW-20261116.json snapshot, which distinguishes user compilation, organizer publication and unresolved account-stage requirements. This review did not newly browse or independently certify current registration rules.",
+    "initialReadOnlyReview": true
+  },
+  "snapshot": {
+    "sourceCommit": "f83dff8d6500405e8ed6712fda9c8412b1fcb44a",
+    "productVersion": "V1.0",
+    "engineVersion": "1.1.2",
+    "archive": "outputs/DriveLab-传智杯参赛材料.zip",
+    "archiveSha256": "525eae7dd9bebb9e6bc3296908a65648d59f16e6209d50b7a54dbd54fd0983bb",
+    "archiveBytes": 38004692,
+    "archiveEntries": 17,
+    "technicalPdf": {
+      "file": "outputs/DriveLab-参赛技术文档.pdf",
+      "pages": 14,
+      "bytes": 313591,
+      "sha256": "b4ac51e3b3c3994455a1623e4167b399a4c443a9baa995c4315cbb45cafc8f8b",
+      "matchesCompleteVisualQa": true
+    },
+    "reportSample": {
+      "file": "outputs/DriveLab-报告样张.pdf",
+      "pages": 7,
+      "bytes": 105905,
+      "sha256": "1902354f33a13553bf513734665ea08c59350e4d88f1f16621c19bdc6ca819f7",
+      "matchesCompleteVisualQa": true
+    },
+    "video": {
+      "file": "outputs/DriveLab-参赛演示.mp4",
+      "sha256": "ade01c2980118805c79413de0f11b4d47b4b43f206bec5681a9d67b35a470ee5",
+      "scriptSha256": "e7a28a1dc07cddbad9edbd6df537747c50fa8c0b6a73862aa8b91bac0759df18",
+      "sentences": 98,
+      "frames": 9301,
+      "exactSeconds": 387.5416666666667,
+      "containerSecondsReported": 387.54,
+      "resolution": [
+        1920,
+        1080
+      ],
+      "fps": 24,
+      "canonicalMetadataMode": "product_video_and_subtitles_acceptance_passed",
+      "currentHashMatchesAcceptedMedia": true,
+      "srtMatchesCurrent98Sentences": true,
+      "sourceScriptAndCheckerHashesMatchMetadata": true,
+      "publishedSubtitleAndVisualQaHashesMatchMetadata": true,
+      "humanListeningAuditClaimed": false
+    },
+    "team": {
+      "confirmed": false,
+      "teamName": null,
+      "school": null,
+      "group": null,
+      "captain": null,
+      "advisors": null,
+      "memberDraftNames": [
+        "丁鑫炜",
+        "邱益美"
+      ],
+      "actualContributionOrSignatureClaimed": false
+    },
+    "scope": "Initial read-only snapshot before authorized 1.1.3 remediation; archive/hash and old PDF/test counts below are historical, not current delivery assertions."
+  },
+  "passedChecks": [
+    {
+      "id": "PACKAGE-INTEGRITY",
+      "result": "pass",
+      "evidence": "Main ZIP CRC test passes. Every one of the 16 files listed in its manifest matches both byte length and SHA-256. The seventeenth ZIP entry is the manifest. The external package-summary hash matches the actual archive. No .dev.vars or .sites-runtime path is packaged.",
+      "scope": "initial_historical_snapshot; current updates below"
+    },
+    {
+      "id": "SOURCE-AND-HISTORY",
+      "result": "pass",
+      "evidence": "Source ZIP has 144 files and passes CRC. Its Git archive comment is the sourceCommit above; HEAD and all bundle heads agree. git bundle verify reports complete history, repository has 18 commits and is not shallow. Key source/README comparisons match after CRLF-to-LF normalization; video renderer, independent checker, script JSON and team JSON match byte-for-byte.",
+      "scope": "initial_historical_snapshot; current updates below"
+    },
+    {
+      "id": "CURRENT-SOURCE-CLAIMS",
+      "result": "pass_with_explicit_limits",
+      "evidence": "README and technical-PDF descriptions agree with current code on five scenarios, server recomputation, four-channel file import, unit normalization, common-interval comparison, 700-character/560-step chunks, BM25 plus 512-dimensional hashed term vectors, four allowlisted tools, three-request cap, bounded correction, rule fallback, CAND_n evidence, input fingerprinting, D1 ownership and embedded-font PDF output. They do not claim semantic embedding, OCR, real-vehicle accuracy or complete natural-language verification.",
+      "scope": "initial_historical_snapshot; current updates below"
+    },
+    {
+      "id": "TEST-COUNTS",
+      "result": "pass",
+      "evidence": "Current test source has 31 core groups and 26 direct analysis groups plus the additional provider-loop instance, yielding 27 analysis tests. README, technical PDF and FINAL-VALIDATION agree on 31/27, 130 independent references, 12 fixed retrieval cases and 4973 public-sample rows. Mock transport is expressly distinguished from real model calls.",
+      "scope": "initial_historical_snapshot; current updates below"
+    },
+    {
+      "id": "TECHNICAL-PDF-AND-SAMPLE",
+      "result": "pass_for_existing_layout_and_evidence",
+      "evidence": "Both current files are exactly the versions covered by complete-page visual QA. Technical PDF is 14 pages; sample is 7. Sample correctly labels zero model calls/rules mode, synthetic log, 34 unique fact IDs, two distinct candidate scopes, common fingerprint, units, source-summary status and limitations. The fixed 99.3827 m stopping distance versus 58.7654 m full-following minimum-gap distinction is preserved.",
+      "scope": "initial_historical_snapshot; current updates below"
+    },
+    {
+      "id": "VIDEO-COMPANION-CONSISTENCY",
+      "result": "pass",
+      "evidence": "Current SRT has one exact full sentence for each of 98 current script sentences. Current script/renderer/checker hashes match VIDEO-QA, canonical output metadata and published subtitle/editorial QA refer to the frozen hash above, and the two metadata copies are byte-identical. Existing independent checks cover final MP4 boundaries, cross-scene gaps, PTS, glyphs and AAC/PCM alignment; they do not claim human listening.",
+      "scope": "initial_historical_snapshot; current updates below"
+    },
+    {
+      "id": "IDENTITY-AND-DECLARATION",
+      "result": "honest_but_not_submission_complete",
+      "evidence": "team.json, README, technical PDF, package manifest and submission notice consistently leave identity/role confirmation incomplete. The two names remain drafts from user-provided development material. No school, captain, advisor, qualification, completed contribution, signature, expert approval, award or accepted submission is fabricated. AI assistance, synthetic narration, public data and font licenses are disclosed.",
+      "scope": "initial_historical_snapshot; current updates below"
+    }
+  ],
+  "findings": [
+    {
+      "id": "MAT-01",
+      "priority": "P2",
+      "category": "stale_current_status_in_packaged_review",
+      "files": [
+        "docs/competition/RULES-REVIEW-20261116.json",
+        "outputs/DriveLab-传智杯参赛材料.zip:11-赛事要求核对.json"
+      ],
+      "observed": "The final package's rules-review JSON still has VIDEO status missing and says no MP4 exists; README_ENV says 14 analysis tests and model not yet connected; PDF says a 12-page old draft requires update. Its scope calls it a snapshot, but the final package presents it under a generic current rules-review filename without per-item current resolution.",
+      "impact": "A reviewer can encounter contradictory readiness evidence inside one final package despite the current MP4, 14-page PDF and 27-test README being correct.",
+      "minimalCorrection": "Preserve original observations and reviewedOn; add a clearly dated currentResolution/currentStatus layer mapping each material requirement to the accepted current files, page/time counts and final hash/QA paths. Keep TEAM, reviewer access and registration genuinely unresolved. Then rebuild the package.",
+      "historicalObservationRetained": true,
+      "currentStatus": "root_coordinated_current_resolution_and_repackage_pending_at_this_followup"
+    },
+    {
+      "id": "MAT-02",
+      "priority": "P2",
+      "category": "incomplete_remediation_closure",
+      "files": [
+        "docs/evidence/analysis-review-20261116.json",
+        "outputs/DriveLab-传智杯参赛材料.zip:10-AI证据链复核记录.json"
+      ],
+      "observed": "implementationFollowup still reports 26 analysis tests and says final PDF visual QA and AI-05 source metadata are coordinated by root. Current final records report 27 tests, completed matching-hash PDF QA, and built-in project-summary/source metadata. The original findings intentionally remain historical, but the current follow-up does not close these completed items.",
+      "impact": "The package obscures which findings are resolved, mitigated or still open. In particular, persisted-bundle provenance remains a genuine limitation and must not be silently marked solved just to remove the stale statuses.",
+      "minimalCorrection": "Add a dated final-resolution index: 27 tests, exact current PDF QA paths/hashes, source metadata outcome, semantic-review boundary, and explicit remaining AI-06 provenance limitation. Do not rewrite the historical discovery evidence or claim a signature/integrity guarantee.",
+      "historicalObservationRetained": true,
+      "currentStatus": "root_coordinated_current_resolution_and_repackage_pending_at_this_followup"
+    },
+    {
+      "id": "MAT-03",
+      "priority": "P2",
+      "category": "requirements_coverage_clarity",
+      "files": [
+        "outputs/DriveLab-参赛技术文档.pdf:pages10-13",
+        "scripts/create-technical-document.py"
+      ],
+      "observed": "The retained rules review lists summary and outlook among technical-PDF content requirements. The current PDF has a current-conclusion cover, demonstration advice, submission gates and implementation evidence, but no explicit summary/outlook paragraph describing conclusions and concrete future product work. This is a coverage ambiguity, not a declaration that the organizer has rejected the document.",
+      "impact": "A formal checklist can reasonably regard the outlook component as missing even though the product boundary and pending confirmation items are clear elsewhere.",
+      "minimalCorrection": "Add a short labelled summary/outlook paragraph to an existing page: what the prototype currently achieves, the limits of its evidence, and future work such as vehicle-specific parameter review, controlled data validation and broader question-quality evaluation. Keep future work explicitly prospective and do not invent completed experiments or expert participation. Re-render affected pages and refresh PDF hashes/QA/package.",
+      "historicalObservationRetained": true,
+      "currentStatus": "resolved",
+      "resolutionEvidence": "Current15-page technical PDF and TECHNICAL-PDF-QA.json; sha256 7114bafe73c89be172822faf1aa526a2c879825108d9b0c8325da97af0eda1a7"
+    },
+    {
+      "id": "MAT-04",
+      "priority": "P2",
+      "category": "qa_description_overstates_screenshot_evidence",
+      "files": [
+        "docs/competition/TECHNICAL-PDF-QA.json:requiredContent.realModelEvidence.statement",
+        ".sites-runtime/technical-qa/technical-13.png"
+      ],
+      "observed": "The QA statement says the screenshot has tool/request/correction/reference steps. The current page-13 image is the accepted default online two-request case: it visibly has retrieval, default candidate generation, model requests, correction and reference checking, but no inspect_simulation or search_knowledge execution trace. FINAL-VALIDATION already correctly sets toolStepsInThisCase:false. Separate real tool cases exist in LIVE-ENGINE-112-QA.json.",
+      "impact": "The QA narrative attributes tool-call proof to the wrong visual case. The PDF's own generic real-model screenshot label is not itself a false tool-call claim.",
+      "minimalCorrection": "Correct only the QA description to distinguish the default online two-request screenshot from the separate three-request real-tool records. Keep both types of evidence and their scopes explicit.",
+      "historicalObservationRetained": true,
+      "currentStatus": "resolved",
+      "resolutionEvidence": "Current15-page technical PDF and TECHNICAL-PDF-QA.json; sha256 7114bafe73c89be172822faf1aa526a2c879825108d9b0c8325da97af0eda1a7"
+    }
+  ],
+  "requirementsMapping": [
+    {
+      "requirement": "PDF at most30 pages",
+      "status": "pass",
+      "evidence": "Current15-page technical PDF with exact hash and complete render/visual QA in currentFollowup"
+    },
+    {
+      "requirement": "MP4, 5-8 minutes, at least 1080p, Mandarin explanation and project/core-function/AI content",
+      "status": "file_and_record_checks_pass",
+      "evidence": "Frozen 1920x1080 MP4, 387.54 s, product-oriented 98-sentence script, accepted subtitle/editorial QA; no human pronunciation audit claimed"
+    },
+    {
+      "requirement": "Source, complete history, README and environment/dependency instructions",
+      "status": "local_artifacts_pass; external_access_pending",
+      "evidence": "144-file source ZIP, complete 18-commit bundle, README, environment example and lockfile; private repository reviewer access not verified"
+    },
+    {
+      "requirement": "Actual same-school team, group, captain/advisors and contribution declarations",
+      "status": "owner_confirmation_required",
+      "evidence": "team.confirmed=false; missing fields consistently disclosed"
+    },
+    {
+      "requirement": "Registered account stage, exact deadline, final upload/receipt",
+      "status": "not_verified",
+      "evidence": "No logged-in registration or submission check performed; material preparation is not an organizer receipt"
+    },
+    {
+      "requirement": "Full technical-document section coverage",
+      "status": "pass_after_revision",
+      "evidence": "Currentp14 explicitly covers model selection, technical/application innovation and summary/outlook."
+    }
+  ],
+  "notDefects": [
+    "ProductV1.0 and calculation-engine1.1.3 are separate versions;112 material is retained as explicitly historical.",
+    "387.54 container seconds and 387.5416667 exact-frame seconds differ only by reporting precision; the rounded six-minutes-28-seconds release-note wording is consistent.",
+    "Current technical-PDF p10 uses accepted V2 actual grouped timeline; V2 remains112 material and its11 displayed values were rechecked under113.",
+    "Archive-vs-worktree raw-byte differences in several text files are CRLF/LF only, not missing source changes.",
+    "Older draft PDFs and tar archives exist in outputs but are not included as competing main technical documents in the 17-entry final ZIP.",
+    "Existing sample-PDF minor source-token wrapping and one fact-paragraph page continuation are documented visual-polish notes, not lost or clipped evidence."
+  ],
+  "remainingSubmissionGates": [
+    "The owner must confirm actual team, school, group, captain/advisors and contributions; no reviewer or agent may invent or sign them.",
+    "Private repository access must be authorized for the organizer's actual reviewer account or otherwise accepted by the organizer; the offline bundle alone does not establish that requirement.",
+    "The owner must verify registration/payment/submission stage and exact deadline in the actual account. The retained public-rule date is not proof of a completed registration or receipt.",
+    "Any material corrections after this snapshot require updated hashes and a newly verified package; this audit cannot attest future edited bytes."
+  ],
+  "limits": [
+    "This review does not certify race eligibility, legal originality, authenticity of future declarations, external-account access, full service reliability or real-vehicle safety.",
+    "It does not convert code/mathematical checks or model success cases into real-vehicle calibration, fault diagnosis, continuous-time extrema, expert signature or semantic-entailment proof.",
+    "No full video decode or subtitle audit was repeated because the frozen hash and all accepted companion records are unchanged."
+  ],
+  "currentFollowup": {
+    "reviewedOn": "2026-11-17",
+    "engineVersion": "1.1.3",
+    "softwareChecksPassed": true,
+    "validationRecord": "docs/competition/FINAL-VALIDATION.json",
+    "coreTests": 36,
+    "analysisTests": 27,
+    "savedWorkflowGroups": 5,
+    "independentCases": 130,
+    "retrievalCases": 12,
+    "publicRows": 4973,
+    "technicalPdf": {
+      "pages": 15,
+      "bytes": 321021,
+      "sha256": "7114bafe73c89be172822faf1aa526a2c879825108d9b0c8325da97af0eda1a7",
+      "repoCopyIdentical": true,
+      "allPagesRenderedAndVisuallyReviewed": true,
+      "characterOutsidePageCount": 0,
+      "contentCoverage": "Explicit selection rationale, technical innovation, application innovation, summary and four prospective directions added; five113 engineering boundaries and current test counts synchronized."
+    },
+    "reportSample": {
+      "pages": 7,
+      "sha256": "bb2a4e9cedb182dbbabf6a37a0c80da9783faf348106158a9b2a9b1bb9f0c14f",
+      "engineVersion": "1.1.3",
+      "rootCompleteVisualQa": "docs/competition/REPORT-PDF-QA.json",
+      "uniqueFactIdentifiers": 37,
+      "factsBreakdown": {
+        "baseline": 7,
+        "logs": 16,
+        "candidates": 14
+      }
+    },
+    "video": {
+      "mp4Sha256": "ade01c2980118805c79413de0f11b4d47b4b43f206bec5681a9d67b35a470ee5",
+      "unchangedAcceptedV2": true,
+      "engineMaterial": "1.1.2",
+      "current113DisplayedNumericRecheck": "docs/competition/VIDEO-113-REVALIDATION.json",
+      "comparedValues": 11,
+      "allWithin1eMinus9": true,
+      "noFresh113VideoToolOrVehicleClaim": true
+    },
+    "realModel": {
+      "current113Record": "docs/competition/LIVE-ENGINE-113-QA.json",
+      "cases": 2,
+      "requests": [
+        1,
+        1
+      ],
+      "firstWordingIssuePreserved": true,
+      "secondCaseManuallyCompared": true,
+      "newToolsExecuted": false,
+      "historical112ScreenshotAndToolRecordsSeparate": true,
+      "generalSemanticAccuracyProven": false
+    },
+    "resolution": {
+      "MAT-03": "resolved",
+      "MAT-04": "resolved",
+      "MAT-01": "root/rules-agent currentResolution refresh and package freeze pending at this followup",
+      "MAT-02": "root AI evidence current-resolution index and package freeze pending at this followup"
+    },
+    "preservedBoundaries": [
+      "AI-06 input fingerprint is not server provenance signature; saved-bundle integrity limitation remains.",
+      "Team identities, school, captain/advisors, actual contributions and signatures must be confirmed by owner.",
+      "External reviewer access and actual registration stage/deadline/receipt not established by local checks.",
+      "Current113 online deployment/access check is root-coordinated; historical112 screenshot is not substituted."
+    ],
+    "futureArchiveNotAttested": true
+  },
+  "finalSourceClosure": {
+    "reviewedOn": "2026-11-17",
+    "engineVersion": "1.1.3",
+    "MAT-01": {
+      "status": "resolved_current_rules_selected_for_packaging",
+      "record": "docs/competition/RULES-REVIEW-20261117.json"
+    },
+    "MAT-02": {
+      "status": "resolved_current_AI_status_selected_for_packaging",
+      "record": "docs/evidence/analysis-final-review-20261117.json"
+    },
+    "historicalReviews": "16日发现与旧包快照保留在历史中；包中09/10/11改选17日当前记录。",
+    "currentPdfAndReportQa": "passed with final file hashes",
+    "currentSourceChecks": "36core/27analysis/130reference/12retrieval/API6/db/lint/typecheck/build passed",
+    "archiveVerification": "最终源码commit和新ZIP哈希由提交后生成的文件校验清单.json与outputs/DriveLab-材料包验收.json负责；本文不提前认证尚未生成的新包。",
+    "submissionReady": false,
+    "pending": [
+      "真实队伍与报名资格",
+      "指定评审仓库访问",
+      "报名后台实际阶段和精确截止时点"
+    ]
+  }
+}

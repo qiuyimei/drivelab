@@ -1,0 +1,40 @@
+{
+  "reviewedOn": "2026-11-17",
+  "engineVersion": "1.1.3",
+  "supersedesStatusOf": "docs/evidence/analysis-review-20261116.json",
+  "historicalRecordPreserved": true,
+  "currentStatus": {
+    "AI-01": "candidate namespaced facts and tool results preserved; regression passed",
+    "AI-02": "deterministic limitations always retained; explicit safety promises rejected; general semantic entailment still not proven",
+    "AI-03": "registered source closure regression passed",
+    "AI-04": "current input fingerprint/version rechecked for PDF export; regression passed",
+    "AI-05": "built-in paragraphs identified as project engineering summaries with external references, not verbatim external texts",
+    "AI-06": "saved snapshots are owner data, not authoritative validation proofs; current export recomputes calculation and checks fingerprint/version"
+  },
+  "softwareChecks": {
+    "analysisTests": 27,
+    "typecheck": "passed",
+    "lint": "passed",
+    "apiIntegration": "passed (6 checks)"
+  },
+  "realModelRecord": "docs/competition/LIVE-ENGINE-113-QA.json",
+  "semanticFailureObservationPreserved": true,
+  "semanticScope": "在113真实比较中发现响应时间措辞混用；收紧提示后的另一次比较主要数值及参数变化经人工对照，不能推出所有回答准确。",
+  "currentPdfVisualQa": {
+    "status": "passed",
+    "technicalPdfPages": 15,
+    "technicalPdfSha256": "7114bafe73c89be172822faf1aa526a2c879825108d9b0c8325da97af0eda1a7",
+    "reportPages": 7,
+    "reportPdfSha256": "bb2a4e9cedb182dbbabf6a37a0c80da9783faf348106158a9b2a9b1bb9f0c14f",
+    "records": [
+      "docs/competition/TECHNICAL-PDF-QA.json",
+      "docs/competition/REPORT-PDF-QA.json"
+    ]
+  },
+  "sourceSha256": {
+    "lib/analysis.ts": "3b05a26210543b6b576be05e76c4db0a068900aa75fa9b6ab3558e4db6831091",
+    "lib/evidence.ts": "925f8bed2198d326db3da4d7b12227390304c000ce0c971c2fa228f7daabe9f4",
+    "lib/pdf-report.ts": "b80a96ad0fe81310040c55a4cb766410c296ab10bac71b5f552c7302c823e38f",
+    "lib/fingerprint.ts": "7a330dfcef5a86dd7efe1251441d3f216c588e240af643c5241d5a444820c4ad"
+  }
+}

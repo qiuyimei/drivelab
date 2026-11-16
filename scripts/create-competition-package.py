@@ -59,9 +59,9 @@ assets=[(technical,'01-参赛技术文档.pdf'),(video,'02-项目演示.mp4'),
        (ROOT/'README.md','06-README.md'),
        (ROOT/'docs/competition/AI-AND-LICENSES.txt','07-AI使用与第三方许可说明.txt'),
        (ROOT/'docs/competition/FINAL-VALIDATION.json','08-工程与软件验收.json'),
-       (ROOT/'docs/evidence/engineering-review-20261116.json','09-工程复核记录.json'),
-       (ROOT/'docs/evidence/analysis-review-20261116.json','10-AI证据链复核记录.json'),
-       (ROOT/'docs/competition/RULES-REVIEW-20261116.json','11-赛事要求核对.json'),
+       (ROOT/'docs/evidence/engineering-final-review-20261117.json','09-工程复核记录.json'),
+       (ROOT/'docs/evidence/analysis-final-review-20261117.json','10-AI证据链复核记录.json'),
+       (ROOT/'docs/competition/RULES-REVIEW-20261117.json','11-赛事要求核对.json'),
        (ROOT/'docs/competition/team.json','12-报名信息核对.json'),
        (OUT/'DriveLab-参赛演示-制作与格式验收.json','13-视频验收.json')]
 for source,name in assets:
@@ -84,7 +84,7 @@ notice='''DriveLab 传智杯参赛材料 使用与提交须知
 必须由团队补齐/确认
 1. team.json与README中的队名、学校、组别、队长、实际成员分工、指导教师。原开发文档两名拟定成员没有被当作完成贡献证明。
 2. 仓库继续Private。按组委会提供的具体评审账号或认可方式授权并验证可读；当前本人可访问不能代表评委可访问。完整Git bundle是离线备份，不能擅自替代赛事的仓库访问要求。
-3. 核对本人报名后台的报名/缴费/提交阶段、精确截止时间及最终入口。公开整理材料列11月18日，不能推断已报名或提交成功。
+3. 核对本人报名后台的报名/缴费/提交阶段、精确截止时间及最终入口。赛事发布者正文列11月18日，顶部组件存在日期/时点差异，不能据此推断延期、已报名或提交成功。
 
 恢复完整源码与历史
 git clone 15-DriveLab-完整Git历史.bundle drivelab
@@ -106,7 +106,7 @@ expected_names={name for _,name in assets}|{source_zip.name,bundle.name,'00-提�
 for name in sorted(expected_names):
     file=DEST/name
     files.append({'name':file.name,'bytes':file.stat().st_size,'sha256':hashlib.sha256(file.read_bytes()).hexdigest()})
-manifest={'preparedOn':'2026-11-17','revision':'产品演示与逐句字幕修订版','sourceCommit':revision,'engineVersion':validation['engineVersion'],
+manifest={'preparedOn':'2026-11-17','revision':'最终复核与边界修订版','sourceCommit':revision,'engineVersion':validation['engineVersion'],
           'technicalPdfPages':len(pdf.pages),'videoDurationSeconds':duration,'sourceAndHistoryScan':scan_result,
           'fileArtifactsPrepared':True,'teamConfirmed':team['confirmed'],
           'reviewerAccessVerified':False,'registrationVerified':False,'submissionReady':False,

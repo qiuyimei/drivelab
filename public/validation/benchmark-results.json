@@ -1,6 +1,6 @@
 {
-  "engineVersion": "1.1.2",
-  "generatedAt": "2026-11-16T06:39:31.520Z",
+  "engineVersion": "1.1.3",
+  "generatedAt": "2026-11-16T18:02:49.362Z",
   "classification": "independent_analytic_reference",
   "fixtureSha256": "fd39ae03d895a6129da5927ec6bde1d7160da422fa31ad91a25352cf1a869b70",
   "summary": {
@@ -899,7 +899,7 @@
       "id": "curve-36-250",
       "kind": "radius_first_geometry",
       "pass": true,
-      "maxAbsoluteError": 1.7763568394002505e-15,
+      "maxAbsoluteError": 0,
       "tolerance": 1e-8
     },
     {
@@ -920,14 +920,14 @@
       "id": "curve-72-250",
       "kind": "radius_first_geometry",
       "pass": true,
-      "maxAbsoluteError": 1.7763568394002505e-15,
+      "maxAbsoluteError": 0,
       "tolerance": 1e-8
     },
     {
       "id": "curve-108-50",
       "kind": "radius_first_geometry",
       "pass": true,
-      "maxAbsoluteError": 7.105427357601002e-15,
+      "maxAbsoluteError": 0,
       "tolerance": 1e-8
     },
     {
@@ -941,7 +941,7 @@
       "id": "curve-108-250",
       "kind": "radius_first_geometry",
       "pass": true,
-      "maxAbsoluteError": 8.881784197001252e-16,
+      "maxAbsoluteError": 0,
       "tolerance": 1e-8
     },
     {

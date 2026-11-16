@@ -21,7 +21,7 @@ export function simulate(c:Config){
  validateConfig(c);const g=9.81,v0=c.speed/3.6, lead=c.leadSpeed/3.6;
  const braking=['highway','urban','avoid'].includes(c.scenario),changing=['lane','avoid'].includes(c.scenario);
  const effectiveDecel=Math.min(c.decel,c.brakeLimit,c.mu*g);
- const stoppingDistance=v0*c.reaction+v0*v0/(2*effectiveDecel),stopTime=c.reaction+v0/effectiveDecel;
+ const stoppingDistance=v0*c.reaction+v0*v0/(2*effectiveDecel),stopTime=v0>0?c.reaction+v0/effectiveDecel:0;
  const rows:Sample[]=[];let x=0,v=v0,minGap=c.distance,maxUtil=0,maxLat=0,maxSteer=0,lowSpeedLateralDemand=false;
  for(let n=0;n<=Math.ceil(c.duration*10);n++){
   const t=Math.min(n/10,c.duration);let ax=0;
@@ -33,19 +33,28 @@ export function simulate(c:Config){
   const y=changing?c.laneWidth*(10*u**3-15*u**4+6*u**5):0;
   const lateral=c.scenario==='curve'?v*v/c.radius:changing&&t>=c.reaction&&t<=c.reaction+c.laneTime&&v>0?c.laneWidth/c.laneTime**2*(60*u-180*u*u+120*u**3):0;
   if(changing&&v<MIN_LATERAL_SPEED_KMH/3.6&&Math.abs(lateral)>1e-9)lowSpeedLateralDemand=true;
-  const yaw=v>0.1?lateral/v*180/Math.PI:0;
-  const steering=v>0.1?Math.atan(c.wheelbase*lateral/(v*v))*180/Math.PI*c.steeringRatio:0;
+  // A steady circle has finite geometric steering even at a small positive
+  // speed. Avoid the generic lateral-demand division guard for this case.
+  const yaw=c.scenario==='curve'?v/c.radius*180/Math.PI:v>0.1?lateral/v*180/Math.PI:0;
+  const steering=c.scenario==='curve'&&v>0?Math.atan(c.wheelbase/c.radius)*180/Math.PI*c.steeringRatio:v>0.1?Math.atan(c.wheelbase*lateral/(v*v))*180/Math.PI*c.steeringRatio:0;
   const pressure=Math.abs(ax)*c.mass/c.brakeGain;
   const gap=c.distance+(c.scenario==='highway'?lead*t:0)-x;
   const utilization=Math.hypot(ax,lateral)/(c.mu*g);
   minGap=Math.min(minGap,gap);maxUtil=Math.max(maxUtil,utilization);maxLat=Math.max(maxLat,Math.abs(lateral));maxSteer=Math.max(maxSteer,Math.abs(steering));
   rows.push({time:t,speed:v*3.6,distance:x,accel:ax,lateral,yaw,steering,pressure,gap,utilization,y});
  }
+ // Keep the original 0.1 s row grid and log statistics contract. A brief
+ // constant-deceleration pulse can fit entirely between two rows; retain its
+ // analytical demand instead of treating unsampled pressure/force as zero.
+ const maxPressure=braking&&v0>0?effectiveDecel*c.mass/c.brakeGain:0;
+ const longitudinalUtilization=braking&&v0>0?effectiveDecel/(c.mu*g):0;
+ maxUtil=Math.max(maxUtil,longitudinalUtilization);
+ const brakingEventMissedByGrid=maxPressure>0&&!rows.some(r=>r.pressure>0);
  const closingSpeed=Math.max(0,v0-(c.scenario==='highway'?lead:0));
  const predictedMinGap=braking?c.distance-closingSpeed*c.reaction-closingSpeed**2/(2*effectiveDecel):null;
  const safeCurveSpeed=Math.sqrt(Math.min(c.lateralLimit,c.mu*g)*c.radius)*3.6;
  const findings:Finding[]=[
-  {level:maxUtil>1?'fail':maxUtil>0.85?'warn':'pass',title:'轮胎附着约束',detail:`峰值附着利用率 ${(maxUtil*100).toFixed(1)}%，依据纵横向加速度的摩擦圆近似。`,source:'KB-001'},
+  {level:maxUtil>1?'fail':maxUtil>0.85?'warn':'pass',title:'轮胎附着约束',detail:`峰值附着需求利用率 ${(maxUtil*100).toFixed(1)}%，采用摩擦圆需求近似，并包含解析纵向制动需求。`,source:'KB-001'},
   {level:maxLat>c.lateralLimit?'warn':'pass',title:'侧向加速度',detail:`峰值 ${maxLat.toFixed(2)} m/s²，设置阈值 ${c.lateralLimit} m/s²（工程初始值，需标定）。`,source:'KB-002'},
   {level:maxSteer>c.steeringLimit?'fail':lowSpeedLateralDemand?'warn':'pass',title:'转向物理约束',detail:`采样方向盘需求峰值 ${maxSteer.toFixed(1)}°，设置极限 ${c.steeringLimit}°。${lowSpeedLateralDemand?'部分横向需求发生在模型最低适用速度以下，转向评估不完整，不能判定全部约束通过。':''}`,source:'KB-003'}
  ];
@@ -55,9 +64,10 @@ export function simulate(c:Config){
  }
  if(changing&&c.duration<c.reaction+c.laneTime)findings.push({level:'warn',title:'换道覆盖范围',detail:`换道计划在 ${(c.reaction+c.laneTime).toFixed(2)} s 结束，当前 ${c.duration} s 时间窗未覆盖完整轨迹。`,source:'KB-005'});
  if(lowSpeedLateralDemand)findings.push({level:'warn',title:'低速横向模型适用性',detail:`车辆在仍有横向需求时低于 ${MIN_LATERAL_SPEED_KMH} km/h。当前横向运动学需求模型不适用于该段，数值保护输出不代表实际横摆或转向为零；需低速专用模型重新验证。此最低速度是软件适用边界，非法规限值。`,source:'KB-005'});
+ if(brakingEventMissedByGrid)findings.push({level:'warn',title:'制动事件采样覆盖',detail:`制动发生在 ${c.reaction.toFixed(3)}–${stopTime.toFixed(3)} s，未被 0.1 s 时序网格捕捉。曲线中的零压力或零加速度不代表没有制动需求；解析压力需求峰值 ${maxPressure.toFixed(2)} bar、纵向附着利用率 ${(longitudinalUtilization*100).toFixed(1)}%，压力增益仍需车型标定。`,source:'KB-004'});
  if(braking){findings.push({level:minGap<=0?'fail':minGap<5?'warn':'pass',title:'制动与间距',detail:`仿真 ${c.duration} s 内最小间距 ${minGap.toFixed(1)} m；理论完全停车需 ${stoppingDistance.toFixed(1)} m / ${stopTime.toFixed(1)} s。前车按恒速运动，静态目标按固定障碍物计算。`,source:'KB-004'});if(c.decel>effectiveDecel+0.01)findings.push({level:'warn',title:'制动请求被约束',detail:`请求 ${c.decel} m/s²，受附着或底盘极限约束，实际采用 ${effectiveDecel.toFixed(2)} m/s²。`,source:'KB-001'});if(c.scenario==='avoid'&&stopTime<c.reaction+c.laneTime)findings.push({level:'warn',title:'避障轨迹适用性',detail:'车辆在规划换道结束前已停车。侧向轨迹仅用于需求估算，不代表实际可执行的避障路径。',source:'KB-005'});}
  const risk=findings.some(f=>f.level==='fail')?'高风险':findings.some(f=>f.level==='warn')?'需关注':'约束内';
- return {config:{...c},rows,findings,risk,effectiveDecel,stoppingDistance,stopTime,maxUtil,maxLat,maxSteer,minGap,predictedMinGap,safeCurveSpeed,braking,modelApplicability:{lateralMinimumSpeedKmh:MIN_LATERAL_SPEED_KMH,lowSpeedLateralDemand}};
+ return {config:{...c},rows,findings,risk,effectiveDecel,stoppingDistance,stopTime,maxUtil,maxPressure,maxLat,maxSteer,minGap,predictedMinGap,safeCurveSpeed,braking,sampling:{intervalS:0.1,brakingEventMissedByGrid},modelApplicability:{lateralMinimumSpeedKmh:MIN_LATERAL_SPEED_KMH,lowSpeedLateralDemand}};
 }
 export type Simulation=ReturnType<typeof simulate>;
 export const knowledge=[
