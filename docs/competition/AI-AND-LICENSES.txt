@@ -1,0 +1,26 @@
+DriveLab AI 使用与第三方来源说明
+日期：2026-11-16
+
+AI 辅助开发：使用 Codex 辅助代码、测试、问题复核、文档与视频制作。实际成员须核实内容、理解代码并说明实际贡献；本说明不代签原创性、资格或人工工程审核声明。
+产品推理：ModelScope API-Inference 免费入口上的 Qwen/Qwen3.5-27B。最多三次请求，受限工具，结构与引用校验，无自动付费切换。模型输出仍需人工语义复核。
+视频：真实界面截图、实际应用计算结果及普通话 AI 合成解说的剪辑。并非连续实时录屏，不声称真人配音或实车实验。旁白经 edge-tts 调用 Microsoft Edge 在线语音服务生成，视频通过 FFmpeg 编码；不将其描述为项目的车辆分析 AI 能力。
+
+第三方数据
+comma.ai comma2k19，固定提交 4c7f1a6e1957745beadc1def0e7225f559b09a2a。
+来源：https://github.com/commaai/comma2k19
+许可：MIT，原文保留于 public/data/LICENSE-comma2k19.txt。
+转换成品仅演示日志导入、单位与时间轴，不作为本项目受控实车工况或准确率验证。
+
+字体
+Noto Sans SC，SIL Open Font License 1.1。
+来源：https://github.com/google/fonts/tree/main/ofl/notosanssc
+许可与字体转换、哈希记录见 public/fonts。
+
+工程依据
+UIUC 停车距离课程、UCSD 摩擦圆课程、CMU 运动学单轨报告等见 docs/evidence/engineering-sources.json。引用用于解释模型假设，不构成车型标定、法规限值或专家签署。
+
+软件依赖
+运行依赖与锁定版本见 package.json、pnpm-lock.yaml；其许可证按各包原声明适用。视频工具源码：https://github.com/rany2/edge-tts 、https://github.com/imageio/imageio-ffmpeg 、https://ffmpeg.org/ 。工具保留在桌面 DriveLab 开发工具中，没有捆入产品前端或冒称自主研发。
+
+凭证与隐私
+源码、Git 历史、文档和视频不得包含 .dev.vars、访问令牌、验证码、证件或真实用户私有日志。演示使用明确标识的合成夹具和公开许可数据。线上模型凭证仅在已授权的私有服务端环境中保存。

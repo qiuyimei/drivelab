@@ -2,6 +2,9 @@ export type Scenario = 'highway'|'curve'|'lane'|'avoid'|'urban';
 export type Config = {name:string; scenario:Scenario; speed:number; leadSpeed:number; distance:number; decel:number; reaction:number; mu:number; radius:number; mass:number; wheelbase:number; steeringRatio:number; steeringLimit:number; brakeLimit:number; brakeGain:number; lateralLimit:number; duration:number; laneWidth:number; laneTime:number};
 export const defaults:Config={name:'高速跟驰制动评估',scenario:'highway',speed:100,leadSpeed:60,distance:80,decel:5,reaction:0.8,mu:0.8,radius:250,mass:1800,wheelbase:2.8,steeringRatio:15,steeringLimit:540,brakeLimit:8,brakeGain:200,lateralLimit:3,duration:20,laneWidth:3.5,laneTime:5};
 export const scenarioNames:Record<Scenario,string>={highway:'高速跟驰',curve:'弯道稳态',lane:'动态换道',avoid:'紧急避障',urban:'城市路口'};
+// Software applicability boundary for this simplified lateral-demand model.
+// This is not a regulatory limit or a vehicle-independent minimum maneuver speed.
+export const MIN_LATERAL_SPEED_KMH=5;
 export const templates:{id:Scenario;title:string;desc:string;tag:string;config:Partial<Config>}[]=[
  {id:'highway',title:'高速跟驰制动',desc:'评估高速跟驰下的制动响应与安全间距。',tag:'纵向控制',config:{...defaults}},
  {id:'curve',title:'弯道稳态行驶',desc:'检查侧向加速度、附着利用率与转向约束。',tag:'横向稳定',config:{name:'湿滑弯道稳定性评估',scenario:'curve',speed:70,mu:0.55,radius:150,duration:20}},
@@ -11,7 +14,7 @@ export const templates:{id:Scenario;title:string;desc:string;tag:string;config:P
 ];
 export const ranges:Record<string,[number,number]>={speed:[0,180],leadSpeed:[0,180],distance:[1,1000],decel:[0.1,12],reaction:[0,5],mu:[0.05,1.2],radius:[10,5000],mass:[500,5000],wheelbase:[1.5,5],steeringRatio:[5,30],steeringLimit:[90,1080],brakeLimit:[0.1,12],brakeGain:[50,1000],lateralLimit:[0.5,10],duration:[5,60],laneWidth:[2,5],laneTime:[2,12]};
 const parameterLabels:Record<string,string>={speed:'初始车速',leadSpeed:'前车车速',distance:'初始间距',decel:'期望减速度',reaction:'响应时间',mu:'路面附着系数',radius:'弯道半径',mass:'整车质量',wheelbase:'轴距',steeringRatio:'转向传动比',steeringLimit:'方向盘角极限',brakeLimit:'减速度极限',brakeGain:'制动力增益',lateralLimit:'侧向加速度阈值',duration:'仿真时长',laneWidth:'换道宽度',laneTime:'换道时长'};
-export function validateConfig(c:Config){if(!c || typeof c.name!=='string' || !c.name.trim() || c.name.length>100)throw Error('请输入 1–100 字的工况名称');if(!Object.keys(scenarioNames).includes(c.scenario))throw Error('工况类型无效');for(const [k,[min,max]] of Object.entries(ranges)){const v=c[k as keyof Config];if(typeof v!=='number'||!Number.isFinite(v)||v<min||v>max)throw Error(`${parameterLabels[k]??k}必须在 ${min}–${max} 范围内`);}if(['lane','avoid'].includes(c.scenario)&&c.speed<=0)throw Error('换道与避障工况需要非零初始车速；此模型不支持原地横向移动');return c;}
+export function validateConfig(c:Config){if(!c || typeof c.name!=='string' || !c.name.trim() || c.name.length>100)throw Error('请输入 1–100 字的工况名称');if(!Object.keys(scenarioNames).includes(c.scenario))throw Error('工况类型无效');for(const [k,[min,max]] of Object.entries(ranges)){const v=c[k as keyof Config];if(typeof v!=='number'||!Number.isFinite(v)||v<min||v>max)throw Error(`${parameterLabels[k]??k}必须在 ${min}–${max} 范围内`);}if(['lane','avoid'].includes(c.scenario)&&c.speed<MIN_LATERAL_SPEED_KMH)throw Error(`当前简化换道/避障模型需要初始车速至少 ${MIN_LATERAL_SPEED_KMH} km/h；更低速度不在模型适用范围内，不会用零转向代替未评估约束（此边界非法规限值）`);return c;}
 export type Sample={time:number;speed:number;distance:number;accel:number;lateral:number;yaw:number;steering:number;pressure:number;gap:number;utilization:number; y:number};
 export type Finding={level:'pass'|'warn'|'fail';title:string;detail:string;source:string};
 export function simulate(c:Config){
@@ -19,7 +22,7 @@ export function simulate(c:Config){
  const braking=['highway','urban','avoid'].includes(c.scenario),changing=['lane','avoid'].includes(c.scenario);
  const effectiveDecel=Math.min(c.decel,c.brakeLimit,c.mu*g);
  const stoppingDistance=v0*c.reaction+v0*v0/(2*effectiveDecel),stopTime=c.reaction+v0/effectiveDecel;
- const rows:Sample[]=[];let x=0,v=v0,minGap=c.distance,maxUtil=0,maxLat=0,maxSteer=0;
+ const rows:Sample[]=[];let x=0,v=v0,minGap=c.distance,maxUtil=0,maxLat=0,maxSteer=0,lowSpeedLateralDemand=false;
  for(let n=0;n<=Math.ceil(c.duration*10);n++){
   const t=Math.min(n/10,c.duration);let ax=0;
   if(braking && t>=c.reaction)ax=v>0?-effectiveDecel:0;
@@ -29,6 +32,7 @@ export function simulate(c:Config){
   const u=Math.max(0,Math.min(1,(trajectoryTime-c.reaction)/c.laneTime));
   const y=changing?c.laneWidth*(10*u**3-15*u**4+6*u**5):0;
   const lateral=c.scenario==='curve'?v*v/c.radius:changing&&t>=c.reaction&&t<=c.reaction+c.laneTime&&v>0?c.laneWidth/c.laneTime**2*(60*u-180*u*u+120*u**3):0;
+  if(changing&&v<MIN_LATERAL_SPEED_KMH/3.6&&Math.abs(lateral)>1e-9)lowSpeedLateralDemand=true;
   const yaw=v>0.1?lateral/v*180/Math.PI:0;
   const steering=v>0.1?Math.atan(c.wheelbase*lateral/(v*v))*180/Math.PI*c.steeringRatio:0;
   const pressure=Math.abs(ax)*c.mass/c.brakeGain;
@@ -43,16 +47,17 @@ export function simulate(c:Config){
  const findings:Finding[]=[
   {level:maxUtil>1?'fail':maxUtil>0.85?'warn':'pass',title:'轮胎附着约束',detail:`峰值附着利用率 ${(maxUtil*100).toFixed(1)}%，依据纵横向加速度的摩擦圆近似。`,source:'KB-001'},
   {level:maxLat>c.lateralLimit?'warn':'pass',title:'侧向加速度',detail:`峰值 ${maxLat.toFixed(2)} m/s²，设置阈值 ${c.lateralLimit} m/s²（工程初始值，需标定）。`,source:'KB-002'},
-  {level:maxSteer>c.steeringLimit?'fail':'pass',title:'转向物理约束',detail:`方向盘峰值 ${maxSteer.toFixed(1)}°，设置极限 ${c.steeringLimit}°。`,source:'KB-003'}
+  {level:maxSteer>c.steeringLimit?'fail':lowSpeedLateralDemand?'warn':'pass',title:'转向物理约束',detail:`采样方向盘需求峰值 ${maxSteer.toFixed(1)}°，设置极限 ${c.steeringLimit}°。${lowSpeedLateralDemand?'部分横向需求发生在模型最低适用速度以下，转向评估不完整，不能判定全部约束通过。':''}`,source:'KB-003'}
  ];
  if(braking){
   findings.push({level:predictedMinGap!<=0?'fail':predictedMinGap!<5?'warn':'pass',title:'完整制动过程预测',detail:`相同恒减速与目标运动假设下，全过程最小间距 ${predictedMinGap!.toFixed(1)} m；此项包含显示时间窗之外的解析预测。`,source:'KB-004'});
   if(v0>0&&c.duration<stopTime)findings.push({level:'warn',title:'仿真覆盖范围',detail:`显示窗口 ${c.duration} s 小于理论停车时间 ${stopTime.toFixed(2)} s。曲线尚未覆盖完整停车过程，请延长时长；完整制动预测单独列出。`,source:'KB-004'});
  }
  if(changing&&c.duration<c.reaction+c.laneTime)findings.push({level:'warn',title:'换道覆盖范围',detail:`换道计划在 ${(c.reaction+c.laneTime).toFixed(2)} s 结束，当前 ${c.duration} s 时间窗未覆盖完整轨迹。`,source:'KB-005'});
+ if(lowSpeedLateralDemand)findings.push({level:'warn',title:'低速横向模型适用性',detail:`车辆在仍有横向需求时低于 ${MIN_LATERAL_SPEED_KMH} km/h。当前横向运动学需求模型不适用于该段，数值保护输出不代表实际横摆或转向为零；需低速专用模型重新验证。此最低速度是软件适用边界，非法规限值。`,source:'KB-005'});
  if(braking){findings.push({level:minGap<=0?'fail':minGap<5?'warn':'pass',title:'制动与间距',detail:`仿真 ${c.duration} s 内最小间距 ${minGap.toFixed(1)} m；理论完全停车需 ${stoppingDistance.toFixed(1)} m / ${stopTime.toFixed(1)} s。前车按恒速运动，静态目标按固定障碍物计算。`,source:'KB-004'});if(c.decel>effectiveDecel+0.01)findings.push({level:'warn',title:'制动请求被约束',detail:`请求 ${c.decel} m/s²，受附着或底盘极限约束，实际采用 ${effectiveDecel.toFixed(2)} m/s²。`,source:'KB-001'});if(c.scenario==='avoid'&&stopTime<c.reaction+c.laneTime)findings.push({level:'warn',title:'避障轨迹适用性',detail:'车辆在规划换道结束前已停车。侧向轨迹仅用于需求估算，不代表实际可执行的避障路径。',source:'KB-005'});}
  const risk=findings.some(f=>f.level==='fail')?'高风险':findings.some(f=>f.level==='warn')?'需关注':'约束内';
- return {config:{...c},rows,findings,risk,effectiveDecel,stoppingDistance,stopTime,maxUtil,maxLat,maxSteer,minGap,predictedMinGap,safeCurveSpeed,braking};
+ return {config:{...c},rows,findings,risk,effectiveDecel,stoppingDistance,stopTime,maxUtil,maxLat,maxSteer,minGap,predictedMinGap,safeCurveSpeed,braking,modelApplicability:{lateralMinimumSpeedKmh:MIN_LATERAL_SPEED_KMH,lowSpeedLateralDemand}};
 }
 export type Simulation=ReturnType<typeof simulate>;
 export const knowledge=[

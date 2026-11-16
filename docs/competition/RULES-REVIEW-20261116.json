@@ -1,0 +1,249 @@
+{
+  "reviewedOn": "2026-11-16",
+  "timezone": "Asia/Shanghai",
+  "track": {
+    "id": "10037",
+    "name": "AI WEB网页开发挑战赛",
+    "stage": "省赛材料准备，报名后台阶段未查验"
+  },
+  "scope": "独立材料规则核对；未提交比赛、未操作账户、未改变仓库或站点权限、未读取任何密钥。现存材料观察为审查时快照，后续修订须重新验收。",
+  "sources": [
+    {
+      "id": "USER_CONTEST",
+      "kind": "用户提供的整理汇编，并非官网原始规则",
+      "path": "2026传智杯16赛道参赛资料汇编(1).docx",
+      "sha256": "66a81b2d4c6959b5e8012ccf0b4ff6d197506157e14980c034636cf8c564c5e5",
+      "locator": "第2.2节 AI WEB网页开发挑战赛；文本读取，未将目录页码当作渲染后证据"
+    },
+    {
+      "id": "USER_SPEC",
+      "kind": "用户原始开发范围及拟定分工",
+      "path": "智能驾驶工况仿真与辅助分析 Web 平台 V1.0 开发文档.docx",
+      "sha256": "201e1b05c744aebb00ebea950e3a43c60d3d2f8973b128e153a8e190fc88df79",
+      "locator": "第四、五、六节"
+    },
+    {
+      "id": "ORGANIZER",
+      "kind": "标示传智杯官方发布者的赛氪赛事页，一手发布内容、第三方托管",
+      "url": "https://m.saikr.com/vse/2026AIWEBKF",
+      "locator": "第三至七节",
+      "verifiedOn": "2026-11-16"
+    },
+    {
+      "id": "OFFICIAL_HOME",
+      "kind": "大赛官网",
+      "url": "https://www.boxuegu.com/match/",
+      "notes": "已确认官网与赛道选择入口；详情页为动态页面，公开文本工具无法独立读取规则正文。"
+    },
+    {
+      "id": "OFFICIAL_TRACK",
+      "kind": "官网赛道详情",
+      "url": "https://www.boxuegu.com/matchTrack/detail/?id=10037",
+      "notes": "地址由高校通知的官方链接确认。原高校链接含多余字符；未把损坏链接当作规则正文。"
+    },
+    {
+      "id": "UNIVERSITY",
+      "kind": "高校官方参赛通知，补充交叉核对",
+      "url": "https://cs.dgut.edu.cn/info/1034/19118.htm",
+      "locator": "第六节作品提交要求",
+      "notes": "该校自身报名、导师和校赛时间要求不直接套用于未知学校的用户。"
+    }
+  ],
+  "mandatoryRequirements": [
+    {
+      "id": "CODE_ACCESS",
+      "requirement": "GitHub/Gitee仓库公开或给评审提供访问权限，保留完整Git历史。",
+      "sources": [
+        "USER_CONTEST",
+        "ORGANIZER"
+      ],
+      "observed": "仓库Private，14条提交记录；未提供评审账号或验证评审权限。",
+      "status": "partial",
+      "needed": "保持用户私有偏好；获取指定评审账号并按赛事允许方式授权或由组委会确认提交方案，验证对方实际可读。不能把源码ZIP完全代替仓库要求。"
+    },
+    {
+      "id": "README_ENV",
+      "requirement": "README包含介绍、架构、安装运行、团队；提供环境变量模板与依赖清单。",
+      "sources": [
+        "ORGANIZER"
+      ],
+      "observed": "README、.env.example和pnpm-lock.yaml已存在；README仍写真实模型待联调和14项分析回归。未见最终学校、队伍、组别、队长、导师信息。",
+      "status": "needs_update"
+    },
+    {
+      "id": "VIDEO",
+      "requirement": "MP4，5–8分钟，至少1080p，普通话讲解，展示项目、核心功能和AI亮点；字幕可选。",
+      "sources": [
+        "USER_CONTEST",
+        "ORGANIZER"
+      ],
+      "observed": "outputs目录未发现MP4。",
+      "status": "missing",
+      "acceptance": {
+        "minimumSeconds": 300,
+        "maximumSeconds": 480,
+        "minimumResolution": "1920x1080或等效1080p",
+        "format": "MP4",
+        "spokenLanguage": "普通话",
+        "subtitlesRequired": false
+      }
+    },
+    {
+      "id": "PDF",
+      "requirement": "PDF不超过30页，包含概述、需求、架构、AI方案、实现、测试部署、总结展望，说明AI选型集成优化和创新点。",
+      "sources": [
+        "USER_CONTEST",
+        "ORGANIZER"
+      ],
+      "observed": "现有验收稿12页；页数合规，但第1/5/7/10/11页仍有邮箱和真实模型未通过的旧状态；第7页写14项分析测试，成员身份仍空。",
+      "status": "needs_update",
+      "acceptance": {
+        "maximumPages": 30,
+        "format": "PDF",
+        "visualQa": "最终文件全部页面检查字体、重叠、截断、页码、截图和引用"
+      }
+    },
+    {
+      "id": "TEAM",
+      "requirement": "同校1–3名学生，可配不超过2名指导教师，按真实资格选择对应组别。",
+      "sources": [
+        "USER_CONTEST",
+        "ORGANIZER"
+      ],
+      "observed": "开发文档有两名拟定成员，但未核实同校、学籍、组别、实际报名。",
+      "status": "needs_user_confirmation"
+    },
+    {
+      "id": "ORIGINALITY",
+      "requirement": "原创、AI处于应用核心；可使用AI辅助编程，但选手应能解释代码；不得包装抄袭或虚构贡献。",
+      "sources": [
+        "ORGANIZER"
+      ],
+      "observed": "已有持续提交、独立计算和工具链；AI协作事实与第三方依赖/模板/字体/公开数据应如实披露，实际成员贡献需确认。",
+      "status": "needs_truthful_declaration"
+    },
+    {
+      "id": "SUBMISSION",
+      "requirement": "按官网入口和截止要求提交完整材料，保护密钥，提交后修改需遵守组委会规则。",
+      "sources": [
+        "ORGANIZER"
+      ],
+      "observed": "未查看登录后的报名/缴费/提交入口，不推断报名完成。",
+      "status": "not_verified"
+    }
+  ],
+  "optionalRequirements": [
+    {
+      "id": "ONLINE",
+      "requirement": "在线演示是可选加分项；提供时评审期间保持可用，需登录则提供评审体验方式。",
+      "sources": [
+        "USER_CONTEST",
+        "ORGANIZER"
+      ],
+      "observed": "站点已部署并有一次真实线上分析验收，但当前仅所有者可见；未验收评审或另一设备访问。",
+      "status": "owner_verified_only"
+    },
+    {
+      "id": "MULTIMODAL",
+      "requirement": "多模态、浏览器端AI推理等属于评分/鼓励方向，不是每个项目必须实现的功能。",
+      "sources": [
+        "ORGANIZER"
+      ],
+      "notes": "不能把文本PDF解析叫视觉多模态或OCR，也不应为凑评分临时虚构能力。"
+    }
+  ],
+  "videoInterpretation": {
+    "explicit": [
+      "5–8分钟",
+      "MP4",
+      "不低于1080p",
+      "普通话讲解",
+      "项目介绍、核心功能演示、AI技术亮点"
+    ],
+    "notFoundAsMandatory": [
+      "本人出镜",
+      "真人声线",
+      "连续不可剪辑屏幕录制",
+      "至少2分钟AI协同",
+      "至少3条完整Prompt链"
+    ],
+    "safeProductionPlan": "真实界面截图和运行结果可剪辑呈现；普通话合成解说应明确标注，不能伪造连续操作、响应速度、成员贡献或工程结论。未找到禁令不等于组委会明确批准所有表现形式。视频必须实际展示核心功能，不能只有概念标题。",
+    "crossTrackWarning": "3轮完整Prompt链和2分钟AI协同为汇编中10039个人赛条款，不直接套到10037 Web团队赛。"
+  },
+  "dates": {
+    "provincialDate": "2026-11-18",
+    "nationalDate": "2026-12-27",
+    "nationalRegistrationWindow": [
+      "2026-12-10",
+      "2026-12-21"
+    ],
+    "exactDeadlineTime": null,
+    "uncertainty": "汇编与发布页正文列11月18日；赛事页报名栏列11月19日00:00，正文还区分指导提交和后续最终入口。不能擅定23:59或认为当前已获最终提交入口。以本人报名后台及组委会最新通知核实阶段和精确时点，按较早日期准备。"
+  },
+  "providedTeamDraft": {
+    "members": [
+      {
+        "name": "丁鑫炜",
+        "declaredRole": "车辆工程",
+        "plannedResponsibilities": [
+          "五类场景与业务规则",
+          "公式、参数和阈值",
+          "四通道日志协议与误差容差",
+          "工程资料和AI输出专业复核",
+          "答辩业务与原理"
+        ],
+        "confirmedAsActualContribution": false
+      },
+      {
+        "name": "邱益美",
+        "declaredRole": "软件工程",
+        "plannedResponsibilities": [
+          "全栈架构与模块开发",
+          "物理计算实现",
+          "可视化与日志清洗对齐",
+          "知识检索与模型工具流程",
+          "保存、管理、PDF和技术答辩"
+        ],
+        "confirmedAsActualContribution": false
+      }
+    ],
+    "knownOnlyAsDraft": true,
+    "unknown": [
+      "学校",
+      "队伍名称",
+      "正确组别",
+      "队长",
+      "报名编号",
+      "指导教师或无导师状态",
+      "成员是否仍按此名单及实际贡献",
+      "当前报名/缴费/提交阶段",
+      "指定评审访问账号"
+    ]
+  },
+  "originalScopeAgreement": {
+    "v1Scope": "五类轻量工况、参数计算、可视化、知识辅助分析、文件日志导入解析对标、工况保存、PDF。",
+    "explicitlyExcluded": [
+      "实物采购",
+      "嵌入式开发",
+      "硬件驱动",
+      "实物传感器采集",
+      "完整自动驾驶感知规划控制"
+    ],
+    "scopeWarning": "原文向量入库是技术意向；实际实现是BM25与哈希词项向量，不能在材料改写成已使用语义embedding。专业角色的预定审核任务不等于已经取得人工签署。",
+    "competitionNotRequired": [
+      "实车精度证明",
+      "采购硬件",
+      "持证工程师签署"
+    ],
+    "claimRule": "若声称车型已标定、专家已审核或实车精度，必须另有对应真实证据；比赛方向允许以前期辅助评估和跨学科学习工具定位参赛。"
+  },
+  "scoringWeights": {
+    "AI技术深度": 35,
+    "创新性": 25,
+    "前端工程质量": 10,
+    "实用性": 10,
+    "用户体验": 10,
+    "社会价值与商业潜力": 10
+  },
+  "acceptanceConclusion": "方向符合自拟AI Web选题范围；当前可完成工程软件审查与材料制作，但在视频、最终身份/资格与评审仓库访问核实前，不能标为全部参赛材料验收通过。此结论不替代组委会接收或评奖。"
+}

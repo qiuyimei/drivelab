@@ -1,0 +1,44 @@
+{
+  "reviewedOn": "2026-11-16",
+  "engineVersion": "1.1.2",
+  "softwareChecksPassed": true,
+  "coreTests": 31,
+  "analysisTests": 26,
+  "savedWorkflowGroups": 5,
+  "independentCases": 130,
+  "independentMaxError": 9.094947017729282e-13,
+  "retrievalCases": 12,
+  "publicRows": 4973,
+  "typecheck": "passed",
+  "build": "passed",
+  "localDatabase": "fresh/repeat/legacy-preservation passed",
+  "realModel": {
+    "provider": "modelscope",
+    "model": "Qwen/Qwen3.5-27B",
+    "cases": 2,
+    "requests": [
+      3,
+      3
+    ],
+    "candidateRegistryVerified": true,
+    "records": "LIVE-ENGINE-112-QA.json"
+  },
+  "publicRawReproduction": {
+    "status": "passed",
+    "arraysIncluded": 4,
+    "sha256": "e97ef42e65251f5ba0ca9fc2dec334b9870a27638be88710545ac5f1d17cd722"
+  },
+  "currentOnlineUi": "pending after publication",
+  "externalReviewerAccess": "not authorized or verified",
+  "teamIdentity": "awaiting owner confirmation",
+  "limits": [
+    "软件复核不等同实车标定或专家签署。",
+    "0.1s采样的需求峰值不保证连续时间极值。",
+    "模型自然语言语义仍需人工复核。",
+    "公开日志只作导入与单位演示。"
+  ],
+  "resolvedAfterInitialReview": [
+    "四个公开原始CAN NPY及MIT许可已补齐并完成相同CSV哈希重建。",
+    "内置知识段落已明确标为项目工程摘要，而非外部来源逐字原文。"
+  ]
+}

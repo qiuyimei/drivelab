@@ -1,0 +1,13 @@
+{
+  "confirmed": false,
+  "teamName": null,
+  "school": null,
+  "group": null,
+  "captain": null,
+  "members": [
+    {"name": "丁鑫炜", "discipline": "车辆工程", "role": "原开发文档拟定工程职责，实际分工待本人确认"},
+    {"name": "邱益美", "discipline": "软件工程", "role": "原开发文档拟定软件职责，实际分工待本人确认"}
+  ],
+  "advisors": null,
+  "note": "仅整理用户原开发文档；不将拟定分工当作已完成贡献或本人签署。报名字段待用户确认后统一更新材料。"
+}

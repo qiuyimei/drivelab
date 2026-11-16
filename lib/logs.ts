@@ -24,8 +24,58 @@ export function parseLog(text:string,name:string,options:{timeUnit?:string;speed
  if(unique.some(r=>!Number.isFinite(r.time-origin+offset)||channels.some(k=>r[k]!==undefined&&Math.abs(r[k]!)>1e6)))throw Error('日志数值超出导入范围，请检查时间格式和采集单位（通道绝对值不超过 1,000,000）');
  return{name,rows:unique.map(r=>({...r,time:r.time-origin+offset})),dropped,duplicates:rows.length-unique.length,missing,offset};
 }
+// A quality warning threshold, not a universal sensor sampling requirement.
+export const LONG_INTERPOLATION_GAP_S=1;
+const metricBasis='MAE/RMSE 按共同区间内原仿真时间网格作等点权平均；最大误差/峰值时刻按两时间网格并集上的分段线性差值计算。插值不代表采样间的真实连续测量。';
+function interpolatedValue<T extends {time:number}>(data:T[],time:number,value:(row:T)=>number){
+ let lo=0,hi=data.length-1;
+ while(hi-lo>1){const mid=(lo+hi)>>1;if(data[mid].time<=time)lo=mid;else hi=mid;}
+ const a=data[lo],b=data[hi];
+ return value(a)+(value(b)-value(a))*(time-a.time)/(b.time-a.time);
+}
 export function compare(sim:Sample[],log:LogData,thresholds:Record<Channel,number>){
- return channels.map(k=>{const data=log.rows.filter(r=>r[k]!==undefined);let i=0;const errors:number[]=[];for(const s of sim){if(data.length<2||s.time<data[0].time||s.time>data[data.length-1].time)continue;while(i<data.length-2&&data[i+1].time<s.time)i++;const a=data[i],b=data[i+1];const value=a[k]!+(b[k]!-a[k]!)*(s.time-a.time)/(b.time-a.time);errors.push(Math.abs(value-s[k]));}const n=errors.length;return{key:k,n,mae:n?errors.reduce((a,b)=>a+b,0)/n:null,rmse:n?Math.sqrt(errors.reduce((a,b)=>a+b*b,0)/n):null,max:n?Math.max(...errors):null,pass:n?Math.max(...errors)<=thresholds[k]:null};});
+ return channels.map(k=>{
+  const data=log.rows.filter(r=>r[k]!==undefined);
+  let i=0;const errors:number[]=[];
+  // Keep the original uniform simulation-grid MAE/RMSE and n contract.
+  for(const s of sim){
+   if(data.length<2||s.time<data[0].time||s.time>data[data.length-1].time)continue;
+   while(i<data.length-2&&data[i+1].time<s.time)i++;
+   const a=data[i],b=data[i+1];
+   const value=a[k]!+(b[k]!-a[k]!)*(s.time-a.time)/(b.time-a.time);
+   errors.push(Math.abs(value-s[k]));
+  }
+  const n=errors.length;
+  const start=sim.length>=2&&data.length>=2?Math.max(sim[0].time,data[0].time):null;
+  const end=sim.length>=2&&data.length>=2?Math.min(sim.at(-1)!.time,data.at(-1)!.time):null;
+  const hasOverlap=start!==null&&end!==null&&start<=end;
+  // The difference of two piecewise-linear series is linear between their
+  // combined knots. Its absolute maximum occurs at one of these knots.
+  const peakTimes=hasOverlap?[...new Set([start!,end!,...sim.map(r=>r.time),...data.map(r=>r.time)].filter(t=>t>=start!&&t<=end!))].sort((a,b)=>a-b):[];
+  let max:number|null=null,peakTime:number|null=null,peakError:number|null=null;
+  for(const time of peakTimes){
+   const error=interpolatedValue(data,time,r=>r[k]!)-interpolatedValue(sim,time,r=>r[k]);
+   if(max===null||Math.abs(error)>max){max=Math.abs(error);peakTime=time;peakError=error;}
+  }
+  let maxInterpolationGap:number|null=null;
+  if(hasOverlap)for(let j=1;j<data.length;j++){
+   if(data[j].time>=start!&&data[j-1].time<=end!)maxInterpolationGap=Math.max(maxInterpolationGap??0,data[j].time-data[j-1].time);
+  }
+  const overlapSourceSamples=hasOverlap?data.filter(r=>r.time>=start!&&r.time<=end!).length:0;
+  const qualityWarnings:string[]=[];
+  if(data.length<2)qualityWarnings.push('该通道不足两个有效采集点，无法建立分段线性对比。');
+  else if(!hasOverlap)qualityWarnings.push('该通道与仿真没有共同时间区间，未计算误差或外推。');
+  else{
+   if(overlapSourceSamples<=2)qualityWarnings.push(`共同区间内只有 ${overlapSourceSamples} 个原始采集点，插值后的点数不能视为独立测量数量。`);
+   if(maxInterpolationGap!==null&&maxInterpolationGap>LONG_INTERPOLATION_GAP_S)qualityWarnings.push(`采集点最大间隔 ${maxInterpolationGap.toFixed(3)} s 超过 ${LONG_INTERPOLATION_GAP_S} s 提醒阈值；线性插值无法确认停采间隙内的实际变化。`);
+   if(!n)qualityWarnings.push('共同区间内没有原仿真网格点，MAE/RMSE 不可用，仅报告两网格并集峰值。');
+   if(start===end)qualityWarnings.push('共同时间范围只有单点，不能代表一段持续工况。');
+  }
+  return {key:k,n,mae:n?errors.reduce((a,b)=>a+b,0)/n:null,rmse:n?Math.sqrt(errors.reduce((a,b)=>a+b*b,0)/n):null,
+   max,pass:max===null?null:max<=thresholds[k],peakTime,peakError,peakSamples:peakTimes.length,gridMax:n?Math.max(...errors):null,
+   sourceSamples:data.length,overlapSourceSamples,maxInterpolationGap,overlapStart:hasOverlap?start:null,overlapEnd:hasOverlap?end:null,
+   qualityWarnings,metricBasis};
+ });
 }
 export function sampleCSV(rows:Sample[],demo=false){return '\uFEFFtime_s,speed_kmh,yaw_rate_dps,brake_pressure_bar,steering_angle_deg\n'+rows.map((r,i)=>[String(r.time),(r.speed+(demo?Math.sin(i*.2)*.7:0)).toFixed(3),(r.yaw+(demo?Math.sin(i*.1)*.3:0)).toFixed(3),(r.pressure+(demo?Math.abs(Math.sin(i*.12))*.8:0)).toFixed(3),(r.steering+(demo?Math.sin(i*.15)*1.5:0)).toFixed(3)].join(',')).join('\n');}
 

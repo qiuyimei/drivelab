@@ -1,0 +1,363 @@
+{
+  "reviewedOn": "2026-11-16",
+  "classification": "engineering_code_review_and_regression_validation",
+  "scope": {
+    "repository": "C:/Users/Zllyh/Documents/Codex/2026-10-11/n-h/work/drivelab",
+    "reviewed": [
+      "lib/simulation.ts",
+      "lib/logs.ts",
+      "lib/evidence.ts",
+      "validation/",
+      "public/data/comma2k19-public-sample.metadata.json",
+      "public/validation/benchmark-results.json"
+    ],
+    "authorizedSourceChanges": [
+      "lib/simulation.ts",
+      "lib/logs.ts",
+      "lib/evidence.ts: scenarioAlternatives only",
+      "scripts/test-core.mjs"
+    ],
+    "supportingScript": "scripts/engineering-demo.mjs",
+    "restrictionsObserved": [
+      "No UI operation",
+      "No secret or runtime-data inspection",
+      "No network model call",
+      "No commit or publication",
+      "No claim of real-vehicle calibration or licensed engineering approval"
+    ],
+    "independenceNote": "缺陷审查与独立解析基准属于代码/数学层验证。缺陷修复后的回归由修复代理自检，不应称作第三方认证。"
+  },
+  "conclusion": {
+    "result": "两项会导致错误展示结论的 P1 已修复；公式与单位的独立解析基准通过。比赛可展示轻量需求估算、日志导入与可追溯分析，仍须明确本文件的模型和数据边界。",
+    "p1Fixed": 2,
+    "residualP2": 3,
+    "allowedClaims": [
+      "实现了带明确假设与适用范围的工况需求估算",
+      "130 项独立解析参考校验通过",
+      "可导入有许可与来源说明的公开实测片段，保留缺失通道",
+      "合成日志尖峰回归证明两网格峰值判定工作"
+    ],
+    "unsupportedClaims": [
+      "整车动力学经过实车标定",
+      "公开道路片段证明本模型误差精度",
+      "模型输出的压力是真实液压压力",
+      "采样约束内等于连续时间车辆安全",
+      "持证工程签署或安全认证"
+    ]
+  },
+  "findings": [
+    {
+      "id": "ENG-LOW-SPEED",
+      "priority": "P1",
+      "status": "fixed",
+      "affected": [
+        "lib/simulation.ts: validateConfig, lateral demand findings",
+        "lib/evidence.ts: scenarioAlternatives"
+      ],
+      "issue": "极低非零速度绕过输入校验，yaw/steering 数值保护输出零，却允许存在横向位移需求的工况判为约束内。",
+      "reproductionBeforeFix": {
+        "configPatch": {
+          "scenario": "lane",
+          "speed": 0.1,
+          "duration": 12
+        },
+        "observed": {
+          "risk": "约束内",
+          "maxSteerDeg": 0,
+          "finalLateralPositionM": 3.5
+        }
+      },
+      "resolution": "lane/avoid 初始速度低于 5 km/h 明确拒绝；5 km/h 是软件适用边界，非法规或通用车辆阈值。避障制动进入该边界以下且仍有横向需求时给出评估不完整告警，转向约束不得显示全部通过。无效降速候选被跳过。",
+      "verification": [
+        "lane/avoid 的 0、0.1、0.36、4.999 km/h 拒绝",
+        "5 km/h 方向盘需求不再伪零",
+        "避障进入低速段触发告警",
+        "5 km/h 下候选 4 km/h 被跳过；6.25 km/h 下候选 5 km/h 有效"
+      ],
+      "applicability": "边界校验不把运动学单轨升级为低速执行模型；被接受的输入仍可能超转向约束。"
+    },
+    {
+      "id": "LOG-PEAK",
+      "priority": "P1",
+      "status": "fixed",
+      "affected": [
+        "lib/logs.ts: compare",
+        "lib/evidence.ts: detailedComparison/facts (integration by AI review agent)"
+      ],
+      "issue": "仅在 0.1 s 仿真网格比较会遗漏采集网格上的真实输入尖峰。",
+      "reproducibleInput": {
+        "simulationPatch": {
+          "scenario": "curve",
+          "speed": 36,
+          "duration": 5
+        },
+        "logCSV": "time_s,speed_kmh\n0,36\n0.05,136\n0.1,36\n5,36",
+        "classification": "synthetic_regression_fixture"
+      },
+      "before": {
+        "n": 51,
+        "mae": 0,
+        "rmse": 0,
+        "max": 0,
+        "pass": true
+      },
+      "after": {
+        "n": 51,
+        "mae": 0,
+        "rmse": 0,
+        "gridMax": 0,
+        "max": 100,
+        "peakTime": 0.05,
+        "peakError": 100,
+        "pass": false
+      },
+      "resolution": "保留原仿真网格 n/MAE/RMSE 兼容口径；最大绝对误差、符号和时刻按两时间网格并集的分段线性差值求取，pass 使用该峰值。两条分段线性曲线的差在每段线性，绝对值最大值必在联合节点上。",
+      "verification": [
+        "正向采集尖峰",
+        "负向转向尖峰",
+        "仿真节点尖峰",
+        "共同区间短于一步：n=0、MAE/RMSE=null，max=100 仍保留并判超差",
+        "没有共同区间不外推，max/peakTime/pass 为 null"
+      ],
+      "applicability": "该算法精确求已给出的分段线性曲线差峰值；不能发现原始传感器采样间未观测的变化。"
+    },
+    {
+      "id": "LOG-SPARSE",
+      "priority": "P2",
+      "status": "improved_with_explicit_limit",
+      "issue": "两点稀疏采集被插值为 51 个比较点时容易误读为充分独立测量。",
+      "resolution": "补充 sourceSamples、overlapSourceSamples、maxInterpolationGap、metricBasis 和 qualityWarnings。共同区间采集点不超过 2 个、采集跨度超过 1 s、无原仿真网格点、只有单点重叠分别告警。1 s 是提醒策略，不是传感器规范。",
+      "verification": {
+        "inputCSV": "time,speed\n0,36\n5,36",
+        "n": 51,
+        "sourceSamples": 2,
+        "overlapSourceSamples": 2,
+        "maxInterpolationGapS": 5,
+        "passUnderLinearAssumption": true
+      },
+      "applicability": "MAE/RMSE 仍是原网格等点权均值，非连续时间积分、非时间加权积分、非独立测量统计置信度。"
+    },
+    {
+      "id": "ENG-CONTINUOUS-EXTREMA",
+      "priority": "P2",
+      "status": "remaining_disclosed_boundary",
+      "affected": [
+        "lib/simulation.ts: maxLat/maxUtil/maxSteer sampled maxima"
+      ],
+      "issue": "0.1 s 采样峰值可略低于连续五次轨迹峰值；贴边阈值可能判约束内但连续值微超。",
+      "reproducibleInput": {
+        "configPatch": {
+          "scenario": "lane",
+          "speed": 90,
+          "duration": 12,
+          "laneWidth": 3.5,
+          "laneTime": 5,
+          "lateralLimit": 0.808
+        }
+      },
+      "actualApplicationOutput": {
+        "sampledPeakLateralMps2": 0.8072064000000011,
+        "risk": "约束内"
+      },
+      "independentAnalyticReference": {
+        "formula": "10*sqrt(3)/3 * W/T^2",
+        "continuousPeakLateralMps2": 0.8082903768654761
+      },
+      "recommendation": "展示中明确称 0.1 s 采样需求峰值；若需严格连续约束，针对五次多项式求导数零点并加入极值评估，联合制动利用率也需独立极值处理。当前不要声称连续安全保证。",
+      "sourceId": "ENG-004"
+    },
+    {
+      "id": "DATA-PROVENANCE",
+      "priority": "P2",
+      "status": "remaining_metadata_limitation",
+      "affected": [
+        "lib/logs.ts: LogData lacks explicit provenance",
+        "lib/evidence.ts: source-specific limitations inferred from name"
+      ],
+      "issue": "文件名包含“演示”或“comma2k19”才触发特定来源说明。重命名不会更改数据本质，却可能丢失特定来源提示。",
+      "currentMitigation": "所有绑定日志均有通用误差用途限制；公开片段另有源 commit、原单位、许可、处理与 hash 元数据；缺失横摆/压力不会补造。",
+      "recommendation": "把 app_synthetic、known_public_sample、user_import_unverified 等来源类型与原始文件 hash/元数据一起持久化。用户导入应默认来源未核验，不应由文件名宣称真实测量。"
+    },
+    {
+      "id": "REPRO-RAW-ASSETS",
+      "priority": "P2",
+      "status": "remaining_reconstruction_setup",
+      "affected": [
+        "validation/convert_public_sample.py",
+        "public/data/comma2k19-public-sample.metadata.json"
+      ],
+      "issue": "仓库已带可验证 CSV 成品，但转换脚本预期 validation/original 四个 NumPy 文件，该目录未包含在当前 checkout。元数据 license_file 也沿用 original/ 相对路径，实际公告保存在 public/data/LICENSE-comma2k19.txt。",
+      "availableEvidence": "work/evidence-assets/original 下有原始四个数组和公告；应用仓库 public/data 有最终 CSV、元数据及 MIT 公告。",
+      "recommendation": "在清洁 checkout 的复现说明中明确从固定 commit 获取四个原始数组并验证 Git blob/SHA256，或提供独立下载准备脚本；修正再分发元数据的相对许可路径。不要声称当前转换脚本脱离原始文件可直接重建。"
+    }
+  ],
+  "verifiedItems": [
+    {
+      "item": "水平路面恒有效减速度与响应段",
+      "formula": "s=v0*reaction+v0^2/(2*a); t= reaction+v0/a",
+      "checks": "含非采样点响应时刻与分数时长；停车后速度不负，积分末位距离匹配解析。",
+      "sourceIds": [
+        "ENG-001"
+      ]
+    },
+    {
+      "item": "恒速前车跟驰完整最小间距",
+      "formula": "gap=d-max(0,v0-vlead)*reaction-max(0,v0-vlead)^2/(2*a)",
+      "checks": "全过程解析与显示窗口分别报告，短时间窗不隐藏碰撞预测。"
+    },
+    {
+      "item": "附着与制动边界",
+      "formula": "a=min(request,brakeLimit,mu*g); utilization=hypot(ax,ay)/(mu*g)",
+      "checks": "单位 m/s²；需求超限只标识不可行，不伪称已求解轮胎饱和后的实际运动。",
+      "sourceIds": [
+        "ENG-002"
+      ]
+    },
+    {
+      "item": "稳态圆周与单轨单位",
+      "formula": "ay=v^2/R; yaw=ay/v*180/pi; steering=atan(L*ay/v^2)*180/pi*ratio",
+      "checks": "内部速度 m/s，界面 km/h；yaw °/s；方向盘°与前轮角区分。",
+      "sourceIds": [
+        "ENG-003"
+      ]
+    },
+    {
+      "item": "五次轨迹",
+      "formula": "y=W*(10u^3-15u^4+6u^5)",
+      "checks": "独立六边界线性系统系数校验；仅给定轨迹需求，不证明碰撞几何或控制可执行。",
+      "sourceIds": [
+        "ENG-004"
+      ]
+    },
+    {
+      "item": "制动压力",
+      "formula": "abs(ax)*mass/brakeGain",
+      "checks": "kg*m/s²/(N/bar)=bar；仅集总增益估计，未经车型标定不能宣称实际液压输出。",
+      "sourceIds": [
+        "ENG-002"
+      ]
+    },
+    {
+      "item": "日志导入",
+      "checks": "自动 ms/s、m/s/km/h、rad/s/°s 换算，排序、重复保留末项，空值不补零，首时间归零+偏移，范围和数量约束，无重叠不外推。"
+    },
+    {
+      "item": "公开实测片段",
+      "checks": "4973 行；59.982570675 s；仅 time_s/speed_mps/steering_angle_deg；MIT 公告、固定源 commit、数组 blob hash 和 CSV SHA256 保留；没有 yaw/pressure。",
+      "csvSha256": "e97ef42e65251f5ba0ca9fc2dec334b9870a27638be88710545ac5f1d17cd722",
+      "sourceIds": [
+        "DATA-001",
+        "DATA-002"
+      ]
+    }
+  ],
+  "validation": {
+    "testedOn": "2026-11-16",
+    "commands": [
+      {
+        "command": "node scripts/test-core.mjs",
+        "result": "pass",
+        "cases": 31
+      },
+      {
+        "command": "node node_modules/typescript/bin/tsc --noEmit",
+        "result": "pass",
+        "exitCode": 0
+      },
+      {
+        "command": "node scripts/validate-benchmarks.mjs",
+        "result": "pass",
+        "independentReferenceCases": 130,
+        "passed": 130,
+        "maxAbsoluteError": 9.094947017729282e-13,
+        "classification": "independent_analytic_reference",
+        "fixtureSha256": "fd39ae03d895a6129da5927ec6bde1d7160da422fa31ad91a25352cf1a869b70",
+        "publicImportRows": 4973,
+        "retrievalHitAt3": "12/12",
+        "note": "检索命中只是固定问题回归，不代表开放问题准确率。此命令重新生成 public/validation/benchmark-results.json，已告知主代理。"
+      },
+      {
+        "command": "node scripts/engineering-demo.mjs",
+        "result": "pass",
+        "output": ".sites-runtime/engineering-demo.json",
+        "uses": "直接导入当前应用源码的转译结果，保存源码 SHA256；无手填仿真指标。"
+      }
+    ],
+    "notPerformed": [
+      "新实车实验",
+      "车型参数标定",
+      "硬件在环",
+      "闭环控制跟踪验证",
+      "碰撞几何验证",
+      "道路安全认证",
+      "此工程子任务未操作 UI 或远程模型"
+    ]
+  },
+  "presentationData": {
+    "output": "work/drivelab/.sites-runtime/engineering-demo.json",
+    "defaultHighway": {
+      "stoppingDistanceM": 99.38271604938272,
+      "predictedMinimumFullBrakingGapM": 58.76543209876544
+    },
+    "lowAdhesion": {
+      "mu": 0.2,
+      "stoppingDistanceM": 218.8595663281358,
+      "predictedMinimumFullBrakingGapM": 39.64913605416494
+    },
+    "syntheticSpike": {
+      "maxErrorKmh": 100,
+      "peakTimeS": 0.05,
+      "maeKmh": 0,
+      "rmseKmh": 0,
+      "pass": false
+    },
+    "laneComparison": {
+      "speed5": {
+        "risk": "高风险",
+        "maximumSampledSteeringDeg": 742.7995410640185
+      },
+      "speed60": {
+        "risk": "约束内",
+        "maximumSampledSteeringDeg": 6.992773095357461
+      }
+    },
+    "note": "图数据含完整当前计算曲线与单位列，所有本节数值均为应用仿真或明确合成日志回归结果。"
+  },
+  "sources": [
+    {
+      "id": "ENG-001",
+      "title": "UIUC ECE101 Autonomous Driving",
+      "url": "https://courses.grainger.illinois.edu/ece101/fa2025/lectures/101-024-autonomous-driving.pdf",
+      "locator": "PDF pages 23–26"
+    },
+    {
+      "id": "ENG-002",
+      "title": "UCSD CSE291 Vehicle Dynamics, Steve Rotenberg",
+      "url": "https://cseweb.ucsd.edu/classes/sp19/cse291-d/Files/CSE291_14_VehicleDynamics.pdf",
+      "locator": "PDF pages 17 and 35"
+    },
+    {
+      "id": "ENG-003",
+      "title": "CMU-RI-TR-09-08, Snider 2009",
+      "url": "https://publications.ri.cmu.edu/storage/publications/pub_files/2009/2/Automatic_Steering_Methods_for_Autonomous_Automobile_Path_Tracking.pdf",
+      "locator": "PDF pages 25–27, body pages 18–20"
+    },
+    {
+      "id": "ENG-004",
+      "title": "PythonRobotics Quintic Polynomials Planner, original MIT source",
+      "url": "https://github.com/AtsushiSakai/PythonRobotics/blob/master/PathPlanning/QuinticPolynomialsPlanner/quintic_polynomials_planner.py"
+    },
+    {
+      "id": "DATA-001",
+      "title": "comma2k19 official pinned repository",
+      "url": "https://github.com/commaai/comma2k19/tree/4c7f1a6e1957745beadc1def0e7225f559b09a2a",
+      "licenseUrl": "https://github.com/commaai/comma2k19/blob/4c7f1a6e1957745beadc1def0e7225f559b09a2a/LICENSE"
+    },
+    {
+      "id": "DATA-002",
+      "title": "Pinned cereal CarState steering wheel schema",
+      "url": "https://raw.githubusercontent.com/commaai/cereal/ab79999e5dc2de25c3eb0c9acbed47c9e81f5d79/car.capnp"
+    }
+  ],
+  "sourceVerificationNote": "以上来源已在前期 engineering-evidence.json 研究中核验；本次只读代码与本地回归，没有另取数据或声称新的实车证据。"
+}

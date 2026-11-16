@@ -1,0 +1,107 @@
+{
+  "id": "comma2k19-public-sample",
+  "display_name": "公开实测日志导入示例 · comma2k19",
+  "classification": "public_measured_log_excerpt",
+  "not_model_validation": true,
+  "description": "公开实测数据的导入、单位和时间轴演示；不是本项目车辆动力学模型的实车标定证明。",
+  "source_repository": "https://github.com/commaai/comma2k19",
+  "source_commit": "4c7f1a6e1957745beadc1def0e7225f559b09a2a",
+  "source_segment": "Example_1/b0c9d2329ad1606b|2018-08-02--08-34-47/40",
+  "vehicle": "Toyota RAV4 (repository README identifies this dongle ID as RAV4)",
+  "source_license": "MIT",
+  "source_copyright": "Copyright (c) 2018 comma.ai",
+  "license_file": "original/LICENSE-comma2k19.txt",
+  "license_url": "https://github.com/commaai/comma2k19/blob/4c7f1a6e1957745beadc1def0e7225f559b09a2a/LICENSE",
+  "publication": {
+    "title": "A Commute in Data: The comma2k19 Dataset",
+    "authors": "Harald Schafer, Eder Santana, Andrew Haden, Riccardo Biasini",
+    "year": 2018,
+    "url": "https://arxiv.org/abs/1812.05752v1"
+  },
+  "units_source_url": "https://github.com/commaai/comma2k19/blob/4c7f1a6e1957745beadc1def0e7225f559b09a2a/README.md#log-format",
+  "steering_definition_source_url": "https://raw.githubusercontent.com/commaai/cereal/ab79999e5dc2de25c3eb0c9acbed47c9e81f5d79/car.capnp",
+  "steering_definition_note": "The dataset's pinned openpilot submodule uses this cereal schema, where CarState.steeringAngle is under the 'steering wheel' section and measured in degrees. The exported dataset field itself is named CAN/steering_angle.",
+  "available_channels": {
+    "time_s": "seconds relative to first retained CAN speed sample",
+    "speed_mps": "original CAN speed in m/s, not km/h",
+    "steering_angle_deg": "CAN steering angle in degrees; steering-wheel convention of pinned openpilot schema"
+  },
+  "missing_channels": [
+    "yaw_rate",
+    "brake_pressure"
+  ],
+  "original_time_basis": "device boot time in seconds",
+  "original_speed_time_start_s": 46408.58950284333,
+  "original_speed_time_end_s": 46468.57761690433,
+  "original_steering_time_start_s": 46408.584958853666,
+  "original_steering_time_end_s": 46468.57220897667,
+  "retained_original_time_start_s": 46408.58950284333,
+  "retained_original_time_end_s": 46468.572073518335,
+  "duration_s": 59.98257067500526,
+  "rows": 4973,
+  "original_speed_rows": 4974,
+  "original_steering_rows": 4974,
+  "dropped_speed_rows_outside_common_time": 1,
+  "speed_range_mps": [
+    7.974305555555556,
+    19.840972222222227
+  ],
+  "steering_range_deg": [
+    -4.6,
+    2.459429766203654
+  ],
+  "transformations": [
+    "Verify each downloaded binary against its Git blob SHA-1 from the pinned official tree.",
+    "Read NumPy arrays with allow_pickle=False; require finite data and strictly increasing timestamps.",
+    "Keep speed samples only within steering's observed time interval; do not extrapolate.",
+    "Linearly interpolate steering on retained original speed sample timestamps; preserve speed measurements unchanged.",
+    "Subtract the first retained CAN speed time to produce relative seconds; retain original time interval in metadata.",
+    "Serialize to 9 decimal places. Do not filter, smooth, rescale speed, invent yaw/pressure, or derive a vehicle-model validation score."
+  ],
+  "csv_file": "comma2k19-public-sample.csv",
+  "csv_sha256": "e97ef42e65251f5ba0ca9fc2dec334b9870a27638be88710545ac5f1d17cd722",
+  "files": [
+    {
+      "local_file": "original/speed_t.npy",
+      "url": "https://raw.githubusercontent.com/commaai/comma2k19/4c7f1a6e1957745beadc1def0e7225f559b09a2a/Example_1/b0c9d2329ad1606b%7C2018-08-02--08-34-47/40/processed_log/CAN/speed/t",
+      "bytes": 39920,
+      "git_blob_sha1": "db54caa7d3f53611713bc5f8a82d2c19950d251a",
+      "sha256": "53d2a88becfc45f9dcb804f2f78436f2bb6246d80386ff18ded10af679d5d6f3"
+    },
+    {
+      "local_file": "original/speed_value.npy",
+      "url": "https://raw.githubusercontent.com/commaai/comma2k19/4c7f1a6e1957745beadc1def0e7225f559b09a2a/Example_1/b0c9d2329ad1606b%7C2018-08-02--08-34-47/40/processed_log/CAN/speed/value",
+      "bytes": 39920,
+      "git_blob_sha1": "6da9b94fbcfaaac9fe57dd53e5fe1f38d18970c4",
+      "sha256": "ba40ded2c9d2a6d5f98801f5438d0cb5d811ccf1444e3a3f680d7addb707551f"
+    },
+    {
+      "local_file": "original/steering_t.npy",
+      "url": "https://raw.githubusercontent.com/commaai/comma2k19/4c7f1a6e1957745beadc1def0e7225f559b09a2a/Example_1/b0c9d2329ad1606b%7C2018-08-02--08-34-47/40/processed_log/CAN/steering_angle/t",
+      "bytes": 39920,
+      "git_blob_sha1": "6fd8d82b1373588e3138b80e9d47f1fe0c22d3e0",
+      "sha256": "eb489c74b52cebccd30b803860d70aaafc44801a44b93e72585d602a982dbfc7"
+    },
+    {
+      "local_file": "original/steering_value.npy",
+      "url": "https://raw.githubusercontent.com/commaai/comma2k19/4c7f1a6e1957745beadc1def0e7225f559b09a2a/Example_1/b0c9d2329ad1606b%7C2018-08-02--08-34-47/40/processed_log/CAN/steering_angle/value",
+      "bytes": 39920,
+      "git_blob_sha1": "662e677be5f2ea19d76d5478fde21ec80935bd59",
+      "sha256": "6af86fe2fce790c6d3a51d512c625e4766699f473ec13207ea043c08d83a6bea"
+    }
+  ],
+  "suitability": {
+    "allowed_demo_claims": [
+      "Can parse a real public CAN log excerpt",
+      "Can convert m/s to km/h",
+      "Can handle asynchronous speed and steering sample times with documented linear interpolation",
+      "Can retain missing channels as missing"
+    ],
+    "prohibited_claims": [
+      "The lightweight dynamics model has been validated or calibrated on this vehicle",
+      "The excerpt reproduces a known controlled braking or lane-change experiment",
+      "The dataset supplies brake pressure",
+      "Phone gyro Z is automatically the platform's vehicle yaw-rate without frame/calibration verification"
+    ]
+  }
+}

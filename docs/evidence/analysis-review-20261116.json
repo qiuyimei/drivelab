@@ -1,0 +1,289 @@
+{
+  "reviewDate": "2026-11-16",
+  "reviewer": "email_verification_help",
+  "implementationFollowup": {
+    "engineVersion": "1.1.2",
+    "implemented": [
+      "AI-01 candidate namespacing, registration and export",
+      "AI-03 exposed-source registry closure",
+      "AI-04 report fingerprint/version check, current-input recomputation and fact/candidate appendix"
+    ],
+    "partiallyMitigated": [
+      "AI-02 requires nonempty model limitations, rejects explicit safety-review promises, preserves all deterministic limitations outside model prose and labels semantic review accurately"
+    ],
+    "additionalFixes": [
+      "Sub-grid overlap windows retain peak facts and time/coverage without fabricating MAE/RMSE/bias",
+      "Detailed comparison uses the union-grid peak time and includes sampling quality warnings"
+    ],
+    "verification": [
+      "31 core tests passed",
+      "26 analysis tests passed including in-memory PDF generation and text extraction",
+      "TypeScript noEmit passed",
+      "git diff --check passed"
+    ],
+    "remaining": [
+      "Natural-language semantic entailment and real-vehicle applicability still require human engineering review",
+      "Final PDF visual QA is coordinated by root",
+      "AI-05 source metadata and AI-06 persisted-bundle trust are coordinated by root"
+    ]
+  },
+  "scope": "DriveLab AI evidence chain, retrieval, API snapshots and report exports",
+  "repository": "C:/Users/Zllyh/Documents/Codex/2026-10-11/n-h/work/drivelab",
+  "method": {
+    "readOnlyApplicationReview": true,
+    "applicationFilesModified": false,
+    "secretsRead": false,
+    "runtimeDataRead": false,
+    "networkCalled": false,
+    "uiOperated": false,
+    "offlineChecks": "Transpiled application TypeScript in memory, used synthetic local fixtures and a stub transport; no real model was called.",
+    "externalReferencesVerified": false
+  },
+  "findings": [
+    {
+      "id": "AI-01",
+      "priority": "P1",
+      "mustFixBeforeSubmission": true,
+      "title": "Candidate facts share baseline IDs and tool-generated candidate evidence is absent from the returned audit bundle",
+      "locations": [
+        {
+          "file": "lib/evidence.ts",
+          "line": 25
+        },
+        {
+          "file": "lib/analysis.ts",
+          "line": 58
+        },
+        {
+          "file": "lib/analysis.ts",
+          "line": 76
+        }
+      ],
+      "observation": "evaluate_parameters returns a candidate with the same SIM_* IDs as the baseline. validateNarrative admits only baseline e.facts. Arbitrary evaluated patches and their results remain only in transient model messages; trace records the tool name but neither arguments nor results. Returned alternatives contain only the separate predefined proposals.",
+      "offlineEvidence": {
+        "baselineSpeed": 36,
+        "candidateSpeed": 28.8,
+        "factIdForBoth": "SIM_LATERAL",
+        "baselineValue": 0.4,
+        "candidateValue": 0.256,
+        "unit": "m/s²"
+      },
+      "minimalSafeFix": [
+        "Create a per-analysis immutable fact registry. Preserve baseline IDs or namespace them explicitly, and assign server-generated distinct candidate scopes such as CAND_1__SIM_LATERAL.",
+        "Register predefined alternatives and evaluated candidates with candidate ID, validated patch, baseline fingerprint, full compact evidence, and applied:false. Return the registry and candidate records in AnalysisResult and evidence JSON.",
+        "Pass the full registry to validation and correction feedback. Render candidate facts only with their candidate labels and never overwrite baseline evidence or baseline risk.",
+        "Include candidate IDs, patches and cited facts in the PDF audit appendix. Do not merely relabel candidate values with baseline IDs."
+      ],
+      "regressionAssertions": [
+        "Two evaluated candidates with different speeds have distinct fact IDs and distinct correct values; the baseline fact value remains unchanged.",
+        "A final candidate citation resolves to the exact candidate registry record; an unregistered candidate ID is rejected.",
+        "An arbitrary evaluate_parameters patch, not equal to a predefined alternative, survives the returned JSON and report export with its arguments and computed evidence.",
+        "Candidate evaluation never mutates input.config, baseline fingerprint, baseline risk or the bound log."
+      ],
+      "programmaticallyVerifiable": true,
+      "humanReviewRequired": "Whether a candidate is physically meaningful or usable on a real vehicle remains an engineering decision."
+    },
+    {
+      "id": "AI-02",
+      "priority": "P1",
+      "mustFixBeforeSubmission": true,
+      "title": "Mandatory engineering limitations can disappear, while ID-only checks are presented as an engineering boundary check",
+      "locations": [
+        {
+          "file": "lib/analysis.ts",
+          "line": 14
+        },
+        {
+          "file": "lib/analysis.ts",
+          "line": 24
+        },
+        {
+          "file": "lib/analysis.ts",
+          "line": 70
+        },
+        {
+          "file": "lib/analysis.ts",
+          "line": 72
+        },
+        {
+          "file": "lib/evidence.ts",
+          "line": 28
+        }
+      ],
+      "observation": "The narrative accepts limitations:[], its summary requires no references, and valid IDs do not constrain the text's numbers or claims. The answer is built entirely from model summary, claims and model limitations. The deterministic e.limitations are retained only inside evidence, so the displayed answer can omit synthetic-data, missing-channel and no-fault-diagnosis boundaries.",
+      "offlineEvidence": {
+        "actualRMSE": 2,
+        "acceptedObservation": "车速RMSE为999 km/h",
+        "acceptedRecommendation": "这些结果证明传感器硬件已损坏",
+        "acceptedSummary": "已经完成车辆安全审核",
+        "acceptedLimitations": []
+      },
+      "minimalSafeFix": [
+        "Always render a server-owned conclusion header containing baseline risk, exact deterministic measurements and all applicable e.limitations, outside the model-controlled narrative. Apply the same policy to UI, JSON and PDF.",
+        "Rename the trace to accurately state schema and reference-ID checks; explicitly label free-form model explanations as requiring review. Do not claim that all prose facts or numerical semantics were validated.",
+        "For program-verifiable numerical claims, prefer structured fact references and server-rendered value/unit substitutions. A regex over prose or a larger forbidden-phrase list cannot establish arbitrary natural-language entailment.",
+        "If a summary is retained as a factual conclusion, make it a referenced claim or render a deterministic summary. Keeping model prose unverified is acceptable only with clear separation from verified computation."
+      ],
+      "regressionAssertions": [
+        "An otherwise valid response with limitations:[] cannot remove engine, missing-channel or synthetic/public-sample limitations from any final export.",
+        "Baseline risk and exact baseline values displayed by the server are identical in rules, llm and fallback modes.",
+        "If structured numerical claims are introduced, wrong values and units are rejected, and server rendering uses registry values rather than model-supplied numerals.",
+        "The UI/report never marks arbitrary prose as semantically validated solely because citation IDs exist."
+      ],
+      "programmaticallyVerifiable": "Presence of server-owned facts, risk, limitations and truthful validation labels can be checked. Arbitrary prose entailment cannot be guaranteed by the current validator.",
+      "humanReviewRequired": "Causal diagnosis, recommendation suitability, summary interpretation and engineering safety implications require review."
+    },
+    {
+      "id": "AI-03",
+      "priority": "P2",
+      "mustFixBeforeSubmission": true,
+      "title": "Retrieval exposes source IDs that its final source registry later rejects",
+      "locations": [
+        {
+          "file": "lib/analysis.ts",
+          "line": 57
+        }
+      ],
+      "observation": "search_knowledge truncates the merged sources to the earliest nine entries but returns every new retrieval result to the model. The model can correctly cite a tool-returned chunk which validateNarrative considers nonexistent.",
+      "offlineEvidence": {
+        "toolCallsInFirstResponse": 4,
+        "newChunksReturned": 12,
+        "finalRegistrySize": 9,
+        "exposedButUnregistered": [
+          "CAP6#c1",
+          "CAP7#c1",
+          "CAP8#c1",
+          "CAP9#c1",
+          "CAP10#c1",
+          "CAP11#c1"
+        ],
+        "outcome": "3 model requests followed by fallback: 模型引用了不存在的证据"
+      },
+      "minimalSafeFix": [
+        "Keep a stable bounded registry of every source actually exposed to the model.",
+        "The smallest change retaining the nine-source limit is to return only newly retrieved chunks admitted to that registry, with an explicit truncation indicator if needed. Never return an ID that is invalid for the final response.",
+        "Do not evict previously exposed sources without retaining their IDs and evidence in the validation/export registry."
+      ],
+      "regressionAssertions": [
+        "With four searches returning three distinct chunks each, every tool-visible chunk ID exists in the final registry and correction feedback.",
+        "A final answer citing any tool-visible chunk can pass ID validation; the source cap remains bounded.",
+        "Repeated chunks do not create duplicate IDs or replace earlier evidence with a different body."
+      ],
+      "programmaticallyVerifiable": true,
+      "humanReviewRequired": "Retrieval relevance and whether the cited paragraph actually supports the prose remain human-review concerns."
+    },
+    {
+      "id": "AI-04",
+      "priority": "P2",
+      "mustFixBeforeSubmission": true,
+      "title": "PDF exports lack a complete cited-fact registry and do not check analysis/input consistency themselves",
+      "locations": [
+        {
+          "file": "lib/pdf-report.ts",
+          "line": 9
+        },
+        {
+          "file": "lib/pdf-report.ts",
+          "line": 34
+        },
+        {
+          "file": "app/ui/AnalysisPanel.tsx",
+          "line": 10
+        }
+      ],
+      "observation": "createReportPdf trusts a supplied AnalysisResult without comparing its fingerprint with current simulation/log/threshold inputs. Its appendix prints source chunks and textual trace only. A PDF claim such as [LOG_SPEED_BIAS] has no same-ID dictionary entry, and tool-evaluated candidate evidence is not exported. The workbench's stale guard is useful but does not protect the exported library function or future callers.",
+      "minimalSafeFix": [
+        "At the report/export boundary, recompute the normalized input fingerprint; reject or omit mismatched analysis and state why.",
+        "Print an appendix with every cited fact ID, scenario/candidate scope, label, exact or clearly rounded value, unit and origin, as well as applicable limitations.",
+        "Include candidate records and source review classifications; keep evidence JSON and PDF tied to the same snapshot schema/version."
+      ],
+      "regressionAssertions": [
+        "Analysis for config A cannot be printed as current analysis beside config B, even through a direct createReportPdf call.",
+        "Every factId and sourceId used in the rendered model answer resolves in the exported appendix or companion evidence artifact.",
+        "Bias, coverage, missing-channel status, source review status and candidate evidence survive report export.",
+        "Rules-only and stale-analysis reports remain usable without mislabeling legacy text as current model evidence."
+      ],
+      "programmaticallyVerifiable": "Fingerprint matching, reference closure and extracted-text coverage can be checked; final PDF layout still needs visual inspection.",
+      "humanReviewRequired": "Readability, source interpretation and whether the final submitted report reflects an appropriate case require review."
+    },
+    {
+      "id": "AI-05",
+      "priority": "P2",
+      "mustFixBeforeSubmission": true,
+      "title": "Project summaries and source-support qualifications are not clearly distinguished from original reference text",
+      "locations": [
+        {
+          "file": "lib/analysis.ts",
+          "line": 19
+        },
+        {
+          "file": "lib/rag.ts",
+          "line": 11
+        },
+        {
+          "file": "lib/knowledge-sources.ts",
+          "line": 1
+        },
+        {
+          "file": "lib/pdf-report.ts",
+          "line": 34
+        }
+      ],
+      "observation": "The built-in KB bodies are project engineering summaries, including project-specific thresholds and preprocessing rules, while the tool description promises original text. engineeringReferences.note explicitly qualifies what the external source supports, but indexDocument drops that note. PDF export also drops Chunk.reviewStatus and basis. A reference such as comma2k19's log format can consequently appear to support the whole platform cleaning/comparison protocol without the stored qualification.",
+      "minimalSafeFix": [
+        "Add textKind (project-summary versus uploaded-extract) and referenceNote to chunks, preserving engineeringReferences.note through retrieval, model context, evidence JSON and PDF.",
+        "Describe tool results as project summaries or uploaded excerpts as appropriate; do not call every built-in body the external paper's original text.",
+        "Export reviewStatus, basis and source-support notes. Preserve the distinction between a reference supporting a formula and a project-defined threshold or implementation choice."
+      ],
+      "regressionAssertions": [
+        "KB-006 retrieval includes the note that cleaning, interpolation and thresholds are project protocols.",
+        "A user-uploaded document remains marked unreviewed through retrieval, JSON and PDF.",
+        "Chunk anchors reproduce the corresponding extracted/local body slice; external links do not automatically mark all local prose as source-original or externally verified."
+      ],
+      "programmaticallyVerifiable": "Metadata preservation, local anchor consistency and honest labels can be tested.",
+      "humanReviewRequired": "External URL availability, exact page locators, source text, licensing and whether a source supports each engineering assertion were not checked without network access and must be reviewed before submission."
+    },
+    {
+      "id": "AI-06",
+      "priority": "P2",
+      "mustFixBeforeSubmission": false,
+      "title": "Saved analysis bundles are accepted and restored on a client-supplied fingerprint alone",
+      "locations": [
+        {
+          "file": "app/api/[...path]/route.ts",
+          "line": 30
+        },
+        {
+          "file": "lib/log-state.ts",
+          "line": 16
+        }
+      ],
+      "observation": "A matching input fingerprint is a consistency identifier, not an integrity signature. The save API accepts any analysisBundle with that fingerprint, and restoreInputSnapshot returns it without structural validation. An authenticated caller can save a partial bundle that later crashes the analysis panel, or a tampered bundle presented as real-model output. This does not cross the per-owner access-control boundary, but it limits audit-provenance claims.",
+      "minimalSafeFix": [
+        "Validate bundle structure and compare its deterministic evidence with server recomputation before save/restore; discard invalid bundles and label remaining free text as legacy/unverified.",
+        "If authentic server-produced model provenance is a competition claim, persist server-issued analysis results under an owner-bound analysis ID and save by that ID, or attest the bundle server-side. A publicly computable hash alone cannot prove provenance.",
+        "Ensure report exports do not label unverifiable restored text as a currently verified model execution."
+      ],
+      "regressionAssertions": [
+        "A partial bundle {fingerprint:correctHash} cannot crash the restored UI or PDF exporter.",
+        "Modified evidence values with an unchanged fingerprint are rejected or explicitly marked unverified.",
+        "Saved records remain owner-scoped, and genuine server-issued analysis snapshots restore correctly."
+      ],
+      "programmaticallyVerifiable": true,
+      "humanReviewRequired": "The submission must describe the fingerprint as input consistency tracking unless authenticated provenance is implemented."
+    }
+  ],
+  "additionalBoundaries": [
+    "No program test here establishes real-vehicle validation, fault causality, certification, applicability of engineering thresholds or general model reliability.",
+    "Filename heuristics are not trustworthy provenance. Known synthetic and public samples should carry explicit provenance; arbitrary uploaded logs remain user-provided and unverified. This observation was shared with engineering_evidence to avoid duplicate implementation work.",
+    "Cached documentIndex currently receives only shallow structural checks. If document updates or imported index payloads are added, bind index content to source-body/version hashes and validate anchors before reuse.",
+    "No external reference pages, published PDF content, user runtime logs, live model responses or UI layouts were examined during this review."
+  ],
+  "existingControlsFoundSoundWithinScope": [
+    "Analysis failures preserve deterministic calculation/retrieval output instead of claiming model success.",
+    "Correction stays within three requests, removes tools in correction requests and rejects unsolicited correction-stage tool calls.",
+    "ModelScope decoding-hint compatibility preserves local structure and reference-ID checks.",
+    "The server recomputes base simulation and log comparisons; candidate tools restrict the set of mutable parameters and do not modify the baseline.",
+    "The API scopes saved records and user knowledge to the authenticated owner."
+  ]
+}
