@@ -21,6 +21,7 @@ OUTPUTS = WORKSPACE / 'outputs'
 SCRIPT = ROOT / 'docs/competition/video-script.json'
 SHOTS = ROOT / 'docs/competition/screenshots'
 ENGINEERING = ROOT / '.sites-runtime/engineering-demo.json'
+LIVE_QA = ROOT / 'docs/competition/LIVE-ENGINE-112-QA.json'
 FONT = ROOT / 'public/fonts/NotoSansSC-Regular.ttf'
 FFMPEG = imageio_ffmpeg.get_ffmpeg_exe()
 VOICE, RATE = 'zh-CN-XiaoxiaoNeural', '+8%'
@@ -168,11 +169,19 @@ def draw_shot(image, scene, variant, draft):
     elif variant and path.name in ['public-log.jpg','validation.jpg']:
         top=140 if variant==1 else 385
         shot=shot.crop((240,top,shot.width-20,min(shot.height,790 if variant==1 else shot.height)))
+    elif path.name=='final-report.jpg' and variant==2:
+        shot=shot.crop((round(shot.width*.05),round(shot.height*.1),round(shot.width*.96),round(shot.height*.54)))
+    elif path.name=='final-ai.jpg' and scene['id']=='09':
+        # Preserve the visible engine/request-count tag near the middle of this
+        # actual screenshot. These are the default online two-request results.
+        top=.14 if variant<2 else .40
+        shot=shot.crop((round(shot.width*.45),round(shot.height*top),round(shot.width*.985),round(shot.height*.99)))
     fitted=ImageOps.contain(shot,(box[2]-box[0]-20,box[3]-box[1]-20),Image.Resampling.LANCZOS)
     image.paste(fitted,(box[0]+(box[2]-box[0]-fitted.width)//2,box[1]+(box[3]-box[1]-fitted.height)//2))
     old=path.name not in ['final-ai.jpg','final-report.jpg']
     date='2026-11-15（历史界面）' if old else datetime.fromtimestamp(path.stat().st_mtime,CLIENT_ZONE).strftime('%Y-%m-%d')
-    return f'实际界面/报告截图：{date} · '+('局部放大' if variant else '全景')+' · 剪辑展示，不代表实时操作耗时'
+    example='（不同工况功能示例）' if scene['id']=='10' else '（线上默认问题：2次请求；工具案例另见验收记录）' if scene['id'] in ['08','09'] else ''
+    return f'实际界面/报告截图：{date} {example} · '+('局部放大' if variant else '全景')+' · 剪辑展示，不代表实时操作耗时'
 
 def plot(draw, box, lines, xlim, ylim, xlabel, ylabel):
     x0,y0,x1,y1=box
@@ -231,6 +240,42 @@ def draw_engineering(image, scene, variant, data):
         text_block(draw,(110,773),'5 km/h 是当前软件模型的输入边界，不是法规或通用安全下限。',27,1160,fill=MUTED)
     return '由当前应用输出 JSON 重绘 · 简化模型 / 合成夹具，非实车实验 · '+data['generatedAt'][:10]
 
+def draw_model_case(image,variant):
+    if not LIVE_QA.exists():raise RuntimeError('Missing actual model-tool QA record')
+    records=json.loads(LIVE_QA.read_text(encoding='utf-8'))
+    draw=ImageDraw.Draw(image);draw.rounded_rectangle((56,172,1372,876),radius=18,fill='white',outline='#d9e2eb',width=2)
+    if variant==1:
+        record=records['highway']
+        if record['mode']!='llm' or record['fallbackReason'] is not None:raise RuntimeError('Live highway tool record not passed')
+        names=[t['label'].split('：',1)[1] for t in record['trace'] if t['label'].startswith('执行工具：')]
+        if 'inspect_simulation' not in names or 'search_knowledge' not in names:raise RuntimeError('Expected real tools absent')
+        draw.text((105,210),'独立真实联网工具案例',font=font(39),fill=NAVY)
+        draw.text((105,275),f'本机正式分析引擎 · {record["evidence"]["engineVersion"]} · {record["modelCalls"]} 次请求',font=font(29),fill=MUTED)
+        for index,(name,label) in enumerate([('inspect_simulation','读取本次服务端计算证据'),('search_knowledge','检索工程资料并返回段落依据')]):
+            y=390+index*160
+            draw.rounded_rectangle((105,y-15,1300,y+112),radius=16,fill='#f0f6f7')
+            draw.text((135,y),name,font=font(36),fill=TEAL)
+            draw.text((135,y+61),label+' · 已完成',font=font(27),fill=NAVY)
+        text_block(draw,(110,760),'这是另一组真实请求的验收记录，不是线上默认问题截图中的步骤。',28,1160,fill=MUTED)
+    else:
+        record=records['candidate']
+        if not record['passed'] or record['mode']!='llm':raise RuntimeError('Candidate live QA not passed')
+        candidate=next(c for c in record['candidates'] if c['kind']=='tool')
+        baseline=next(f for f in record['factRegistry'] if f['id']=='SIM_LATERAL')
+        alternate=next(f for f in record['factRegistry'] if f['id']==candidate['id']+'__SIM_LATERAL')
+        draw.text((105,210),'候选事实与基线独立编号',font=font(39),fill=NAVY)
+        draw.text((105,280),'真实联网候选案例 · 合成固定偏差日志 · 非实车标定',font=font(27),fill=MUTED)
+        for index,(label,fact) in enumerate([('当前基线侧向需求',baseline),(f'工具候选：{candidate["patch"]["speed"]:g} km/h',alternate)]):
+            x=110+index*610
+            draw.rounded_rectangle((x,380,x+550,680),radius=16,fill='#f1f6f8')
+            draw.text((x+30,409),label,font=font(30),fill=MUTED)
+            draw.text((x+30,465),f'{fact["value"]:.3f} m/s²',font=font(49),fill=NAVY)
+            draw.text((x+30,548),'各自引用对应的计算事实',font=font(29),fill=NAVY)
+            text_block(draw,(x+30,610),fact['id'],24,490,fill=TEAL if index==0 else ORANGE)
+        draw.text((110,759),'候选未自动应用；原基线保持不变。',font=font(32),fill=NAVY)
+        draw.text((110,816),'编号区分证据来源，文字语义仍需工程复核。',font=font(27),fill=MUTED)
+    return '真实联网验收 JSON 重绘，非页面截图 · LIVE-ENGINE-112-QA.json · 与默认线上2次请求案例分开'
+
 def make_card(scene,index,variant,data,draft):
     image=Image.new('RGB',(W,H),BG);draw=ImageDraw.Draw(image)
     draw.rectangle((0,0,W,12),fill=ORANGE)
@@ -240,7 +285,9 @@ def make_card(scene,index,variant,data,draft):
     draw.text((56,94),scene['title'],font=font(35),fill=NAVY)
     draw.rounded_rectangle((56,146,1864,152),radius=3,fill='#dbe4ec')
     draw.rounded_rectangle((56,146,56+1808*(index+1)/12,152),radius=3,fill=ORANGE)
-    if data and (scene['id']=='06' or (scene['id']=='04' and variant>0)):
+    if scene['id']=='08' and variant>0 and LIVE_QA.exists():
+        source=draw_model_case(image,variant)
+    elif data and (scene['id']=='06' or (scene['id']=='04' and variant>0)):
         source=draw_engineering(image,scene,variant,data)
     else: source=draw_shot(image,scene,variant,draft)
     draw.rounded_rectangle((1410,172,1864,876),radius=18,fill=NAVY)
@@ -358,7 +405,7 @@ async def main():
         offset+=duration
     (OUTPUTS/'DriveLab-参赛演示.srt').write_text('\n\n'.join(f'{i+1}\n{srt_time(c["start"])} --> {srt_time(c["end"])}\n{c["text"]}' for i,c in enumerate(global_cues))+'\n',encoding='utf-8')
     (OUTPUTS/'DriveLab-参赛演示-逐字稿.txt').write_text('DriveLab 普通话合成解说逐字稿\n'+script['narrationDisclosure']+'\n\n'+'\n'.join(transcript),encoding='utf-8')
-    metadata={'preparedAt':datetime.now(CLIENT_ZONE).isoformat(),'mode':'render' if args.render else 'draft-prepare','scriptSha256':sha(SCRIPT),'voice':VOICE,'rate':RATE,'plannedDurationSeconds':total,'resolution':[W,H],'fps':FPS,'narrationDisclosure':script['narrationDisclosure'],'sceneDurations':dict(zip([s['id'] for s in scenes],durations)),'audioSeconds':sum(m['durationSeconds'] for m in audio),'subtitleCues':len(global_cues),'narrationWordsMatchTimingEvents':True,'sourceScreenshotSha256':{p.name:sha(p) for p in SHOTS.glob('*.jpg')},'engineeringDataSha256':sha(ENGINEERING) if data else None,'limitations':['界面截图按日期标注；局部放大与图表属于剪辑展示，非连续操作或真实耗时。','工程图来自当前应用输出和合成回归夹具，不是实车实验。','普通话为AI合成解说；不模拟成员本人声音。']}
+    metadata={'preparedAt':datetime.now(CLIENT_ZONE).isoformat(),'mode':'render' if args.render else 'draft-prepare','scriptSha256':sha(SCRIPT),'voice':VOICE,'rate':RATE,'plannedDurationSeconds':total,'resolution':[W,H],'fps':FPS,'narrationDisclosure':script['narrationDisclosure'],'sceneDurations':dict(zip([s['id'] for s in scenes],durations)),'audioSeconds':sum(m['durationSeconds'] for m in audio),'subtitleCues':len(global_cues),'narrationWordsMatchTimingEvents':True,'sourceScreenshotSha256':{p.name:sha(p) for p in SHOTS.glob('*.jpg')},'engineeringDataSha256':sha(ENGINEERING) if data else None,'liveModelQASha256':sha(LIVE_QA) if LIVE_QA.exists() else None,'limitations':['界面截图按日期标注；局部放大与图表属于剪辑展示，非连续操作或真实耗时。','线上默认2次请求与本机联网工具3次请求是不同测试案例，图表明确区分。','工程图来自当前应用输出和合成回归夹具，不是实车实验。','普通话为AI合成解说；不模拟成员本人声音。']}
     write_json(CACHE/'video-metadata.json',metadata)
     print(f'PREPARED {total:.2f}s; {len(global_cues)} subtitle cues',flush=True)
     if args.encode_ready and not args.render:

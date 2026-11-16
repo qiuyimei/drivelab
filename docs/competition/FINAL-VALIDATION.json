@@ -28,7 +28,16 @@
     "arraysIncluded": 4,
     "sha256": "e97ef42e65251f5ba0ca9fc2dec334b9870a27638be88710545ac5f1d17cd722"
   },
-  "currentOnlineUi": "pending after publication",
+  "currentOnlineUi": {
+    "status": "passed",
+    "engineVersion": "1.1.2",
+    "question": "分析当前工况风险",
+    "modelCalls": 2,
+    "correction": true,
+    "generatedAtLocal": "2026-11-16 16:25:39 Asia/Shanghai",
+    "screenshot": "screenshots/final-ai.jpg",
+    "toolStepsInThisCase": false
+  },
   "externalReviewerAccess": "not authorized or verified",
   "teamIdentity": "awaiting owner confirmation",
   "limits": [
@@ -41,5 +50,12 @@
     "四个公开原始CAN NPY及MIT许可已补齐并完成相同CSV哈希重建。",
     "内置知识段落已明确标为项目工程摘要，而非外部来源逐字原文。"
   ],
-  "safetyNegationRegression": "Explicit negative safety disclaimers accepted; positive and mixed positive guarantees rejected"
+  "safetyNegationRegression": "Explicit negative safety disclaimers accepted; positive and mixed positive guarantees rejected",
+  "onlineRejectedCase": {
+    "recorded": true,
+    "reason": "模型作出了超出工程边界的承诺",
+    "requests": 3,
+    "rawAnswerRetained": false,
+    "attribution": "不把此案例擅自归因为否定句误拦"
+  }
 }

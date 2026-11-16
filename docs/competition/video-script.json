@@ -150,9 +150,9 @@
       "fallbackNarration": "工程复核需要特别关注一个容易被忽略的细节：测量日志可能在两个仿真采样时刻之间出现孤立尖峰。对标时除了检查误差公式，还要检查取样时刻是否保留了这些变化，并确认共同区间、缺失数据与插值方式合理。验收记录会把这类边界案例和修复情况单独列出。不能因为平均曲线看起来接近，就直接推断所有短时误差都在容差内，更不能由此认定真实车辆没有风险。",
       "assets": [
         {
-          "path": null,
-          "requestedCapture": "root取得最终单点尖峰修复前后或回归结果的真实截图",
-          "use": "真实误差曲线与对应验收结果；不制作虚构测试通过画面"
+          "path": "work/drivelab/.sites-runtime/engineering-demo.json",
+          "generatedBy": "node scripts/engineering-demo.mjs",
+          "use": "实际应用输出的合成尖峰夹具，明确标注为数据重绘"
         }
       ],
       "beforeRender": [
@@ -196,12 +196,15 @@
         "受限工具与资料检索",
         "有限请求与流式步骤"
       ],
-      "narration": "智能分析先在服务端重新生成当前工况和日志证据，再检索相关工程资料。模型可以请求读取仿真结果、比较测量数据、搜索知识段落或计算候选参数，应用只执行允许的工具。线上真实测试已经展示了计算读取和资料搜索，执行记录也会说明当前正在做什么。最终文字需要符合结构和引用要求。整个流程限制请求次数，模型不能通过工具修改当前基线，也不能无限调用接口消耗额度。",
+      "narration": "智能分析先在服务端重新生成当前工况和日志证据，再检索相关工程资料。模型可以请求读取仿真结果、比较测量数据、搜索知识段落或计算候选参数，应用只执行允许的工具。画面先展示线上默认问题的真实结果，再展示另一个真实联网案例的工具记录，两者不是同一次请求。最终文字需要符合结构和引用要求。整个流程限制请求次数，模型不能通过工具修改当前基线，也不能无限调用接口消耗额度。",
       "assets": [
         {
-          "path": null,
-          "requestedCapture": "root取得线上免费模型分析成功的实际截图",
-          "use": "展示inspect_simulation、search_knowledge、完成状态与模型结果标签"
+          "path": "work/drivelab/docs/competition/screenshots/final-ai.jpg",
+          "use": "线上默认风险问题：两次请求，包含一次输出纠正；不是工具案例"
+        },
+        {
+          "path": "work/drivelab/docs/competition/LIVE-ENGINE-112-QA.json",
+          "use": "单独的真实联网highway工具案例与candidate独立候选记录，重绘为记录卡，不冒充UI截图"
         }
       ],
       "beforeRender": [
@@ -222,9 +225,8 @@
       "narration": "资料检索采用词项检索与哈希向量组合，保留段落和出处，不把它宣传成语义嵌入模型。分析中的事实编号和资料编号帮助用户查找依据。如果模型输出缺少引用或格式错误，系统只在剩余次数内要求纠正，仍未通过就明确保留规则分析；网络失败或免费额度耗尽时也不会切换付费服务。引用标识存在并不代表整句话必然正确，因此关键数字、候选条件和风险含义仍需要结合计算证据复核。",
       "assets": [
         {
-          "path": null,
-          "requestedCapture": "root取得最终模型引用与执行记录截图",
-          "use": "展示有效引用、工具执行与限制说明；如展示纠正，必须来自真实记录"
+          "path": "work/drivelab/docs/competition/screenshots/final-ai.jpg",
+          "use": "放大线上默认问题的纠正、引用检查与事实卡，保留1.1.2/2次模型请求标签"
         }
       ],
       "beforeRender": [
@@ -249,9 +251,8 @@
           "use": "保存入口与工况上下文"
         },
         {
-          "path": null,
-          "requestedCapture": "root可使用最终真实PDF报告的页面渲染图",
-          "use": "展示中文报告、误差与来源，避免透露用户数据"
+          "path": "work/drivelab/docs/competition/screenshots/final-report.jpg",
+          "use": "实际1.1.2报告首页，单独跟驰工况示例，非历史换道工况报告"
         }
       ],
       "beforeRender": [
@@ -310,5 +311,6 @@
     "rate": "+8%",
     "provider": "Microsoft Edge online speech synthesis",
     "disclosure": "AI合成解说，不模拟成员本人声音"
-  }
+  },
+  "sourceVerification": "root已确认final-ai为线上默认两次请求案例、final-report为当前1.1.2报告；工具记录是另一次真实联网测试，必须区分。"
 }

@@ -1,0 +1,83 @@
+{
+  "preparedAt": "2026-11-16T16:34:20.665729+08:00",
+  "mode": "technical_and_visual_acceptance_passed",
+  "scriptSha256": "d2ea3145c8d6bc6873970b89552fb7601e45f6dbb7bdd518a89df82ba9af6c6f",
+  "voice": "zh-CN-XiaoxiaoNeural",
+  "rate": "+8%",
+  "plannedDurationSeconds": 432.125,
+  "resolution": [
+    1920,
+    1080
+  ],
+  "fps": 24,
+  "narrationDisclosure": "本视频基于实际界面与计算结果剪辑，普通话为AI合成解说。",
+  "sceneDurations": {
+    "01": 33.833333333333336,
+    "02": 34.875,
+    "03": 36.083333333333336,
+    "04": 35.75,
+    "05": 36.5,
+    "06": 36.375,
+    "07": 35.791666666666664,
+    "08": 38.125,
+    "09": 37.458333333333336,
+    "10": 35.458333333333336,
+    "11": 36.083333333333336,
+    "12": 35.791666666666664
+  },
+  "audioSeconds": 413.85,
+  "subtitleCues": 73,
+  "narrationWordsMatchTimingEvents": true,
+  "sourceScreenshotSha256": {
+    "final-ai.jpg": "8dc83c92bef5714d5c6b243841e8eada7a2793c3de39228a5c93b20b76f422b9",
+    "final-fallback.jpg": "b09425637c88649768a81df8b8994e43151087b8fdb50d31f96c719dd9585434",
+    "final-report.jpg": "3973fa51c0b02554a71a46a4b3e87381054e4ac7d3a5136c0f8a13bbc29cb6b2",
+    "lane-workbench.jpg": "59a831a64025e6b92072ca4d8f62e790c0b34f71a655b71446d5fca88e98785f",
+    "mobile-menu.jpg": "10006ded2c50c982874b28bb6de185e685519b2feea587829c14c17cdb836fc6",
+    "public-log.jpg": "40ecda6f2df7a02aef1402d3e5ed470089450c3c9a8238ea4fa1a73c9a1e012a",
+    "validation.jpg": "1bc70a4a35d9b019c98be4dd201e0dd097d476e5b72fa1af1dd80954ecb0ea82"
+  },
+  "engineeringDataSha256": "42070eeb5582d7e14510b49c301a4b945a258bbcec74a3f24f7bfce3e9c1b82a",
+  "liveModelQASha256": "2b3984e6e952ccbe185215fe6af04004e8597606aceab386180041dd03bb9521",
+  "limitations": [
+    "界面截图按日期标注；局部放大与图表属于剪辑展示，非连续操作或真实耗时。",
+    "线上默认2次请求与本机联网工具3次请求是不同测试案例，图表明确区分。",
+    "工程图来自当前应用输出和合成回归夹具，不是实车实验。",
+    "普通话为AI合成解说；不模拟成员本人声音。"
+  ],
+  "output": "DriveLab-参赛演示.mp4",
+  "fileSize": 11641541,
+  "outputSha256": "2982ca83dcc7e087d41114ace7b2ce01c44a86f7740ceea70aca597f6335a195",
+  "formatChecks": {
+    "durationSeconds": 432.17,
+    "width": 1920,
+    "height": 1080,
+    "hasAudio": true
+  },
+  "subtitleRenderChecks": {
+    "sampledScenes": 12,
+    "sampledCaptionTimes": 24,
+    "changingSubtitlePixels": true
+  },
+  "fullDecodeExitCode": 0,
+  "audioVolumeChecks": {
+    "peakDb": -1.0,
+    "meanDb": -19.5,
+    "noDigitalPeakClipping": true
+  },
+  "ffmpegInspection": "Input #0, mov,mp4,m4a,3gp,3g2,mj2, from 'DriveLab-参赛演示.mp4':\n  Metadata:\n    major_brand     : isom\n    minor_version   : 512\n    compatible_brands: isomiso2avc1mp41\n    encoder         : Lavf63.1.102\n  Duration: 00:07:12.17, start: 0.000000, bitrate: 215 kb/s\n  Stream #0:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(progressive), 1920x1080, 111 kb/s, 24 fps, 24 tbr, 12288 tbn, start 0.042643 (default)\n    Metadata:\n      handler_name    : VideoHandler\n      encoder         : Lavc63.1.102 libx264\n  Stream #0:1[0x2](und): Audio: aac (LC) (mp4a / 0x6134706D), 24000 Hz, mono, fltp, 99 kb/s (default)\n    Metadata:\n      handler_name    : SoundHandler\nAt least one output file must be specified\n",
+  "acceptance": {
+    "formatPassed": true,
+    "narrationTimingWordsMatch": true,
+    "changingSubtitlesSampled": true,
+    "fullAudioVideoDecodePassed": true,
+    "audioPeakNoClipping": true,
+    "visualReviewPassed": true,
+    "visualReviewMethod": "实际最终MP4逐章抽帧概览，加查08候选记录、09线上纠正与事实卡、10报告放大；中文无缺字、字幕更新、无画面溢出或占位素材。",
+    "finalContactSheet": ".sites-runtime/competition-video/final-contact-sheet.jpg",
+    "caseDistinction": "线上默认2次请求截图与本机3次请求工具案例分别标注；JSON卡明确为重绘验收记录，非UI截图。",
+    "humanVoiceOrContinuousScreenRecordingClaimed": false,
+    "humanListeningAudit": "未声称已进行真人听审；已核对TTS文字时间事件、音轨完整解码与峰值。",
+    "competitionSubmission": "仅制作与格式验收，不等于组委会接收、评奖或成员身份审核。"
+  }
+}

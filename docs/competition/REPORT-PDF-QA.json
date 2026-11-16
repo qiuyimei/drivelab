@@ -1,0 +1,149 @@
+{
+  "checkedOn": "2026-11-16",
+  "operation": "read_only_pdf_render_and_visual_review",
+  "reviewedPdf": "C:/Users/Zllyh/Documents/Codex/2026-10-11/n-h/work/drivelab/.sites-runtime/pdf-qa/report-sample.pdf",
+  "pdfSha256": "1902354f33a13553bf513734665ea08c59350e4d88f1f16621c19bdc6ca819f7",
+  "engineVersion": "1.1.2",
+  "pageCount": 7,
+  "result": "pass_content_legibility_and_required_evidence_with_minor_pagination_notes",
+  "method": {
+    "renderer": "bundled Poppler pdftoppm",
+    "dpi": 130,
+    "outputDirectory": ".sites-runtime/pdf-qa/rendered",
+    "visualReview": "七张完整单页 PNG 均逐页查看；未仅依靠文本提取或缩略图。",
+    "additionalChecks": [
+      "pypdf extraction",
+      "pdfplumber character bounds",
+      "fact identifier and fingerprint count"
+    ],
+    "marker": "Read-only task: artifact-operation marker was not executed."
+  },
+  "layout": {
+    "missingChineseGlyphsObserved": false,
+    "visibleReplacementBoxes": false,
+    "overlapObserved": false,
+    "pageBoundaryClippingObserved": false,
+    "characterOutsidePageCount": 0,
+    "textReplacementCharacterCount": 0,
+    "headersFooters": "页眉一致、页脚引擎 1.1.2 与页码 1/7–7/7 完整。",
+    "tableContinuation": "p2–p3 日志表跨页重复表头，列对齐，无信息丢失。",
+    "chart": "p2 速度图蓝/橙图例、km/h 与时间轴可读；合成日志声明紧邻对标表。",
+    "minorPaginationNotes": [
+      {
+        "page": 2,
+        "severity": "P3",
+        "issue": "制动与间距说明末尾 [KB-004] 在左方括号后跨行；信息完整但可更整洁。",
+        "suggestion": "后续可把来源标记作为不可拆单元换行。"
+      },
+      {
+        "page": "5–6",
+        "severity": "P3",
+        "issue": "LOG_STEERING_RMSE 的统计说明在下一页续“计点；原始采集 201 点”；未截断，但分开了同一事实条目。",
+        "suggestion": "后续可将单条 fact 的完整段落保持同页。"
+      }
+    ]
+  },
+  "pageReview": [
+    {
+      "page": 1,
+      "result": "pass",
+      "notes": "标题、计算结果、参数边界表、单位清晰；99.38 m 与 58.77 m 语义分开。"
+    },
+    {
+      "page": 2,
+      "result": "pass_with_minor_wrap",
+      "notes": "曲线、工程约束、合成演示声明和首行日志表可读；有一处来源编号跨行。"
+    },
+    {
+      "page": 3,
+      "result": "pass",
+      "notes": "日志表续表头正常；规则分析/0次模型请求、通道误差/峰值时刻/区间可读，无覆盖。"
+    },
+    {
+      "page": 4,
+      "result": "pass",
+      "notes": "MAE/RMSE 与两网格峰值口径、工程边界、指纹、三条来源摘要/锚点/URL均完整。"
+    },
+    {
+      "page": 5,
+      "result": "pass_with_minor_pagination",
+      "notes": "完整事实字典开始，指纹用途限制可见；一条 fact 描述跨页续行。"
+    },
+    {
+      "page": 6,
+      "result": "pass",
+      "notes": "事实续文、两候选独立编号/参数/基线指纹/applied=false 均可读，无碰撞或截断。"
+    },
+    {
+      "page": 7,
+      "result": "pass",
+      "notes": "合成数据、非模型精度、压力估算、非整车安全认证等限制清晰；页面留白较多但无内容丢失。"
+    }
+  ],
+  "evidenceContent": {
+    "baselineFacts": 6,
+    "logFacts": 16,
+    "candidateFacts": 12,
+    "totalFactIdentifiers": 34,
+    "uniqueFactIdentifiers": 34,
+    "candidateNamespaces": [
+      "CAND_1__SIM_*",
+      "CAND_2__SIM_*"
+    ],
+    "candidates": [
+      {
+        "id": "CAND_1",
+        "patch": {
+          "speed": 80
+        },
+        "applied": false,
+        "stoppingDistanceM": 67.1604938272,
+        "fullBrakingMinimumGapM": 72.4691358025
+      },
+      {
+        "id": "CAND_2",
+        "patch": {
+          "distance": 100
+        },
+        "applied": false,
+        "stoppingDistanceM": 99.3827160494,
+        "fullBrakingMinimumGapM": 78.7654320988
+      }
+    ],
+    "baselineFingerprint": "d8c6fb041fad5cabc6d5409d",
+    "fingerprintOccurrences": 4,
+    "fingerprintsAgree": true,
+    "fingerprintDisclaimerVisible": "指纹用于输入一致性检查，不是模型输出真实性签名。",
+    "metricBasisVisible": "MAE/RMSE按原仿真网格等点权统计，最大误差按两时间网格并集判定。",
+    "originalMeasurementCountsVisible": true,
+    "peakTimesVisible": true,
+    "syntheticDataDisclaimerVisible": true,
+    "noRealVehicleAccuracyClaim": true,
+    "limitationVisible": "误差仅描述两组数据的差异；未经工况、车型和采样一致性确认，不能当成模型精度或传感器故障证据。"
+  },
+  "sourceLabels": {
+    "builtInSources": 3,
+    "sources": [
+      "KB-004#c1",
+      "KB-006#c1",
+      "KB-002#c1"
+    ],
+    "explicitProjectSummaryDisclaimerCount": 3,
+    "correctForThisSample": true,
+    "note": "每条内置知识来源显示项目工程摘要并明确非来源逐字原文。标题“正文”是段落标签；样张没有上传原文来源，因此不据此声称已覆盖上传原文标签分支。"
+  },
+  "limitations": [
+    "本次是现有单一样张的只读渲染和可见内容 QA，不验证所有动态数据/极端长度/用户上传来源。",
+    "可见指纹一致性不是密码学真实性校验。",
+    "无实车实验、车型标定、持证工程签署或安全认证。"
+  ],
+  "filesCreated": [
+    ".sites-runtime/pdf-qa/inspect_report.py",
+    ".sites-runtime/pdf-qa/rendered/report-1.png through report-7.png",
+    ".sites-runtime/pdf-qa/rendered/contact-sheet.png",
+    ".sites-runtime/pdf-qa/rendered/extracted-text.txt",
+    ".sites-runtime/pdf-qa/rendered/read-only-inspection.json",
+    ".sites-runtime/pdf-qa/visual-qa-20261116.json"
+  ],
+  "unchanged": "未修改输入 PDF、应用源码、密钥、模型配置；未发布或提交。"
+}

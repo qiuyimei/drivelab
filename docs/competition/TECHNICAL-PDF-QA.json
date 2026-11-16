@@ -1,0 +1,270 @@
+{
+  "checkedOn": "2026-11-16",
+  "operation": "read_only_technical_pdf_render_and_visual_review",
+  "pdf": "C:/Users/Zllyh/Documents/Codex/2026-10-11/n-h/outputs/DriveLab-参赛技术文档.pdf",
+  "result": "pass_after_two_documentation_corrections",
+  "latestPdfSha256": "b4ac51e3b3c3994455a1623e4167b399a4c443a9baa995c4315cbb45cafc8f8b",
+  "latestFileBytes": 313591,
+  "pageCount": 14,
+  "method": {
+    "renderer": "bundled Poppler pdftoppm",
+    "dpi": 130,
+    "renderedDirectory": ".sites-runtime/technical-qa",
+    "completeVisualReview": "初版 14 张完整单页 PNG 均逐页查看。制作者修正后重新渲染全部 14 页；p4/p8 再次逐页查看，其余 12 页 PNG SHA256 与已审版本逐字节一致。",
+    "additionalChecks": [
+      "pypdf 全页文本提取",
+      "pdfplumber 字符页面边界",
+      "前后单页 PNG SHA256 对比"
+    ],
+    "markerNotRun": true,
+    "noPdfOrSourceChangesByReviewer": true
+  },
+  "layout": {
+    "missingChineseGlyphsObserved": false,
+    "replacementBoxesObserved": false,
+    "overlapObserved": false,
+    "clippingObserved": false,
+    "characterOutsidePageCount": 0,
+    "textReplacementCharacterCount": 0,
+    "pageNumbers": "1–14 连续且与实际页序一致",
+    "headings": "封面+01–13章节，页眉/页脚一致；表头、列宽与段落均可读。",
+    "screenshots": "p6 公开导入图与 p13 模型执行图均有明确图注。截图为辅助界面证据，非实车验证或连续操作录像。"
+  },
+  "correctedFindings": [
+    {
+      "id": "DOC-PUBLIC-SPEED-UNIT",
+      "priority": "P2",
+      "page": 8,
+      "status": "resolved",
+      "before": "文案将 CSV 转换与应用导入混为一谈，称原始 m/s 已在转换时变为 km/h。",
+      "after": "成品 CSV 保留 speed_mps，应用导入时才换为 km/h；样例生成时将方向盘角插值到共同区间内速度时间戳。",
+      "verification": "新 p8 可见正确叙述，保留原 CSV SHA256。"
+    },
+    {
+      "id": "DOC-ANGLE-DISPLAY-UNIT",
+      "priority": "P3",
+      "page": 4,
+      "status": "resolved",
+      "before": "r=ay/v、atan 几何公式默认角量 rad，但未说明展示到 °/°s 的换算。",
+      "after": "明确公式角量 rad/rad/s，页面与日志展示乘 180/π。",
+      "verification": "新 p4 文案、π、°、°/s 均渲染正常，未造成表格或下方段落挤压。"
+    }
+  ],
+  "requiredContent": {
+    "engineeringFixes": {
+      "pages": [
+        1,
+        4,
+        12
+      ],
+      "visible": true,
+      "items": [
+        "低于 5 km/h 的换道/避障初始输入拒绝",
+        "低速残余横向需求提示未完成评估",
+        "非法候选跳过",
+        "0.05 s +100 km/h 合成尖峰的两网格并集峰值",
+        "原始采样数/长间隔提醒",
+        "独立 CAND_n 事实与基线隔离",
+        "PDF 输入指纹与旧分析时效"
+      ]
+    },
+    "lowSpeedPolicy": {
+      "page": 4,
+      "visible": true,
+      "statement": "5 km/h 是当前软件模型适用政策，不是通用车辆限值或法规。"
+    },
+    "sampledExtrema": {
+      "page": 4,
+      "visible": true,
+      "statement": "侧向、附着与方向盘为 0.1 s 采样需求峰值，不保证连续时间极值；贴近阈值需加密验证。"
+    },
+    "testCounts": {
+      "page": 7,
+      "core": 31,
+      "analysis": 27,
+      "independentReference": "130/130",
+      "retrieval": "12/12 Hit@3 and 12/12 Top1",
+      "publicCanRows": 4973
+    },
+    "realModelEvidence": {
+      "pages": [
+        5,
+        13
+      ],
+      "visible": true,
+      "statement": "ModelScope Qwen/Qwen3.5-27B 实际联调已完成并有截图；截图中有工具/请求/格式纠正/引用检查步骤。保留输出校验、纠正和规则降级边界。"
+    },
+    "staleStatus": {
+      "pages": [
+        1,
+        3,
+        5,
+        11,
+        13
+      ],
+      "result": "未见旧版“真实模型尚未接通/工程复核待做”等已过时状态。仍待团队/评审确认的事项保留待确认。"
+    },
+    "teamInformation": {
+      "pages": [
+        1,
+        10,
+        11,
+        13
+      ],
+      "honestMissingInformation": true,
+      "statement": "队名、学校、组别、队长、分工和人工签署待本人核实，不代填、不虚构贡献。"
+    },
+    "publicData": {
+      "pages": [
+        6,
+        8
+      ],
+      "clearImportOnly": true,
+      "sourceCommit": "4c7f1a6e1957745beadc1def0e7225f559b09a2a",
+      "csvSha256": "e97ef42e65251f5ba0ca9fc2dec334b9870a27638be88710545ac5f1d17cd722",
+      "noYawOrPressureFabricated": true,
+      "notControlledModelValidation": true
+    },
+    "defaultCase": {
+      "page": 13,
+      "speedKmh": 100,
+      "leadSpeedKmh": 60,
+      "gapM": 80,
+      "reactionS": 0.8,
+      "decelMps2": 5,
+      "stoppingDistanceM": 99.3827,
+      "stopTimeS": 6.3556,
+      "fullBrakingMinimumGapM": 58.7654,
+      "result": "与当前应用已复核计算一致，并解释停车距离大于初始间距不直接判碰撞。"
+    },
+    "noSafetyCertificationClaim": {
+      "pages": [
+        1,
+        2,
+        4,
+        7,
+        8,
+        13
+      ],
+      "visible": true
+    },
+    "developmentDisclosure": {
+      "pages": [
+        11,
+        13
+      ],
+      "visible": true,
+      "statement": "Codex 辅助代码/测试/材料；合成普通话配音和截图剪辑如实披露，不伪装实车实验或本人配音。"
+    },
+    "competitionStatus": {
+      "pages": [
+        10,
+        11,
+        14
+      ],
+      "statement": "访问、另一台设备/评审账户、报名身份/资格/截止时间仍需团队核实；未声称已经提交或获奖。"
+    }
+  },
+  "pageReview": [
+    {
+      "page": 1,
+      "result": "pass",
+      "notes": "封面版本/状态和缺团队信息说明真实明确，未伪造身份。"
+    },
+    {
+      "page": 2,
+      "result": "pass",
+      "notes": "用户、功能闭环、定位和碰撞几何局限可读。"
+    },
+    {
+      "page": 3,
+      "result": "pass",
+      "notes": "架构表、请求链、持久化与过期分析处理清晰。"
+    },
+    {
+      "page": 4,
+      "result": "pass_after_correction",
+      "notes": "公式与rad→度说明完整；5km/h政策和采样极值局限明确。"
+    },
+    {
+      "page": 5,
+      "result": "pass",
+      "notes": "AI/RAG/工具、请求预算、真实模型及本地校验限制说明完整。"
+    },
+    {
+      "page": 6,
+      "result": "pass",
+      "notes": "导入截图及图注、对标两网格口径和缺失协议完整。"
+    },
+    {
+      "page": 7,
+      "result": "pass",
+      "notes": "31/27/130/12测试数量正确；未夸大实车/泛化/模型输出证据。"
+    },
+    {
+      "page": 8,
+      "result": "pass_after_correction",
+      "notes": "CSV原单位与导入换算准确，哈希/许可/复现说明和非车型标定边界明确。"
+    },
+    {
+      "page": 9,
+      "result": "pass",
+      "notes": "运行命令、回环向导、数据库迁移与错误处理说明完整。"
+    },
+    {
+      "page": 10,
+      "result": "pass",
+      "notes": "演示时间表与真实待完成项明确，分工未冒充已完成贡献。"
+    },
+    {
+      "page": 11,
+      "result": "pass",
+      "notes": "验收门槛、私有协作和合成配音/剪辑披露清晰。"
+    },
+    {
+      "page": 12,
+      "result": "pass",
+      "notes": "五类复现问题、修复、验证与适用范围表无截断。"
+    },
+    {
+      "page": 13,
+      "result": "pass",
+      "notes": "真实模型截图、固定算例、指纹时效、开发披露完整。"
+    },
+    {
+      "page": 14,
+      "result": "pass",
+      "notes": "主要来源 URL可读且换行正常，赛事最终规则核准提示保留。"
+    }
+  ],
+  "versionComparison": {
+    "initialPdfSha256": "3dae7851e98407532f7e87819be8ad234e047fee39cc9b186a123b82cffef8e8",
+    "changedPages": [
+      4,
+      8
+    ],
+    "unchangedPages": [
+      1,
+      2,
+      3,
+      5,
+      6,
+      7,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14
+    ]
+  },
+  "limitations": [
+    "检查对象仅为此版本技术 PDF 的版式与关键可见内容；不是对全部软件、比赛资格、实时服务稳定性或所有截图历史的重新验收。",
+    "真实模型截图与测试通过不构成整车安全、实车精度、车型标定或持证工程签署。",
+    "初次脚本名 inspect.py 与 Python 标准库冲突，已重命名为 inspect_technical_pdf.py 后完成；未影响 PDF 或应用文件。"
+  ],
+  "remainingBlockingFindings": [],
+  "reviewerWroteOnly": [
+    ".sites-runtime/technical-qa/ QA脚本、PNG、提取文本与JSON"
+  ]
+}
