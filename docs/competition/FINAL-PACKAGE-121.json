@@ -2,12 +2,12 @@
   "reviewedOn": "2026-11-18",
   "engineVersion": "1.2.1",
   "submissionPerformed": false,
-  "formalArchive": "C:\\Users\\Zllyh\\Documents\\Codex\\2026-10-11\\n-h\\outputs\\最终交付-20261118\\DriveLab-正式提交材料.zip",
-  "formalZipSha256": "ac158e7e771f3f1c29630e3f12a1aedbad39d6d41744c97480def6dc961d16ab",
+  "formalArchive": "C:\\Users\\Zllyh\\Documents\\Codex\\2026-10-11\\n-h\\outputs\\最终交付-20261118\\DriveLab-正式提交材料-简洁版.zip",
+  "formalZipSha256": "ceff59d6d51f2b0139efbd96a0820fc43202238e6687ca292b00e5363a50ef94",
   "formalEntries": {
     "01-DriveLab-参赛技术文档.pdf": {
-      "sha256": "c7de164d4c63b86cec024ae92b620863d5fd6f432912fa1fc7870e29e236b1dd",
-      "bytes": 736928
+      "sha256": "11529ea979a240554ac88e19065d4db69ba189d5f12d158b6704606d9357e9cd",
+      "bytes": 591736
     },
     "02-DriveLab-参赛演示.mp4": {
       "sha256": "378bad3c91ace12a193ed15bdcb95a7f9d6b500bae4fd18ee76c5e12ff59f368",
@@ -20,23 +20,23 @@
   },
   "separateFiles": {
     "DriveLab-参赛技术文档.docx": {
-      "sha256": "3e0ed8c6831379a3f2ed84ce07c9bb4c871eb7e818654caed02980b14796d582",
-      "bytes": 196976
+      "sha256": "42e8efc0ef87cc9d092d0a2d77619a4e1bbe08337bdd3f81714237973e815df2",
+      "bytes": 423935
     },
     "DriveLab-参赛技术文档.pdf": {
-      "sha256": "c7de164d4c63b86cec024ae92b620863d5fd6f432912fa1fc7870e29e236b1dd",
-      "bytes": 736928
+      "sha256": "11529ea979a240554ac88e19065d4db69ba189d5f12d158b6704606d9357e9cd",
+      "bytes": 591736
     },
     "DriveLab-最终修改核对单.docx": {
-      "sha256": "5ef37db7c074bebe8bc037436732224769820c34656bad8fd4e6d21511b6e0cf",
-      "bytes": 40006
+      "sha256": "2e05c0c9c60899ce83c61f88c543daa8a1ebfc5066803df40fe5685d9c6cb5d7",
+      "bytes": 40019
     },
     "DriveLab-最终修改核对单.pdf": {
-      "sha256": "0db41d3ad21662d58a20537c8889f9792f87b44e616d886dd5bf0b828f0d0f9e",
-      "bytes": 269811
+      "sha256": "157d7b9c34f58b4bf37d68314c7070309a296b9e8305493809c5816f4738a214",
+      "bytes": 317545
     }
   },
-  "technicalPages": 19,
+  "technicalPages": 8,
   "videoSeconds": 463.8333333333333,
   "zipCrcAndByteEqualityPassed": true,
   "editableWordAndChecklistExcludedFromFormalZip": true,

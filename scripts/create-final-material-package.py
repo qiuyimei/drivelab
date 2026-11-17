@@ -45,6 +45,8 @@ def main():
     for name,source in sources.items():
         shutil.copy2(source,output/name)
         assert sha(source)==sha(output/name)
+    for suffix in ['docx','pdf']:
+        shutil.copy2(output/f'DriveLab-参赛技术文档.{suffix}',output/f'DriveLab-参赛技术文档-简洁版.{suffix}')
     link=output/'DriveLab-仓库链接.txt'
     link.write_text('DriveLab 智能驾驶工况仿真与辅助分析平台\n产品 V1.0 / 引擎 1.2.1\n\n源码仓库（含完整 Git 历史）：\nhttps://github.com/qiuyimei/drivelab\n\n仓库保持私有，访问权限未在本次材料制作中调整。\n','utf-8',newline='\n')
     entries={
@@ -52,7 +54,7 @@ def main():
         '02-DriveLab-参赛演示.mp4':output/'DriveLab-参赛演示.mp4',
         '03-DriveLab-仓库链接.txt':link,
     }
-    archive=output/'DriveLab-正式提交材料.zip'
+    archive=output/'DriveLab-正式提交材料-简洁版.zip'
     with ZipFile(archive,'w',ZIP_DEFLATED,compresslevel=9) as package:
         for name,path in entries.items():package.write(path,name)
     with ZipFile(archive) as package:
@@ -62,6 +64,7 @@ def main():
         'status':'passed final native document and revised video QA','engineVersion':'1.2.1',
         'technicalPdfPages':technical['pageCount'],'technicalSha256':technical['sha256'],
         'editableTechnicalDocxSha256':technical['docxSha256'],'sameContentSource':True,
+        'editorialStyle':'plain student project report; user-requested simpler wording and layout; screenshots and factual results retained',
         'technicalNativeTables':technical['nativeTables'],'technicalFigureGroups':technical['actualFigureGroups'],
         'checklistPages':checklist['pageCount'],'checklistExcludedFromSubmissionZip':True,
         'videoDurationSeconds':video['format']['durationSeconds'],'videoResolution':[1920,1080],
@@ -70,7 +73,7 @@ def main():
         'newTtsNetworkRequests':0,'newLiveModelRequestsInThisMaterialsTask':0,
         'formalZipEntries':list(entries),'formalZipSha256':sha(archive),
     }
-    validation['submissionReadiness']['materialFormats']='passed 19-page same-content PDF/editable DOCX, separately reviewed checklist and 7:43.833 1080p offline-Mandarin video; three-entry ZIP verified'
+    validation['submissionReadiness']['materialFormats']=f"passed {technical['pageCount']}-page same-content PDF/editable DOCX in revised plain report style, separately reviewed checklist and 7:43.833 1080p offline-Mandarin video; three-entry ZIP verified"
     validation['submissionReadiness']['currentDeployment']='Final publication outcome is recorded alongside delivered artifacts after this source snapshot is frozen.'
     validation['currentOnlineUi']={'engineVersion':'1.2.1','status':'publication receipt recorded outside frozen source','historicalDeployment':'1.2.0 retained in historicalOnlineUi120','receipt':'最终交付-20261118/验收/发布记录.json','audience':'owner-only private; unchanged'}
     validation_path.write_text(json.dumps(validation,ensure_ascii=False,indent=2)+'\n','utf-8',newline='\n')

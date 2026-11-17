@@ -154,11 +154,12 @@
   "materialFormats": {
     "status": "passed final native document and revised video QA",
     "engineVersion": "1.2.1",
-    "technicalPdfPages": 19,
-    "technicalSha256": "c7de164d4c63b86cec024ae92b620863d5fd6f432912fa1fc7870e29e236b1dd",
-    "editableTechnicalDocxSha256": "3e0ed8c6831379a3f2ed84ce07c9bb4c871eb7e818654caed02980b14796d582",
+    "technicalPdfPages": 8,
+    "technicalSha256": "11529ea979a240554ac88e19065d4db69ba189d5f12d158b6704606d9357e9cd",
+    "editableTechnicalDocxSha256": "42e8efc0ef87cc9d092d0a2d77619a4e1bbe08337bdd3f81714237973e815df2",
     "sameContentSource": true,
-    "technicalNativeTables": 17,
+    "editorialStyle": "plain student project report; user-requested simpler wording and layout; screenshots and factual results retained",
+    "technicalNativeTables": 5,
     "technicalFigureGroups": 4,
     "checklistPages": 2,
     "checklistExcludedFromSubmissionZip": true,
@@ -178,7 +179,7 @@
       "02-DriveLab-参赛演示.mp4",
       "03-DriveLab-仓库链接.txt"
     ],
-    "formalZipSha256": "ac158e7e771f3f1c29630e3f12a1aedbad39d6d41744c97480def6dc961d16ab"
+    "formalZipSha256": "ceff59d6d51f2b0139efbd96a0820fc43202238e6687ca292b00e5363a50ef94"
   },
   "historicalOnlineUi114": {
     "projectId": "appgprj_6af9751c44388191b7b99d0646dbd840",
@@ -287,7 +288,7 @@
     "codeCapabilities": "implemented and checked within documented model/application scope",
     "currentProductionBuild": "passed official helper for 1.2.1",
     "currentDeployment": "Final publication outcome is recorded alongside delivered artifacts after this source snapshot is frozen.",
-    "materialFormats": "passed 19-page same-content PDF/editable DOCX, separately reviewed checklist and 7:43.833 1080p offline-Mandarin video; three-entry ZIP verified",
+    "materialFormats": "passed 8-page same-content PDF/editable DOCX in revised plain report style, separately reviewed checklist and 7:43.833 1080p offline-Mandarin video; three-entry ZIP verified",
     "teamIdentity": "confirmed known identities and assigned responsibilities",
     "registration": "not handled in this materials-only task per user instruction",
     "reviewerRepositoryAccess": "not verified",

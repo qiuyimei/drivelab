@@ -35,26 +35,33 @@ def set_cell_borders(cell):
     props.append(margins)
 
 
-def build_native_docx(blocks, output, *, title, reviewed_on, header='DRIVELAB  /  ENGINEERING WITH EVIDENCE',footer='参赛技术文档'):
+def build_native_docx(blocks, output, *, title, reviewed_on, header='DRIVELAB  /  ENGINEERING WITH EVIDENCE',footer='参赛技术文档',report_style='technical'):
     output=Path(output)
     document=Document()
     section=document.sections[0]
     section.page_width=Mm(210);section.page_height=Mm(297)
-    section.left_margin=Pt(42);section.right_margin=Pt(42)
+    student=report_style=='student'
+    section.left_margin=Pt(60 if student else 42);section.right_margin=Pt(60 if student else 42)
     section.top_margin=Pt(61);section.bottom_margin=Pt(57)
     section.header_distance=Pt(20);section.footer_distance=Pt(20)
     specs=[('Normal',10,17,False,10),('Title',31,42,False,18),('Heading 1',20,29,False,18),('Heading 2',12,20,False,7),('Caption',8.5,14,False,8)]
+    if student:
+        specs=[('Normal',11,18,False,7),('Title',21,30,False,12),('Heading 1',15,24,True,12),('Heading 2',12,20,True,7),('Caption',9,15,False,7)]
     for name,size,leading,bold,after in specs:
         style=document.styles[name];font(style,size,bold)
+        if student:style.element.get_or_add_rPr().get_or_add_rFonts().set(qn('w:eastAsia'),'宋体')
         style.paragraph_format.line_spacing=Pt(leading)
         style.paragraph_format.space_after=Pt(after)
         style.paragraph_format.space_before=Pt(12 if name=='Heading 2' else 0)
         style.paragraph_format.keep_with_next=name in ['Title','Heading 1','Heading 2']
-    header_p=section.header.paragraphs[0];header_p.text=header
+    header_p=section.header.paragraphs[0];header_p.text='' if student else header
     header_p.style=document.styles['Caption']
     footer_p=section.footer.paragraphs[0];footer_p.style=document.styles['Caption']
     footer_p.paragraph_format.tab_stops.add_tab_stop(Pt(510),2)
-    footer_p.add_run(footer+' · '+reviewed_on+'\t')
+    if student:
+        footer_p.alignment=1
+    else:
+        footer_p.add_run(footer+' · '+reviewed_on+'\t')
     field=OxmlElement('w:fldSimple');field.set(qn('w:instr'),' PAGE ')
     run=OxmlElement('w:r');text=OxmlElement('w:t');text.text='1';run.append(text);field.append(run);footer_p._p.append(field)
     style_map={'title':'Title','heading':'Heading 1','sub':'Heading 2','small':'Caption','body':'Normal'}
@@ -64,7 +71,7 @@ def build_native_docx(blocks, output, *, title, reviewed_on, header='DRIVELAB  /
         if kind=='paragraph':
             p=document.add_paragraph(block['text'],style_map.get(block.get('style','body'),'Normal'))
             if block.get('style')=='small':
-                for run in p.runs:run.font.color.rgb=RGBColor.from_string('657887')
+                for run in p.runs:run.font.color.rgb=RGBColor.from_string('555555' if student else '657887')
             counts['paragraphs']+=1;logical.append({'type':kind,'text':block['text'],'style':block.get('style','body')})
         elif kind=='page_break':
             document.add_page_break();logical.append({'type':kind})
@@ -83,15 +90,16 @@ def build_native_docx(blocks, output, *, title, reviewed_on, header='DRIVELAB  /
                 for cell,width,value in zip(row.cells,block['widths'],values):
                     cell.width=Pt(width);cell.vertical_alignment=WD_CELL_VERTICAL_ALIGNMENT.CENTER
                     set_cell_borders(cell)
-                    fill='253846' if row_index==0 else 'F5F7F9' if row_index%2==0 else 'FFFFFF'
+                    fill=('EEEEEE' if row_index==0 else 'FFFFFF') if student else ('253846' if row_index==0 else 'F5F7F9' if row_index%2==0 else 'FFFFFF')
                     shading=OxmlElement('w:shd');shading.set(qn('w:fill'),fill);cell._tc.get_or_add_tcPr().append(shading)
                     p=cell.paragraphs[0];p.text=str(value)
                     p.paragraph_format.space_after=Pt(0);p.paragraph_format.space_before=Pt(0)
                     p.paragraph_format.line_spacing=Pt(14);p.paragraph_format.keep_with_next=row_index==0
                     for run in p.runs:
                         run.font.name='Arial';run.font.size=Pt(9)
-                        run.font.color.rgb=RGBColor.from_string('FFFFFF' if row_index==0 else '253846')
-                        run._element.get_or_add_rPr().get_or_add_rFonts().set(qn('w:eastAsia'),'等线')
+                        run.font.color.rgb=RGBColor.from_string('000000' if student else 'FFFFFF' if row_index==0 else '253846')
+                        run.font.bold=student and row_index==0
+                        run._element.get_or_add_rPr().get_or_add_rFonts().set(qn('w:eastAsia'),'宋体' if student else '等线')
             counts['tables']+=1
             logical.append({'type':kind,'headers':block['headers'],'rows':block['rows'],'widths':block['widths']})
         elif kind=='image':
