@@ -12145,7 +12145,7 @@
                 "liveFullWorkflow": "实际读取日志工具并组织有针对性的解释；本题不能据此声称AI改善了计算精度。"
               },
               "reviewedAt": "2026-11-17T08:43:51.195Z",
-              "reviewMethod": "Codex逐题读取最终结构化正文、实际工具/候选/来源，核对固定公式及项目夹具；非用户研究或持证工程签署。",
+              "reviewMethod": "AI逐题读取最终结构化正文、实际工具/候选/来源，核对固定公式及项目夹具；非用户研究或持证工程签署。",
               "reviewedStructuredSha256": "5bb19a62344579ef55ff136b036cf98052c20e80a5cb87c9889a21d535f713e6",
               "reviewedAnswerSha256": "860be528dbeb6693ca9fb51c6c4cc85248c7c778eee5615637b19626be273b21",
               "semanticAccuracy": null
@@ -13067,7 +13067,7 @@
                 "liveFullWorkflow": "把已知时移与当前差异联系起来并明确建议0.5→0后重跑。"
               },
               "reviewedAt": "2026-11-17T08:43:51.195Z",
-              "reviewMethod": "Codex逐题读取最终结构化正文、实际工具/候选/来源，核对固定公式及项目夹具；非用户研究或持证工程签署。",
+              "reviewMethod": "AI逐题读取最终结构化正文、实际工具/候选/来源，核对固定公式及项目夹具；非用户研究或持证工程签署。",
               "reviewedStructuredSha256": "5e1c0d369f3f7975a6e7a9f8ce686a4f81086fa1efd0e6a907f99c1af83324f7",
               "reviewedAnswerSha256": "91bfaed55184f960847eec4206f026087b5cfb54eb5888dc049829342eb1665f",
               "semanticAccuracy": null
@@ -14132,7 +14132,7 @@
                 "liveFullWorkflow": "自定义工具产物正确，但最终模型叙述未交付；这是保留的实际失败。"
               },
               "reviewedAt": "2026-11-17T08:43:51.195Z",
-              "reviewMethod": "Codex逐题读取最终结构化正文、实际工具/候选/来源，核对固定公式及项目夹具；非用户研究或持证工程签署。",
+              "reviewMethod": "AI逐题读取最终结构化正文、实际工具/候选/来源，核对固定公式及项目夹具；非用户研究或持证工程签署。",
               "reviewedStructuredSha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
               "reviewedAnswerSha256": "f2c23b1e4e4d0c81efb4dc69f7dfcd2fecf93d8e273c87b82f8e8f8b71de79af",
               "semanticAccuracy": null
@@ -14769,7 +14769,7 @@
                 "liveFullWorkflow": "实际重算并解释平方关系，核心数值与对应候选引用正确。"
               },
               "reviewedAt": "2026-11-17T08:43:51.195Z",
-              "reviewMethod": "Codex逐题读取最终结构化正文、实际工具/候选/来源，核对固定公式及项目夹具；非用户研究或持证工程签署。",
+              "reviewMethod": "AI逐题读取最终结构化正文、实际工具/候选/来源，核对固定公式及项目夹具；非用户研究或持证工程签署。",
               "reviewedStructuredSha256": "47fd74643cf6505a02b23b59469cd1236b6eacaf5d6368dbc56182affa9be075",
               "reviewedAnswerSha256": "469afe8ac8cf232ca2874aceb6582779d15da53d7b012481de6e319ebfce6773",
               "semanticAccuracy": null
@@ -15301,7 +15301,7 @@
                 "liveFullWorkflow": "读取检索工具并依据实际段落回答完整的项目问题。"
               },
               "reviewedAt": "2026-11-17T08:43:51.195Z",
-              "reviewMethod": "Codex逐题读取最终结构化正文、实际工具/候选/来源，核对固定公式及项目夹具；非用户研究或持证工程签署。",
+              "reviewMethod": "AI逐题读取最终结构化正文、实际工具/候选/来源，核对固定公式及项目夹具；非用户研究或持证工程签署。",
               "reviewedStructuredSha256": "660b656577156c94d67c929aa5f70cf935b7a59ccd6a70670e3e899a74380e5f",
               "reviewedAnswerSha256": "0c0903436219164b2c2960adf66ac1c0eb78d8bca29de8b72fadec4e29888e3d",
               "semanticAccuracy": null
@@ -15833,7 +15833,7 @@
                 "liveFullWorkflow": "直接承认未知并区分软件默认值与厂家标定。"
               },
               "reviewedAt": "2026-11-17T08:43:51.195Z",
-              "reviewMethod": "Codex逐题读取最终结构化正文、实际工具/候选/来源，核对固定公式及项目夹具；非用户研究或持证工程签署。",
+              "reviewMethod": "AI逐题读取最终结构化正文、实际工具/候选/来源，核对固定公式及项目夹具；非用户研究或持证工程签署。",
               "reviewedStructuredSha256": "d7673e37ba1ecaf5a0552411e8d97961ee1472ffd9c7446b858cca4876616185",
               "reviewedAnswerSha256": "5424e35187a533905d10023f2f87fd7b5aa7eb6e870e4a2d93534b4ae1396dc8",
               "semanticAccuracy": null
@@ -15869,7 +15869,7 @@
   "liveStatus": "attempts_preserved",
   "independentReview": {
     "reviewedAt": "2026-11-17T08:43:51.195Z",
-    "reviewer": "Codex独立工程子任务",
+    "reviewer": "AI独立工程子任务",
     "method": "逐题阅读六个实际API结果与同题规则/RAG答案，对照解析gold、实际候选、来源正文与页节元数据；不由regex自动判语义通过。",
     "engineVersion": "1.2.0",
     "fixtureSha256": "7a888c81b3c52b20c64392fe0a0c4e8df63cf8996793cb1e57fc047d620a4ebe",
@@ -15911,7 +15911,7 @@
             "liveFullWorkflow": "实际读取日志工具并组织有针对性的解释；本题不能据此声称AI改善了计算精度。"
           },
           "reviewedAt": "2026-11-17T08:43:51.195Z",
-          "reviewMethod": "Codex逐题读取最终结构化正文、实际工具/候选/来源，核对固定公式及项目夹具；非用户研究或持证工程签署。",
+          "reviewMethod": "AI逐题读取最终结构化正文、实际工具/候选/来源，核对固定公式及项目夹具；非用户研究或持证工程签署。",
           "reviewedStructuredSha256": "5bb19a62344579ef55ff136b036cf98052c20e80a5cb87c9889a21d535f713e6",
           "reviewedAnswerSha256": "860be528dbeb6693ca9fb51c6c4cc85248c7c778eee5615637b19626be273b21",
           "semanticAccuracy": null
@@ -15942,7 +15942,7 @@
             "liveFullWorkflow": "把已知时移与当前差异联系起来并明确建议0.5→0后重跑。"
           },
           "reviewedAt": "2026-11-17T08:43:51.195Z",
-          "reviewMethod": "Codex逐题读取最终结构化正文、实际工具/候选/来源，核对固定公式及项目夹具；非用户研究或持证工程签署。",
+          "reviewMethod": "AI逐题读取最终结构化正文、实际工具/候选/来源，核对固定公式及项目夹具；非用户研究或持证工程签署。",
           "reviewedStructuredSha256": "5e1c0d369f3f7975a6e7a9f8ce686a4f81086fa1efd0e6a907f99c1af83324f7",
           "reviewedAnswerSha256": "91bfaed55184f960847eec4206f026087b5cfb54eb5888dc049829342eb1665f",
           "semanticAccuracy": null
@@ -15974,7 +15974,7 @@
             "liveFullWorkflow": "自定义工具产物正确，但最终模型叙述未交付；这是保留的实际失败。"
           },
           "reviewedAt": "2026-11-17T08:43:51.195Z",
-          "reviewMethod": "Codex逐题读取最终结构化正文、实际工具/候选/来源，核对固定公式及项目夹具；非用户研究或持证工程签署。",
+          "reviewMethod": "AI逐题读取最终结构化正文、实际工具/候选/来源，核对固定公式及项目夹具；非用户研究或持证工程签署。",
           "reviewedStructuredSha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
           "reviewedAnswerSha256": "f2c23b1e4e4d0c81efb4dc69f7dfcd2fecf93d8e273c87b82f8e8f8b71de79af",
           "semanticAccuracy": null
@@ -16006,7 +16006,7 @@
             "liveFullWorkflow": "实际重算并解释平方关系，核心数值与对应候选引用正确。"
           },
           "reviewedAt": "2026-11-17T08:43:51.195Z",
-          "reviewMethod": "Codex逐题读取最终结构化正文、实际工具/候选/来源，核对固定公式及项目夹具；非用户研究或持证工程签署。",
+          "reviewMethod": "AI逐题读取最终结构化正文、实际工具/候选/来源，核对固定公式及项目夹具；非用户研究或持证工程签署。",
           "reviewedStructuredSha256": "47fd74643cf6505a02b23b59469cd1236b6eacaf5d6368dbc56182affa9be075",
           "reviewedAnswerSha256": "469afe8ac8cf232ca2874aceb6582779d15da53d7b012481de6e319ebfce6773",
           "semanticAccuracy": null
@@ -16036,7 +16036,7 @@
             "liveFullWorkflow": "读取检索工具并依据实际段落回答完整的项目问题。"
           },
           "reviewedAt": "2026-11-17T08:43:51.195Z",
-          "reviewMethod": "Codex逐题读取最终结构化正文、实际工具/候选/来源，核对固定公式及项目夹具；非用户研究或持证工程签署。",
+          "reviewMethod": "AI逐题读取最终结构化正文、实际工具/候选/来源，核对固定公式及项目夹具；非用户研究或持证工程签署。",
           "reviewedStructuredSha256": "660b656577156c94d67c929aa5f70cf935b7a59ccd6a70670e3e899a74380e5f",
           "reviewedAnswerSha256": "0c0903436219164b2c2960adf66ac1c0eb78d8bca29de8b72fadec4e29888e3d",
           "semanticAccuracy": null
@@ -16066,7 +16066,7 @@
             "liveFullWorkflow": "直接承认未知并区分软件默认值与厂家标定。"
           },
           "reviewedAt": "2026-11-17T08:43:51.195Z",
-          "reviewMethod": "Codex逐题读取最终结构化正文、实际工具/候选/来源，核对固定公式及项目夹具；非用户研究或持证工程签署。",
+          "reviewMethod": "AI逐题读取最终结构化正文、实际工具/候选/来源，核对固定公式及项目夹具；非用户研究或持证工程签署。",
           "reviewedStructuredSha256": "d7673e37ba1ecaf5a0552411e8d97961ee1472ffd9c7446b858cca4876616185",
           "reviewedAnswerSha256": "5424e35187a533905d10023f2f87fd7b5aa7eb6e870e4a2d93534b4ae1396dc8",
           "semanticAccuracy": null

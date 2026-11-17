@@ -238,7 +238,7 @@
       ],
       "status": "disclosure_prepared_owner_ability_unverified",
       "evidence": [
-        "README及AI-AND-LICENSES.txt披露Codex辅助实现/复核/材料制作",
+        "README及AI-AND-LICENSES.txt披露AI辅助实现/复核/材料制作",
         "原拟定分工不包装成已完成个人贡献"
       ],
       "remaining": "成员实际理解并能解释架构、公式、RAG、Function Calling、存储和失败机制；不能由文件存在性推定通过。"
