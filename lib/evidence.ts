@@ -1,6 +1,6 @@
 import {simulate,type Config,type Simulation} from './simulation';
 import {channels,channelMeta,compare,IMPORTED_LOG_SOURCE_NOTICE,type Channel,type LogData} from './logs';
-export const ENGINE_VERSION='1.2.0';
+export const ENGINE_VERSION='1.2.1';
 export const defaultThresholds:Record<Channel,number>={speed:2,yaw:2,pressure:5,steering:10};
 export type Fact={id:string;label:string;value:number;unit:string;origin:'simulation'|'log';detail?:string};
 export function validatedThresholds(input:unknown):Record<Channel,number>{if(input===undefined)return {...defaultThresholds};if(!input||typeof input!=='object')throw Error('容差格式无效');const values={} as Record<Channel,number>;for(const k of channels){const v=(input as Record<string,unknown>)[k];if(typeof v!=='number'||!Number.isFinite(v)||v<0||v>10000)throw Error(channelMeta[k].label+'容差必须是 0–10000 的有限数值');values[k]=v;}return values;}

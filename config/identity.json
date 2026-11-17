@@ -1,0 +1,5 @@
+{
+  "signInPath": "/signin-with-chatgpt",
+  "signOutPath": "/signout-with-chatgpt",
+  "callbackPath": "/callback"
+}

@@ -1,5 +1,5 @@
 import {env} from 'cloudflare:workers';
-import {getChatGPTUser} from '../../chatgpt-auth';
+import {getCurrentUser,signInPath} from '../../auth';
 import {getDb} from '../../../db';
 import {records,documents} from '../../../db/schema';
 import {eq,and,desc} from 'drizzle-orm';
@@ -22,7 +22,7 @@ async function handler(request:Request){try{
   let settings;let modelError:string|null=null;try{settings=providerSettings(env as ModelSettings);}catch(e){modelError=(e as Error).message;}
   return json({engineVersion:ENGINE_VERSION,database:!!env.DB,llm:settings?.configured??false,model:settings?.model??null,provider:settings?.provider??null,freeOnly:settings?.freeOnly??true,verified:settings?.verified??false,modelError});
  }
- const user=await getChatGPTUser();if(!user)return json({error:'请先登录，以保存工况和使用知识库。',signin:'/signin-with-chatgpt?return_to=/'},401);
+ const user=await getCurrentUser();if(!user)return json({error:'请先登录，以保存工况和使用知识库。',signin:signInPath('/')},401);
  const db=getDb(),owner=user.userId;
  if(path==='records'&&method==='GET')return json(await db.select({id:records.id,name:records.name,scenario:records.scenario,risk:records.risk,created:records.created}).from(records).where(eq(records.owner,owner)).orderBy(desc(records.created)).limit(100));
  if(path.startsWith('records/')&&method==='GET'){const rows=await db.select().from(records).where(and(eq(records.id,path.slice(8)),eq(records.owner,owner))).limit(1);return rows.length?json(rows[0]):json({error:'记录不存在或无权访问'},404);}
@@ -39,7 +39,7 @@ async function handler(request:Request){try{
  if(path==='knowledge'&&method==='POST'){
   if(typeof data.title!=='string'||typeof data.body!=='string'||!data.title.trim()||!data.body.trim()||data.title.length>100||data.body.length>60000)throw Error('资料标题或内容无效，正文上限 60,000 字');
   const existing=await db.select({id:documents.id}).from(documents).where(eq(documents.owner,owner));if(existing.length>=40)throw Error('当前最多保存 40 份自定义资料');
-  const segments:Segment[]|undefined=data.segments;if(segments){if(!Array.isArray(segments)||segments.length>2000||segments.some(s=>typeof s.text!=='string'||(s.page!==undefined&&(!Number.isInteger(s.page)||s.page<1)))||segments.map(s=>s.text).join('\n\n')!==data.body)throw Error('文档分段与正文不一致');}
+  const segments:Segment[]|undefined=data.segments;if(segments){if(!Array.isArray(segments)||segments.length>2000||segments.some(s=>!s||typeof s!=='object'||Array.isArray(s)||typeof s.text!=='string'||(s.page!==undefined&&(!Number.isInteger(s.page)||s.page<1))||(s.section!==undefined&&(typeof s.section!=='string'||s.section.length>200)))||segments.map(s=>s.text).join('\n\n')!==data.body)throw Error('文档分段与正文不一致，章节名称需为不超过200字符的文本');}
   const metadata=JSON.stringify({kind:['pdf','docx','text'].includes(data.kind)?data.kind:'text',sourceName:typeof data.sourceName==='string'?data.sourceName.slice(0,200):null,importedAt:new Date().toISOString(),reviewStatus:'unreviewed',segments});
   const row={id:crypto.randomUUID(),owner,title:data.title,body:data.body,created:new Date().toISOString(),metadata};const documentIndex=JSON.stringify(indexDocument(row));await db.insert(documents).values({...row,documentIndex});return json({...row,chunkCount:JSON.parse(documentIndex).length},201);
  }

@@ -1,6 +1,7 @@
 // Vendored from @openai/sites-vite-plugin 0.2.0 (openai/sites#9).
 // See sites-vite-plugin.LICENSE for the upstream MIT license.
 import { access, cp, mkdir, rm } from "node:fs/promises";
+import identity from "../../config/identity.json";
 import type { IncomingMessage, ServerResponse } from "node:http";
 import { resolve } from "node:path";
 import type { Plugin } from "vite";
@@ -12,9 +13,9 @@ const localCookieName = "__sites_local_auth";
 const localHosts = new Set(["localhost", "127.0.0.1", "::1"]);
 const localAddresses = new Set(["127.0.0.1", "::1", "::ffff:127.0.0.1"]);
 const authPaths = new Set([
-  "/signin-with-chatgpt",
-  "/signout-with-chatgpt",
-  "/callback",
+  identity.signInPath,
+  identity.signOutPath,
+  identity.callbackPath,
 ]);
 
 async function exists(path: string): Promise<boolean> {
@@ -102,8 +103,8 @@ export function sites({ mockAuth = true } = {}): Plugin {
           return;
         }
 
-        const signIn = url.pathname === "/signin-with-chatgpt";
-        const signOut = url.pathname === "/signout-with-chatgpt";
+        const signIn = url.pathname === identity.signInPath;
+        const signOut = url.pathname === identity.signOutPath;
         if (!signIn && !signOut) {
           if (signInCookies.length === 1 && signInCookies[0] === "1") {
             setHeader(request, "oai-authenticated-user-id", localUserId);

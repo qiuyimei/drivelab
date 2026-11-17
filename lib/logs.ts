@@ -34,6 +34,20 @@ function interpolatedValue<T extends {time:number}>(data:T[],time:number,value:(
  const a=data[lo],b=data[hi];
  return value(a)+(value(b)-value(a))*(time-a.time)/(b.time-a.time);
 }
+// Plot-only clipping of the same per-channel piecewise-linear series used by
+// compare(). Boundary vertices are interpolated, never new measured samples;
+// do not write them back to LogData or use them to count/statistically compare.
+export function clipLogChannelToWindow(rows:readonly LogRow[],channel:Channel,start:number,end:number):LogRow[]{
+ if(!Number.isFinite(start)||!Number.isFinite(end)||end<start)return [];
+ const data=rows.filter(row=>row[channel]!==undefined);
+ if(!data.length)return [];
+ const lo=Math.max(start,data[0].time),hi=Math.min(end,data.at(-1)!.time);
+ if(lo>hi)return [];
+ if(data.length===1)return [{time:data[0].time,[channel]:data[0][channel]}];
+ const existing=new Map(data.map(row=>[row.time,row[channel]!]));
+ const times=[...new Set([lo,...data.filter(row=>row.time>=lo&&row.time<=hi).map(row=>row.time),hi])].sort((a,b)=>a-b);
+ return times.map(time=>({time,[channel]:existing.get(time)??interpolatedValue(data,time,row=>row[channel]!)}));
+}
 export function compare(sim:Sample[],log:LogData,thresholds:Record<Channel,number>){
  return channels.map(k=>{
   const data=log.rows.filter(r=>r[k]!==undefined);

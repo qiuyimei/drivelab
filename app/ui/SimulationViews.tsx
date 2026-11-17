@@ -1,14 +1,14 @@
 'use client';
 import {useState} from 'react';
 import {ranges,type Config,type Simulation} from '../../lib/simulation';
-import {channelMeta,type Channel,type LogData} from '../../lib/logs';
+import {channelMeta,clipLogChannelToWindow,type Channel,type LogData} from '../../lib/logs';
 const f=(n:number,d=1)=>n.toFixed(d);
 const tick=(n:number,span:number)=>Number(n.toFixed(span<10?2:span<100?1:0)).toString();
 export function Badge({risk}:{risk:string}){return <span className={'badge '+(risk==='约束内'?'green':risk==='高风险'?'red':'amber')}><i/>{risk}</span>;}
 export function Field({label,field,config,set,unit,step=1}:{label:string;field:keyof Config;config:Config;set:(k:keyof Config,v:number)=>void;unit?:string;step?:number}){return <label className="field"><span>{label}</span><div><input aria-label={label} type="number" min={ranges[field]?.[0]} max={ranges[field]?.[1]} step={step} value={Number.isNaN(config[field]) ? String() : String(config[field])} onChange={e=>set(field,e.target.value===''?NaN:Number(e.target.value))}/><em>{unit}</em></div></label>;}
 export function Chart({result,log,channel='speed',distance=false}:{result:Simulation;log:LogData|null;channel?:Channel;distance?:boolean}){
  const [hover,setHover]=useState<number|null>(null);const key=distance?'distance':channel;
- const data=result.rows;const hardware=log&&!distance?log.rows.filter(r=>r[channel]!==undefined&&r.time>=0&&r.time<=result.config.duration):[];
+ const data=result.rows;const hardware=log&&!distance?clipLogChannelToWindow(log.rows,channel,0,result.config.duration):[];
  const values=[...data.map(r=>r[key]),...hardware.map(r=>r[channel]!)];let min=Math.min(0,...values),max=Math.max(...values,1);const range=max-min;max+=range*.12;min-=min<0?range*.1:0;
  const x=(t:number)=>48+t/result.config.duration*760,y=(v:number)=>195-(v-min)/(max-min)*165;
  const points=data.map(r=>`${x(r.time)},${y(r[key])}`).join(' '),hw=hardware.map(r=>`${x(r.time)},${y(r[channel]!)}`).join(' ');

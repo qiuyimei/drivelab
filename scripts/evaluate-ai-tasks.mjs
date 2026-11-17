@@ -1,3 +1,4 @@
+import identity from '../config/identity.json' with {type:'json'};
 // Controlled software task evaluation. Offline is the default; --live is explicit.
 // No model secret is read. Live calls use the existing local app and its free-only guard.
 import fs from 'node:fs/promises';
@@ -137,7 +138,7 @@ async function liveRun(fixture,app,report,base){
  const url=new URL(base);if(url.protocol!=='http:'||!['127.0.0.1','localhost','[::1]'].includes(url.hostname)||url.pathname!=='/'||url.search||url.username||url.password)throw Error('Live evaluation only accepts a local HTTP preview origin');
  base=url.origin;const statusResponse=await fetch(base+'/api/status'),status=await statusResponse.json();
  if(!statusResponse.ok||status.engineVersion!==app.evidence.ENGINE_VERSION||!status.llm||status.freeOnly!==true)throw Error('Local engine/free-only provider preflight failed; no model call made');
- const login=await fetch(base+'/signin-with-chatgpt?return_to=/',{redirect:'manual'}),cookie=login.headers.getSetCookie().map(s=>s.split(';')[0]).join('; ');if(!cookie)throw Error('Local preview sign-in cookie unavailable');
+ const login=await fetch(base+identity.signInPath+'?return_to=/',{redirect:'manual'}),cookie=login.headers.getSetCookie().map(s=>s.split(';')[0]).join('; ');if(!cookie)throw Error('Local preview sign-in cookie unavailable');
  const api=async(route,method='GET',body)=>{const response=await fetch(base+'/api/'+route,{method,headers:{Cookie:cookie,Origin:base,...(body?{'Content-Type':'application/json'}:{})},body:body?JSON.stringify(body):undefined,signal:AbortSignal.timeout(175000)});const data=await response.json();if(!response.ok)throw Error('HTTP '+response.status+': '+scrub(data.error));return data;};
  const existing=(report.liveRuns??[]).flatMap(r=>r.tasks??[]),reserved=existing.reduce((s,t)=>s+(t.requestReservation??0),0);
  const selected=fixture.cases.filter(t=>t.liveSelected&&!existing.some(done=>done.id===t.id));
