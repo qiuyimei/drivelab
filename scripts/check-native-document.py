@@ -35,6 +35,7 @@ def main():
     parser.add_argument('--docx-copy',type=Path)
     parser.add_argument('--pdf-copy',type=Path)
     parser.add_argument('--export-receipt',type=Path)
+    parser.add_argument('--page-number-only-footer',action='store_true')
     args=parser.parse_args()
     manifest=json.loads(args.manifest.read_text(encoding='utf-8'))
     doc=Document(args.docx)
@@ -69,7 +70,22 @@ def main():
             geometry.append({'page':index,'characters':len(page.chars),'outsidePageCount':len(outside),'replacementCount':sum(c['text']=='\ufffd' for c in page.chars)})
     # Word emits mixed Chinese/Latin runs whose visual-order clustering may
     # differ in pdfplumber; pypdf preserves the PDF text-operator sequence.
-    pdf_text='\n'.join(page.extract_text() or '' for page in PdfReader(args.pdf).pages)
+    if args.page_number_only_footer:
+        footer=doc.sections[0].footer._element
+        fields=footer.xpath('.//w:fldSimple')
+        assert len(fields)==1 and fields[0].get('{http://schemas.openxmlformats.org/wordprocessingml/2006/main}instr','').strip()=='PAGE'
+        assert ''.join(node.text or '' for node in footer.xpath('.//w:t')).strip()=='1','Expected only the PAGE field placeholder'
+        assert not ''.join(node.text or '' for node in doc.sections[0].header._element.xpath('.//w:t')).strip(),'Expected an empty header'
+    body_pages=[]
+    for index,page in enumerate(PdfReader(args.pdf).pages,1):
+        lines=(page.extract_text() or '').splitlines()
+        if args.page_number_only_footer:
+            nonempty=[i for i,line in enumerate(lines) if line.strip()]
+            footer_index=next((i for i in [nonempty[0],nonempty[-1]] if lines[i].strip()==str(index)),None)
+            assert footer_index is not None,f'Verified PAGE footer missing on page {index}'
+            del lines[footer_index]
+        body_pages.append('\n'.join(lines))
+    pdf_text='\n'.join(body_pages)
     normalized=compact(pdf_text)
     all_strings=expected_paragraphs+[cell for table in expected_tables for row in table for cell in row]
     missing=[value for value in all_strings if compact(value) not in normalized]
@@ -92,6 +108,7 @@ def main():
         'nativeParagraphs':len(expected_paragraphs),'nativeTables':len(expected_tables),'actualFigureGroups':len(figures),
         'sourceParagraphAndTableEquality':True,'allSourceTextPresentInPdf':True,
         'textEqualityExtractor':'pypdf text-operator sequence, whitespace normalized; pdfplumber used independently for character geometry',
+        'verifiedPageNumberOnlyFootersExcludedFromCrossPageText':args.page_number_only_footer,
         'pdfExportInputDocxSha256':manifest['sha256'],
         'pdfExportReceipt':receipt,
         'renderer':'Independent hidden Microsoft Word 16 COM exact-input PDF export; bundled render_docx.py rasterizer and Poppler',

@@ -53,6 +53,7 @@ def build_native_docx(blocks, output, *, title, reviewed_on, header='DRIVELAB  /
         style.paragraph_format.line_spacing=Pt(leading)
         style.paragraph_format.space_after=Pt(after)
         style.paragraph_format.space_before=Pt(12 if name=='Heading 2' else 0)
+        if student and name=='Heading 1':style.paragraph_format.space_before=Pt(16)
         style.paragraph_format.keep_with_next=name in ['Title','Heading 1','Heading 2']
     header_p=section.header.paragraphs[0];header_p.text='' if student else header
     header_p.style=document.styles['Caption']
@@ -94,9 +95,9 @@ def build_native_docx(blocks, output, *, title, reviewed_on, header='DRIVELAB  /
                     shading=OxmlElement('w:shd');shading.set(qn('w:fill'),fill);cell._tc.get_or_add_tcPr().append(shading)
                     p=cell.paragraphs[0];p.text=str(value)
                     p.paragraph_format.space_after=Pt(0);p.paragraph_format.space_before=Pt(0)
-                    p.paragraph_format.line_spacing=Pt(14);p.paragraph_format.keep_with_next=row_index==0
+                    p.paragraph_format.line_spacing=Pt(16 if student else 14);p.paragraph_format.keep_with_next=row_index==0
                     for run in p.runs:
-                        run.font.name='Arial';run.font.size=Pt(9)
+                        run.font.name='Arial';run.font.size=Pt(10 if student else 9)
                         run.font.color.rgb=RGBColor.from_string('000000' if student else 'FFFFFF' if row_index==0 else '253846')
                         run.font.bold=student and row_index==0
                         run._element.get_or_add_rPr().get_or_add_rFonts().set(qn('w:eastAsia'),'宋体' if student else '等线')

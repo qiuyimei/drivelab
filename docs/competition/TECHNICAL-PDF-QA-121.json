@@ -1,96 +1,181 @@
 {
   "engineVersion": "1.2.1",
-  "pageCount": 8,
-  "pages": 8,
-  "sha256": "11529ea979a240554ac88e19065d4db69ba189d5f12d158b6704606d9357e9cd",
-  "latestPdfSha256": "11529ea979a240554ac88e19065d4db69ba189d5f12d158b6704606d9357e9cd",
-  "bytes": 591736,
-  "docxSha256": "42e8efc0ef87cc9d092d0a2d77619a4e1bbe08337bdd3f81714237973e815df2",
-  "docxBytes": 423935,
+  "pageCount": 20,
+  "pages": 20,
+  "sha256": "f56c2990c9c800be942b1661a028871ba5d930f2a54c98b97106c1b365618be2",
+  "latestPdfSha256": "f56c2990c9c800be942b1661a028871ba5d930f2a54c98b97106c1b365618be2",
+  "bytes": 858778,
+  "docxSha256": "472f8bdef79db75685fd4b142736148fd9550d808a25c9dd953890f92b659144",
+  "docxBytes": 357913,
   "outputPdf": "C:\\Users\\Zllyh\\Documents\\Codex\\2026-10-11\\n-h\\work\\drivelab\\.sites-runtime\\final121\\technical.pdf",
   "outputDocx": "C:\\Users\\Zllyh\\Documents\\Codex\\2026-10-11\\n-h\\work\\drivelab\\.sites-runtime\\final121\\technical.docx",
-  "contentSha256": "14ff24eab25a660fb75fc2de9d35b7ef6382ce4b3cdf5064258f34257a9e26b8",
+  "contentSha256": "2b420d1ce84ae209220fbeb47d479e3a8be0c2ad3de61b7d96427f48ceec58bc",
   "sameContentSource": true,
   "nativeEditable": true,
-  "nativeParagraphs": 78,
-  "nativeTables": 5,
-  "actualFigureGroups": 4,
+  "nativeParagraphs": 145,
+  "nativeTables": 21,
+  "actualFigureGroups": 8,
   "sourceParagraphAndTableEquality": true,
   "allSourceTextPresentInPdf": true,
   "textEqualityExtractor": "pypdf text-operator sequence, whitespace normalized; pdfplumber used independently for character geometry",
-  "pdfExportInputDocxSha256": "42e8efc0ef87cc9d092d0a2d77619a4e1bbe08337bdd3f81714237973e815df2",
+  "verifiedPageNumberOnlyFootersExcludedFromCrossPageText": true,
+  "pdfExportInputDocxSha256": "472f8bdef79db75685fd4b142736148fd9550d808a25c9dd953890f92b659144",
   "pdfExportReceipt": {
     "inputDocx": "C:\\Users\\Zllyh\\Documents\\Codex\\2026-10-11\\n-h\\work\\drivelab\\.sites-runtime\\final121\\technical.docx",
-    "inputDocxSha256": "42e8efc0ef87cc9d092d0a2d77619a4e1bbe08337bdd3f81714237973e815df2",
+    "inputDocxSha256": "472f8bdef79db75685fd4b142736148fd9550d808a25c9dd953890f92b659144",
     "outputPdf": "C:\\Users\\Zllyh\\Documents\\Codex\\2026-10-11\\n-h\\work\\drivelab\\.sites-runtime\\final121\\technical.pdf",
-    "outputPdfSha256": "11529ea979a240554ac88e19065d4db69ba189d5f12d158b6704606d9357e9cd",
+    "outputPdfSha256": "f56c2990c9c800be942b1661a028871ba5d930f2a54c98b97106c1b365618be2",
     "backend": "Microsoft Word 16 COM",
     "wordVersion": "16.0",
-    "ownedWordPid": 15576,
+    "ownedWordPid": 49740,
     "readOnly": true,
     "addToRecentFiles": false,
     "automationSecurity": 3,
-    "exportedAt": "2026-11-17T20:06:41.7158118Z"
+    "exportedAt": "2026-11-17T20:35:54.8867125Z"
   },
   "renderer": "Independent hidden Microsoft Word 16 COM exact-input PDF export; bundled render_docx.py rasterizer and Poppler",
   "libreOfficeUsed": false,
-  "renderDirectory": "C:\\Users\\Zllyh\\Documents\\Codex\\2026-10-11\\n-h\\work\\drivelab\\.sites-runtime\\final121\\technical-simple-final-pages",
+  "renderDirectory": "C:\\Users\\Zllyh\\Documents\\Codex\\2026-10-11\\n-h\\work\\drivelab\\.sites-runtime\\final121\\technical-delivery-pages",
   "renderedPngSha256": {
-    "page-1.png": "0b21926545e7e51c198d385b62c4875c0753548f442814ae85af2e76dd662a62",
-    "page-2.png": "81915c1a8a53f7b66702507c20235e112c6968634780ff71e2f12e3311324c57",
-    "page-3.png": "f643e372c2f54522bad9887544518945de792d5d33b031864c133714fdae84f6",
-    "page-4.png": "67e64663b66007b9a44618f7cd81a50ffa5f58e469f3337058ceb80b8bd2db42",
-    "page-5.png": "5ec64b87629d17b08a65c7f800b85b3d92d62e7e149a8885c47e2e0d5a77b6c2",
-    "page-6.png": "890ebebc9583fe3a39eff080a92dac101820eb33910bdd32a67ace6a28221418",
-    "page-7.png": "0534f8815231f14a951f1f18823a3e3d23f991b756293cb92ba08021dbceb721",
-    "page-8.png": "c0376522ff740d1d68ea4a2b23d1fb6c183243f23f4a1e6e69f882e1435fc447"
+    "page-1.png": "8ed438266f0936448a8b258e362114f27ab92c5fddd78a21d5343adf5caece72",
+    "page-2.png": "1c69737e21668b943575c1d3986b8327e407293f2829939a40a999f193f108e0",
+    "page-3.png": "1f868cf71ea2f24f1a03ab20d5c98402556fc3b5fb0a705695ec8a0b809d2404",
+    "page-4.png": "9d3ed7b4273373535eef0d070241c2f5c3b44659258bbb0d6619497e19bf17f5",
+    "page-5.png": "27110bd9828adfa54c19ee15a806279d4af249a2f0fda03e7d5ed88f43d8608f",
+    "page-6.png": "105a07c0619d22b72b0c0760c55a0a8efa8aefe6ef3993a741cb748a8a346de2",
+    "page-7.png": "9615635dce9732896f69d528afeab0fd978ec42805ab403c27875b46241fe91c",
+    "page-8.png": "29a583fff8f05347b3578d8818ab639ecb19ad308b218d6782f79c66ef3e4f84",
+    "page-9.png": "19a3bc5292dae6907607d7cdc98c140f9bb7fae63af4c0c515f77b17253ec86e",
+    "page-10.png": "b5998350b7eb85d593f23eed4d18b08831b243967cb2a2355d5271ab444c2430",
+    "page-11.png": "ec6d384219e7e5e54dab0775cbfd7a85a39ad6ee53959bdd9703326200fd2667",
+    "page-12.png": "90ad304d228dad4c3d65ab17d0ccb905bcac11ff7458c862036538b37ec2163b",
+    "page-13.png": "e41aff3d52d413f5851fb25bc1b7bd93468bc9cbac2c84063ea30d352ac1f3b7",
+    "page-14.png": "917bfb0534143ad8858fe5861345da33b73d97fc1f23dd560cff4ccb75946cf5",
+    "page-15.png": "553ca0891b7e50f30c8fb3b6d655649e17a85496df96ef8c13b523d9e434c79b",
+    "page-16.png": "f4d8d9dcdb46548d3c154ee048f103314f9a811f1d602201d0733b8ebe618cc6",
+    "page-17.png": "b9c1e8a2453a16cb01783d7dfd0d69f10b0b194af9da8d40a9617198e155f8d3",
+    "page-18.png": "96ae2a05bf09452087caa927932f698d3edb826af035b511abbd57cc2a1b3cb1",
+    "page-19.png": "afd735de33846501c004e9b3583e533e73d02fce433ccc07b8d29aadac956b7d",
+    "page-20.png": "ebb96a3b9b1fcdacf6b97ed4059703bf43aa8aff2d2a33082b617d1a8e188901"
   },
   "geometry": [
     {
       "page": 1,
-      "characters": 192,
+      "characters": 344,
       "outsidePageCount": 0,
       "replacementCount": 0
     },
     {
       "page": 2,
-      "characters": 714,
+      "characters": 763,
       "outsidePageCount": 0,
       "replacementCount": 0
     },
     {
       "page": 3,
-      "characters": 917,
+      "characters": 1004,
       "outsidePageCount": 0,
       "replacementCount": 0
     },
     {
       "page": 4,
-      "characters": 636,
+      "characters": 1092,
       "outsidePageCount": 0,
       "replacementCount": 0
     },
     {
       "page": 5,
-      "characters": 683,
+      "characters": 516,
       "outsidePageCount": 0,
       "replacementCount": 0
     },
     {
       "page": 6,
-      "characters": 757,
+      "characters": 395,
       "outsidePageCount": 0,
       "replacementCount": 0
     },
     {
       "page": 7,
-      "characters": 711,
+      "characters": 759,
       "outsidePageCount": 0,
       "replacementCount": 0
     },
     {
       "page": 8,
-      "characters": 1226,
+      "characters": 925,
+      "outsidePageCount": 0,
+      "replacementCount": 0
+    },
+    {
+      "page": 9,
+      "characters": 727,
+      "outsidePageCount": 0,
+      "replacementCount": 0
+    },
+    {
+      "page": 10,
+      "characters": 783,
+      "outsidePageCount": 0,
+      "replacementCount": 0
+    },
+    {
+      "page": 11,
+      "characters": 884,
+      "outsidePageCount": 0,
+      "replacementCount": 0
+    },
+    {
+      "page": 12,
+      "characters": 458,
+      "outsidePageCount": 0,
+      "replacementCount": 0
+    },
+    {
+      "page": 13,
+      "characters": 1036,
+      "outsidePageCount": 0,
+      "replacementCount": 0
+    },
+    {
+      "page": 14,
+      "characters": 832,
+      "outsidePageCount": 0,
+      "replacementCount": 0
+    },
+    {
+      "page": 15,
+      "characters": 908,
+      "outsidePageCount": 0,
+      "replacementCount": 0
+    },
+    {
+      "page": 16,
+      "characters": 526,
+      "outsidePageCount": 0,
+      "replacementCount": 0
+    },
+    {
+      "page": 17,
+      "characters": 923,
+      "outsidePageCount": 0,
+      "replacementCount": 0
+    },
+    {
+      "page": 18,
+      "characters": 488,
+      "outsidePageCount": 0,
+      "replacementCount": 0
+    },
+    {
+      "page": 19,
+      "characters": 1046,
+      "outsidePageCount": 0,
+      "replacementCount": 0
+    },
+    {
+      "page": 20,
+      "characters": 267,
       "outsidePageCount": 0,
       "replacementCount": 0
     }
@@ -104,7 +189,19 @@
     5,
     6,
     7,
-    8
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20
   ],
   "visualReviewAllPages": true,
   "finalized": true,

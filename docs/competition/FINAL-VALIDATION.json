@@ -154,13 +154,16 @@
   "materialFormats": {
     "status": "passed final native document and revised video QA",
     "engineVersion": "1.2.1",
-    "technicalPdfPages": 8,
-    "technicalSha256": "11529ea979a240554ac88e19065d4db69ba189d5f12d158b6704606d9357e9cd",
-    "editableTechnicalDocxSha256": "42e8efc0ef87cc9d092d0a2d77619a4e1bbe08337bdd3f81714237973e815df2",
+    "technicalPdfPages": 20,
+    "technicalSha256": "f56c2990c9c800be942b1661a028871ba5d930f2a54c98b97106c1b365618be2",
+    "editableTechnicalDocxSha256": "472f8bdef79db75685fd4b142736148fd9550d808a25c9dd953890f92b659144",
     "sameContentSource": true,
-    "editorialStyle": "plain student project report; user-requested simpler wording and layout; screenshots and factual results retained",
-    "technicalNativeTables": 5,
-    "technicalFigureGroups": 4,
+    "editorialStyle": "plain layout; all original detailed technical content retained; application scenarios and operation details expanded",
+    "originalTechnicalParagraphsRetained": 117,
+    "originalTablesRetained": 17,
+    "originalDistinctImagesRetained": 4,
+    "technicalNativeTables": 21,
+    "technicalFigureGroups": 8,
     "checklistPages": 2,
     "checklistExcludedFromSubmissionZip": true,
     "videoDurationSeconds": 463.8333333333333,
@@ -179,7 +182,7 @@
       "02-DriveLab-参赛演示.mp4",
       "03-DriveLab-仓库链接.txt"
     ],
-    "formalZipSha256": "ceff59d6d51f2b0139efbd96a0820fc43202238e6687ca292b00e5363a50ef94"
+    "formalZipSha256": "d46cf58f43a10508eb3ddd79d72d75551d57d31bea9a72ac967b81a7f450bdb1"
   },
   "historicalOnlineUi114": {
     "projectId": "appgprj_6af9751c44388191b7b99d0646dbd840",
@@ -288,7 +291,7 @@
     "codeCapabilities": "implemented and checked within documented model/application scope",
     "currentProductionBuild": "passed official helper for 1.2.1",
     "currentDeployment": "Final publication outcome is recorded alongside delivered artifacts after this source snapshot is frozen.",
-    "materialFormats": "passed 8-page same-content PDF/editable DOCX in revised plain report style, separately reviewed checklist and 7:43.833 1080p offline-Mandarin video; three-entry ZIP verified",
+    "materialFormats": "passed 20-page same-content PDF/editable DOCX in revised plain report style, separately reviewed checklist and 7:43.833 1080p offline-Mandarin video; three-entry ZIP verified",
     "teamIdentity": "confirmed known identities and assigned responsibilities",
     "registration": "not handled in this materials-only task per user instruction",
     "reviewerRepositoryAccess": "not verified",
