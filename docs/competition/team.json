@@ -1,13 +1,33 @@
 {
   "confirmed": false,
+  "identityConfirmed": true,
   "teamName": null,
-  "school": null,
+  "school": "厦门大学嘉庚学院",
   "group": null,
-  "captain": null,
+  "captain": "邱益美",
   "members": [
-    {"name": "丁鑫炜", "discipline": "车辆工程", "role": "原开发文档拟定工程职责，实际分工待本人确认"},
-    {"name": "邱益美", "discipline": "软件工程", "role": "原开发文档拟定软件职责，实际分工待本人确认"}
+    {
+      "name": "邱益美",
+      "college": "人工智能与计算机学院",
+      "discipline": "软件工程",
+      "role": "总体方案、核心系统开发、API接入、集成测试与部署、材料统筹（负责人，主责）"
+    },
+    {
+      "name": "李聿昕",
+      "college": "人工智能与计算机学院",
+      "discipline": "软件工程",
+      "role": "界面组件开发、数据与资料导入交互、流程功能测试"
+    },
+    {
+      "name": "丁鑫炜",
+      "college": "机电工程与自动化学院",
+      "discipline": "车辆工程",
+      "role": "车辆工况与参数模型依据整理、工程结果核对、场景说明"
+    }
   ],
-  "advisors": null,
-  "note": "仅整理用户原开发文档；不将拟定分工当作已完成贡献或本人签署。报名字段待用户确认后统一更新材料。"
+  "advisors": [],
+  "registrationStatus": null,
+  "paymentStatus": null,
+  "roleBasis": "用户授权的项目职责分配",
+  "note": "学校、学院、专业、三位成员、负责人及无指导教师由用户明确提供。职责为本轮项目分配，完成情况以开发记录和验收证据为准，不作为独立完成履历或工程签署。队名、组别、报名及缴费状态未提供，保留空值；identityConfirmed表示已知身份信息确认，confirmed仍为false，不表示已经完成参赛报名核验。"
 }

@@ -114,7 +114,17 @@ MAE/RMSE/平均偏差保留共同区间内仿真网格等点权口径；最大�
 
 ## 团队信息与 AI 辅助说明
 
-报名资料尚待本人确认，登记源为 docs/competition/team.json：队名、学校、组别、队长、导师均未代填。原开发文档拟定丁鑫炜（车辆工程）、邱益美（软件工程）；这不作为已完成分工、资格或人工签署证明。确认实际报名信息后，应同步 team.json、README 和技术文档。
+学校：厦门大学嘉庚学院。项目负责人：邱益美。三位成员、学院专业及无指导教师由用户明确提供，登记于 `docs/competition/team.json`；队名、参赛组别、报名与缴费状态暂留空，不据此认定已经完成报名核验。
+
+以下为用户授权的项目职责分配，完成情况以开发记录与验收证据为准。
+
+| 成员 | 学院与专业 | 职责分配 |
+| --- | --- | --- |
+| 邱益美（负责人） | 人工智能与计算机学院 · 软件工程 | 总体方案、核心系统开发、API 接入、集成测试与部署、材料统筹，承担主责 |
+| 李聿昕 | 人工智能与计算机学院 · 软件工程 | 界面组件开发、数据与资料导入交互、流程功能测试 |
+| 丁鑫炜 | 机电工程与自动化学院 · 车辆工程 | 车辆工况与参数模型依据整理、工程结果核对、场景说明 |
+
+指导教师：无。职责分配不作为已完成独立开发履历或人工工程签署；身份信息与职责分配已记录，尚未提供的报名字段继续保留空值。
 
 项目使用 Codex 辅助实现、缺陷复核、回归及材料制作；免费分析模型为 ModelScope 上的 Qwen/Qwen3.5-27B。演示视频由真实截图、实际计算数据与功能流程示意剪辑而成，制作方式记录在 AI 使用与第三方许可说明中。团队须理解并能解释代码逻辑，不将生成内容包装为实车实验或专家审核。第三方数据和字体许可随仓库保留，完整说明见 docs/competition/AI-AND-LICENSES.txt。
 
@@ -126,7 +136,27 @@ MAE/RMSE/平均偏差保留共同区间内仿真网格等点权口径；最大�
 
 公开数据成品 CSV 可直接按 SHA-256 验收。本次已补齐 validation/original 中四个官方公开 CAN 样例 NPY、原 README 和 MIT 许可，约 160 KB 原始数组。可用 Python 3 与 NumPy 执行 `python validation/convert_public_sample.py` 验证原 Git blob 哈希并重建同一 CSV；这不包含全量数据集、视频或定位数据，也不需要下载它们。
 
-仓库保持 Private。邀请一个共创伙伴：仓库 **Settings → Collaborators → Add people**，输入对方 GitHub 用户名；对方接受后通过独立分支和 Pull Request 协作。提交前另行安排评审只读访问，不能把仅所有者可见的链接当作评审可访问证明。
+仓库保持 Private。邀请已知共创伙伴可在仓库 **Settings → Collaborators → Add people** 中选择对方 GitHub 账号；对方接受后通过独立分支和 Pull Request 协作。对于个人账号的私有仓库，协作者具有读写权限，不能把 Add people 当作只读授权；如需更细的权限，应采用组委会认可且实际可配置的方案。[GitHub 权限说明](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/repository-access-and-collaboration/permission-levels-for-a-personal-account-repository)。
+
+评审访问按组委会指定账号或认可方式安排，并验证对方能够读取；当前尚无指定评审账号，不自动邀请或改变分享。线上站点仍为仅所有者可访问，不能把本人登录成功当作外部评审可访问证明；如使用在线演示加分，另行验证评审体验路径。
+
+### 评审本机运行与规则演示
+
+材料包中的完整 Git 历史可恢复项目。安装 Node.js 24 与 pnpm 11.25.0 后，在材料目录执行：
+
+```powershell
+git clone 15-DriveLab-完整Git历史.bundle drivelab-review
+cd drivelab-review
+pnpm install --frozen-lockfile
+pnpm run db:local
+pnpm run dev
+```
+
+若使用源码 ZIP，解压并进入含 `package.json` 的项目目录，从安装依赖开始。首次安装需要联网下载依赖；依赖准备后，可在本机演示计算、日志处理、规则检索、保存恢复与 PDF。
+
+打开 http://127.0.0.1:5173/，通过页面的本机模拟登录进入个人记录流程。选择工况并运行，导入样例，点击“只运行规则与检索（不占模型额度）”，再保存、恢复记录或导出 PDF。模拟登录仅用于回环地址预览，不是可发给外部人员的线上账号。
+
+真实模型分析需要联网及合法配置的服务端凭证；材料包不包含令牌，也不要求通过聊天传递密钥。无需模型接入时可完成上述规则演示；已留存的脱敏真实调用记录用于核对对应案例，不能冒充当场联网结果。离线源码与本机演示也不自行替代赛事要求的仓库评审访问。
 
 参赛检查见 COMPETITION-READINESS.md，阶段记录见 DEVELOPMENT.md。
 
