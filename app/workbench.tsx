@@ -69,7 +69,7 @@ export default function Workbench() {
         setLog(null);
         setRawLog(null);
     } notify('仿真计算完成 · ' + r.rows.length + ' 个时间采样点'); }); }
-    async function save() {if(page==='tasks'&&(!analysisBundle||(analysisBundle.task&&analysisBundle.task.id!==taskId))){notify('请先执行所选任务，再保存或导出本次复盘；单独计算报告可在工作台导出');return;} if (dirty) {
+    async function save() {if(page==='tasks'&&(!analysisBundle?.task||analysisBundle.task.id!==taskId||analysisStale)){notify('请先执行所选任务，再保存或导出本次复盘；单独计算报告可在工作台导出');return;} if (dirty) {
         notify('参数已修改，请先运行仿真后保存');
         return;
     } await action('save', async () => { const r = await api<SavedRecord>('records', 'POST', { config: result.config, log, thresholds, analysis: analysisStale?'':answer,analysisBundle:analysisStale?null:analysisBundle }); setRecords(v => [r, ...v]); notify('工况及对标结果已保存'); }); }
@@ -105,7 +105,7 @@ export default function Workbench() {
         const next=validateConfig({...result.config,...candidate.patch});setConfig(next);setParamTab('scenario');setPage('workbench');notify('候选参数已载入，请运行仿真；重新计算后原日志会解除绑定');
       }catch(error){notify(error instanceof Error?error.message:'候选参数无效');}
     }
-    async function report(){if(page==='tasks'&&(!analysisBundle||(analysisBundle.task&&analysisBundle.task.id!==taskId))){notify('请先执行所选任务，再保存或导出本次复盘；单独计算报告可在工作台导出');return;}if(dirty){notify('请先运行仿真后生成报告');return;}await action('pdf',async()=>{const {downloadReportPdf}=await import('../lib/pdf-report');await downloadReportPdf(result,log,thresholds,analysisStale?null:analysisBundle,analysisStale?'':answer);notify('中文 PDF 报告已生成并下载');});}
+    async function report(){if(page==='tasks'&&(!analysisBundle?.task||analysisBundle.task.id!==taskId||analysisStale)){notify('请先执行所选任务，再保存或导出本次复盘；单独计算报告可在工作台导出');return;}if(dirty){notify('请先运行仿真后生成报告');return;}await action('pdf',async()=>{const {downloadReportPdf}=await import('../lib/pdf-report');await downloadReportPdf(result,log,thresholds,analysisStale?null:analysisBundle,analysisStale?'':answer);notify('中文 PDF 报告已生成并下载');});}
     const sample = result.rows[index] ?? result.rows[0];
     const secondMetric=result.braking?{label:'理论停车距离',english:'STOPPING DISTANCE',value:result.stoppingDistance,unit:'m',detail:'含 '+result.config.reaction+'s 响应时间'}:result.config.scenario==='curve'?{label:'弯道速度参考',english:'CURVE SPEED LIMIT',value:result.safeCurveSpeed,unit:'km/h',detail:'依据附着与侧向阈值'}:{label:'计划换道时长',english:'LANE CHANGE DURATION',value:result.config.laneTime,unit:'s',detail:'五次轨迹规划时长'};
     const title = page === 'tasks'?'AI 工况复盘':page === 'validation'?'验证与证据':page === 'workbench' ? '仿真工作台' : page === 'cases' ? '标准工况库' : page === 'compare' ? '实车数据对标' : page === 'records' ? '工况记录' : page === 'knowledge' ? '专业知识库' : '平台设置';

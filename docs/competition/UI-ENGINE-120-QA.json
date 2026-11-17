@@ -22,6 +22,12 @@
     "staticEvaluationRows": 6,
     "claimFactsVisible": true,
     "report": ".sites-runtime/AI任务成功报告样张.pdf",
+    "errors": [],
+    "scope": "实际成功快照UI/PDF在e618590阶段验收；最终守卫补强不改变其展示"
+  },
+  "additionalTaskBoundaries": {
+    "legacyUnassignedAnalysisNotDeliverable": true,
+    "staleToleranceAnalysisNotDeliverable": true,
     "errors": []
   }
 }
