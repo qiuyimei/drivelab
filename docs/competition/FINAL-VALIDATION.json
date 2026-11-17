@@ -160,10 +160,10 @@
   "materialFormats": {
     "status": "passed",
     "technicalPdfPages": 19,
-    "technicalSha256": "e2e24af951167b29b8d248a12413790d9c5205d4171181e114210da2fb79c7ce",
+    "technicalSha256": "8378fb78349b11f00cfa56f493adc4e2ae71fa9429bd6626a4abefd44c69d5e1",
     "implementationDocxPages": 25,
     "implementationFigures": 17,
-    "implementationSha256": "f47b778000c187a577ab956f65c34909afcfdeca1e4f0edf8db791e5d0688cda",
+    "implementationSha256": "4bbc508898faa7d5d5ae4183ca98b8264f64b2c9e678415c0afe74be11d86d46",
     "reportPdfPages": 6,
     "reportSha256": "78162cf4d580f4fda5ff92a169b4022088e96ebba99115cbf8b457bffd4438e7",
     "videoDurationSeconds": 387.54,
@@ -173,7 +173,7 @@
     ],
     "videoNumericRevalidation": "VIDEO-120-REVALIDATION.json",
     "videoRemadeFor120": false,
-    "layoutRevision": "全宽左对齐、相关小图成组、参数与候选图放大，职责尾括注删除"
+    "editorialRevision": "团队按软件和车辆工程模块分工；正文采用简洁AI辅助说明，实际范围与许可单列，无未经统计比例或替换工具。"
   },
   "historicalOnlineUi114": {
     "projectId": "appgprj_6af9751c44388191b7b99d0646dbd840",
@@ -282,7 +282,7 @@
     "codeCapabilities": "implemented and checked within documented model/application scope",
     "currentProductionBuild": "passed official helper",
     "currentDeployment": "succeeded owner-only private; same application inputs as55ac934",
-    "materialFormats": "passed 25-page DOCX, 19-page technical PDF, 6-page report and retained video",
+    "materialFormats": "passed 25-page DOCX, 19-page technical PDF, 6-page report and retained video; neutral assistance wording",
     "teamIdentity": "confirmed known identities and assigned responsibilities",
     "registration": "unknown fields remain null; not verified",
     "reviewerRepositoryAccess": "not verified",

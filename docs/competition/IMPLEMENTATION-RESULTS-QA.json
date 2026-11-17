@@ -3,8 +3,8 @@
   "machineResult": "pass",
   "visualReview": "pass",
   "docx": "C:\\Users\\Zllyh\\Documents\\Codex\\2026-10-11\\n-h\\outputs\\DriveLab 智能驾驶工况仿真与辅助分析 Web 平台 V1.0 软件实现与成果说明书.docx",
-  "sha256": "f47b778000c187a577ab956f65c34909afcfdeca1e4f0edf8db791e5d0688cda",
-  "bytes": 1183333,
+  "sha256": "4bbc508898faa7d5d5ae4183ca98b8264f64b2c9e678415c0afe74be11d86d46",
+  "bytes": 1183321,
   "pageCount": 25,
   "renderInputByteIdentical": true,
   "engineVersion": "1.2.0",
@@ -561,151 +561,151 @@
   "geometry": [
     {
       "page": 1,
-      "characters": 698,
+      "characters": 699,
       "outsidePageCount": 0,
       "replacementCount": 0
     },
     {
       "page": 2,
-      "characters": 623,
+      "characters": 624,
       "outsidePageCount": 0,
       "replacementCount": 0
     },
     {
       "page": 3,
-      "characters": 737,
+      "characters": 738,
       "outsidePageCount": 0,
       "replacementCount": 0
     },
     {
       "page": 4,
-      "characters": 355,
-      "outsidePageCount": 0,
-      "replacementCount": 0
-    },
-    {
-      "page": 5,
-      "characters": 141,
-      "outsidePageCount": 0,
-      "replacementCount": 0
-    },
-    {
-      "page": 6,
-      "characters": 615,
-      "outsidePageCount": 0,
-      "replacementCount": 0
-    },
-    {
-      "page": 7,
-      "characters": 495,
-      "outsidePageCount": 0,
-      "replacementCount": 0
-    },
-    {
-      "page": 8,
-      "characters": 535,
-      "outsidePageCount": 0,
-      "replacementCount": 0
-    },
-    {
-      "page": 9,
-      "characters": 496,
-      "outsidePageCount": 0,
-      "replacementCount": 0
-    },
-    {
-      "page": 10,
-      "characters": 567,
-      "outsidePageCount": 0,
-      "replacementCount": 0
-    },
-    {
-      "page": 11,
-      "characters": 558,
-      "outsidePageCount": 0,
-      "replacementCount": 0
-    },
-    {
-      "page": 12,
-      "characters": 721,
-      "outsidePageCount": 0,
-      "replacementCount": 0
-    },
-    {
-      "page": 13,
-      "characters": 565,
-      "outsidePageCount": 0,
-      "replacementCount": 0
-    },
-    {
-      "page": 14,
-      "characters": 328,
-      "outsidePageCount": 0,
-      "replacementCount": 0
-    },
-    {
-      "page": 15,
-      "characters": 144,
-      "outsidePageCount": 0,
-      "replacementCount": 0
-    },
-    {
-      "page": 16,
-      "characters": 506,
-      "outsidePageCount": 0,
-      "replacementCount": 0
-    },
-    {
-      "page": 17,
       "characters": 356,
       "outsidePageCount": 0,
       "replacementCount": 0
     },
     {
-      "page": 18,
-      "characters": 538,
+      "page": 5,
+      "characters": 142,
       "outsidePageCount": 0,
       "replacementCount": 0
     },
     {
-      "page": 19,
+      "page": 6,
+      "characters": 616,
+      "outsidePageCount": 0,
+      "replacementCount": 0
+    },
+    {
+      "page": 7,
+      "characters": 496,
+      "outsidePageCount": 0,
+      "replacementCount": 0
+    },
+    {
+      "page": 8,
       "characters": 536,
       "outsidePageCount": 0,
       "replacementCount": 0
     },
     {
+      "page": 9,
+      "characters": 497,
+      "outsidePageCount": 0,
+      "replacementCount": 0
+    },
+    {
+      "page": 10,
+      "characters": 568,
+      "outsidePageCount": 0,
+      "replacementCount": 0
+    },
+    {
+      "page": 11,
+      "characters": 559,
+      "outsidePageCount": 0,
+      "replacementCount": 0
+    },
+    {
+      "page": 12,
+      "characters": 722,
+      "outsidePageCount": 0,
+      "replacementCount": 0
+    },
+    {
+      "page": 13,
+      "characters": 566,
+      "outsidePageCount": 0,
+      "replacementCount": 0
+    },
+    {
+      "page": 14,
+      "characters": 329,
+      "outsidePageCount": 0,
+      "replacementCount": 0
+    },
+    {
+      "page": 15,
+      "characters": 145,
+      "outsidePageCount": 0,
+      "replacementCount": 0
+    },
+    {
+      "page": 16,
+      "characters": 507,
+      "outsidePageCount": 0,
+      "replacementCount": 0
+    },
+    {
+      "page": 17,
+      "characters": 357,
+      "outsidePageCount": 0,
+      "replacementCount": 0
+    },
+    {
+      "page": 18,
+      "characters": 539,
+      "outsidePageCount": 0,
+      "replacementCount": 0
+    },
+    {
+      "page": 19,
+      "characters": 537,
+      "outsidePageCount": 0,
+      "replacementCount": 0
+    },
+    {
       "page": 20,
-      "characters": 553,
+      "characters": 554,
       "outsidePageCount": 0,
       "replacementCount": 0
     },
     {
       "page": 21,
-      "characters": 561,
+      "characters": 562,
       "outsidePageCount": 0,
       "replacementCount": 0
     },
     {
       "page": 22,
-      "characters": 745,
+      "characters": 746,
       "outsidePageCount": 0,
       "replacementCount": 0
     },
     {
       "page": 23,
-      "characters": 569,
+      "characters": 570,
       "outsidePageCount": 0,
       "replacementCount": 0
     },
     {
       "page": 24,
-      "characters": 637,
+      "characters": 638,
       "outsidePageCount": 0,
       "replacementCount": 0
     },
     {
       "page": 25,
-      "characters": 503,
+      "characters": 512,
       "outsidePageCount": 0,
       "replacementCount": 0
     }
@@ -735,7 +735,7 @@
     "page-22.png": "601a58618060e10914f9c6a3bfb6c7d5da9d3e30cc46c0d9a7e7145058e5b1e4",
     "page-23.png": "a302f1568ec40ed24524818e92beaa33c4640c70e864deff7a40809a5a556642",
     "page-24.png": "e11e85a98f60bf6340af2dfa40344e2f0cfb67c98f85be7eec85cdfc9ff8f9c4",
-    "page-25.png": "9e228a8453080123a3b414779c0f14e9984b97073718e1f48fe8211a118ed7b4"
+    "page-25.png": "4b85acf6848f63cafe0578ae80bb7bf1914e6089e786d475f7b69fbcca91d782"
   },
   "limitations": [
     "软件流程和引用检查不证明真实车型标定、企业验收或全部自然语言推理正确。",
@@ -745,20 +745,20 @@
   "finalized": true,
   "visualReviewAllPages": true,
   "all25PagesIndividuallyViewed": true,
-  "docxSha256": "f47b778000c187a577ab956f65c34909afcfdeca1e4f0edf8db791e5d0688cda",
-  "latestPdfSha256": "6a7438dff3cf0a95dc574d36b8a241710b9cc0f79cd86fabf9a16766ba09b44c",
+  "docxSha256": "4bbc508898faa7d5d5ae4183ca98b8264f64b2c9e678415c0afe74be11d86d46",
+  "latestPdfSha256": "e5e74952b70c14df2a13b8b505675b8f9120d1982f5a4bb19925231950722bab",
   "outputDocx": "C:\\Users\\Zllyh\\Documents\\Codex\\2026-10-11\\n-h\\outputs\\DriveLab 智能驾驶工况仿真与辅助分析 Web 平台 V1.0 软件实现与成果说明书.docx",
   "repositoryDocx": "docs/competition/DriveLab-软件实现与成果说明书.docx",
   "outputRepositoryAndRenderInputByteIdentical": true,
   "contentSource": "docs/competition/implementation-results.json",
   "builderSource": "scripts/create-implementation-results.py",
-  "contentSha256": "16ec86144fc5611fb472e1bf60e40d8797af84c03eab29099036c35731cfc65c",
+  "contentSha256": "61a6b144634afb09aa518eba8e03daa88d4bae55625cdd10fcdc1fc0f85d477b",
   "builderSha256": "7244f3be28924b9a7d775d193a76bfa59df36994d3e0abd571bfc5df34bdb74b",
-  "authoringMarker": "new edit count1 docx succeeded once for requested figure-redesign operation; not repeated",
-  "ownedFinalWordPid": 35860,
+  "authoringMarker": "new edit count1 docx succeeded once for requested neutral-wording operation; not repeated",
+  "ownedFinalWordPid": 40700,
   "wordClosedWithoutSaving": true,
   "installedLibreOfficeUsed": false,
-  "renderDirectory": ".sites-runtime/implementation-results/final-layout-render",
+  "renderDirectory": ".sites-runtime/implementation-results/final-neutral-render",
   "layoutRevision": "20261117-full-width-figure-groups",
   "pageReview": [
     {
@@ -909,7 +909,7 @@
       "page": 25,
       "result": "pass",
       "reviewer": "email_verification_help",
-      "notes": "本轮最新PNG逐页目视：正文、全宽图组、图注和页码清楚，无裁切、重叠或缺字。"
+      "notes": "本轮新职责与中立AI辅助短段已复看；无开发助手品牌、工作量比例或独立人工履历表述；负责人独立字段保留。"
     }
   ],
   "layout": {
@@ -937,9 +937,30 @@
     "captainRoleSuffixRemoved": true,
     "initialFallbackAndTargetedRegressionSeparate": true,
     "originalSixTaskSourceSetSha256": "2c597a9c6878a46c48cb31accbdec2775bfbe9a9724e7092e050816609005f51",
-    "noGeneralSemanticOrRealVehicleCertificationClaim": true
+    "noGeneralSemanticOrRealVehicleCertificationClaim": true,
+    "developmentAssistantBrandNeutral": true,
+    "noUnverifiedAiOrHumanWorkRatio": true,
+    "softwareAndVehicleResponsibilitiesExplicit": true
   },
-  "oldVersionPreserved": "outputs/历史版本/20261117-图版调整前",
+  "oldVersionPreserved": "outputs/历史版本/20261117-中立表述调整前",
   "pdfDelivered": false,
-  "remainingBlockingFindings": []
+  "remainingBlockingFindings": [],
+  "teamSha256": "25a1458cc483bbc76c32f8345812204ae2bc8f42e5e7f8ec8ed4b30af13e6762",
+  "wordingRevision": "20261117-neutral-development-responsibilities",
+  "currentIterationVisualCheck": {
+    "changedPages": [
+      25
+    ],
+    "changedPagesReopened": [
+      25
+    ],
+    "other24PagesByteIdenticalToReviewedVersion": true
+  },
+  "additionalRootVisualReview": {
+    "pages": [
+      25
+    ],
+    "result": "pass",
+    "scope": "本轮中立文案与职责变化页；父任务明确逐页目视通过。"
+  }
 }

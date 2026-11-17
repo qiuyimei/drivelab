@@ -6,40 +6,40 @@
   "finalized": true,
   "visualReview": "pass",
   "visualReviewAllPages": true,
-  "latestPdfSha256": "e2e24af951167b29b8d248a12413790d9c5205d4171181e114210da2fb79c7ce",
-  "sha256": "e2e24af951167b29b8d248a12413790d9c5205d4171181e114210da2fb79c7ce",
-  "bytes": 356702,
+  "latestPdfSha256": "8378fb78349b11f00cfa56f493adc4e2ae71fa9429bd6626a4abefd44c69d5e1",
+  "sha256": "8378fb78349b11f00cfa56f493adc4e2ae71fa9429bd6626a4abefd44c69d5e1",
+  "bytes": 356955,
   "outputPdf": "C:\\Users\\Zllyh\\Documents\\Codex\\2026-10-11\\n-h\\outputs\\DriveLab-参赛技术文档.pdf",
   "repositoryCopy": "docs/competition/DriveLab-参赛技术文档.pdf",
   "copiesByteIdentical": true,
   "builderSource": "scripts/create-technical-document.py",
-  "builderSha256": "4e93a0153021a0536c2e43869716bdc9b790d45418a3919b56ba38560d4c0d8c",
+  "builderSha256": "1f32118a551a050c7183313782e03b78905670d2cd3e8af7358b6bb01ce69f73",
   "figureLayoutBuilderSha256": "7244f3be28924b9a7d775d193a76bfa59df36994d3e0abd571bfc5df34bdb74b",
-  "figureContentSha256": "16ec86144fc5611fb472e1bf60e40d8797af84c03eab29099036c35731cfc65c",
-  "teamSha256": "9561874c68691b10eeee8e893f6e138323070a30047229516f4fcac96454cd2c",
-  "authoringMarker": "new edit count1 pdf succeeded once for requested figure-redesign operation; not repeated",
+  "figureContentSha256": "61a6b144634afb09aa518eba8e03daa88d4bae55625cdd10fcdc1fc0f85d477b",
+  "teamSha256": "25a1458cc483bbc76c32f8345812204ae2bc8f42e5e7f8ec8ed4b30af13e6762",
+  "authoringMarker": "new edit count1 pdf succeeded once for requested neutral-wording operation; not repeated",
   "renderer": "bundled Poppler pdftoppm110dpi",
   "renderDirectory": ".sites-runtime/materials-120",
   "renderedPngSha256": {
-    "technical-layout-page-01.png": "164c3f0df7f058be30bae909b55a0f34f910919707e9fe8e855dcedf8bcb2bae",
-    "technical-layout-page-02.png": "193960606935b0891372de4ebd43765d8fbc9c77fdc26b3f2603c6a3cae8dc0e",
-    "technical-layout-page-03.png": "c74a024f5ec48dad39a781e427a304278e30867f59f48a804566c0198f4c0e31",
-    "technical-layout-page-04.png": "7ad3ea2deab9255fb15636d2c20e0cd57fc9f786af73a084fea8bf17b09882b7",
-    "technical-layout-page-05.png": "1b65e0d031032a687845ce139d53d2fac0417edf9d4f712c571aff22d164ff0e",
-    "technical-layout-page-06.png": "e1020ece9f4081f33fb7e958192fd5850167459f507b900e4213e7262784eb8e",
-    "technical-layout-page-07.png": "209ba52e07c539f3c9197fd63480f274466e2e4b864a9e9fbffd08d826794ad4",
-    "technical-layout-page-08.png": "2be3cf7555d0b5606f85f7e8fba5b6507bd3aeef1a57b8d26daf17da6b7c0c34",
-    "technical-layout-page-09.png": "0be131c84b54a0765a1d6a6d5532c4cd2d67e2e2d8fb60903bd05e684dbf7e33",
-    "technical-layout-page-10.png": "20ba9741058437ba6b1efcb028c5ad73194004da071eb69828ad4df958be5576",
-    "technical-layout-page-11.png": "f2f6dcd49ce30061e590dfdad3be7979b9fdab1b4b5d73686c827f5cb5ba562e",
-    "technical-layout-page-12.png": "9f239687723d6e7beb6660622024b153a3f35ef7370f2ee66418e92fcf0ddae7",
-    "technical-layout-page-13.png": "baf412c18541dad6c744a3678afe4068e70c9f0f6e08828df095af7d2e6a7f8f",
-    "technical-layout-page-14.png": "4c1fc3259eeb794e8551a21430222856b2d483cebb1394736d8fd605804bd65e",
-    "technical-layout-page-15.png": "48a5faa39cb801cf45d02af3e27c04a7e6d091077fb460451354b732c236348b",
-    "technical-layout-page-16.png": "076bfcb4e6ce64acac4fc9ee0595d23cf32b43940787914db5e9cc4cf8c9341f",
-    "technical-layout-page-17.png": "3380674750073a3db7bd90bae54de9ad09f25825d528e69f36617ee082ea51dd",
-    "technical-layout-page-18.png": "043b6cd4af1e5651075141666f42c3e72f35d8329574939be02a257d106d938d",
-    "technical-layout-page-19.png": "0786931c5c420d148d10e500191cb2f0d917ea8c3634eec1ef3d942067f574d5"
+    "technical-neutral-page-01.png": "164c3f0df7f058be30bae909b55a0f34f910919707e9fe8e855dcedf8bcb2bae",
+    "technical-neutral-page-02.png": "193960606935b0891372de4ebd43765d8fbc9c77fdc26b3f2603c6a3cae8dc0e",
+    "technical-neutral-page-03.png": "c74a024f5ec48dad39a781e427a304278e30867f59f48a804566c0198f4c0e31",
+    "technical-neutral-page-04.png": "7ad3ea2deab9255fb15636d2c20e0cd57fc9f786af73a084fea8bf17b09882b7",
+    "technical-neutral-page-05.png": "1b65e0d031032a687845ce139d53d2fac0417edf9d4f712c571aff22d164ff0e",
+    "technical-neutral-page-06.png": "e1020ece9f4081f33fb7e958192fd5850167459f507b900e4213e7262784eb8e",
+    "technical-neutral-page-07.png": "209ba52e07c539f3c9197fd63480f274466e2e4b864a9e9fbffd08d826794ad4",
+    "technical-neutral-page-08.png": "2be3cf7555d0b5606f85f7e8fba5b6507bd3aeef1a57b8d26daf17da6b7c0c34",
+    "technical-neutral-page-09.png": "0be131c84b54a0765a1d6a6d5532c4cd2d67e2e2d8fb60903bd05e684dbf7e33",
+    "technical-neutral-page-10.png": "20ba9741058437ba6b1efcb028c5ad73194004da071eb69828ad4df958be5576",
+    "technical-neutral-page-11.png": "f2f6dcd49ce30061e590dfdad3be7979b9fdab1b4b5d73686c827f5cb5ba562e",
+    "technical-neutral-page-12.png": "029ada3e940a5f384f94432e5cf90ea1d1860b16c8c299d76191ebbf3d3b4fde",
+    "technical-neutral-page-13.png": "baf412c18541dad6c744a3678afe4068e70c9f0f6e08828df095af7d2e6a7f8f",
+    "technical-neutral-page-14.png": "4c1fc3259eeb794e8551a21430222856b2d483cebb1394736d8fd605804bd65e",
+    "technical-neutral-page-15.png": "48a5faa39cb801cf45d02af3e27c04a7e6d091077fb460451354b732c236348b",
+    "technical-neutral-page-16.png": "e925bdd110a717a0884f56b30b92996cbc3828f0e39180ee8956a9aa61c20713",
+    "technical-neutral-page-17.png": "3380674750073a3db7bd90bae54de9ad09f25825d528e69f36617ee082ea51dd",
+    "technical-neutral-page-18.png": "043b6cd4af1e5651075141666f42c3e72f35d8329574939be02a257d106d938d",
+    "technical-neutral-page-19.png": "0786931c5c420d148d10e500191cb2f0d917ea8c3634eec1ef3d942067f574d5"
   },
   "geometry": [
     {
@@ -110,7 +110,7 @@
     },
     {
       "page": 12,
-      "characters": 403,
+      "characters": 439,
       "outsidePageCount": 0,
       "replacementCount": 0
     },
@@ -134,7 +134,7 @@
     },
     {
       "page": 16,
-      "characters": 349,
+      "characters": 342,
       "outsidePageCount": 0,
       "replacementCount": 0
     },
@@ -257,7 +257,7 @@
       "page": 12,
       "result": "pass",
       "reviewer": "email_verification_help",
-      "notes": "本轮最新渲染逐页检查通过；第12页职责断行修正后单独复看，其余18页像素字节一致。"
+      "notes": "本轮中立职责与AI辅助短段修订后已复看；不含具体开发助手品牌，不声称使用比例。"
     },
     {
       "page": 13,
@@ -280,8 +280,8 @@
     {
       "page": 16,
       "result": "pass",
-      "reviewer": "root",
-      "notes": "本轮最新渲染逐页检查通过；第12页职责断行修正后单独复看，其余18页像素字节一致。"
+      "reviewer": "email_verification_help",
+      "notes": "本轮中立职责与AI辅助短段修订后已复看；不含具体开发助手品牌，不声称使用比例。"
     },
     {
       "page": 17,
@@ -325,8 +325,31 @@
     "noSemanticAccuracyOrVehicleCertificationClaim": true,
     "oldVideoNotRemade": true,
     "singlePointComparisonWarningAccurate": true,
-    "historical114ExtremaSeparate": true
+    "historical114ExtremaSeparate": true,
+    "developmentAssistantBrandNeutral": true,
+    "noUnverifiedAiOrHumanWorkRatio": true,
+    "softwareAndVehicleResponsibilitiesExplicit": true
   },
-  "oldVersionPreserved": "outputs/历史版本/20261117-图版调整前",
-  "remainingBlockingFindings": []
+  "oldVersionPreserved": "outputs/历史版本/20261117-中立表述调整前",
+  "remainingBlockingFindings": [],
+  "wordingRevision": "20261117-neutral-development-responsibilities",
+  "currentIterationVisualCheck": {
+    "changedPages": [
+      12,
+      16
+    ],
+    "changedPagesReopened": [
+      12,
+      16
+    ],
+    "other17PagesByteIdenticalToReviewedVersion": true
+  },
+  "additionalRootVisualReview": {
+    "pages": [
+      12,
+      16
+    ],
+    "result": "pass",
+    "scope": "本轮中立文案与职责变化页；父任务明确逐页目视通过。"
+  }
 }
