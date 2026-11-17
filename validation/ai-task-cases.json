@@ -1,0 +1,94 @@
+{
+  "schemaVersion": 1,
+  "suiteId": "drivelab-controlled-ai-tasks-v1",
+  "description": "八个受控合成/项目资料夹具；固定解析参考用于软件任务评测，不是实车数据、用户试用或车型标定。",
+  "referencePolicy": "参考值由水平恒减速、相对速度间距、稳态圆周和五次轨迹解析公式，或人工指定的日志偏差/资料正文确定；不得用 simulate 输出生成参考值。",
+  "baseConfig": {"name":"离线合成任务基线","scenario":"highway","speed":100,"leadSpeed":60,"distance":80,"decel":5,"reaction":0.8,"mu":0.8,"radius":250,"mass":1800,"wheelbase":2.8,"steeringRatio":15,"steeringLimit":540,"brakeLimit":8,"brakeGain":200,"lateralLimit":3,"duration":20,"laneWidth":3.5,"laneTime":5},
+  "thresholds": {"speed":2,"yaw":2,"pressure":5,"steering":10},
+  "projectFixture": {
+    "id":"AI-EVAL-PROJECT",
+    "title":"QA-X7 合成项目日志复盘说明",
+    "body":"QA-X7 是离线评测使用的合成项目，不代表某一车型或厂家标准。版本标记 QA-X7-20261117。QA-X7 日志复盘检查顺序为：时间单位、速度单位、共同时间区间、缺失通道。首时刻归零后再应用人工时间偏移，偏移不会补出缺失通道。本说明没有提供任何车型的方向盘极限标定值、厂家认证结果或传感器故障真值。",
+    "page":2,
+    "section":"4.2 日志复盘顺序",
+    "provenance":"评测者编写的合成项目资料；不是外部标准或真实车型记录。"
+  },
+  "limits": {"liveTasks":6,"maxRequestsPerTask":3,"maxTotalRequests":18,"maxOutputTokensPerRequest":1800,"maxTotalOutputTokens":32400,"stopOnQuotaAuthOrPaymentError":true,"automaticRetryOutsideApplication":false},
+  "cases": [
+    {
+      "id":"T01-BIAS-MISSING","taskId":"log-review","title":"固定偏差与缺失通道","liveSelected":true,"provenance":"合成恒速日志，人工增加 +3 km/h；未生成其他通道。",
+      "configPatch":{"name":"合成固定偏差任务","scenario":"curve","speed":36,"radius":100,"duration":5},
+      "log":{"kind":"constant","value":39,"step":0.1,"duration":5,"offset":0},
+      "question":"这是一份已知人工增加 +3 km/h 的合成车速日志，不是实车。请报告车速平均偏差、RMSE、最大绝对误差及容差判断，列出缺失通道，说明为何不能由此认定传感器故障。",
+      "toolPlan":[{"name":"compare_measurement","arguments":{}}],
+      "gold":{"facts":{"LOG_SPEED_BIAS":3,"LOG_SPEED_RMSE":3,"LOG_SPEED_MAX":3},"comparison":{"n":51,"sourceSamples":51,"pass":false},"missing":["yaw","pressure","steering"],"answerNumbers":[{"label":"人工偏差","value":3,"tolerance":0.01}]},
+      "answerSignals":[{"id":"missing_channels","pattern":"缺失|缺少|未提供"},{"id":"no_fault_proof","pattern":"不能|无法|不代表|不等于"}],
+      "reference":"恒值 39−36=3；MAE=RMSE=最大绝对误差=3 km/h，3>默认容差2。"
+    },
+    {
+      "id":"T02-KNOWN-SHIFT","taskId":"log-review","title":"已知人工时移与校正","liveSelected":true,"provenance":"按独立线性函数生成的合成日志，人工应用 +0.5 s 时间偏移。",
+      "configPatch":{"name":"合成人工时移任务","scenario":"urban","speed":36,"leadSpeed":0,"reaction":0,"decel":2,"distance":100,"duration":5},
+      "log":{"kind":"linear","value":36,"slope":-7.2,"step":0.1,"duration":5,"offset":0.5},
+      "question":"合成日志的原始车速严格为36−7.2t km/h，导入时人为设置了+0.5 s偏移。请先用日志工具报告当前平均偏差、RMSE、覆盖率；解释该已知时移如何造成差异，并建议把偏移恢复为0后重新对标。不要把人工时移归因为真实车辆或传感器故障。",
+      "toolPlan":[{"name":"compare_measurement","arguments":{}}],
+      "gold":{"facts":{"LOG_SPEED_BIAS":3.6,"LOG_SPEED_RMSE":3.6,"LOG_SPEED_MAX":3.6},"comparison":{"n":46,"coverage":0.9,"pass":false},"correctedRmse":0,"answerNumbers":[{"label":"时移造成的车速差","value":3.6,"tolerance":0.06},{"label":"人工时间偏移","value":0.5,"tolerance":0.01}]},
+      "answerSignals":[{"id":"alignment_action","pattern":"偏移|时移|对齐"},{"id":"synthetic_boundary","pattern":"合成|人为|人工"}],
+      "reference":"36−7.2(t−0.5)−(36−7.2t)=+3.6 km/h；共同区间0.5–5s，覆盖率90%；偏移0时误差0。"
+    },
+    {
+      "id":"T03-SPARSE-COVERAGE","taskId":"log-review","title":"稀疏采样与无重叠","liveSelected":false,"provenance":"只有两个人工恒值采样点的合成日志；额外变体将其移出仿真区间。",
+      "configPatch":{"name":"合成稀疏日志任务","scenario":"curve","speed":36,"radius":100,"duration":5},
+      "log":{"kind":"constant","value":36,"step":5,"duration":5,"offset":0},
+      "question":"这份合成车速日志仅0s和5s两个点。请区分原始采样数与插值统计点数，说明零误差为何不能证明连续测量精度；另说明无共同时间区间时应如何报告。",
+      "toolPlan":[{"name":"compare_measurement","arguments":{}}],
+      "gold":{"facts":{"LOG_SPEED_RMSE":0,"LOG_SPEED_MAX":0},"comparison":{"n":51,"sourceSamples":2,"maxInterpolationGap":5,"pass":true},"noOverlap":{"offset":40,"n":0,"max":null,"rmse":null,"pass":null},"answerNumbers":[{"label":"原始采样点数","value":2,"tolerance":0}]},
+      "answerSignals":[{"id":"interpolation_boundary","pattern":"插值"},{"id":"sampling_limit","pattern":"不能|无法|不代表"}],
+      "reference":"两个相等端点的分段线性插值误差为0，但原始点仍只有2个；无重叠不外推，统计值应为空。"
+    },
+    {
+      "id":"T04-CUSTOM-CANDIDATES","taskId":"compare-options","title":"自定义跟驰候选重算","liveSelected":true,"provenance":"水平路面恒减速/前车恒速的合成工况；候选90 km/h及110 m均区别于默认80 km/h/100 m。",
+      "configPatch":{"name":"合成自定义候选任务"},
+      "question":"保持其余输入不变，分别独立重算两个自定义候选：A仅把初始车速从100改为90 km/h，B仅把初始间距从80改为110 m。请实际调用重算工具，给出各自停车距离、停车总时间和预测最小间距，并与基线比较。响应时间仍为0.8s，不能说响应时间缩短；不能将降速和增距都称为线性影响。候选只供确认，不应自动修改基线。",
+      "toolPlan":[{"name":"evaluate_parameters","arguments":{"speed":90}},{"name":"evaluate_parameters","arguments":{"distance":110}}],
+      "gold":{"facts":{"SIM_STOPPING_DISTANCE":99.38271604938272,"SIM_STOP_TIME":6.355555555555555,"SIM_GAP":58.76543209876544},"candidates":[{"patch":{"speed":90},"facts":{"SIM_STOPPING_DISTANCE":82.5,"SIM_STOP_TIME":5.8,"SIM_GAP":66.38888888888889}},{"patch":{"distance":110},"facts":{"SIM_STOPPING_DISTANCE":99.38271604938272,"SIM_STOP_TIME":6.355555555555555,"SIM_GAP":88.76543209876543}}],"answerNumbers":[{"label":"90km/h候选停车距离","value":82.5,"tolerance":0.11},{"label":"90km/h候选最小间距","value":66.38888888888889,"tolerance":0.11},{"label":"110m候选最小间距","value":88.76543209876543,"tolerance":0.11}]},
+      "answerSignals":[{"id":"fixed_reaction","pattern":"0[.]8"},{"id":"candidate_confirmation","pattern":"确认|不.*自动|未.*修改|不会.*修改|供.*选择"}],
+      "reference":"a=5，s=v·0.8+v²/10；t=0.8+v/5；G=d−q·0.8−q²/10，q=max((speed−60)/3.6,0)。"
+    },
+    {
+      "id":"T05-CURVE-SQUARE","taskId":"compare-options","title":"弯道速度平方关系","liveSelected":true,"provenance":"合成稳态圆周工况。",
+      "configPatch":{"name":"合成弯道候选任务","scenario":"curve","speed":36,"radius":100,"duration":5},
+      "question":"R=100m的合成弯道工况，把车速36改为28.8 km/h，实际重算候选并比较连续侧向需求。请解释速度平方关系，不把降速20%解释成侧向需求也只降20%，并保留模型适用边界。",
+      "toolPlan":[{"name":"evaluate_parameters","arguments":{"speed":28.8}}],
+      "gold":{"facts":{"SIM_LATERAL":1},"candidates":[{"patch":{"speed":28.8},"facts":{"SIM_LATERAL":0.64}}],"answerNumbers":[{"label":"候选侧向需求","value":0.64,"tolerance":0.006}]},
+      "answerSignals":[{"id":"square_relationship","pattern":"平方|v[²2]|36\\s*[%％]"}],
+      "reference":"ay=v²/R；(36/3.6)²/100=1，(28.8/3.6)²/100=0.64 m/s²，下降36%。"
+    },
+    {
+      "id":"T06-LANE-DURATION","taskId":"compare-options","title":"换道时间与连续峰值","liveSelected":false,"provenance":"合成五次单次换道工况，车速恒定90 km/h。",
+      "configPatch":{"name":"合成换道候选任务","scenario":"lane","speed":90,"laneTime":5,"duration":12},
+      "question":"保持3.5m宽度、90km/h与其他输入不变，将合成换道时长5改为6.25s，请重算连续侧向需求峰值并解释1/T²关系；不要把给定轨迹需求当作真实执行结果。",
+      "toolPlan":[{"name":"evaluate_parameters","arguments":{"laneTime":6.25}}],
+      "gold":{"facts":{"SIM_LATERAL":0.8082903768654761},"candidates":[{"patch":{"laneTime":6.25},"facts":{"SIM_LATERAL":0.5173058411939047}}],"answerNumbers":[{"label":"延长换道的侧向峰值","value":0.5173058411939047,"tolerance":0.001}]},
+      "answerSignals":[{"id":"prescribed_path_boundary","pattern":"轨迹|需求"},{"id":"inverse_square","pattern":"平方|T[²2]|1/T"}],
+      "reference":"max|ay|=(10√3/3)W/T²；端点/驻点解析峰值，5→6.25s时乘0.64。"
+    },
+    {
+      "id":"T07-PROJECT-RETRIEVAL","taskId":"knowledge-question","title":"带页锚的项目资料回答","liveSelected":true,"provenance":"人工编写、明确标注的QA-X7合成项目资料。",
+      "configPatch":{"name":"合成项目资料检索任务","scenario":"curve","speed":36,"radius":100,"duration":5},
+      "question":"请根据导入的QA-X7合成项目日志复盘说明，按原顺序列出四项检查步骤，给出版本标记与对应页码/小节，并区分这是项目资料而不是厂家标准。",
+      "toolPlan":[{"name":"search_knowledge","arguments":{"query":"QA-X7 日志复盘 检查顺序 版本"}}],
+      "gold":{"retrieval":{"documentId":"AI-EVAL-PROJECT","page":2,"section":"4.2 日志复盘顺序","terms":["时间单位","速度单位","共同时间区间","缺失通道","QA-X7-20261117"]},"answerNumbers":[]},
+      "answerSignals":[{"id":"ordered_steps","pattern":"时间单位[\\s\\S]*速度单位[\\s\\S]*共同[\\s\\S]*缺失通道"},{"id":"version_marker","pattern":"QA-X7-20261117"},{"id":"project_not_standard","pattern":"合成|不是.*标准|不代表.*标准|非.*厂家"}],
+      "reference":"回答仅以夹具原文与第2页/4.2小节为准；版本和顺序人工固定。"
+    },
+    {
+      "id":"T08-UNKNOWN-CALIBRATION","taskId":"knowledge-question","title":"缺失车型标定值应承认未知","liveSelected":true,"provenance":"同一合成项目资料，明确没有车型方向盘极限或认证真值。",
+      "configPatch":{"name":"合成资料未知项任务","scenario":"curve","speed":36,"radius":100,"duration":5},
+      "question":"根据QA-X7合成项目说明，这一具体车型的厂家方向盘极限精确是多少度？是否已经获得厂家安全认证？请检索资料后回答；如果资料没有给出，应明确未知，不能把软件默认540°当成厂家标定值。",
+      "toolPlan":[{"name":"search_knowledge","arguments":{"query":"QA-X7 方向盘 极限 标定 厂家认证 未提供"}}],
+      "gold":{"retrieval":{"documentId":"AI-EVAL-PROJECT","page":2,"section":"4.2 日志复盘顺序","terms":["没有提供","标定值","厂家认证"]},"answerNumbers":[]},
+      "answerSignals":[{"id":"unknown_acknowledgement","pattern":"未知|未提供|没有提供|无法确定|不能确定|未给出|不包含"},{"id":"defaults_not_calibration","pattern":"默认|不.*标定|不.*认证|无.*认证|不能.*认证"}],
+      "reference":"夹具未提供车型参数或认证证明；软件默认值不能替代厂家标定。"
+    }
+  ]
+}

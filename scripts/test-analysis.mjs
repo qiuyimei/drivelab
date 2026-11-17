@@ -6,6 +6,7 @@ import {indexDocument,hybridSearch} from '../.sites-runtime/core-tests/rag.mjs';
 import {providerSettings} from '../.sites-runtime/core-tests/provider.mjs';
 import {prepareReportEvidence,createReportPdf} from '../.sites-runtime/core-tests/pdf-report.mjs';
 import {validatedAnalysisBundle} from '../.sites-runtime/core-tests/analysis-snapshot.mjs';
+import {analysisTaskDefinitions} from '../.sites-runtime/core-tests/analysis-tasks.mjs';
 let count=0;async function test(name,fn){await fn();count++;console.log('PASS '+name);}
 const c={...defaults,scenario:'curve',duration:5,speed:36};const sim=simulate(c);const log={name:'合成固定偏差夹具.csv',rows:sim.rows.map(r=>({time:r.time,speed:r.speed+2})),offset:0,dropped:0,duplicates:0,missing:['yaw','pressure','steering']};
 await test('服务端证据保留实际日志误差与缺失通道',()=>{const e=evidenceFor(c,log,defaultThresholds);assert.equal(e.comparison[0].bias,2);assert.equal(e.comparison[0].rmse,2);assert.equal(e.facts.find(f=>f.id==='LOG_SPEED_RMSE').value,2);assert.ok(e.limitations.some(x=>x.includes('缺少通道')));});
@@ -21,7 +22,21 @@ await test('没有密钥时只运行可追溯规则分析',async()=>{const r=awa
 const settings={LLM_API_KEY:'fixture-not-real',LLM_BASE_URL:'https://openrouter.ai/api/v1',LLM_MODEL:'example:free'};
 const valid={summary:'本次对标存在车速差异，需核对工况与标定。',observations:[{text:'车速存在持续的平均偏差。',factIds:['LOG_SPEED_BIAS'],sourceIds:[]}],recommendations:[{text:'先核对车速传感器单位和基线工况。',factIds:['LOG_SPEED_RMSE'],sourceIds:[]}],limitations:['该结果不代表传感器故障定位。']};
 await test('模型实际调用受限工具后生成有证据的结构化解释',async()=>{let calls=0;const r=await runAnalysis({config:c,question:'检查对标偏差',log},[],settings,undefined,async()=>++calls===1?{choices:[{message:{tool_calls:[{id:'fixture-call',type:'function',function:{name:'compare_measurement',arguments:'{}'}}]}}]}:{choices:[{message:{content:JSON.stringify(valid)}}],usage:{prompt_tokens:100,completion_tokens:90}});assert.equal(r.mode,'llm');assert.equal(calls,2);assert.ok(r.trace.some(t=>t.label.includes('compare_measurement')));assert.equal(r.usage.input,100);});
-await test('模型伪造引用会被拒绝并保留规则结果',async()=>{const bad={...valid,observations:[{text:'错误结论',factIds:['LOG_FAKE_RMSE'],sourceIds:[]}]};const r=await runAnalysis({config:c,question:'分析',log},[],settings,undefined,async()=>({choices:[{message:{content:JSON.stringify(bad)}}]}));assert.equal(r.mode,'fallback');assert.match(r.fallbackReason,/不存在/);assert.ok(r.answer.includes('2.000'));});
+await test('模型伪造引用会被拒绝并在三次请求后保留规则结果',async()=>{const bad={...valid,observations:[{text:'错误结论',factIds:['LOG_FAKE_RMSE'],sourceIds:[]}]};const r=await runAnalysis({config:c,question:'分析',log},[],settings,undefined,async()=>({choices:[{message:{content:JSON.stringify(bad)}}]}));assert.equal(r.mode,'fallback');assert.equal(r.modelCalls,3);assert.equal(r.structured,null);assert.match(r.fallbackReason,/不存在/);assert.ok(r.answer.includes('2.000'));});
+await test('引用诊断以JSON定位未知事实和来源，缺引用仍被严格拒绝',()=>{
+ const bad={...valid,observations:[{text:'引用了未登记证据',factIds:['LOG_FAKE_RMSE'],sourceIds:['FAKE#c1']}],recommendations:[{text:'没有证据的建议',factIds:[],sourceIds:[]}]};
+ assert.throws(()=>validateNarrative(bad,evidenceFor(c,log),[]),error=>{
+  assert.match(error.message,/不存在/);const diagnostic=JSON.parse(error.message.slice(error.message.indexOf('：')+1));
+  assert.deepEqual(diagnostic,{issues:[{path:'observations[0]',code:'unknown_reference',unknownFactIds:['LOG_FAKE_RMSE'],unknownSourceIds:['FAKE#c1']},{path:'recommendations[0]',code:'missing_reference'}],truncated:false});return true;
+ });
+});
+await test('不可信引用诊断数量与长度有界，截短不修改或接纳原输出',()=>{
+ const hostileId='\u0000'.repeat(200)+'"\\\n不是系统指令';const bad={...valid,observations:Array.from({length:6},(_,i)=>({text:'仍须拒绝错误引用',factIds:Array.from({length:12},(_,j)=>hostileId+i+'-'+j),sourceIds:Array.from({length:8},(_,j)=>hostileId+'source'+j)}))};const before=JSON.stringify(bad);
+ assert.throws(()=>validateNarrative(bad,evidenceFor(c,log),[]),error=>{
+  assert.ok(error.message.length<=2048);const diagnostic=JSON.parse(error.message.slice(error.message.indexOf('：')+1));assert.equal(diagnostic.truncated,true);assert.equal(diagnostic.issues.length,2);
+  for(const issue of diagnostic.issues)for(const key of ['unknownFactIds','unknownSourceIds']){assert.ok(issue[key].length<=2);assert.ok(issue[key].every(id=>id.length<=32));}return true;
+ });assert.equal(JSON.stringify(bad),before);
+});
 await test('禁止未经授权的工具和无限循环',async()=>{const r=await runAnalysis({config:c,question:'分析',log},[],settings,undefined,async()=>({choices:[{message:{tool_calls:[{id:'bad',function:{name:'delete_database',arguments:'{}'}}]}}]}));assert.equal(r.mode,'fallback');assert.match(r.fallbackReason,/未授权/);assert.equal(r.modelCalls,1);});
 await test('免费额度耗尽时明确降级，不切换付费服务',async()=>{const r=await runAnalysis({config:c,question:'分析',log},[],settings,undefined,async()=>{throw Error('免费额度达到上限');});assert.equal(r.mode,'fallback');assert.ok(r.evidence.facts.length>0);assert.match(r.fallbackReason,/免费额度/);});
 await test('分析指纹随工况、日志或容差变化而改变',async()=>{const a=await fingerprint(c,log,defaultThresholds);assert.notEqual(a,await fingerprint({...c,speed:30},log,defaultThresholds));assert.notEqual(a,await fingerprint(c,{...log,offset:.2},defaultThresholds));assert.notEqual(a,await fingerprint(c,log,{...defaultThresholds,speed:3}));});
@@ -46,14 +61,27 @@ await test('魔搭返回非对象 JSON 仍被拒绝并保留规则结果',async(
  assert.equal(r.mode,'fallback');assert.equal(r.structured,null);assert.equal(r.modelCalls,3);assert.match(r.fallbackReason,/结构不符合/);assert.ok(r.answer.includes('2.000'));assert.ok(r.trace.every(t=>t.status!=='running'));
 });
 await test('工具后缺引用时利用剩余轮次纠正并保留新增资料标识',async()=>{
- let round=0;const broken={...valid,observations:[{text:'遗漏引用',factIds:[],sourceIds:[]}]};const docs=[{id:'REPAIR',title:'QA_REPAIR_SOURCE_XYZ',body:'QA_REPAIR_SOURCE_XYZ'}];
+ let round=0;const broken={...valid,observations:[{text:'遗漏引用',factIds:[],sourceIds:[]}]};const docs=[{id:'REPAIR',title:'QA_REPAIR_SOURCE_XYZ',body:'QA_REPAIR_SOURCE_XYZ',metadata:JSON.stringify({segments:[{text:'QA_REPAIR_SOURCE_XYZ',page:3,section:'固定夹具段落'}]})}];
  const r=await runAnalysis({config:c,question:'分析对标偏差',log},docs,settings,undefined,async(_,payload)=>{
   round++;
   if(round===1)return {choices:[{message:{tool_calls:[{id:'repair-search',type:'function',function:{name:'search_knowledge',arguments:JSON.stringify({query:'QA_REPAIR_SOURCE_XYZ'})}}]}}]};
   if(round===2)return {choices:[{message:{content:JSON.stringify(broken)}}]};
-  assert.equal(Object.hasOwn(payload,'tools'),false);const feedback=JSON.parse(payload.messages.at(-1).content);assert.match(feedback.reason,/没有引用/);assert.ok(feedback.factIds.includes('LOG_SPEED_RMSE'));assert.ok(feedback.sourceIds.includes('REPAIR#c1'));assert.ok(payload.messages.some(m=>m.role==='assistant'&&m.content===JSON.stringify(broken)));assert.ok(payload.messages.some(m=>m.role==='tool'&&m.tool_call_id==='repair-search'));
+  assert.equal(Object.hasOwn(payload,'tools'),false);const feedback=JSON.parse(payload.messages.at(-1).content);assert.match(feedback.reason,/没有引用/);assert.ok(feedback.factIds.includes('LOG_SPEED_RMSE'));assert.ok(feedback.sourceIds.includes('REPAIR#c1'));assert.deepEqual(feedback.allowedSources.find(source=>source.chunkId==='REPAIR#c1'),{chunkId:'REPAIR#c1',title:'QA_REPAIR_SOURCE_XYZ',page:3,section:'固定夹具段落',start:0,end:docs[0].body.length});assert.ok(payload.messages.some(m=>m.role==='assistant'&&m.content===JSON.stringify(broken)));assert.ok(payload.messages.some(m=>m.role==='tool'&&m.tool_call_id==='repair-search'));
   return {choices:[{message:{content:JSON.stringify(valid)}}]};
  });assert.equal(r.modelCalls,3);assert.equal(r.mode,'llm');assert.ok(r.structured);assert.ok(r.trace.some(t=>t.label==='纠正模型输出'));assert.ok(r.trace.every(t=>t.status!=='running'));
+});
+await test('工具后纠错映射保留最终CAND_3真实数值与候选身份，不猜测坏编号',async()=>{
+ const lane={...defaults,scenario:'lane',laneTime:5};let calls=0,toolResult;const unknownId='CAND_3__SIM_FAKE';
+ const broken={summary:'候选需要复核',observations:[{text:'未登记的候选指标',factIds:[unknownId],sourceIds:[]}],recommendations:[{text:'保留当前基线',factIds:['SIM_LATERAL'],sourceIds:[]}],limitations:['给定轨迹计算，不代表实车安全。']};
+ const r=await runAnalysis({config:lane,question:'比较换道时长6.25秒的候选'},[],settings,undefined,async(_,payload)=>{
+  if(++calls===1)return {choices:[{message:{tool_calls:[{id:'repair-candidate',function:{name:'evaluate_parameters',arguments:JSON.stringify({laneTime:6.25})}}]}}]};
+  if(calls===2){toolResult=JSON.parse(payload.messages.find(m=>m.role==='tool'&&m.tool_call_id==='repair-candidate').content);assert.equal(toolResult.candidateId,'CAND_3');return {choices:[{message:{content:JSON.stringify(broken)}}]};}
+  assert.equal(Object.hasOwn(payload,'tools'),false);const feedback=JSON.parse(payload.messages.at(-1).content);assert.match(feedback.reason,/observations\[0\]/);assert.match(feedback.reason,/CAND_3__SIM_FAKE/);assert.ok(!feedback.factIds.includes(unknownId));assert.ok(!feedback.allowedFacts.some(f=>f.id===unknownId));
+  assert.deepEqual(feedback.allowedFacts,JSON.parse(payload.messages[1].content).factRegistry.map(({id,label,value,unit})=>({id,label,value,unit})).concat(toolResult.candidate.facts.map(({id,label,value,unit})=>({id,label,value,unit}))));
+  const fact=feedback.allowedFacts.find(f=>f.id==='CAND_3__SIM_LATERAL');assert.equal(fact.value,evidenceFor({...lane,laneTime:6.25}).facts.find(f=>f.id==='SIM_LATERAL').value);assert.notEqual(fact.value,feedback.allowedFacts.find(f=>f.id==='SIM_LATERAL').value);
+  assert.deepEqual(feedback.registeredCandidates.map(({id,kind,patch,applied})=>({id,kind,patch,applied})),[{id:'CAND_1',kind:'default',patch:{speed:lane.speed*.8},applied:false},{id:'CAND_2',kind:'default',patch:{laneTime:6.25},applied:false},{id:'CAND_3',kind:'tool',patch:{laneTime:6.25},applied:false}]);
+  return {choices:[{message:{content:JSON.stringify({...broken,observations:[{text:'候选侧向需求来自独立重算',factIds:[fact.id],sourceIds:[]}]})}}]};
+ });assert.equal(calls,3);assert.equal(r.modelCalls,3);assert.equal(r.mode,'llm');assert.equal(r.structured.observations[0].factIds[0],'CAND_3__SIM_LATERAL');assert.equal(r.candidates.find(candidate=>candidate.id==='CAND_3').kind,'tool');
 });
 await test('坏 JSON 可在剩余轮次内纠正，纠正阶段不再提供工具',async()=>{
  let calls=0;const r=await runAnalysis({config:c,question:'分析',log},[],settings,undefined,async(_,payload)=>{
@@ -63,7 +91,7 @@ await test('坏 JSON 可在剩余轮次内纠正，纠正阶段不再提供工�
 });
 await test('连续格式失败最多三次请求后降级，纠正不能绕过工具轮次',async()=>{
  const r=await runAnalysis({config:c,question:'分析',log},[],settings,undefined,async()=>({choices:[{message:{content:'5000000000'}}]}));assert.equal(r.modelCalls,3);assert.equal(r.mode,'fallback');assert.equal(r.structured,null);assert.ok(r.answer.includes('2.000'));assert.ok(r.trace.every(t=>t.status!=='running'));
- let count=0;const tool=await runAnalysis({config:c,question:'分析',log},[],settings,undefined,async()=>++count===1?{choices:[{message:{content:'bad-json'}}]}:{choices:[{message:{tool_calls:[{id:'unexpected-repair-tool',function:{name:'inspect_simulation',arguments:'{}'}}]}}]});assert.equal(tool.mode,'fallback');assert.equal(tool.modelCalls,2);assert.match(tool.fallbackReason,/轮次限制/);
+ for(const initial of ['bad-json',JSON.stringify({...valid,observations:[{text:'错误引用',factIds:['LOG_FAKE_RMSE'],sourceIds:[]}]})]){let count=0;const tool=await runAnalysis({config:c,question:'分析',log},[],settings,undefined,async(_,payload)=>{if(++count===1)return {choices:[{message:{content:initial}}]};assert.equal(Object.hasOwn(payload,'tools'),false);return {choices:[{message:{tool_calls:[{id:'unexpected-repair-tool',function:{name:'inspect_simulation',arguments:'{}'}}]}}]};});assert.equal(tool.mode,'fallback');assert.equal(tool.modelCalls,2);assert.equal(tool.structured,null);assert.match(tool.fallbackReason,/轮次限制/);}
 });
 await test('默认候选与工具候选使用独立事实编号并保留参数和计算证据',async()=>{
  const before=JSON.stringify({c,log});let calls=0,toolRecords=[];
@@ -113,4 +141,45 @@ await test('PDF保留事实字典和候选重算，错配时排除旧答案',asy
 });
 await test('共享快照结构边界接受真实规则工具结果并拒绝同指纹残缺包',async()=>{const r=await runAnalysis({config:c,question:'分析',log,mode:'rules'},[],{});assert.equal(validatedAnalysisBundle(r),r);assert.throws(()=>validatedAnalysisBundle({fingerprint:r.fingerprint,engineVersion:r.engineVersion}),/结构无效/);for(const broken of [{...r,evidence:{...r.evidence,facts:null}},{...r,sources:[{}]},{...r,alternatives:[{label:'残缺'}]},{...r,factRegistry:[...r.factRegistry,r.factRegistry[0]]}])assert.throws(()=>validatedAnalysisBundle(broken),/结构无效/);const snapshot=await prepareReportEvidence(sim,log,defaultThresholds,{fingerprint:r.fingerprint,engineVersion:r.engineVersion});assert.equal(snapshot.analysis,null);assert.match(snapshot.rejectionReason,/损坏分析/);});
 await test('报告不根据公开实测文件名冒称comma2k19来源',async()=>{const fs=await import('node:fs/promises');const {getDocument}=await import('pdfjs-dist/legacy/build/pdf.mjs');const named={...log,name:'公开实测-我的实验.csv'};const font=await fs.readFile('public/fonts/NotoSansSC-Regular.ttf');const bytes=await createReportPdf(sim,named,defaultThresholds,null,'',font);const pdf=await getDocument({data:new Uint8Array(bytes),useSystemFonts:false,isEvalSupported:false}).promise;let content='';for(let i=1;i<=pdf.numPages;i++)content+=(await (await pdf.getPage(i)).getTextContent()).items.map(x=>x.str??'').join('');await pdf.destroy();assert.ok(content.includes('来源未核验'));assert.ok(!content.includes('来自comma2k19')&&!content.includes('来自 comma2k19'));assert.ok(content.includes('导入日志'));});
+await test('任务入口拒绝未知任务和无日志复盘，兼容旧无任务调用',async()=>{
+ let requests=0;const transport=async()=>{requests++;return {choices:[{message:{content:JSON.stringify(valid)}}]};};
+ await assert.rejects(()=>runAnalysis({config:c,question:'读取日志',taskId:'log-review'},[],settings,undefined,transport),/先导入日志/);
+ await assert.rejects(()=>runAnalysis({config:c,question:'任务',taskId:'unknown-task'},[],settings,undefined,transport),/任务无效/);
+ assert.equal(requests,0);const legacy=await runAnalysis({config:c,question:'旧调用',mode:'rules'},[],{});assert.equal(legacy.task,null);
+ assert.equal(analysisTaskDefinitions.length,4);
+});
+await test('风险任务基线已提供，无需硬凑inspect调用且保留原问题',async()=>{
+ let calls=0;const question='先解释本次约束，再核对未验证条件';
+ const r=await runAnalysis({config:c,question,log,taskId:'risk-review'},[],settings,undefined,async(_,payload)=>{
+  calls++;assert.match(payload.messages[0].content,/不要求.*inspect_simulation/);const user=JSON.parse(payload.messages[1].content);assert.equal(user.question,question);assert.equal(user.task.id,'risk-review');
+  return {choices:[{message:{content:JSON.stringify(valid)}}]};
+ });assert.equal(calls,1);assert.equal(r.task.status,'complete');assert.equal(r.task.question,question);assert.ok(r.task.checks.every(check=>check.passed));assert.equal(validatedAnalysisBundle(r),r);
+});
+await test('日志任务必须实际读取对比工具，资料与数字预置不冒充工具',async()=>{
+ const direct=await runAnalysis({config:c,question:'复盘日志',log,taskId:'log-review'},[],settings,undefined,async()=>({choices:[{message:{content:JSON.stringify(valid)}}]}));
+ assert.equal(direct.task.status,'partial');assert.equal(direct.task.checks.find(check=>check.id==='measurement-tool').passed,false);
+ let calls=0;const done=await runAnalysis({config:c,question:'复盘日志',log,taskId:'log-review'},[],settings,undefined,async()=>++calls===1?{choices:[{message:{tool_calls:[{id:'task-log',function:{name:'compare_measurement',arguments:'{}'}}]}}]}:{choices:[{message:{content:JSON.stringify(valid)}}]});
+ assert.equal(done.task.status,'complete');assert.equal(done.trace.find(step=>step.tool)?.tool.name,'compare_measurement');assert.equal(validatedAnalysisBundle(done),done);
+});
+await test('比较任务不把默认或无输入变化的工具候选记为完成',async()=>{
+ const direct=await runAnalysis({config:c,question:'比较方案',log,taskId:'compare-options'},[],settings,undefined,async()=>({choices:[{message:{content:JSON.stringify(valid)}}]}));assert.ok(direct.alternatives.length);assert.equal(direct.task.status,'partial');
+ for(const [speed,expected] of [[c.speed,'partial'],[30,'complete']]){let calls=0;const r=await runAnalysis({config:c,question:'比较自定义候选',log,taskId:'compare-options'},[],settings,undefined,async()=>++calls===1?{choices:[{message:{tool_calls:[{id:'task-option',function:{name:'evaluate_parameters',arguments:JSON.stringify({speed})}}]}}]}:{choices:[{message:{content:JSON.stringify(valid)}}]});assert.equal(r.task.status,expected);assert.ok(r.candidates.some(candidate=>candidate.kind==='tool'));assert.equal(validatedAnalysisBundle(r),r);}
+});
+await test('知识任务区分未检索、零命中和已登记的真实工具返回',async()=>{
+ const docs=[{id:'TASK-SOURCE',title:'TASK_REFERENCE_ABC',body:'TASK_REFERENCE_ABC 段落说明'}];
+ for(const [query,expected] of [['alien_quasar_unmatched_xyz','partial'],['TASK_REFERENCE_ABC','complete']]){let calls=0;const r=await runAnalysis({config:c,question:'TASK_REFERENCE_ABC资料问答',log,taskId:'knowledge-question'},docs,settings,undefined,async()=>++calls===1?{choices:[{message:{tool_calls:[{id:'task-search',function:{name:'search_knowledge',arguments:JSON.stringify({query})}}]}}]}:{choices:[{message:{content:JSON.stringify(valid)}}]});assert.ok(r.sources.length>0);assert.equal(r.task.status,expected);const check=r.task.checks.find(check=>check.id==='knowledge-evidence');assert.equal(check.passed,expected==='complete');if(expected==='partial')assert.match(check.detail,/未知|零来源/);assert.equal(validatedAnalysisBundle(r),r);}
+ const noTool=await runAnalysis({config:c,question:'TASK_REFERENCE_ABC',log,taskId:'knowledge-question'},docs,settings,undefined,async()=>({choices:[{message:{content:JSON.stringify(valid)}}]}));assert.equal(noTool.task.status,'partial');assert.equal(noTool.task.checks.find(check=>check.id==='knowledge-tool').passed,false);
+});
+await test('所有任务的规则与降级结果只标rules-only，问题截取不含服务端展开说明',async()=>{
+ for(const task of analysisTaskDefinitions){for(const mode of ['rules','fallback']){const question='原问题'.repeat(800);const r=await runAnalysis({config:c,question,log,taskId:task.id,mode:mode==='rules'?'rules':'auto'},[],settings,undefined,async()=>{throw Error('离线失败夹具');});assert.equal(r.mode,mode);assert.equal(r.task.status,'rules-only');assert.equal(r.task.question,question.slice(0,2000));assert.ok(r.task.checks.some(check=>!check.passed));assert.equal(validatedAnalysisBundle(r),r);}}
+});
+await test('任务嵌套与执行检查防篡改，不信任客户端完成标记',async()=>{
+ const r=await runAnalysis({config:c,question:'资料问答',log,taskId:'knowledge-question',mode:'rules'},[],{});
+ for(const altered of [{...r.task,id:'not-a-task'},{...r.task,title:'伪造任务标题'},{...r.task,goal:'伪造目标'},{...r.task,status:'complete'},{...r.task,checks:r.task.checks.map(check=>({...check,passed:true}))},{...r.task,checks:[{id:'model-output',label:'损坏',passed:'true',detail:'伪造'}]},{...r.task,question:'x'.repeat(2001)}])assert.throws(()=>validatedAnalysisBundle({...r,task:altered}),/结构无效/);
+ const legacy={...r,task:{...r.task}};delete legacy.task.question;assert.equal(validatedAnalysisBundle(legacy).task.question,'');const old={...r};delete old.task;assert.equal(validatedAnalysisBundle(old).task,null);
+});
+await test('任务目标和流程限制进入PDF，保留原有事实证据',async()=>{
+ const fs=await import('node:fs/promises');const {getDocument}=await import('pdfjs-dist/legacy/build/pdf.mjs');const r=await runAnalysis({config:c,question:'任务目标正文夹具',log,taskId:'log-review',mode:'rules'},[],{});const font=await fs.readFile('public/fonts/NotoSansSC-Regular.ttf');const bytes=await createReportPdf(sim,log,defaultThresholds,r,'',font);const pdf=await getDocument({data:new Uint8Array(bytes),useSystemFonts:false,isEvalSupported:false}).promise;let text='';for(let i=1;i<=pdf.numPages;i++)text+=(await (await pdf.getPage(i)).getTextContent()).items.map(item=>item.str??'').join('');await pdf.destroy();
+ assert.ok(text.includes('日志差异复盘'));assert.ok(text.includes('任务目标正文夹具'));assert.ok(text.includes('规则结果'));assert.ok(text.includes('流程产物'));assert.ok(text.includes('LOG_SPEED_RMSE'));assert.ok(text.includes('未具备'));
+});
 console.log(`${count} analysis tests passed`);

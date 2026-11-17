@@ -1,0 +1,455 @@
+{
+  "schemaVersion": 1,
+  "title": "AI 固定任务评测：合成项目样例",
+  "evaluatedEngineVersion": "1.2.0",
+  "evaluatedAt": "2026-11-17T08:40:53.552Z",
+  "recordGeneratedAt": "2026-11-17T09:06:14.268Z",
+  "provenance": {
+    "record": "docs/evidence/ai-task-evaluation-20261117.json",
+    "recordSha256": "2e947fc0a0a1c276648962cd49d248393ed23ff5e6eb7f6a0d3886e0f7370b6c",
+    "fixtureSha256": "7a888c81b3c52b20c64392fe0a0c4e8df63cf8996793cb1e57fc047d620a4ebe",
+    "evaluatedLibrarySourceSetSha256": "2c597a9c6878a46c48cb31accbdec2775bfbe9a9724e7092e050816609005f51",
+    "evaluatedLibrarySourceSha256": {
+      "lib/trajectory-extrema.ts": "5ad1171dabca2cc36a6482a40cad7346caf94b85bf0ccdbeaf3886905f461ef7",
+      "lib/simulation.ts": "4c705ade77f3e04152720053aaaa492756f1fd43d69e826c77692942b6b763a5",
+      "lib/logs.ts": "63dadd672f2c8f227e395e8b75a66f898084ecf0fd7469cecf0ba2a87463987d",
+      "lib/knowledge-sources.ts": "9cd9df6c329fb40d641019b74df30ab14e2dd1ad18c8bbef6f9405d1c88fcf8d",
+      "lib/rag.ts": "7643c6b43d67cf8043bcff714c9ac5f1bbebd8a81a17a71774a2b89901fa43e4",
+      "lib/retrieval.ts": "f08bfbc4aaefedb6be5ba6efdcdd7dcf81b0dd0bee99fc115e3381a133f794e7",
+      "lib/evidence.ts": "c2b6312be39e3c3d35c6227ea992fd234862a39a328db1c354e79e2c0decdbb0",
+      "lib/provider.ts": "9396f3b691f7173d59fd6c8121709dc1382a7261085273f65f5688fe1d389e58",
+      "lib/fingerprint.ts": "7a330dfcef5a86dd7efe1251441d3f216c588e240af643c5241d5a444820c4ad",
+      "lib/analysis-tasks.ts": "d21ebdfdd6f1da94d52bf6242a4699d85e9b2900f49dc4122dba3ab71b0b7b91",
+      "lib/analysis.ts": "0495fb0a0d6fd1ed5ec9427cc139c10a7fcbde29d37a2969961a5956b320a9b0"
+    },
+    "note": "原报告包含最新离线重建及保留的真实模型记录；每组分别绑定被评测源码。兼容字段evaluatedLibrarySource*指首组真实模型的原源码，不指后来离线/应用源码。缺失历史逐文件map时保留原sourceSet且值为null，不能用当前文件反推。"
+  },
+  "offline": {
+    "taskCount": 8,
+    "distinctReferenceAssertions": 24,
+    "variantCount": 3,
+    "referenceAssertions": {
+      "passed": 72,
+      "total": 72
+    },
+    "provenance": {
+      "engineVersion": "1.2.0",
+      "sourceSetSha256": "967acb7c95801cefab17b2bc2af17db3a8e6d5f9565e38d90a6a0833e549aaa2",
+      "sourceSha256": {
+        "lib/trajectory-extrema.ts": "5ad1171dabca2cc36a6482a40cad7346caf94b85bf0ccdbeaf3886905f461ef7",
+        "lib/simulation.ts": "4c705ade77f3e04152720053aaaa492756f1fd43d69e826c77692942b6b763a5",
+        "lib/logs.ts": "63dadd672f2c8f227e395e8b75a66f898084ecf0fd7469cecf0ba2a87463987d",
+        "lib/knowledge-sources.ts": "9cd9df6c329fb40d641019b74df30ab14e2dd1ad18c8bbef6f9405d1c88fcf8d",
+        "lib/rag.ts": "7643c6b43d67cf8043bcff714c9ac5f1bbebd8a81a17a71774a2b89901fa43e4",
+        "lib/retrieval.ts": "f08bfbc4aaefedb6be5ba6efdcdd7dcf81b0dd0bee99fc115e3381a133f794e7",
+        "lib/evidence.ts": "c2b6312be39e3c3d35c6227ea992fd234862a39a328db1c354e79e2c0decdbb0",
+        "lib/provider.ts": "9396f3b691f7173d59fd6c8121709dc1382a7261085273f65f5688fe1d389e58",
+        "lib/fingerprint.ts": "7a330dfcef5a86dd7efe1251441d3f216c588e240af643c5241d5a444820c4ad",
+        "lib/analysis-tasks.ts": "d21ebdfdd6f1da94d52bf6242a4699d85e9b2900f49dc4122dba3ab71b0b7b91",
+        "lib/analysis.ts": "fb224e5289c0b80a8077c1cb286f40416ed0986c8c25506f0471b73ab45f58b8"
+      },
+      "classification": "current_offline_rebuild"
+    },
+    "variants": [
+      {
+        "id": "rules_only",
+        "label": "无检索规则",
+        "realModel": false
+      },
+      {
+        "id": "rules_rag",
+        "label": "规则 + RAG",
+        "realModel": false
+      },
+      {
+        "id": "scripted_tool_contract",
+        "label": "脚本化工具契约",
+        "realModel": false
+      }
+    ],
+    "extraBoundaryChecks": {
+      "passed": 6,
+      "total": 6
+    },
+    "scriptedCandidateChecks": {
+      "passed": 4,
+      "total": 4
+    },
+    "scriptedRetrievalAnchors": {
+      "passed": 2,
+      "total": 2
+    },
+    "scriptedToolPlans": {
+      "passed": 8,
+      "total": 8
+    },
+    "tasks": [
+      {
+        "id": "T01-BIAS-MISSING",
+        "taskId": "log-review",
+        "title": "固定偏差与缺失通道",
+        "dataKind": "合成工况/项目夹具"
+      },
+      {
+        "id": "T02-KNOWN-SHIFT",
+        "taskId": "log-review",
+        "title": "已知人工时移与校正",
+        "dataKind": "合成工况/项目夹具"
+      },
+      {
+        "id": "T03-SPARSE-COVERAGE",
+        "taskId": "log-review",
+        "title": "稀疏采样与无重叠",
+        "dataKind": "合成工况/项目夹具"
+      },
+      {
+        "id": "T04-CUSTOM-CANDIDATES",
+        "taskId": "compare-options",
+        "title": "自定义跟驰候选重算",
+        "dataKind": "合成工况/项目夹具"
+      },
+      {
+        "id": "T05-CURVE-SQUARE",
+        "taskId": "compare-options",
+        "title": "弯道速度平方关系",
+        "dataKind": "合成工况/项目夹具"
+      },
+      {
+        "id": "T06-LANE-DURATION",
+        "taskId": "compare-options",
+        "title": "换道时间与连续峰值",
+        "dataKind": "合成工况/项目夹具"
+      },
+      {
+        "id": "T07-PROJECT-RETRIEVAL",
+        "taskId": "knowledge-question",
+        "title": "带页锚的项目资料回答",
+        "dataKind": "合成工况/项目夹具"
+      },
+      {
+        "id": "T08-UNKNOWN-CALIBRATION",
+        "taskId": "knowledge-question",
+        "title": "缺失车型标定值应承认未知",
+        "dataKind": "合成工况/项目夹具"
+      }
+    ],
+    "note": "24项固定参考在3个软件变体上各核对一次，共72条断言；不是72个独立任务。脚本响应不计真实模型效果。"
+  },
+  "live": {
+    "taskCount": 6,
+    "acceptedModelAnswers": 5,
+    "fallbacks": 1,
+    "modelRequests": 14,
+    "workflowComplete": 5,
+    "provenance": {
+      "evaluations": [
+        {
+          "sourceSetSha256": "2c597a9c6878a46c48cb31accbdec2775bfbe9a9724e7092e050816609005f51",
+          "sourceSha256": {
+            "lib/trajectory-extrema.ts": "5ad1171dabca2cc36a6482a40cad7346caf94b85bf0ccdbeaf3886905f461ef7",
+            "lib/simulation.ts": "4c705ade77f3e04152720053aaaa492756f1fd43d69e826c77692942b6b763a5",
+            "lib/logs.ts": "63dadd672f2c8f227e395e8b75a66f898084ecf0fd7469cecf0ba2a87463987d",
+            "lib/knowledge-sources.ts": "9cd9df6c329fb40d641019b74df30ab14e2dd1ad18c8bbef6f9405d1c88fcf8d",
+            "lib/rag.ts": "7643c6b43d67cf8043bcff714c9ac5f1bbebd8a81a17a71774a2b89901fa43e4",
+            "lib/retrieval.ts": "f08bfbc4aaefedb6be5ba6efdcdd7dcf81b0dd0bee99fc115e3381a133f794e7",
+            "lib/evidence.ts": "c2b6312be39e3c3d35c6227ea992fd234862a39a328db1c354e79e2c0decdbb0",
+            "lib/provider.ts": "9396f3b691f7173d59fd6c8121709dc1382a7261085273f65f5688fe1d389e58",
+            "lib/fingerprint.ts": "7a330dfcef5a86dd7efe1251441d3f216c588e240af643c5241d5a444820c4ad",
+            "lib/analysis-tasks.ts": "d21ebdfdd6f1da94d52bf6242a4699d85e9b2900f49dc4122dba3ab71b0b7b91",
+            "lib/analysis.ts": "0495fb0a0d6fd1ed5ec9427cc139c10a7fcbde29d37a2969961a5956b320a9b0"
+          },
+          "engineVersions": [
+            "1.2.0"
+          ],
+          "classification": "historical_live_run_for_earlier_sources"
+        }
+      ],
+      "matchesCurrentOfflineSources": false,
+      "label": "历史真实模型记录（早于本次离线源码，未重跑六题）"
+    },
+    "executedToolCount": 7,
+    "provider": "modelscope",
+    "model": "Qwen/Qwen3.5-27B",
+    "freeOnly": true,
+    "tasks": [
+      {
+        "id": "T01-BIAS-MISSING",
+        "taskId": "log-review",
+        "title": "固定偏差与缺失通道",
+        "dataKind": "合成工况/项目样例",
+        "evaluatedEngineVersion": "1.2.0",
+        "evaluatedSourceSetSha256": "2c597a9c6878a46c48cb31accbdec2775bfbe9a9724e7092e050816609005f51",
+        "mode": "llm",
+        "applicationTaskStatus": "complete",
+        "modelRequests": 2,
+        "executedTools": [
+          "compare_measurement"
+        ],
+        "fallbackReason": null,
+        "semanticReview": {
+          "status": "main_answer_supported_with_citation_caveat",
+          "label": "主要结论一致，具体断言的引用支持范围有限",
+          "mainTaskAnswer": "supported",
+          "citationSupport": "partial",
+          "findings": [
+            "平均偏差、MAE、RMSE、最大误差均为3 km/h，超过2 km/h容差；与固定参考及工具数据一致。",
+            "正确列出横摆/压力/转向三通道缺失，没有补造，也没有将已知合成偏差诊断为传感器故障。"
+          ],
+          "caveats": [
+            "具体三通道缺失的观察仅引用QA-X7通用说明，说明正文不包含本次日志的缺失通道清单；该清单实际由本次tool/evidence.log提供。标识有效不能当成该引用段落独立支持此具体观察。"
+          ],
+          "semanticAccuracy": null
+        },
+        "comparison": {
+          "rulesOnly": "已报告误差/缺失/边界，足以完成主要数值读取；未针对人工固定偏差组织解释。",
+          "rulesRag": "相同规则正文增加相关资料来源；未产生额外模型解释。",
+          "liveFullWorkflow": "实际读取日志工具并组织有针对性的解释；本题不能据此声称AI改善了计算精度。"
+        },
+        "answerExcerpt": {
+          "kind": "model_answer_excerpt",
+          "label": "固定评测记录：实际模型回答节选",
+          "text": "车速通道在共同时间区间 0.000–5.000 s 内，平均偏差为 3 km/h，MAE 为 3 km/h，RMSE 为 3 km/h，最大绝对误差为 3 km/h（峰值时刻 0.000 s），均超过默认容差 2 km/h。",
+          "truncated": false,
+          "recordField": "structured.observations[0]"
+        }
+      },
+      {
+        "id": "T02-KNOWN-SHIFT",
+        "taskId": "log-review",
+        "title": "已知人工时移与校正",
+        "dataKind": "合成工况/项目样例",
+        "evaluatedEngineVersion": "1.2.0",
+        "evaluatedSourceSetSha256": "2c597a9c6878a46c48cb31accbdec2775bfbe9a9724e7092e050816609005f51",
+        "mode": "llm",
+        "applicationTaskStatus": "complete",
+        "modelRequests": 2,
+        "executedTools": [
+          "compare_measurement"
+        ],
+        "fallbackReason": null,
+        "semanticReview": {
+          "status": "main_answer_supported_with_citation_caveat",
+          "label": "主要结论一致，具体断言的引用支持范围有限",
+          "mainTaskAnswer": "supported",
+          "citationSupport": "partial",
+          "findings": [
+            "报告Bias/MAE/RMSE/MAX约3.6 km/h、共同区间0.5–5s、覆盖90%，与独立线性时移公式一致。",
+            "明确+0.5s为已知人工时移，建议恢复0后重新对标，没有诊断真实车辆或传感器故障。"
+          ],
+          "caveats": [
+            "缺失通道与本次0.5s配置等具体断言所附KB/QA说明主要支持通用流程，具体取值依赖本次tool/input，不能由引用段落单独核实。",
+            "0.600s峰值是本次浮点/两网格统计返回的时刻；解析上整段偏差恒定，不应解读为物理上独有的传感器峰值。",
+            "实际模型只建议校正，未自动改偏移；校正后0误差仅由独立离线变体核对，不冒充模型完成的第二次对标。"
+          ],
+          "semanticAccuracy": null
+        },
+        "comparison": {
+          "rulesOnly": "给出3.6 km/h及90%覆盖，但未回答将已知0.5s偏移恢复0的具体行动。",
+          "rulesRag": "检索相关资料，规则正文仍未针对该已知时移生成行动解释。",
+          "liveFullWorkflow": "把已知时移与当前差异联系起来并明确建议0.5→0后重跑。"
+        },
+        "answerExcerpt": {
+          "kind": "model_answer_excerpt",
+          "label": "固定评测记录：实际模型回答节选",
+          "text": "车速通道的平均偏差（Bias）为3.6 km/h，MAE和RMSE也均为3.6 km/h，表明存在一致性的正向偏移而非随机噪声。 建议将日志导入的时间偏移参数从+0.5 s恢复为0，重新执行对标流程以消除由人工时移引起的系统性偏差。",
+          "truncated": false,
+          "recordField": "structured.observations[0] + recommendations[0]"
+        }
+      },
+      {
+        "id": "T04-CUSTOM-CANDIDATES",
+        "taskId": "compare-options",
+        "title": "自定义跟驰候选重算",
+        "dataKind": "合成工况/项目样例",
+        "evaluatedEngineVersion": "1.2.0",
+        "evaluatedSourceSetSha256": "2c597a9c6878a46c48cb31accbdec2775bfbe9a9724e7092e050816609005f51",
+        "mode": "fallback",
+        "applicationTaskStatus": "rules-only",
+        "modelRequests": 3,
+        "executedTools": [
+          "evaluate_parameters",
+          "evaluate_parameters"
+        ],
+        "fallbackReason": "模型结论没有引用本次证据",
+        "semanticReview": {
+          "status": "model_narrative_not_delivered_fallback_retained",
+          "label": "模型叙述未交付，保留规则结果与工具候选",
+          "mainTaskAnswer": "not_delivered_model",
+          "citationSupport": "not_applicable_fallback",
+          "findings": [
+            "本次两个实际evaluate_parameters分别为speed90与distance110，区别于默认speed80/distance100。",
+            "90km/h工具候选停车82.5m、5.8s、预测最小间距66.3888888889m；110m候选停车99.3827160494m、6.3555555556s、最小间距88.7654320988m；均匹配独立公式。",
+            "两个候选reaction保持0.8s，applied=false；工具产物仍可供用户确认。",
+            "共3请求，输出因缺引用被拒绝，最终mode=fallback/task=rules-only，未冒充成功模型回答。"
+          ],
+          "caveats": [
+            "API没有保存被拒绝的原始模型正文，能核验工具产物、验证失败原因与降级记录，不能进一步声称已审查其全部原始语义。",
+            "不重试此题，不把工具数字正确等同于模型答题成功。"
+          ],
+          "semanticAccuracy": null
+        },
+        "comparison": {
+          "rulesOnly": "只给基线，没有自定义90km/h或110m的回答。",
+          "rulesRag": "默认候选为80km/h及100m，不满足本题自定义重算要求。",
+          "liveFullWorkflow": "自定义工具产物正确，但最终模型叙述未交付；这是保留的实际失败。"
+        },
+        "answerExcerpt": {
+          "kind": "rules_fallback_excerpt",
+          "label": "固定评测记录：降级后的规则回答节选",
+          "text": "当前「合成自定义候选任务」的模型评估为：约束内。\n\n轮胎附着约束：连续附着需求峰值利用率 63.7%，采用当前恒减速/给定轨迹的摩擦圆需求近似，不求解轮胎饱和后的运动。\n\n侧向加速度：给定轨迹连续需求峰值 0.000 m/s²，设置阈值 3 m/s²（工程初始值，需标定）。\n\n转向物理约束：适用速度域内连续方向盘需求峰值 0.000°，设置极限 540°。\n\n完整制动过程预测：相同恒减速与目标运动…",
+          "truncated": true,
+          "recordField": "answer"
+        }
+      },
+      {
+        "id": "T05-CURVE-SQUARE",
+        "taskId": "compare-options",
+        "title": "弯道速度平方关系",
+        "dataKind": "合成工况/项目样例",
+        "evaluatedEngineVersion": "1.2.0",
+        "evaluatedSourceSetSha256": "2c597a9c6878a46c48cb31accbdec2775bfbe9a9724e7092e050816609005f51",
+        "mode": "llm",
+        "applicationTaskStatus": "complete",
+        "modelRequests": 3,
+        "executedTools": [
+          "evaluate_parameters"
+        ],
+        "fallbackReason": null,
+        "semanticReview": {
+          "status": "main_answer_supported_with_wording_caveat",
+          "label": "主要结论一致，模型内计算不能当成实车验证",
+          "mainTaskAnswer": "supported",
+          "citationSupport": "supported_for_main_claims",
+          "findings": [
+            "实际调用evaluate_parameters(speed28.8)，按对应CAND_2编号引用。",
+            "侧向需求1.000→0.640m/s²，下降36%；附着需求利用率12.74%→8.15%；方向盘需求仍约24.058°，均与当前模型/独立关系一致。",
+            "说明速度平方关系、其他输入不变及模型未含轮胎非线性等边界，未声称实车已标定。"
+          ],
+          "caveats": [
+            "摘要“验证了…物理关系”应对外表述为“当前模型计算与公式一致”，不能把本次软件重算宣传为实车物理验证。",
+            "28.8km/h恰为本工况默认降20%候选，规则+RAG结果的候选结构已含0.64；本题展示的是实际工具调用与解释，不是AI独有数值能力。",
+            "本题在应用限定轮次内纠正一次输出后成功，计入3个请求，没有在外部重跑。"
+          ],
+          "semanticAccuracy": null
+        },
+        "comparison": {
+          "rulesOnly": "仅给当前1m/s²基线，不解释所问候选。",
+          "rulesRag": "默认候选结构可见0.64，但规则正文没有解释20%降速与36%侧向需求下降。",
+          "liveFullWorkflow": "实际重算并解释平方关系，核心数值与对应候选引用正确。"
+        },
+        "answerExcerpt": {
+          "kind": "model_answer_excerpt",
+          "label": "固定评测记录：实际模型回答节选",
+          "text": "候选方案CAND_2在仅修改初始车速为28.8 km/h后，连续侧向需求峰值重算结果为0.640 m/s²，连续附着需求峰值利用率重算结果为8.15%。 车速降低20%导致侧向需求降低36%，符合稳态圆周运动公式ay = v²/R的平方关系，说明降速对侧向需求的改善效果优于线性比例。",
+          "truncated": false,
+          "recordField": "structured.observations[1..2]"
+        }
+      },
+      {
+        "id": "T07-PROJECT-RETRIEVAL",
+        "taskId": "knowledge-question",
+        "title": "带页锚的项目资料回答",
+        "dataKind": "合成工况/项目样例",
+        "evaluatedEngineVersion": "1.2.0",
+        "evaluatedSourceSetSha256": "2c597a9c6878a46c48cb31accbdec2775bfbe9a9724e7092e050816609005f51",
+        "mode": "llm",
+        "applicationTaskStatus": "complete",
+        "modelRequests": 2,
+        "executedTools": [
+          "search_knowledge"
+        ],
+        "fallbackReason": null,
+        "semanticReview": {
+          "status": "task_answer_supported",
+          "label": "回答与项目夹具及定位一致",
+          "mainTaskAnswer": "supported",
+          "citationSupport": "supported",
+          "findings": [
+            "实际执行search_knowledge。",
+            "准确回答时间单位→速度单位→共同时间区间→缺失通道，版本QA-X7-20261117，以及第2页/4.2小节。",
+            "这些内容与本次合成项目资料正文及人工指定的页/节metadata一致；明确是合成项目资料而非厂家标准。"
+          ],
+          "caveats": [
+            "页2为评测夹具指定的来源元数据，不代表找到了真实厂家PDF或车型规范。"
+          ],
+          "semanticAccuracy": null
+        },
+        "comparison": {
+          "rulesOnly": "无检索来源，没有回答所问项目步骤与版本。",
+          "rulesRag": "已命中正确第2页/4.2段落，但规则答案只列来源标题，没有组织步骤、版本和定位回答。",
+          "liveFullWorkflow": "读取检索工具并依据实际段落回答完整的项目问题。"
+        },
+        "answerExcerpt": {
+          "kind": "model_answer_excerpt",
+          "label": "固定评测记录：实际模型回答节选",
+          "text": "版本标记为 QA-X7-20261117。 日志复盘检查顺序（按原顺序）：1. 时间单位；2. 速度单位；3. 共同时间区间；4. 缺失通道。 上述内容位于第2页，小节“4.2 日志复盘顺序”。",
+          "truncated": false,
+          "recordField": "structured.observations[1..3]"
+        }
+      },
+      {
+        "id": "T08-UNKNOWN-CALIBRATION",
+        "taskId": "knowledge-question",
+        "title": "缺失车型标定值应承认未知",
+        "dataKind": "合成工况/项目样例",
+        "evaluatedEngineVersion": "1.2.0",
+        "evaluatedSourceSetSha256": "2c597a9c6878a46c48cb31accbdec2775bfbe9a9724e7092e050816609005f51",
+        "mode": "llm",
+        "applicationTaskStatus": "complete",
+        "modelRequests": 2,
+        "executedTools": [
+          "search_knowledge"
+        ],
+        "fallbackReason": null,
+        "semanticReview": {
+          "status": "appropriate_unknown_supported",
+          "label": "恰当承认资料未知项",
+          "mainTaskAnswer": "supported",
+          "citationSupport": "supported",
+          "findings": [
+            "实际执行search_knowledge，引用明确未提供车型标定/认证信息的QA-X7段落。",
+            "明确无法确定厂家方向盘极限或认证状态，拒绝把默认540°当厂家标定值，没有编造具体数值或认证结果。",
+            "task complete表示执行检索和输出检查完成，不表示未知车型问题已获得精确参数；合理未知不是失败。"
+          ],
+          "caveats": [
+            "没有真实厂家资料，此题只能验证对夹具缺失信息的处理。"
+          ],
+          "semanticAccuracy": null
+        },
+        "comparison": {
+          "rulesOnly": "显示软件默认540°与通用边界，没有直接回答所问厂家未知项。",
+          "rulesRag": "来源命中但规则正文仍无针对该未知项的直接回答。",
+          "liveFullWorkflow": "直接承认未知并区分软件默认值与厂家标定。"
+        },
+        "answerExcerpt": {
+          "kind": "model_answer_excerpt",
+          "label": "固定评测记录：实际模型回答节选",
+          "text": "本说明没有提供任何车型的方向盘极限标定值、厂家认证结果或传感器故障真值。 由于资料明确未提供相关数据，不能将软件默认值（如540°）视为厂家标定值，也不能声称已获得厂家安全认证。需查阅具体的车型技术手册或联系厂家获取准确信息。",
+          "truncated": false,
+          "recordField": "structured.observations[1] + recommendations[0]"
+        }
+      }
+    ],
+    "semanticAccuracy": null,
+    "note": "固定6题：5个模型回答被接收，1个因引用遗漏降级，共14次请求（含应用内纠正）。这是流程记录，不是83.3%语义准确率；单独UI联调不计入本组。这六题绑定原lib sourceSet，不能当成后来引用诊断补丁的真实重验。"
+  },
+  "interpretation": {
+    "dataKind": "合成工况与人工编写的项目样例，不是实车数据。",
+    "corpusIsolation": "离线规则/RAG使用内置与夹具资料；真实API还检索到既有项目演示资料，语料未严格隔离，不能把差异归因于单一因素。",
+    "automatedMetricsAreSemanticAccuracy": false,
+    "userStudyPerformed": false,
+    "timeSavingMeasured": false,
+    "vehicleCalibrationPerformed": false,
+    "limitations": [
+      "只有8个固定离线任务及其中6个预选真实模型任务，单服务/单模型/单次小样本，不能外推通用准确率。",
+      "所有日志和项目问答资料均为合成/人工夹具，不是实车日志验证或厂家资料验证。",
+      "数字出现/引用ID有效/任务complete均不等于自然语言语义正确、引用蕴含正确或工程适用。",
+      "同题A/B使用受控内置及夹具资料；真实API还检索到既有项目演示资料，未严格隔离语料，不能将差异因果归因于单一RAG或工具因素。各实际来源已保留。",
+      "离线脚本化响应不计入模型效果；三个变体重复核对的72断言不是72个独立任务。",
+      "T04实际失败保留，API不返回被拒绝正文；没有外部重试/挑选成功答案。T05应用内纠正轮次已经计费次数/用量记账。",
+      "没有真实用户试用、人工耗时对照、节时比例或实车标定，不能编造这些结论。",
+      "程序快照与本次人工审阅不是专业安全认证或持证工程签署。"
+    ],
+    "observedValue": "规则已能稳定给出基线和日志误差；真实模型在这批题中能把已知时移转成具体复盘行动、解释候选关系、回答有定位的项目资料问题并承认未知。自定义工具运算可保留，但复杂候选叙述仍会因引用失败降级。"
+  }
+}

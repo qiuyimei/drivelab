@@ -1,0 +1,523 @@
+{
+  "schemaVersion": 1,
+  "title": "T06 换道时长候选：初始降级与一次授权定向回归",
+  "reviewedAt": "2026-11-17T09:10:05.371Z",
+  "engineVersion": "1.2.0",
+  "reviewType": "independent-read-only-semantic-review",
+  "scope": {
+    "caseId": "T06-LANE-DURATION",
+    "taskId": "compare-options",
+    "realModel": "Qwen/Qwen3.5-27B",
+    "newApiRequestsByReviewer": 0,
+    "regressionAttempts": 1,
+    "regressionModelRequests": 3,
+    "additionalApiCallAuthorizedByUser": true,
+    "authorizationBasis": "父任务确认用户明确授权一次额外在线回归；本复核只读既有结果，不触发模型。",
+    "originalSixTasksReexecuted": false,
+    "sourceCodeChangedDuringReview": false,
+    "limitations": "单个合成模型工况、单次定向结果；不证明模型通用语义正确性、所有引用蕴含正确或实车适用性。"
+  },
+  "provenance": {
+    "analysisSourcePath": "lib/analysis.ts",
+    "analysisSourceSha256": "fb224e5289c0b80a8077c1cb286f40416ed0986c8c25506f0471b73ab45f58b8",
+    "initialUiAnalysisSourceSha256": "0495fb0a0d6fd1ed5ec9427cc139c10a7fcbde29d37a2969961a5956b320a9b0",
+    "sourceHashBindingNote": "初始UI结果未内嵌源码哈希；旧hash来自修补前只读源码快照及旧六题评测公开摘要。新hash为本次独立复核时的实际文件字节，不冒充服务端二进制证明。",
+    "payloads": {
+      "initial": {
+        "path": ".sites-runtime/live-ui120-result.json",
+        "sha256": "f0f891eb43913f1c2c8c79373b906a03651183619f7b51fdc1154b6ad88da33e"
+      },
+      "regression": {
+        "path": ".sites-runtime/live-ui120-regression-result.json",
+        "sha256": "c08d33844e4ea6d56a01fb4dcf51a77d519c82b343be3ac5e4022beb8906a15e"
+      }
+    },
+    "inputPayloads": {
+      "initial": {
+        "path": ".sites-runtime/live-ui120-input.json",
+        "sha256": "34a9b96dff5e7de506b1c1614d197aed10eaf5dd3fa9ad8565c037be4d6ed0ee"
+      },
+      "regression": {
+        "path": ".sites-runtime/live-ui120-regression-input.json",
+        "sha256": "34a9b96dff5e7de506b1c1614d197aed10eaf5dd3fa9ad8565c037be4d6ed0ee"
+      },
+      "identicalBytes": true
+    }
+  },
+  "historicalSixTaskEvaluation": {
+    "recordPath": "docs/evidence/ai-task-evaluation-20261117.json",
+    "recordSha256AtReview": "2e947fc0a0a1c276648962cd49d248393ed23ff5e6eb7f6a0d3886e0f7370b6c",
+    "liveSourceSetSha256": "2c597a9c6878a46c48cb31accbdec2775bfbe9a9724e7092e050816609005f51",
+    "evaluatedAnalysisSourceSha256": "0495fb0a0d6fd1ed5ec9427cc139c10a7fcbde29d37a2969961a5956b320a9b0",
+    "currentAnalysisSourceSha256": "fb224e5289c0b80a8077c1cb286f40416ed0986c8c25506f0471b73ab45f58b8",
+    "analysisSourceDiffers": true,
+    "currentOfflineSourceSetSha256": "967acb7c95801cefab17b2bc2af17db3a8e6d5f9565e38d90a6a0833e549aaa2",
+    "sourceSetDiffers": true,
+    "taskOrder": [
+      "T01-BIAS-MISSING",
+      "T02-KNOWN-SHIFT",
+      "T04-CUSTOM-CANDIDATES",
+      "T05-CURVE-SQUARE",
+      "T07-PROJECT-RETRIEVAL",
+      "T08-UNKNOWN-CALIBRATION"
+    ],
+    "taskCount": 6,
+    "acceptedModelAnswers": 5,
+    "fallbacks": 1,
+    "modelRequests": 14,
+    "t06WasInOriginalSix": false,
+    "note": "原六题真实运行的源码集合与本次修补后不同；当前评测文件顶层已重建离线结果，但liveRuns保留旧sourceSetSha256。T06是独立UI案例；其单题回归不得覆盖原六题5接收/1降级，T04原失败继续保留，不组合计算新准确率。",
+    "publicSnapshotAtReview": {
+      "path": "public/validation/ai-task-results.json",
+      "sha256": "e9c559dfb5d7c5b197754b82bd5783ec7f09ce2bd57afb211363f7379b856f0c"
+    }
+  },
+  "initialAttempt": {
+    "generatedAt": "2026-11-17T08:47:34.861Z",
+    "mode": "fallback",
+    "taskStatus": "rules-only",
+    "modelRequests": 3,
+    "fallbackReason": "模型引用了不存在的证据",
+    "structured": null,
+    "executedTools": [
+      {
+        "name": "evaluate_parameters",
+        "status": "complete",
+        "candidateId": "CAND_3"
+      }
+    ],
+    "candidates": [
+      {
+        "id": "CAND_1",
+        "kind": "default",
+        "patch": {
+          "speed": 72
+        },
+        "applied": false,
+        "baselineFingerprint": "617aa1f5ccd25d1a5ddf9a56",
+        "facts": [
+          {
+            "id": "CAND_1__SIM_UTILIZATION",
+            "label": "连续附着需求峰值利用率",
+            "value": 10.299316728663054,
+            "unit": "%"
+          },
+          {
+            "id": "CAND_1__SIM_LATERAL",
+            "label": "连续侧向需求峰值",
+            "value": 0.8082903768654767,
+            "unit": "m/s²"
+          },
+          {
+            "id": "CAND_1__SIM_STEERING",
+            "label": "适用速度域内连续方向盘需求峰值",
+            "value": 4.8626689679823345,
+            "unit": "°"
+          }
+        ],
+        "risk": "约束内"
+      },
+      {
+        "id": "CAND_2",
+        "kind": "default",
+        "patch": {
+          "laneTime": 6.25
+        },
+        "applied": false,
+        "baselineFingerprint": "617aa1f5ccd25d1a5ddf9a56",
+        "facts": [
+          {
+            "id": "CAND_2__SIM_UTILIZATION",
+            "label": "连续附着需求峰值利用率",
+            "value": 6.591562706344356,
+            "unit": "%"
+          },
+          {
+            "id": "CAND_2__SIM_LATERAL",
+            "label": "连续侧向需求峰值",
+            "value": 0.5173058411939051,
+            "unit": "m/s²"
+          },
+          {
+            "id": "CAND_2__SIM_STEERING",
+            "label": "适用速度域内连续方向盘需求峰值",
+            "value": 1.9917668973954759,
+            "unit": "°"
+          }
+        ],
+        "risk": "约束内"
+      },
+      {
+        "id": "CAND_3",
+        "kind": "tool",
+        "patch": {
+          "laneTime": 6.25
+        },
+        "applied": false,
+        "baselineFingerprint": "617aa1f5ccd25d1a5ddf9a56",
+        "facts": [
+          {
+            "id": "CAND_3__SIM_UTILIZATION",
+            "label": "连续附着需求峰值利用率",
+            "value": 6.591562706344356,
+            "unit": "%"
+          },
+          {
+            "id": "CAND_3__SIM_LATERAL",
+            "label": "连续侧向需求峰值",
+            "value": 0.5173058411939051,
+            "unit": "m/s²"
+          },
+          {
+            "id": "CAND_3__SIM_STEERING",
+            "label": "适用速度域内连续方向盘需求峰值",
+            "value": 1.9917668973954759,
+            "unit": "°"
+          }
+        ],
+        "risk": "约束内"
+      }
+    ],
+    "failureRetained": true,
+    "failureInterpretation": "已实际重算CAND_3且数值存在；最终未知引用未通过严格校验，模型解释未接纳，保留规则答案。原返回未包含被拒绝模型正文，不能反推具体错误ID或断言其语义正确。"
+  },
+  "regression": {
+    "generatedAt": "2026-11-17T09:05:28.619Z",
+    "mode": "llm",
+    "taskStatus": "complete",
+    "modelRequests": 3,
+    "fallbackReason": null,
+    "hadCorrectionRound": true,
+    "executedTools": [
+      {
+        "name": "evaluate_parameters",
+        "status": "complete",
+        "candidateId": "CAND_3"
+      }
+    ],
+    "baselineFingerprint": "617aa1f5ccd25d1a5ddf9a56",
+    "baselineConfig": {
+      "name": "换道需求方案复盘示例",
+      "scenario": "lane",
+      "speed": 90,
+      "leadSpeed": 60,
+      "distance": 80,
+      "decel": 5,
+      "reaction": 0.8,
+      "mu": 0.8,
+      "radius": 250,
+      "mass": 1800,
+      "wheelbase": 2.8,
+      "steeringRatio": 15,
+      "steeringLimit": 540,
+      "brakeLimit": 8,
+      "brakeGain": 200,
+      "lateralLimit": 3,
+      "duration": 12,
+      "laneWidth": 3.5,
+      "laneTime": 5
+    },
+    "candidates": [
+      {
+        "id": "CAND_1",
+        "kind": "default",
+        "patch": {
+          "speed": 72
+        },
+        "applied": false,
+        "baselineFingerprint": "617aa1f5ccd25d1a5ddf9a56",
+        "facts": [
+          {
+            "id": "CAND_1__SIM_UTILIZATION",
+            "label": "连续附着需求峰值利用率",
+            "value": 10.299316728663054,
+            "unit": "%"
+          },
+          {
+            "id": "CAND_1__SIM_LATERAL",
+            "label": "连续侧向需求峰值",
+            "value": 0.8082903768654767,
+            "unit": "m/s²"
+          },
+          {
+            "id": "CAND_1__SIM_STEERING",
+            "label": "适用速度域内连续方向盘需求峰值",
+            "value": 4.8626689679823345,
+            "unit": "°"
+          }
+        ],
+        "risk": "约束内"
+      },
+      {
+        "id": "CAND_2",
+        "kind": "default",
+        "patch": {
+          "laneTime": 6.25
+        },
+        "applied": false,
+        "baselineFingerprint": "617aa1f5ccd25d1a5ddf9a56",
+        "facts": [
+          {
+            "id": "CAND_2__SIM_UTILIZATION",
+            "label": "连续附着需求峰值利用率",
+            "value": 6.591562706344356,
+            "unit": "%"
+          },
+          {
+            "id": "CAND_2__SIM_LATERAL",
+            "label": "连续侧向需求峰值",
+            "value": 0.5173058411939051,
+            "unit": "m/s²"
+          },
+          {
+            "id": "CAND_2__SIM_STEERING",
+            "label": "适用速度域内连续方向盘需求峰值",
+            "value": 1.9917668973954759,
+            "unit": "°"
+          }
+        ],
+        "risk": "约束内"
+      },
+      {
+        "id": "CAND_3",
+        "kind": "tool",
+        "patch": {
+          "laneTime": 6.25
+        },
+        "applied": false,
+        "baselineFingerprint": "617aa1f5ccd25d1a5ddf9a56",
+        "facts": [
+          {
+            "id": "CAND_3__SIM_UTILIZATION",
+            "label": "连续附着需求峰值利用率",
+            "value": 6.591562706344356,
+            "unit": "%"
+          },
+          {
+            "id": "CAND_3__SIM_LATERAL",
+            "label": "连续侧向需求峰值",
+            "value": 0.5173058411939051,
+            "unit": "m/s²"
+          },
+          {
+            "id": "CAND_3__SIM_STEERING",
+            "label": "适用速度域内连续方向盘需求峰值",
+            "value": 1.9917668973954759,
+            "unit": "°"
+          }
+        ],
+        "risk": "约束内"
+      }
+    ],
+    "sources": [
+      {
+        "chunkId": "KB-005#c1",
+        "title": "换道轨迹与紧急避障",
+        "page": null,
+        "section": "正文",
+        "start": 0,
+        "end": 99
+      },
+      {
+        "chunkId": "27fa7498-bf15-4403-a96b-ff1de20baf7f#c4",
+        "title": "工况复盘说明示例",
+        "page": null,
+        "section": "段落 4",
+        "start": 158,
+        "end": 234
+      },
+      {
+        "chunkId": "27fa7498-bf15-4403-a96b-ff1de20baf7f#c3",
+        "title": "工况复盘说明示例",
+        "page": null,
+        "section": "段落 3",
+        "start": 67,
+        "end": 156
+      }
+    ],
+    "summary": "已调用evaluate_parameters工具生成候选CAND_3，将换道时长从5 s修改为6.25 s，其余输入（包括响应时间0.8 s、车速90 km/h等）保持不变。重算结果显示侧向需求峰值和方向盘需求峰值均显著降低，风险等级仍为“约束内”。",
+    "structured": {
+      "summary": "已调用evaluate_parameters工具生成候选CAND_3，将换道时长从5 s修改为6.25 s，其余输入（包括响应时间0.8 s、车速90 km/h等）保持不变。重算结果显示侧向需求峰值和方向盘需求峰值均显著降低，风险等级仍为“约束内”。",
+      "observations": [
+        {
+          "text": "基线工况下，连续附着需求峰值利用率为10.3%，侧向加速度峰值为0.808 m/s²，方向盘需求峰值为3.112°。",
+          "factIds": [
+            "SIM_UTILIZATION",
+            "SIM_LATERAL",
+            "SIM_STEERING"
+          ],
+          "sourceIds": []
+        },
+        {
+          "text": "候选CAND_3将换道时长改为6.25 s后，连续附着需求峰值利用率降至6.6%，侧向加速度峰值降至0.517 m/s²，方向盘需求峰值降至1.992°。",
+          "factIds": [
+            "CAND_3__SIM_UTILIZATION",
+            "CAND_3__SIM_LATERAL",
+            "CAND_3__SIM_STEERING"
+          ],
+          "sourceIds": []
+        },
+        {
+          "text": "根据五次多项式轨迹理论，缩短换道时长会显著增加横向需求，反之延长换道时长可降低侧向加速度与转向需求。",
+          "factIds": [],
+          "sourceIds": [
+            "KB-005#c1"
+          ]
+        },
+        {
+          "text": "本次重算中，响应时间reaction保持为0.8 s未变，仅laneTime参数发生改变，符合工况复盘说明中关于保留参数进行对比的要求。",
+          "factIds": [
+            "SIM_LATERAL",
+            "CAND_3__SIM_LATERAL"
+          ],
+          "sourceIds": [
+            "27fa7498-bf15-4403-a96b-ff1de20baf7f#c4"
+          ]
+        }
+      ],
+      "recommendations": [
+        {
+          "text": "若需进一步降低侧向动态需求，可考虑继续延长换道时长，但需权衡换道完成时间与交通流效率。",
+          "factIds": [
+            "CAND_3__SIM_LATERAL",
+            "CAND_3__SIM_STEERING"
+          ],
+          "sourceIds": [
+            "KB-005#c1"
+          ]
+        },
+        {
+          "text": "当前模型基于水平路面运动学假设，实际车辆结论仍需受控测量与专业审核，不能直接认定实车安全。",
+          "factIds": [
+            "CAND_3__SIM_UTILIZATION"
+          ],
+          "sourceIds": [
+            "27fa7498-bf15-4403-a96b-ff1de20baf7f#c4"
+          ]
+        }
+      ],
+      "limitations": [
+        "本分析基于水平路面与运动学需求模型，不包含轮胎非线性、载荷转移和闭环控制效应。",
+        "工程阈值（如侧向加速度3 m/s²）为可配置初始值，需车型标定与专业审核确认。",
+        "本次未绑定测量日志，不能诊断具体实车偏差或证明实车安全。",
+        "候选方案仅为独立重算结果，未修改当前基线工况，不能作为可执行避障指令或实车安全认证依据。"
+      ]
+    },
+    "answer": "计算引擎基线评估：约束内。\n以下为模型解释，已检查结构和引用编号，文字语义仍需工程审核。\n\n已调用evaluate_parameters工具生成候选CAND_3，将换道时长从5 s修改为6.25 s，其余输入（包括响应时间0.8 s、车速90 km/h等）保持不变。重算结果显示侧向需求峰值和方向盘需求峰值均显著降低，风险等级仍为“约束内”。\n\n基线工况下，连续附着需求峰值利用率为10.3%，侧向加速度峰值为0.808 m/s²，方向盘需求峰值为3.112°。 [SIM_UTILIZATION，SIM_LATERAL，SIM_STEERING]\n\n候选CAND_3将换道时长改为6.25 s后，连续附着需求峰值利用率降至6.6%，侧向加速度峰值降至0.517 m/s²，方向盘需求峰值降至1.992°。 [CAND_3__SIM_UTILIZATION，CAND_3__SIM_LATERAL，CAND_3__SIM_STEERING]\n\n根据五次多项式轨迹理论，缩短换道时长会显著增加横向需求，反之延长换道时长可降低侧向加速度与转向需求。 [KB-005#c1]\n\n本次重算中，响应时间reaction保持为0.8 s未变，仅laneTime参数发生改变，符合工况复盘说明中关于保留参数进行对比的要求。 [SIM_LATERAL，CAND_3__SIM_LATERAL，27fa7498-bf15-4403-a96b-ff1de20baf7f#c4]\n\n若需进一步降低侧向动态需求，可考虑继续延长换道时长，但需权衡换道完成时间与交通流效率。 [CAND_3__SIM_LATERAL，CAND_3__SIM_STEERING，KB-005#c1]\n\n当前模型基于水平路面运动学假设，实际车辆结论仍需受控测量与专业审核，不能直接认定实车安全。 [CAND_3__SIM_UTILIZATION，27fa7498-bf15-4403-a96b-ff1de20baf7f#c4]\n\n工程边界：\n水平路面与运动学需求模型，不包含轮胎非线性、载荷转移和闭环控制。\n工程阈值与制动力增益为可配置初始值，需要车型标定与专业审核。\n本次未绑定测量日志，不能诊断具体实车偏差。\n\n模型补充限制：\n本分析基于水平路面与运动学需求模型，不包含轮胎非线性、载荷转移和闭环控制效应。\n工程阈值（如侧向加速度3 m/s²）为可配置初始值，需车型标定与专业审核确认。\n本次未绑定测量日志，不能诊断具体实车偏差或证明实车安全。\n候选方案仅为独立重算结果，未修改当前基线工况，不能作为可执行避障指令或实车安全认证依据。"
+  },
+  "mechanicalChecks": {
+    "sameInputBytes": true,
+    "sameBaselineConfigAsInitial": true,
+    "onlyChangedConfigKeys": [
+      "laneTime"
+    ],
+    "patchExactlyLaneTime625": true,
+    "reactionPreserved": 0.8,
+    "speedPreservedKmh": 90,
+    "baselineLaneTimeS": 5,
+    "candidateLaneTimeS": 6.25,
+    "candidateApplied": false,
+    "candidateFingerprintMatchesBaseline": true,
+    "allClaimReferencesRegistered": true,
+    "allClaimsHaveAtLeastOneReference": true,
+    "requestLimitRespected": true,
+    "realToolCandidateNotDefault": true,
+    "numericComparisons": [
+      {
+        "baselineFactId": "SIM_UTILIZATION",
+        "candidateFactId": "CAND_3__SIM_UTILIZATION",
+        "label": "连续附着需求峰值利用率",
+        "unit": "%",
+        "baseline": 10.299316728663054,
+        "candidate": 6.591562706344356,
+        "ratio": 0.6400000000000001,
+        "decreased": true
+      },
+      {
+        "baselineFactId": "SIM_LATERAL",
+        "candidateFactId": "CAND_3__SIM_LATERAL",
+        "label": "连续侧向需求峰值",
+        "unit": "m/s²",
+        "baseline": 0.8082903768654767,
+        "candidate": 0.5173058411939051,
+        "ratio": 0.64,
+        "decreased": true
+      },
+      {
+        "baselineFactId": "SIM_STEERING",
+        "candidateFactId": "CAND_3__SIM_STEERING",
+        "label": "适用速度域内连续方向盘需求峰值",
+        "unit": "°",
+        "baseline": 3.1121277461654486,
+        "candidate": 1.9917668973954759,
+        "ratio": 0.6400016515548229,
+        "decreased": true
+      }
+    ],
+    "independentFormulaChecks": {
+      "basis": "仅对当前无制动、固定宽度/车速、完整五次给定轨迹的运动学需求公式交叉核对，非新实车或完整工程回归。",
+      "lateralPeakFormula": "(10*sqrt(3)/3)*laneWidth/laneTime^2",
+      "steeringFormula": "atan(wheelbase*lateralPeak/(speed/3.6)^2)*180/pi*steeringRatio",
+      "lateralRatioExpected": 0.64,
+      "lateralAndSteeringNumbersMatch": true,
+      "linearScalingClaimed": false
+    }
+  },
+  "semanticReview": {
+    "verdict": "本单题主要数值、参数比较与限制说明正确；引用的直接蕴含仍有局部限制。",
+    "numericRounding": "10.3%/0.808m/s²/3.112°与6.6%/0.517m/s²/1.992°均为对应基线与CAND_3事实的合理舍入。",
+    "summarySupported": true,
+    "riskStatementMatchesEngine": true,
+    "baselineNotAppliedStatementSupported": true,
+    "qualitativeRelationship": {
+      "supportedForThisCase": true,
+      "note": "在该固定宽度/车速且完整覆盖给定五次轨迹的案例，延长T使侧向峰值按1/T²下降，方向盘需求经atan关系下降。回答没有把两者统称线性，也没有声称闭环避障能力；不应外推任意制动/速度域/截断轨迹。"
+    },
+    "claimCitationReview": [
+      {
+        "path": "observations[0]",
+        "status": "direct",
+        "note": "三个基线数值各引用对应SIM事实。"
+      },
+      {
+        "path": "observations[1]",
+        "status": "direct",
+        "note": "三个候选数值各引用真实工具CAND_3事实，未混用同值的默认CAND_2。"
+      },
+      {
+        "path": "observations[2]",
+        "status": "supported-in-current-model",
+        "note": "KB-005公开项目摘要包含五次轨迹及缩短时长增加横向需求；降低转向需求由当前候选数值与模型公式支持，不等同于该段逐字包含全部结论。"
+      },
+      {
+        "path": "observations[3]",
+        "status": "factually-correct-but-citation-partial",
+        "note": "reaction0.8及只改laneTime可由candidate.patch和baseline/candidate.config直接核对；所引两个侧向峰值事实不直接编码reaction。c4是保存参数、日志、阈值和快照及专业复盘建议，不直接规定本次只改laneTime，故不能声称每个句子均被其引用充分蕴含。"
+      },
+      {
+        "path": "recommendations[0]",
+        "status": "bounded-advice-with-unmeasured-consideration",
+        "note": "本次下降趋势有对应候选事实；换道完成时间与交通流效率属于一般权衡提示。本系统没有模拟交通流效率，不能将该句作为已量化收益或继续无限延长时长的保证。"
+      },
+      {
+        "path": "recommendations[1]",
+        "status": "boundary-supported-with-nonessential-numeric-citation",
+        "note": "受控测量与专业审核由c4及本次evidence.limitations支持；CAND_3利用率不是安全验证证据。该建议明确禁止直接认定实车安全，未作认证承诺。"
+      }
+    ],
+    "remainingLimitations": [
+      "登记引用存在只证明ID有效，不证明每条文字被引用直接蕴含；本次已记录obs4局部引用支持不足。",
+      "两次结果对照不是随机或重复控制试验，无法将改善完全因果归于本次提示补丁。",
+      "未经现场用户试用、实车标定或工程签署；不声明所有AI语义问题已修复。",
+      "只有这一次额外T06在线回归，未重跑原六题。"
+    ],
+    "suggestedMaterialWording": "初始T06因未知引用降级后，补充有界诊断与真实事实映射；一次明确授权的同输入定向回归用3次模型请求完成真实候选重算，主要数值与参数保持核对通过。局部引用的直接支持及未量化建议仍需人工复核，原六题结果与失败记录保持不变。"
+  },
+  "redaction": {
+    "includesApiKeys": false,
+    "includesCredentials": false,
+    "includesPersonalDocumentBody": false,
+    "includedSourceFields": "仅chunkId、标题与页段锚点；不导出导入资料正文、向量或账户信息。",
+    "answerTreatment": "保留本次工程工况的结构化回答及渲染答案；不把规则回答、候选默认计算或历史模型结果冒称新真实调用。"
+  }
+}

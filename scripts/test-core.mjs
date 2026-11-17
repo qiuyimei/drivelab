@@ -3,7 +3,7 @@ import path from 'node:path';
 import assert from 'node:assert/strict';
 import ts from 'typescript';
 const out=path.resolve('.sites-runtime/core-tests');await fs.mkdir(out,{recursive:true});
-for(const name of ['trajectory-extrema','simulation','logs','knowledge-sources','rag','retrieval','evidence','provider','fingerprint','analysis','analysis-snapshot','pdf-report','log-state']){const code=await fs.readFile(`lib/${name}.ts`,'utf8');const js=ts.transpileModule(code,{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ES2022}}).outputText.replace(/from ['"]\.\/([a-z-]+)['"]/g,"from './$1.mjs'");await fs.writeFile(path.join(out,name+'.mjs'),js);}
+for(const name of ['trajectory-extrema','simulation','logs','knowledge-sources','rag','retrieval','evidence','provider','fingerprint','analysis-tasks','analysis','analysis-snapshot','pdf-report','log-state']){const code=await fs.readFile(`lib/${name}.ts`,'utf8');const js=ts.transpileModule(code,{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ES2022}}).outputText.replace(/from ['"]\.\/([a-z-]+)['"]/g,"from './$1.mjs'");await fs.writeFile(path.join(out,name+'.mjs'),js);}
 const {defaults,simulate,templates,validateConfig,MIN_LATERAL_SPEED_KMH}=await import(new URL('../.sites-runtime/core-tests/simulation.mjs',import.meta.url));
 const {parseLog,compare,sampleCSV}=await import(new URL('../.sites-runtime/core-tests/logs.mjs',import.meta.url));
 const {retrieve}=await import(new URL('../.sites-runtime/core-tests/retrieval.mjs',import.meta.url));

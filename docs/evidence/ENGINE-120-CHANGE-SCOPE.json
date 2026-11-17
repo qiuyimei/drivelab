@@ -1,0 +1,134 @@
+{
+  "schemaVersion": 1,
+  "reviewedOn": "2026-11-17",
+  "reviewedAt": "2026-11-17T09:11:26.466Z",
+  "engineVersion": "1.2.0",
+  "status": "core_git_blob_identity_verified",
+  "scope": "只核实120与已提交114的计算/日志/连续极值源码对象身份，以及历史检查归属；不把源码相同当作整站/模型语义等价证明。",
+  "currentCheckoutBaseCommit": "cf07ec4008cd533e657999d0dd2e53e78cfb1d99",
+  "workingTreeTargetEngineVersion": "1.2.0",
+  "baselineReleaseCommit": "38724b70ad0684459e92c0fb8fb11f98af67e85e",
+  "baselineReleaseEngineVersion": "1.1.4",
+  "baselineImplementationCommit": "4b75da8be22899b631be80c24f55d69e118a62b2",
+  "coreFiles": [
+    {
+      "path": "lib/simulation.ts",
+      "currentWorkingTreeSha256": "4c705ade77f3e04152720053aaaa492756f1fd43d69e826c77692942b6b763a5",
+      "baselineGitBlobContentSha256": "4c705ade77f3e04152720053aaaa492756f1fd43d69e826c77692942b6b763a5",
+      "baselineReleaseBlob": "7861b5b9c2c2b73956da77b721bd9f989040a994",
+      "baselineImplementationBlob": "7861b5b9c2c2b73956da77b721bd9f989040a994",
+      "currentCleanGitBlob": "7861b5b9c2c2b73956da77b721bd9f989040a994",
+      "identicalGitObject": true,
+      "rawBytesEqualToGitBlob": true,
+      "gitCanonicalization": "git hash-object --path=<path> <path> applies the repository clean/line-ending rules; does not write an object.",
+      "currentWorkingTreeMatchesRecorded114WorkingTreeSha256": true
+    },
+    {
+      "path": "lib/logs.ts",
+      "currentWorkingTreeSha256": "63dadd672f2c8f227e395e8b75a66f898084ecf0fd7469cecf0ba2a87463987d",
+      "baselineGitBlobContentSha256": "dca2902b016b7ee5fbdf028be9f0ab3f13aa6f37689f7e8881d1bc3d656b045d",
+      "baselineReleaseBlob": "9e3fad7bb666d560986192131de19c0303623518",
+      "baselineImplementationBlob": "9e3fad7bb666d560986192131de19c0303623518",
+      "currentCleanGitBlob": "9e3fad7bb666d560986192131de19c0303623518",
+      "identicalGitObject": true,
+      "rawBytesEqualToGitBlob": false,
+      "gitCanonicalization": "git hash-object --path=<path> <path> applies the repository clean/line-ending rules; does not write an object.",
+      "currentWorkingTreeMatchesRecorded114WorkingTreeSha256": true
+    },
+    {
+      "path": "lib/trajectory-extrema.ts",
+      "currentWorkingTreeSha256": "5ad1171dabca2cc36a6482a40cad7346caf94b85bf0ccdbeaf3886905f461ef7",
+      "baselineGitBlobContentSha256": "5ad1171dabca2cc36a6482a40cad7346caf94b85bf0ccdbeaf3886905f461ef7",
+      "baselineReleaseBlob": "c39bf6e39f40b701c4a0ac3e1ec7e535bb7e349c",
+      "baselineImplementationBlob": "c39bf6e39f40b701c4a0ac3e1ec7e535bb7e349c",
+      "currentCleanGitBlob": "c39bf6e39f40b701c4a0ac3e1ec7e535bb7e349c",
+      "identicalGitObject": true,
+      "rawBytesEqualToGitBlob": true,
+      "gitCanonicalization": "git hash-object --path=<path> <path> applies the repository clean/line-ending rules; does not write an object.",
+      "currentWorkingTreeMatchesRecorded114WorkingTreeSha256": true
+    }
+  ],
+  "coreCalculationFilesChanged": false,
+  "evidenceVersionBoundary": {
+    "path": "lib/evidence.ts",
+    "baselineGitBlob": "f714396343e5a42597b6c4df040f029c5e5897d3",
+    "currentCleanGitBlob": "4b2ce885bad83e44806024f6118ee3f2db9daf27",
+    "currentWorkingTreeSha256": "c2b6312be39e3c3d35c6227ea992fd234862a39a328db1c354e79e2c0decdbb0",
+    "unchangedExceptEngineVersion": true,
+    "note": "该文件相对114只将ENGINE_VERSION从1.1.4改为1.2.0；当前任务/提示/保存恢复等变化另见integrationFileDelta，不在三核心文件身份结论内。"
+  },
+  "integrationFileDelta": {
+    "trackedChanged": [
+      "app/api/[...path]/route.ts",
+      "app/layout.tsx",
+      "app/ui/AnalysisPanel.tsx",
+      "app/ui/ValidationPage.tsx",
+      "app/workbench.tsx",
+      "lib/analysis-snapshot.ts",
+      "lib/analysis.ts",
+      "lib/evidence.ts",
+      "lib/pdf-report.ts"
+    ],
+    "newUntracked": [
+      "app/tasks.css",
+      "app/ui/AITaskEvaluation.tsx",
+      "app/ui/AITaskWorkspace.tsx",
+      "lib/analysis-tasks.ts"
+    ],
+    "note": "这是当前工作树相对114的文件清单，不是对全部业务/UI变化的工程等价或质量保证。"
+  },
+  "freshChecksInThisRecord": {
+    "gitBlobIdentityFiles": 3,
+    "videoNumericalComparisons": 11,
+    "videoRecord": "docs/competition/VIDEO-120-REVALIDATION.json",
+    "fullHistoricalSweepsReexecuted": false,
+    "modelApiRequests": 0
+  },
+  "historicalChecksRetained": [
+    {
+      "name": "independentLongitudinalSweep",
+      "cases": 624,
+      "engineVersion": "1.1.3",
+      "record": "docs/evidence/engineering-final-review-20261117.json",
+      "recordSha256": "d266ced4efd87cb6970b5e41e0864af7d3dee3aaf401b6a08860c3e39e6a805f",
+      "jsonPath": "$.freshVerification.independentLongitudinalSweep",
+      "historicalResultPassed": true,
+      "newlyExecutedFor120": false
+    },
+    {
+      "name": "independentLogReference",
+      "cases": 120,
+      "engineVersion": "1.1.3",
+      "record": "docs/evidence/engineering-final-review-20261117.json",
+      "recordSha256": "d266ced4efd87cb6970b5e41e0864af7d3dee3aaf401b6a08860c3e39e6a805f",
+      "jsonPath": "$.freshVerification.independentLogReference",
+      "historicalResultPassed": true,
+      "newlyExecutedFor120": false
+    },
+    {
+      "name": "continuousDenseCrossCheck",
+      "cases": 72,
+      "engineVersion": "1.1.4",
+      "record": "docs/evidence/engineering-results-audit-20261117.json",
+      "recordSha256": "31881409e0f85da22dfae9316aedf5f2ae46a21642ddb64b7e69c121fe114a65",
+      "jsonPath": "$.freshVerification.continuousDenseCrossCheck",
+      "historicalResultPassed": true,
+      "newlyExecutedFor120": false
+    }
+  ],
+  "conclusion": "simulation.ts、logs.ts、trajectory-extrema.ts在Git清理/换行规范后的blob与114发布及修复提交相同；当前工作树SHA也匹配114审查记录的finalSourceSha256。624/120/72是原113/114历史检查，不能标为120新执行。此次11项旧视频底层数值确用120重新计算，全部一致。",
+  "limitations": [
+    "仅这3个文件的对象身份已核实；不推导所有app/lib均未变化。",
+    "工程模型仍是水平路面、恒减速/运动学需求模型，未做车型实车标定或专业安全认证。",
+    "120新增AI任务、候选载入、快照及纠错逻辑需要各自当前软件检查；旧模型真实记录不能冒称新源码已重验。"
+  ],
+  "reproduction": {
+    "temporaryIgnoredHelper": ".sites-runtime/revalidate-120.mjs",
+    "temporaryHelperSha256": "a23f49370ba127cec4bb5ff602c5a2fed71d30ee8105469a48eb66a5542e7a2b",
+    "gitObjectCommands": [
+      "git rev-parse 38724b70ad0684459e92c0fb8fb11f98af67e85e:<path>",
+      "git rev-parse 4b75da8be22899b631be80c24f55d69e118a62b2:<path>",
+      "git hash-object --path=<path> <path>"
+    ]
+  }
+}

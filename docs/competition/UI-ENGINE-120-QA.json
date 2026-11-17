@@ -1,0 +1,27 @@
+{
+  "engineVersion": "1.2.0",
+  "scope": "本地独立浏览器验收；实际T06初次3请求fallback快照，非成功模型回答截图",
+  "status": "passed",
+  "checks": [
+    "default AI task page with four objectives",
+    "missing log blocks model request",
+    "actual fallback task snapshot restores question and status",
+    "actual tool candidate numerical comparison visible",
+    "task PDF generated from actual restored result",
+    "loading candidate leaves computed baseline unchanged and marks dirty",
+    "explicit simulation computes candidate",
+    "switching task disables mismatched save and export",
+    "mobile page has no horizontal overflow",
+    "no page errors"
+  ],
+  "report": ".sites-runtime/AI任务报告样张.pdf",
+  "screenshots": "docs/competition/screenshots/implementation-120",
+  "errors": [],
+  "supplement": {
+    "actualAcceptedRegression": "同一T06一次定向回归3requests，非六题重跑",
+    "staticEvaluationRows": 6,
+    "claimFactsVisible": true,
+    "report": ".sites-runtime/AI任务成功报告样张.pdf",
+    "errors": []
+  }
+}

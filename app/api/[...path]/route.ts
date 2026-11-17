@@ -45,7 +45,7 @@ async function handler(request:Request){try{
  }
  if(path.startsWith('knowledge/')&&method==='DELETE'){await db.delete(documents).where(and(eq(documents.id,path.slice(10)),eq(documents.owner,owner)));return json({ok:true});}
  if(path==='analyze'&&method==='POST'){
-  const extra=await db.select().from(documents).where(eq(documents.owner,owner));const input={config:data.config,question:data.question,log:data.log,thresholds:data.thresholds,mode:data.mode};
+  const extra=await db.select().from(documents).where(eq(documents.owner,owner));const input={config:data.config,question:data.question,log:data.log,thresholds:data.thresholds,mode:data.mode,taskId:data.taskId};
   if(!request.headers.get('accept')?.includes('text/event-stream'))return json(await runAnalysis(input,extra,env as ModelSettings));
   const encoder=new TextEncoder();const stream=new ReadableStream({async start(controller){const send=(event:string,value:unknown)=>controller.enqueue(encoder.encode(`event: ${event}\ndata: ${JSON.stringify(value)}\n\n`));try{const result=await runAnalysis(input,extra,env as ModelSettings,trace=>send('progress',trace));send('result',result);}catch(error){send('error',{error:error instanceof Error?error.message:'分析失败'});}finally{controller.close();}}});
   return new Response(stream,{headers:{'Content-Type':'text/event-stream; charset=utf-8','Cache-Control':'no-cache, no-transform','X-Accel-Buffering':'no'}});

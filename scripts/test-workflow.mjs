@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import {defaults} from '../.sites-runtime/core-tests/simulation.mjs';
 import {restoreInputSnapshot,realignSavedLog} from '../.sites-runtime/core-tests/log-state.mjs';
+import {runAnalysis} from '../.sites-runtime/core-tests/analysis.mjs';
 const log={name:'合成保存恢复夹具.csv',rows:[{time:2,speed:36,yaw:1},{time:3,speed:40,yaw:2}],offset:2,dropped:0,duplicates:0,missing:['pressure','steering']};
 const snapshot=restoreInputSnapshot(JSON.stringify({config:defaults,log,thresholds:{speed:3,yaw:4,pressure:6,steering:12},analysis:'规则分析快照'}));
 assert.equal(snapshot.log.offset,2);assert.equal(snapshot.thresholds.speed,3);assert.equal(snapshot.analysis,'规则分析快照');
@@ -10,4 +11,8 @@ assert.throws(()=>realignSavedLog(log,Infinity));assert.throws(()=>realignSavedL
 assert.throws(()=>restoreInputSnapshot(JSON.stringify({config:{...defaults,speed:-1},log})));assert.throws(()=>restoreInputSnapshot('{invalid json}'));
 const broken=restoreInputSnapshot(JSON.stringify({config:defaults,log,thresholds:{speed:3,yaw:4,pressure:6,steering:12},analysis:'未验证旧文本仍可阅读',analysisBundle:{fingerprint:'4d8988ad590eb903d51d0fc6',engineVersion:'1.1.3'}}));
 assert.equal(broken.analysisBundle,null);assert.match(broken.analysisDiscardedReason,/丢弃损坏/);assert.equal(broken.analysis,'未验证旧文本仍可阅读');assert.equal(broken.log.rows[0].speed,36);
-console.log('PASS saved workflow: restored offset/tolerance/answer, normalized realignment, immutable source, repeated alignment, invalid snapshot rejection, damaged analysis isolation (6 groups)');
+const taskResult=await runAnalysis({config:defaults,question:'恢复我保存的日志复盘目标',log,taskId:'log-review',mode:'rules'},[],{});
+const taskSaved={config:defaults,log,thresholds:{speed:3,yaw:4,pressure:6,steering:12},analysis:taskResult.answer,analysisBundle:taskResult};
+const restoredTask=restoreInputSnapshot(JSON.stringify(taskSaved));assert.equal(restoredTask.analysisBundle.task.id,'log-review');assert.equal(restoredTask.analysisBundle.task.question,'恢复我保存的日志复盘目标');assert.equal(restoredTask.analysisBundle.task.status,'rules-only');assert.equal(restoredTask.analysisDiscardedReason,null);
+const forgedTask=restoreInputSnapshot(JSON.stringify({...taskSaved,analysisBundle:{...taskResult,task:{...taskResult.task,status:'complete'}}}));assert.equal(forgedTask.analysisBundle,null);assert.match(forgedTask.analysisDiscardedReason,/丢弃损坏/);assert.equal(forgedTask.log.rows[0].speed,36);assert.equal(forgedTask.thresholds.speed,3);
+console.log('PASS saved workflow: restored offset/tolerance/answer, normalized realignment, immutable source, repeated alignment, invalid snapshot rejection, damaged analysis isolation, task/question restore, forged task isolation (8 groups)');
