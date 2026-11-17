@@ -1,0 +1,26 @@
+{
+  "checkedOn": "2026-11-17",
+  "docx": "docs/competition/DriveLab-项目说明书.docx",
+  "sha256": "f573bfdc0b464688e91415ddc186a884feb576f7410cca2d57a2b3b89437647a",
+  "pages": 3,
+  "backend": "Microsoft Word 16.0 fixed-format export in an independent hidden instance; bundled render_docx.py rasterizer with Word PDF adapter",
+  "allPageImagesReviewed": true,
+  "rootAndAuthorReviewPassed": true,
+  "renderInputByteIdentical": true,
+  "originalDocumentUnchanged": true,
+  "referenceSha256": "201e1b05c744aebb00ebea950e3a43c60d3d2f8973b128e153a8e190fc88df79",
+  "primaryAudience": "车辆测试和底盘标定相关工程人员与小型测试团队",
+  "contentChecks": {
+    "originalV1MainWorkflowMapped": true,
+    "nineFunctionsExplained": true,
+    "concreteThreeScenarioExample": true,
+    "prototypeMaturityAndScopeClear": true,
+    "teachingIsSecondary": true,
+    "noContestAuditOrUnverifiedPersonnelContributionNarrative": true
+  },
+  "sourceFiles": [
+    "scripts/create-project-explanation.py",
+    "docs/competition/project-explanation.json"
+  ],
+  "note": "仅将构建器的本机默认引用路径改为必填--reference参数，已验收DOCX字节未改变。"
+}
