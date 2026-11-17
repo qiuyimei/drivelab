@@ -12,10 +12,13 @@ const outputDirectory=path.join(root,'.sites-runtime','competition-video-v2');
 const moduleDirectory=path.join(outputDirectory,'product-demo-modules');
 await fs.mkdir(moduleDirectory,{recursive:true});
 const source=await fs.readFile(path.join(root,'lib','simulation.ts'),'utf8');
+const extremaSource=await fs.readFile(path.join(root,'lib','trajectory-extrema.ts'),'utf8');
 const evidenceSource=await fs.readFile(path.join(root,'lib','evidence.ts'),'utf8');
 const engineVersion=evidenceSource.match(/ENGINE_VERSION\s*=\s*['"]([^'"]+)['"]/)?.[1];
 assert.ok(engineVersion,'Expected a declared application engine version');
-const js=ts.transpileModule(source,{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ES2022}}).outputText;
+const options={compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ES2022}};
+await fs.writeFile(path.join(moduleDirectory,'trajectory-extrema.mjs'),ts.transpileModule(extremaSource,options).outputText);
+const js=ts.transpileModule(source,options).outputText.replace(/from ['"]\.\/trajectory-extrema['"]/g,"from './trajectory-extrema.mjs'");
 const moduleFile=path.join(moduleDirectory,'simulation.mjs');
 await fs.writeFile(moduleFile,js);
 const {defaults,simulate}=await import(pathToFileURL(moduleFile));
@@ -52,7 +55,7 @@ const payload={
  generatedBy:'node scripts/product-demo.mjs',
  engineVersion,
  classification:'current_application_simulation_outputs',
- sourceSha256:{'lib/simulation.ts':createHash('sha256').update(source).digest('hex')},
+ sourceSha256:{'lib/simulation.ts':createHash('sha256').update(source).digest('hex'),'lib/trajectory-extrema.ts':createHash('sha256').update(extremaSource).digest('hex')},
  units:{config:'Application Config units; speed/leadSpeed km/h, distance/radius m, decel m/s², reaction/duration s',stoppingDistanceM:'m',stopTimeS:'s',predictedMinimumFullBrakingGapM:'m',maxLat:'m/s²'},
  productComparisons:{highway,curve},
  interpretation:[
@@ -61,7 +64,7 @@ const payload={
   'predictedMinimumFullBrakingGapM is the analytical whole-braking minimum gap, not the rounded minimum of the displayed sample grid.',
   'Curve comparisons keep radius 100 m and change speed from 36 to 28.8 km/h. The lateral demand is 1 to 0.64 m/s² under the steady-circle model.',
   'Curve is a non-braking scenario. Stopping distance/time and braking minimum gap are null because those are not applicable display metrics for that scenario.',
-  'maxLat is the maximum absolute lateral demand on the application sample grid; the steady curve value is constant. A risk label describes the simplified model constraints.'
+  'maxLat is the continuous maximum absolute lateral demand in the prescribed model; the steady curve value is constant. A risk label describes the simplified model constraints.'
  ]
 };
 const output=path.join(outputDirectory,'product-demo.json');

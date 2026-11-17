@@ -6,6 +6,7 @@ import {eq,and,desc} from 'drizzle-orm';
 import {simulate,validateConfig} from '../../../lib/simulation';
 import {runAnalysis,fingerprint} from '../../../lib/analysis';
 import {validatedLog,validatedThresholds,ENGINE_VERSION} from '../../../lib/evidence';
+import {validatedAnalysisBundle} from '../../../lib/analysis-snapshot';
 import {indexDocument,type Segment} from '../../../lib/rag';
 import {providerSettings,type ModelSettings} from '../../../lib/provider';
 
@@ -27,7 +28,8 @@ async function handler(request:Request){try{
  if(path.startsWith('records/')&&method==='GET'){const rows=await db.select().from(records).where(and(eq(records.id,path.slice(8)),eq(records.owner,owner))).limit(1);return rows.length?json(rows[0]):json({error:'记录不存在或无权访问'},404);}
  if(path==='records'&&method==='POST'){
   const result=simulate(validateConfig(data.config));const log=validatedLog(data.log),thresholds=validatedThresholds(data.thresholds),signature=await fingerprint(result.config,log,thresholds);
-  const bundle=data.analysisBundle?.fingerprint===signature?data.analysisBundle:null;
+  const incoming=validatedAnalysisBundle(data.analysisBundle);
+  const bundle=incoming?.fingerprint===signature&&incoming.engineVersion===ENGINE_VERSION?incoming:null;
   const payload=JSON.stringify({schemaVersion:2,engineVersion:ENGINE_VERSION,config:result.config,log,thresholds,analysis:typeof data.analysis==='string'?data.analysis.slice(0,24000):'',analysisBundle:bundle,fingerprint:signature});
   if(payload.length>2500000)throw Error('记录过大，请减少日志行数');
   const row={id:crypto.randomUUID(),owner,name:result.config.name,scenario:result.config.scenario,risk:result.risk,created:new Date().toISOString(),payload};await db.insert(records).values(row);return json(row,201);

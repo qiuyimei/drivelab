@@ -11,7 +11,7 @@ const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const runtime=path.join(root,'.sites-runtime','engineering-demo-modules');
 await fs.mkdir(runtime,{recursive:true});
 const sourceSha256={};
-for(const name of ['simulation','logs','evidence']){
+for(const name of ['trajectory-extrema','simulation','logs','evidence']){
  const source=await fs.readFile(path.join(root,'lib',name+'.ts'),'utf8');
  sourceSha256['lib/'+name+'.ts']=createHash('sha256').update(source).digest('hex');
  const js=ts.transpileModule(source,{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ES2022}}).outputText.replace(/from ['"]\.\/([a-z-]+)['"]/g,"from './$1.mjs'");
@@ -24,7 +24,7 @@ const snapshot=s=>({
  config:s.config,
  classification:'application_synthetic_simulation',
  risk:s.risk,
- metrics:{effectiveDecelMps2:s.effectiveDecel,stoppingDistanceM:s.stoppingDistance,stopTimeS:s.stopTime,minimumDisplayedGapM:s.minGap,predictedMinimumFullBrakingGapM:s.predictedMinGap,maximumSampledUtilization:s.maxUtil,maximumSampledLateralMps2:s.maxLat,maximumSampledSteeringDeg:s.maxSteer},
+ metrics:{effectiveDecelMps2:s.effectiveDecel,stoppingDistanceM:s.stoppingDistance,stopTimeS:s.stopTime,minimumDisplayedGapM:s.minGap,predictedMinimumFullBrakingGapM:s.predictedMinGap,maximumSampledUtilization:s.sampling.sampledPeaks.utilization,maximumSampledLateralMps2:s.sampling.sampledPeaks.lateral,maximumSampledSteeringDeg:s.sampling.sampledPeaks.steering,maximumContinuousUtilization:s.maxUtil,maximumContinuousLateralDemandMps2:s.maxLat,maximumContinuousSteeringDemandDeg:s.maxSteer,analyticBrakePressureDemandBar:s.maxPressure},
  applicability:s.modelApplicability,
  findings:s.findings,
  curveColumns:['time_s','speed_kmh','distance_m','acceleration_mps2','lateral_acceleration_mps2','yaw_rate_degps','steering_wheel_deg','estimated_pressure_bar','gap_m','utilization_ratio','lateral_position_m'],
@@ -56,7 +56,7 @@ const payload={
  limitations:[
   '所有仿真曲线均由当前应用简化模型计算，不是实车测量、车型标定或安全认证。',
   '50 ms +100 km/h 尖峰是明确构造的合成日志回归夹具，不是实测道路事件。',
-  '附着、侧向与方向盘峰值是 0.1 s 网格采样峰值；不能据此保证连续时间的严格阈值满足。',
+  'Sampled 字段保留 0.1 s 网格峰值；Continuous 字段使用当前给定轨迹活动区间的端点和驻点，转向限于既定适用速度域，不能据此保证实车安全。',
   '换道/避障初始速度 5 km/h 是当前软件模型适用边界，非法规或通用车辆下限；被接受不等于约束通过。',
   '默认跟驰假设前车恒速 60 km/h；解析自车停车距离与跟驰最小间距是不同指标。'
  ],

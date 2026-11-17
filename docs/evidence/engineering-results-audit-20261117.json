@@ -1,0 +1,400 @@
+{
+  "schemaVersion": "engineering-results-audit-v1",
+  "reviewedOn": "2026-11-17",
+  "reviewedEngine": "1.1.3",
+  "status": "已复核：1.1.4定向修复验证通过",
+  "scope": "连续换道/避障峰值、日志来源分类、保存恢复边界的具体反例审查；未重复全套回归。",
+  "sourceSha256": {
+    "lib/simulation.ts": "c281443f7722589772ed2b738b03d2ae5603a7ba4727ca35437d99b90ea9be51",
+    "lib/logs.ts": "28d8f4c0710c58bd35706f8495856eccfe83f6d9b6be87b892390cde6d5132a9",
+    "lib/evidence.ts": "925f8bed2198d326db3da4d7b12227390304c000ce0c971c2fa228f7daabe9f4",
+    "lib/log-state.ts": "b3111580bcc542d2568f81804f1f54ead571e5033a509e570a753d29429609cd",
+    "lib/fingerprint.ts": "7a330dfcef5a86dd7efe1251441d3f216c588e240af643c5241d5a444820c4ad",
+    "lib/pdf-report.ts": "b80a96ad0fe81310040c55a4cb766410c296ab10bac71b5f552c7302c823e38f",
+    "app/api/[...path]/route.ts": "1540d319bd558c96b42a3e00e1f88ceac713a03cf595eb5a3ea6f282b5ca10e1",
+    "app/ui/AnalysisPanel.tsx": "c36d0d9647269cd263eb50d4bed4c67925d6e6a5bc8566fa3e03f341c5418da2"
+  },
+  "conclusion": "已按授权修复连续换道/避障峰值伪通过、文件名来源断言和不完整分析包边界。保留0.1s时序与日志均方口径，约束及事实使用当前给定模型的连续极值；应用、相关回归及独立解析交叉检查通过。该结论属于软件与所选数学模型的一致性，不构成实车精度或安全认证。",
+  "findings": [
+    {
+      "id": "RESULTS-CONTINUOUS-STEERING",
+      "priority": "P1",
+      "status": "resolved_in_1.1.4",
+      "category": "software_model_consistency",
+      "issue": "给定五次轨迹的连续方向盘需求极值不一定落在0.1s网格，当前只检查采样maxSteer，存在连续超限却显示全部约束通过的合法参数。",
+      "reproductions": [
+        {
+          "patch": {
+            "scenario": "lane",
+            "speed": 15,
+            "duration": 12,
+            "steeringLimit": 111.3
+          },
+          "actual": {
+            "risk": "约束内",
+            "maximumSampledSteeringDeg": 111.26108650727122
+          },
+          "independentContinuous": {
+            "maximumSteeringDeg": 111.40882911260515
+          },
+          "result": "连续值超过111.3°，采样值低于限值。"
+        },
+        {
+          "patch": {
+            "scenario": "avoid",
+            "speed": 15,
+            "decel": 0.1,
+            "reaction": 0.8,
+            "laneTime": 5,
+            "duration": 60,
+            "distance": 1000,
+            "steeringLimit": 135.65
+          },
+          "actual": {
+            "risk": "约束内",
+            "maximumSampledSteeringDeg": 135.63794253950815,
+            "maximumSampledLateralMps2": 0.8072064000000011,
+            "lowSpeedLateralDemand": false
+          },
+          "independentContinuous": {
+            "u": 0.7959471314401636,
+            "timeS": 4.779735657200818,
+            "speedMps": 3.768693100946585,
+            "maximumSteeringDeg": 135.67869475556247
+          },
+          "result": "连续值超过135.65°；极值处速度约13.57km/h，处在现有5km/h软件边界以上，不能依赖低速警告覆盖。"
+        }
+      ],
+      "referenceMethod": {
+        "lateralPolynomial": "F(u)=60u-180u²+120u³, ay=W/T²*F(u)",
+        "lane": "常速时|ay|的驻点u=(3±sqrt(3))/6；方向盘角对|ay|单调。",
+        "avoid": "v(u)=v0-a*T*u；对F(u)/v(u)²求导，驻点满足F'(u)*v(u)+2*a*T*F(u)=0。本例用独立符号形式与有界二分根定位，检查所有根和区间端点。",
+        "note": "检验的是应用已选定的简化数学模型内部极值，不是实车轨迹跟踪或真实轮胎响应。"
+      },
+      "recommendation": "在当前轨迹模型内对活动区间端点及多项式/有理函数驻点求需求极值，用于约束判定；保留原行网格作显示和日志均方统计，不必扩大到更复杂车辆模型。若不实现，必须将结论限制为采样点约束，不能宣称全过程约束通过。"
+    },
+    {
+      "id": "RESULTS-CONTINUOUS-LATERAL",
+      "priority": "P2",
+      "status": "resolved_in_1.1.4",
+      "category": "software_model_consistency",
+      "patch": {
+        "scenario": "lane",
+        "speed": 90,
+        "duration": 12,
+        "laneWidth": 3.5,
+        "laneTime": 5,
+        "lateralLimit": 0.808
+      },
+      "actual": {
+        "risk": "约束内",
+        "maximumSampledLateralMps2": 0.8072064000000011
+      },
+      "independentContinuousPeakMps2": 0.8082903768654761,
+      "formula": "10*sqrt(3)/3*W/T²",
+      "note": "此前技术材料已披露采样峰值限制；产品的约束等级仍可能在贴边条件下产生过强解释。可与连续转向极值在同一有界修复中处理。"
+    },
+    {
+      "id": "RESULTS-FILENAME-PROVENANCE",
+      "priority": "P2",
+      "status": "resolved_in_1.1.4",
+      "category": "source_claim_accuracy",
+      "issue": "来源类别只靠文件名决定，既可丢失合成说明，也会产生错误的公开数据来源断言。",
+      "reproductions": [
+        {
+          "input": "同一sampleCSV(simulate(defaults).rows,true)内容，分别以演示采集日志.csv和measurement.csv解析。",
+          "actual": "前者evidence.limitations含合成演示限制，改名后该限制消失；LogData没有显式来源字段。",
+          "impact": "数据性质未变，说明却随名称改变。"
+        },
+        {
+          "input": "任意合法两行CSV，文件名公开实测-我的实验.csv。",
+          "actualControlFlow": "lib/pdf-report.ts中name.includes('公开实测')为true，选中固定文案“公开实测样例来自comma2k19，用于导入、单位和时间轴演示，不是本模型的车型标定证明。”",
+          "impact": "不能仅根据文件名断言数据来自comma.ai。该结论来自读取实际生成器分支；本次没有生成或修改PDF。"
+        }
+      ],
+      "recommendation": "来源信息使用显式字段跨解析、规范化、保存、恢复和PDF传递；未知导入默认为来源未经核验。已知公开/应用合成样例应有明确标识与来源元数据，名称仅用于显示。来源声明与内容哈希核验程度必须区分，不把客户端标签当认证。",
+      "saveRestoreRequirement": "新增来源字段时，validatedLog与realignSavedLog需保留合法元数据；保存快照与输入指纹需包含影响解释的来源信息，旧数据无字段时安全降级为未知来源。"
+    },
+    {
+      "id": "RESULTS-INCOMPLETE-ANALYSIS-BUNDLE",
+      "priority": "P2",
+      "status": "resolved_in_1.1.4",
+      "category": "saved_snapshot_boundary",
+      "issue": "保存与恢复没有检查analysisBundle结构，只检查输入fingerprint或直接原样返回。不完整但指纹正确的包可以进入界面状态。",
+      "input": {
+        "config": "defaults",
+        "log": null,
+        "thresholds": {
+          "speed": 2,
+          "yaw": 2,
+          "pressure": 5,
+          "steering": 10
+        },
+        "analysisBundle": {
+          "fingerprint": "4d8988ad590eb903d51d0fc6",
+          "engineVersion": "1.1.3"
+        }
+      },
+      "actual": {
+        "recordsPostFingerprintCondition": true,
+        "restoreInputSnapshotAccepted": true,
+        "analysisPanelAccess": "analysisBundle.evidence.facts.slice(0,9)",
+        "exception": "Cannot read properties of undefined (reading 'facts')"
+      },
+      "reproductionBoundary": "本次仅执行纯恢复函数和界面会执行的字段访问；没有写数据库、发送API请求或操作UI。records POST会接受的条件由现有分支核对。",
+      "recommendation": "在服务端保存及恢复前验证分析包必需结构；损坏或不兼容的分析包应拒绝/隔离并保留可用参数日志，不让它进入正常AnalysisPanel。输入指纹证明输入一致，不证明分析对象完整或来自可信生成过程。",
+      "furtherScope": "完整分析内容是否与当前重算事实一致属于单独语义核验；本报告没有把“结构有效”等同于模型文字真实。"
+    }
+  ],
+  "verifiedSoftware": [
+    {
+      "item": "正常规范化日志保存恢复",
+      "input": "time_ms,speed_mps: (1000,10),(2000,11); offset=2",
+      "restoredRows": [
+        {
+          "time": 2,
+          "speed": 36
+        },
+        {
+          "time": 3,
+          "speed": 39.6
+        }
+      ],
+      "result": "单位不会重复换算。"
+    },
+    {
+      "item": "恢复后时间偏移",
+      "targetOffset": 3.25,
+      "outputRows": [
+        {
+          "time": 3.25,
+          "speed": 36
+        },
+        {
+          "time": 4.25,
+          "speed": 39.6
+        }
+      ],
+      "result": "只加偏移增量，原对象不变，重复应用相同偏移幂等。"
+    },
+    {
+      "item": "旧文本与报告",
+      "result": "界面和PDF已有未验证旧版文本标签；PDF准备阶段会拒绝指纹/引擎版本不匹配的结构化分析。没有把这条现有保护误报为缺失。",
+      "remaining": "相同指纹的畸形对象仍需结构校验。"
+    }
+  ],
+  "documentationImplications": [
+    "约束及事实现在使用当前给定模型的连续需求极值，时序显示和日志均方统计仍保留原采样口径；低速适用域以外继续明确未完整评估。",
+    "所有导入统一说明来源未核验，不根据文件名宣称实测或特定公开数据出处。",
+    "保存拒绝不完整分析包，恢复和报告会隔离损坏分析，保留可用参数、日志及明确标记的旧文本。",
+    "结构与引用登记检查、输入指纹均不构成模型文字或数据来源的真实性认证；尚未由本任务建立实车精度。"
+  ],
+  "operations": {
+    "authorizedApplicationChanges": true,
+    "oldSavedRecordsChanged": false,
+    "olderAuditJsonOverwritten": false,
+    "oldBenchmarkArtifactChanged": false,
+    "externalModelCalls": false,
+    "networkCalls": false,
+    "keysRead": false,
+    "commit": false,
+    "deployment": false,
+    "applicationFrozenAfterVerification": true
+  },
+  "initialConclusion": "正常参数保存恢复、标准单位保留和重复时间对齐可用。三个实际问题仍需处理：采样峰值可使连续转向超限显示约束内；文件名会错误决定来源声明；不完整分析包可被保存条件和恢复函数接受，随后触发界面字段访问错误。这些是软件一致性问题，不是新增车型实测结论。",
+  "finalEngineVersion": "1.1.4",
+  "resolution": {
+    "sourceOpenCommit": "18ffc758c426fc85e85be36cef2ad72d36177254",
+    "continuousPeaks": {
+      "method": "给定五次轨迹端点/二阶导驻点；避障转向有理函数三次驻点，用导数单调区间分割及有界二分求全部实根。",
+      "activeTime": "限定当前显示时间窗、换道计划与停车前的实际活动区间。",
+      "steeringDomain": "换道/避障转向极值仅在现有>=5km/h适用域求取；低于该域保留未完整评估告警，不判全部约束通过。",
+      "compatibility": "原0.1s rows不变；MAE/RMSE仍按原网格。sampling.sampledPeaks另存原采样峰值，maxLat/maxSteer/maxUtil用于连续需求判定。",
+      "counterexampleResults": [
+        {
+          "patch": {
+            "scenario": "lane",
+            "speed": 90,
+            "duration": 12,
+            "lateralLimit": 0.808
+          },
+          "risk": "需关注",
+          "maxLat": 0.8082903768654767,
+          "maxSteer": 3.1121277461654486,
+          "maxUtil": 0.10299316728663055,
+          "trajectoryExtrema": {
+            "maxLateral": 0.8082903768654767,
+            "maxSteering": 3.1121277461654486,
+            "lateralPeakTime": 4.7433756729740635,
+            "steeringPeakTime": 4.743375672974064,
+            "activeEnd": 1,
+            "validSteeringEnd": 1,
+            "lowSpeedLateralDemand": false
+          },
+          "rows": 121
+        },
+        {
+          "patch": {
+            "scenario": "lane",
+            "speed": 15,
+            "duration": 12,
+            "steeringLimit": 111.3
+          },
+          "risk": "高风险",
+          "maxLat": 0.8082903768654767,
+          "maxSteer": 111.40882911260535,
+          "maxUtil": 0.10299316728663055,
+          "trajectoryExtrema": {
+            "maxLateral": 0.8082903768654767,
+            "maxSteering": 111.40882911260535,
+            "lateralPeakTime": 4.7433756729740635,
+            "steeringPeakTime": 4.743375672974064,
+            "activeEnd": 1,
+            "validSteeringEnd": 1,
+            "lowSpeedLateralDemand": false
+          },
+          "rows": 121
+        },
+        {
+          "patch": {
+            "scenario": "avoid",
+            "speed": 15,
+            "decel": 0.1,
+            "reaction": 0.8,
+            "laneTime": 5,
+            "duration": 60,
+            "distance": 1000,
+            "steeringLimit": 135.65
+          },
+          "risk": "高风险",
+          "maxLat": 0.8082903768654767,
+          "maxSteer": 135.6786947555618,
+          "maxUtil": 0.10377838704443278,
+          "trajectoryExtrema": {
+            "maxLateral": 0.8082903768654767,
+            "maxSteering": 135.6786947555618,
+            "lateralPeakTime": 4.7433756729740635,
+            "steeringPeakTime": 4.779735657200819,
+            "activeEnd": 1,
+            "validSteeringEnd": 1,
+            "lowSpeedLateralDemand": false
+          },
+          "rows": 601
+        }
+      ],
+      "nominalChanges": [
+        {
+          "scenario": "lane",
+          "maxLat": 0.8082903768654767,
+          "maxSteer": 3.1121277461654486,
+          "maxUtil": 0.10299316728663055,
+          "risk": "约束内",
+          "sampledPeaks": {
+            "lateral": 0.8072064000000011,
+            "steering": 3.1079541902933485,
+            "utilization": 0.10285504587155976
+          },
+          "validEnd": 1
+        },
+        {
+          "scenario": "avoid",
+          "maxLat": 1.649572197684646,
+          "maxSteer": 989.7884278716315,
+          "maxUtil": 0.9061638463552885,
+          "risk": "高风险",
+          "sampledPeaks": {
+            "lateral": 1.6457142857142855,
+            "steering": 1309.294033095454,
+            "utilization": 0.9060150780825762
+          },
+          "validEnd": 0.7275132275132276
+        }
+      ]
+    },
+    "sourcePolicy": {
+      "classification": "所有导入日志默认来源未核验",
+      "behavior": "不根据名称判为实车、合成或comma2k19来源。界面图例及报告称导入日志，证据/报告统一来源未核验说明。名称只作为文件标识。",
+      "scope": "未引入可被客户端随意声明为已认证的来源信任标记；公开样例的外部元数据/许可仍可单独核对。"
+    },
+    "analysisSnapshots": {
+      "helper": "lib/analysis-snapshot.ts",
+      "save": "共享结构校验拒绝不完整或不安全可渲染字段，服务端保存返回错误；之后仍核对输入指纹与引擎版本。",
+      "restore": "损坏/不兼容的结构化分析被丢弃，参数、日志、容差及明确标记的旧文本保留；提供丢弃原因。",
+      "report": "指纹/版本错配或结构损坏的分析不会纳入当前PDF，保留重算结果。",
+      "boundary": "结构与引用登记检查不是来源签名，也不能证明全部自然语言或结构化伪造数据的真实性。"
+    },
+    "engineFingerprint": {
+      "beforeVersion": "1.1.3",
+      "before": "4d8988ad590eb903d51d0fc6",
+      "afterVersion": "1.1.4",
+      "after": "2179c89d47257539768e8cba",
+      "oldAnalysisStale": true
+    }
+  },
+  "freshVerification": {
+    "core": 41,
+    "analysis": 29,
+    "savedWorkflowGroups": 6,
+    "typecheck": "tsc --noEmit passed",
+    "independentReference": {
+      "passed": 130,
+      "total": 130,
+      "maxAbsoluteError": 9.094947017729282e-13,
+      "fixtureNumbersChanged": false,
+      "assertion": "12组换道maxLat改为与原独立连续峰值等值核对，完整原采样点核对仍保留。",
+      "artifactWriting": "通过只移除结果写入的内存适配执行，未改旧public benchmark结果。"
+    },
+    "retrieval": {
+      "hitAt3": "12/12",
+      "top1": "12/12"
+    },
+    "continuousDenseCrossCheck": {
+      "cases": 72,
+      "gridPointsPerSeries": 10001,
+      "maxAnalyticMinusDenseLateral": 5.622422971640617e-8,
+      "maxAnalyticMinusDenseSteering": 0.000008718268077245739,
+      "maxAnalyticMinusDenseUtilization": 7.164147497462636e-9,
+      "passed": true
+    },
+    "apiBuildDeployment": "由主代理另行验收，本代理未声称完成。"
+  },
+  "finalSourceSha256": {
+    "lib/trajectory-extrema.ts": "5ad1171dabca2cc36a6482a40cad7346caf94b85bf0ccdbeaf3886905f461ef7",
+    "lib/simulation.ts": "4c705ade77f3e04152720053aaaa492756f1fd43d69e826c77692942b6b763a5",
+    "lib/logs.ts": "63dadd672f2c8f227e395e8b75a66f898084ecf0fd7469cecf0ba2a87463987d",
+    "lib/evidence.ts": "9493646f981d52c9f18c05de2c0665696667fb16ea6f2c61fa0e879c616f2618",
+    "lib/analysis-snapshot.ts": "5dadff7456dbb9406ab8827c5f78c73f616f86783cfd6e7d6d315a01f7b58365",
+    "lib/log-state.ts": "3dbd885107901949dd769195d3e56b825080923d06baacf16e4faca458a601d7",
+    "lib/pdf-report.ts": "9c040864b0b6dd973d44fd4d143d3fb0ab2fb8391829dc206598283ab825fa53",
+    "app/api/[...path]/route.ts": "010fd2d3edbef4ae1342cb4362bff50e4b6513784a20dd13bb58be9b96674b82",
+    "app/ui/SimulationViews.tsx": "ef1ff187939becfdf286fb59fd63c509c735708b78656692d71a6984aba03507",
+    "scripts/test-core.mjs": "cf9fcf48c2c3d9e0894c62b5bfb84728ae67ab85b42682e88b70104e8f66bf1f",
+    "scripts/test-analysis.mjs": "955ba654c6a0a5d0fba4dbbf79d0dbaabc89028af698ba35188704aea3ed3646",
+    "scripts/test-workflow.mjs": "3dc00649051b164ecd1f2359aea5b9aeed207b0dfbac4889298025fcbd133fe8",
+    "scripts/validate-benchmarks.mjs": "0995370a7c8f6e41e569bee5535c92fc1b897e2b3c135c4bdcfa3f90042ccb89",
+    "scripts/engineering-demo.mjs": "189727ba2119f9c7ca8a5622f8e70901f3e0e9d5f541c215f650b8073d856116",
+    "scripts/product-demo.mjs": "90e7fb224b67a088979b2564d179d9e71047a1e2c28d775b5dcc1c5e92acc39b"
+  },
+  "initialReadOnlyOperations": {
+    "modifiedApplicationSource": false,
+    "modifiedOldRecords": false,
+    "generatedPdf": false,
+    "externalModelCalls": false,
+    "networkCalls": false,
+    "keysRead": false,
+    "fullSuiteRepeated": false,
+    "wroteOnlyThisNewReviewJson": true
+  },
+  "remainingModelBoundaries": [
+    "连续峰值只覆盖当前水平路面恒减速/给定五次轨迹的需求方程，不扩大为动态轮胎、车辆碰撞几何或闭环控制。",
+    "低速横向段仍属于未完整评估；原采样行可保留该段近似值，它们不是适用速度域连续峰值。",
+    "导入日志来源仍需独立核验；结构校验和输入指纹不是数据或模型回答的真实性认证。",
+    "没有开展实车标定或持证工程签署。"
+  ],
+  "initialDocumentationImplications": [
+    "给定轨迹的约束判断应说明是否覆盖连续极值，不能把稀疏采样点通过写成连续过程保证。",
+    "导入文件可以参与差异分析，但来源性质需要独立声明/核验；文件名不构成实测或公开数据来源证据。",
+    "保存恢复已具备正常工作流，尚不能宣称对任意损坏或不完整的分析快照都稳健。",
+    "软件公式、输入/输出与日志操作可验证，实车准确率、车型标定、闭环控制与安全认证仍未由本任务建立。"
+  ]
+}

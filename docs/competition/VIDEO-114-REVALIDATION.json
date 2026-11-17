@@ -1,0 +1,10 @@
+{
+  "reviewedOn": "2026-11-17",
+  "engineVersion": "1.1.4",
+  "videoEngineMaterial": "1.1.2",
+  "numericComparisons": 11,
+  "unchangedWithinTolerance": true,
+  "tolerance": 1e-9,
+  "mp4Sha256": "ade01c2980118805c79413de0f11b4d47b4b43f206bec5681a9d67b35a470ee5",
+  "scope": "复算V2已展示的11个停车/间距/稳态圆周数值。影片未重制，不冒充114新实车或新工具实测。"
+}

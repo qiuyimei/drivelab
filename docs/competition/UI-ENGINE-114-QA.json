@@ -1,0 +1,13 @@
+{
+  "engineVersion": "1.1.4",
+  "passed": true,
+  "checks": [
+    "real model bundle saved and restored",
+    "four-channel comparison restored",
+    "knowledge file parsed and indexed",
+    "continuous steering boundary displayed"
+  ],
+  "pageErrors": [],
+  "screenshotDirectory": "docs/competition/screenshots/implementation-114",
+  "scope": "独立本机浏览器测试会话；真实模型结果由本机API获得、经保存接口写入后从页面恢复展示，不伪造界面返回。"
+}

@@ -1,6 +1,7 @@
 import {simulate,validateConfig} from './simulation';
 import {validatedLog,validatedThresholds} from './evidence';
 import type {LogData} from './logs';
+import {validatedAnalysisBundle} from './analysis-snapshot';
 
 // Restored snapshots already use canonical units; never reapply source-unit conversion.
 export function realignSavedLog(input:LogData,offset:number):LogData{
@@ -13,5 +14,7 @@ export function restoreInputSnapshot(payload:string){
  const p=JSON.parse(payload);const config=validateConfig(p.config);
  // Calculate and validate everything before the UI applies any restored state.
  const simulation=simulate(config),log=validatedLog(p.log),thresholds=validatedThresholds(p.thresholds);
- return {config,simulation,log,thresholds,analysis:typeof p.analysis==='string'?p.analysis:'',analysisBundle:p.analysisBundle??null};
+ let analysisBundle=null,analysisDiscardedReason:string|null=null;
+ try{analysisBundle=validatedAnalysisBundle(p.analysisBundle);}catch{analysisDiscardedReason='已丢弃损坏或不兼容的分析快照；参数与日志仍可使用，请重新分析。';}
+ return {config,simulation,log,thresholds,analysis:typeof p.analysis==='string'?p.analysis:'',analysisBundle,analysisDiscardedReason};
 }

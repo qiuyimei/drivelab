@@ -8,4 +8,6 @@ const moved=realignSavedLog(snapshot.log,3.25);assert.deepEqual(moved.rows.map(r
 assert.deepEqual(snapshot.log.rows.map(row=>row.time),[2,3]);assert.deepEqual(realignSavedLog(moved,3.25),moved);
 assert.throws(()=>realignSavedLog(log,Infinity));assert.throws(()=>realignSavedLog(log,61));
 assert.throws(()=>restoreInputSnapshot(JSON.stringify({config:{...defaults,speed:-1},log})));assert.throws(()=>restoreInputSnapshot('{invalid json}'));
-console.log('PASS saved workflow: restored offset/tolerance/answer, normalized realignment, immutable source, repeated alignment, invalid snapshot rejection (5 groups)');
+const broken=restoreInputSnapshot(JSON.stringify({config:defaults,log,thresholds:{speed:3,yaw:4,pressure:6,steering:12},analysis:'未验证旧文本仍可阅读',analysisBundle:{fingerprint:'4d8988ad590eb903d51d0fc6',engineVersion:'1.1.3'}}));
+assert.equal(broken.analysisBundle,null);assert.match(broken.analysisDiscardedReason,/丢弃损坏/);assert.equal(broken.analysis,'未验证旧文本仍可阅读');assert.equal(broken.log.rows[0].speed,36);
+console.log('PASS saved workflow: restored offset/tolerance/answer, normalized realignment, immutable source, repeated alignment, invalid snapshot rejection, damaged analysis isolation (6 groups)');
