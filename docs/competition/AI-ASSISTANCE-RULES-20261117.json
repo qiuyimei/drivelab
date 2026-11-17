@@ -1,0 +1,21 @@
+{
+  "reviewedOn": "2026-11-17",
+  "source": "https://m.saikr.com/vse/2026AIWEBKF",
+  "scope": "赛事发布者的公开规则；报名后台附加声明未读取。",
+  "findings": {
+    "aiAssistedProgrammingPermitted": true,
+    "participantsMustExplainCode": true,
+    "publishedDevelopmentAssistantBrandRestrictionFound": false,
+    "publishedAICodePercentageCapFound": false,
+    "publishedRequirementToNameAssistantBrandFound": false,
+    "originalityAndRealGitHistoryRequired": true,
+    "qualificationAutomaticallyGuaranteed": false
+  },
+  "currentPresentation": {
+    "teamRoles": "两名软件工程成员按软件模块分工；车辆工程成员负责工况、模型依据、参数及工程核对。",
+    "developmentAssistance": "采用AI辅助开发；正文简述，实际使用范围见AI-AND-LICENSES.txt。未声明仅少量辅助或人工独立完成比例。",
+    "productModel": "实际通过ModelScope免费接口调用Qwen/Qwen3.5-27B。",
+    "assistantBrandInCurrentProse": "不列具体开发助手品牌，不以未使用过的工具替代。",
+    "sourceAndHistory": "真实源码、环境兼容标识和历史证据保留；当前正文中性化不等于清除完整历史的所有字符串。"
+  }
+}
