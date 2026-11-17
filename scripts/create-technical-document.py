@@ -1,9 +1,15 @@
-"""Build the competition technical review draft with the bundled ReportLab runtime."""
+"""Build the editable technical document from shared native content blocks.
+
+The formal PDF is exported from this DOCX by the authorized Word renderer.
+ReportLab remains an explicitly named layout reference, never the formal PDF.
+"""
 from pathlib import Path
 from xml.sax.saxutils import escape
 import json
 import re
 import importlib.util
+import argparse
+import hashlib
 from io import BytesIO
 from reportlab.pdfgen import canvas
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, PageBreak, Image, KeepTogether
@@ -32,8 +38,8 @@ TASK_REGRESSION_RECORD='docs/evidence/AI-TASK-T06-REGRESSION-120.json'
 TASK_REGRESSION=json.loads((ROOT/TASK_REGRESSION_RECORD).read_text(encoding='utf-8'))
 assert TASK_REGRESSION['regression']['mode']=='llm' and TASK_REGRESSION['regression']['modelRequests']==3
 REVIEW_DATE=VALIDATION['reviewedOn']
-VIDEO=json.loads((ROOT/'docs/competition/VIDEO-QA.json').read_text(encoding='utf-8'))
-VIDEO_TIMELINE=json.loads((ROOT/'docs/competition/VIDEO-SUBTITLE-QA.json').read_text(encoding='utf-8'))['scenes']
+VIDEO=json.loads((ROOT/'docs/competition/VIDEO-FINAL-121.json').read_text(encoding='utf-8'))
+VIDEO_TIMELINE=VIDEO['chapters']
 FIGURE_CONTENT=json.loads((ROOT/'docs/competition/implementation-results.json').read_text(encoding='utf-8'))
 figure_spec=importlib.util.spec_from_file_location('implementation_figure_layout',ROOT/'scripts/create-implementation-results.py')
 figure_layout=importlib.util.module_from_spec(figure_spec)
@@ -51,25 +57,37 @@ styles={
  'headcell':ParagraphStyle('headcell',fontName='NotoSC',fontSize=9,leading=14,textColor=colors.white,wordWrap='CJK'),
 }
 story=[]
+content_blocks=[]
 section_number=0
 def p(text,kind='body'):
  return Paragraph(escape(str(text)).replace('\n','<br/>'),styles[kind])
-def add(text,kind='body'): story.append(p(text,kind))
+def add(text,kind='body'):
+ story.append(p(text,kind))
+ content_blocks.append({'type':'paragraph','text':str(text),'style':kind})
+
+def spacer(height):
+ story.append(Spacer(1,height))
+ content_blocks.append({'type':'spacer','height':height})
 def table(headers,rows,widths):
  data=[[p(v,'headcell') for v in headers]]+[[p(v,'cell') for v in row] for row in rows]
  t=Table(data,colWidths=widths,repeatRows=1,hAlign='LEFT')
  t.setStyle(TableStyle([('BACKGROUND',(0,0),(-1,0),INK),('ROWBACKGROUNDS',(0,1),(-1,-1),[colors.white,colors.HexColor('#f5f7f9')]),('VALIGN',(0,0),(-1,-1),'TOP'),('LEFTPADDING',(0,0),(-1,-1),9),('RIGHTPADDING',(0,0),(-1,-1),9),('TOPPADDING',(0,0),(-1,-1),8),('BOTTOMPADDING',(0,0),(-1,-1),8),('LINEBELOW',(0,0),(-1,-1),.4,LINE)]))
- story.extend([t,Spacer(1,12)])
+ story.append(t)
+ content_blocks.append({'type':'table','headers':[str(v) for v in headers],'rows':[[str(v) for v in row] for row in rows],'widths':widths})
+ spacer(12)
 def page(number,title):
  global section_number
  section_number+=1
- story.append(PageBreak());add(f'{section_number:02d}  /  DRIVELAB','small');add(title,'heading')
+ story.append(PageBreak());content_blocks.append({'type':'page_break'})
+ add(f'{section_number:02d}  /  DRIVELAB','small');add(title,'heading')
 def image(name):
  file=ROOT/'docs/competition/screenshots'/name
  if file.exists():
   from PIL import Image as PILImage
   with PILImage.open(file) as im: w,h=im.size
-  story.extend([Image(str(file),width=510,height=510*h/w),Spacer(1,12)])
+  story.append(Image(str(file),width=510,height=510*h/w))
+  content_blocks.append({'type':'image','data':file.read_bytes(),'width':510,'height':510*h/w,'source':str(file.relative_to(ROOT))})
+  spacer(12)
 
 def result_image(name,*,crop=None,max_height=195):
  from io import BytesIO
@@ -80,12 +98,16 @@ def result_image(name,*,crop=None,max_height=195):
   result=original.crop(crop) if crop else original.copy()
   stream=BytesIO();result.save(stream,format='PNG');stream.seek(0)
   width=min(510,max_height*result.width/result.height)
-  story.extend([Image(stream,width=width,height=width*result.height/result.width),Spacer(1,10)])
+  story.append(Image(stream,width=width,height=width*result.height/result.width))
+  content_blocks.append({'type':'image','data':stream.getvalue(),'width':width,'height':width*result.height/result.width,'source':str(file.relative_to(ROOT))})
+  spacer(10)
 
 def result_asset(asset_id):
  result=figure_layout.render_figure_asset(FIGURE_CONTENT,asset_id)
  stream=BytesIO();result.save(stream,format='PNG');stream.seek(0)
- story.extend([Image(stream,width=510,height=510*result.height/result.width),Spacer(1,12)])
+ story.append(Image(stream,width=510,height=510*result.height/result.width))
+ content_blocks.append({'type':'image','data':stream.getvalue(),'width':510,'height':510*result.height/result.width,'source':asset_id})
+ spacer(12)
 def footer(c,doc):
  c.setStrokeColor(LINE);c.line(42,801,553,801);c.line(42,39,553,39)
  c.setFont('NotoSC',8);c.setFillColor(MUTED)
@@ -93,16 +115,16 @@ def footer(c,doc):
  c.drawString(42,25,'参赛技术文档 · 软件工程复核版 · '+REVIEW_DATE)
  c.drawRightString(553,25,str(doc.page))
 
-add('AI WEB DEVELOPMENT  /  10037','small');story.append(Spacer(1,65))
+add('AI WEB DEVELOPMENT  /  10037','small');spacer(65)
 add('DriveLab\n智能驾驶工况仿真\n与辅助分析平台','title')
-add('以可复算的工程证据，连接工况设计、日志对标与 AI 解释。','sub')
-story.append(Spacer(1,24))
+add('工况设计、日志对标、资料检索与 AI 辅助分析','sub')
+spacer(24)
 table(['版本','状态'],[[f'产品 V1.0 / 计算引擎 {ENGINE}','本轮软件复核；既有模型实测另标版本'],['目标赛道','2026 传智杯 AI WEB 网页开发挑战赛'],['代码仓库','github.com/qiuyimei/drivelab（私有）']],[155,355])
 add('当前结论','sub')
 add('项目形成了面向前期工况预评估与数据复盘的 Web 工作台，连接五类工况、参数计算、采集日志、专业资料、受限 AI 解释及中文报告。结果保留输入、处理口径和引用依据，便于工程人员比较方案与说明前提。软件验证与历史模型记录分开留证；尚无车型或企业标定验收。')
 if TEAM.get('identityConfirmed'):
  add('学校：'+TEAM['school']+'；负责人：'+TEAM['captain']+'；成员：'+'、'.join(m['name'] for m in TEAM['members'])+'。','small')
- add('队名：'+(TEAM['teamName'] or '')+'                 组别：'+(TEAM['group'] or '')+'                 指导教师：无','small')
+ add('指导教师：无。','small')
 else:
  add('队名：                 学校：                 组别：','small')
 
@@ -162,6 +184,9 @@ add('生成校验与失败行为','sub')
 add('模型最多请求3轮、每轮至多4个工具；最终输出结构化JSON。观察和建议须引用有效factId或chunkId。剩余请求内返回有界错误诊断与真实登记映射，要求模型自行纠正，不自动替换或填入引用。肯定式安全承诺仍拒绝。额度、网络或格式失败保留规则结果。编号有效不等于语义或引用支持已被证明。')
 add('1.2.0新增固定任务对照，原六题真实结果保留5个被接收回答及1个降级，见后文有限评测。1.1.2/1.1.3/1.1.4模型案例另标历史，不充当当前版本重新运行证据。','small')
 add('默认及工具重算候选使用独立CAND_n事实范围，保留patch、基线指纹和结果；界面均提供比较与确认载入。载入只填写参数，用户需单独运行，原日志随后解除绑定。检索只暴露已登记段落。编号校验不能证明文字与引用之间的全部支持关系。','small')
+add('新资料导入在服务端核验段落位置字段，section仅接受不超过200字符的字符串；错误类型会被拒绝。PDF读取失败或被拒绝时释放解析任务，避免遗留解析资源。','small')
+add('已有资料的兼容处理','sub')
+add('读取旧索引时校验段落对象、页码和章节名称；非字符串章节改用真实页码或段落回退标签，异常分段跳过后使用可用正文。只做读取兼容，不迁移或改写已有数据库；原文、向量与有效定位不被替换。')
 
 page(4,'四类任务与可操作结果')
 table(['任务','前提与实际执行要求','完成检查的范围'],[
@@ -182,6 +207,7 @@ table(['处理','规则'],[
  ['清洗与对齐','去无效行；时间排序；重复时间保留最后一行；首时刻归零后应用偏移'],
  ['对标','在共同区间比较；单点可报告点误差，并警告不能代表持续工况。MAE/RMSE/偏差按原仿真网格等点权，最大误差/时刻按两网格并集；采样间隔提醒只计与共同区间正长度相交的间隔'],
  ['缺失','按有效通道值判断；有列名但全为空也标缺失。空值不补零，区间外不外推；先检查方向盘/前轮角定义'],
+ ['曲线显示','浏览器与PDF共用共同窗口裁边插值；跨越窗口的线段保留窗口边界值，纵轴覆盖有效负值。该显示处理不改变误差统计口径'],
  ],[85,425])
 
 page(6,'独立验证与结果')
@@ -190,14 +216,16 @@ assert bench['engineVersion']==ENGINE
 table(['验证','结果','证明范围'],[
  ['核心回归',str(VALIDATION['coreTests'])+' 项通过','给定轨迹连续极值、共同区间与单点边界、导入来源及既有计算/日志边界'],
  ['分析回归',str(VALIDATION['analysisTests'])+' 项通过','工具往返、候选事实、引用闭包、有界纠正与降级'],
+ ['导入与曲线边界',str(VALIDATION['importPlotGroups'])+' 组通过','跨窗口线段、边界插值、有效负值与资料导入'],
+ ['旧资料兼容',str(VALIDATION['legacyKnowledgeGroups'])+' 组通过','旧章节对象、异常页码/索引与有效定位保留'],
  ['独立解析参考',f"{bench['summary']['passed']} / {bench['summary']['total']}；另有1.1.4历史 {VALIDATION['continuousExtremaReview']['cases']} 组连续需求密扫",'当前公式实现与历史给定轨迹密扫分别留证；不冒充当前版本重新密扫'],
  ['既有1.1.3扩展交叉检查',f"{VALIDATION['independentExtendedReview']['longitudinalCases']} 组 / {VALIDATION['independentExtendedReview']['timeSamples']} 时序点；{VALIDATION['independentExtendedReview']['asynchronousLogCases']} 组异步日志",'历史检查保留；不冒充当前版本重新运行或实车精度'],
  ['固定检索回归',f"{bench['retrieval']['hitAt3']}/{bench['retrieval']['total']} Hit@3；{bench['retrieval']['top1']}/{bench['retrieval']['total']} Top1",'小样本回归，不代表泛化准确率'],
  ['公开 CAN 样例',f"{bench['publicSample']['rows']:,} 行；约 {bench['publicSample']['duration']:.2f} s",'哈希、单位、时间轴与缺失通道'],
- ['本地 API','验收通过','登录门禁、误差、SSE、快照、页码、残缺分析拒绝与夹具清理'],
- ['界面与保存工作流',f"实际界面操作及 {VALIDATION['savedWorkflowGroups']} 组回归通过",'小屏幕入口、CSV 导入、偏移/容差/分析恢复；视口模拟不等同另一台设备'],
- ['既有1.1.3数据库','初始化/升级检查保留','本轮未改库结构；当前 API 验证保存、读取和删除'],
- ['中文 PDF','实际下载与渲染检查','中文、公式转写、图表、分页'],
+ ['本地 API',str(VALIDATION['apiIntegrationChecks'])+' 项通过','独立数据库；登录/来源门禁、SSE、任务与快照、分段拒绝；夹具清理'],
+ ['保存工作流',f"{VALIDATION['savedWorkflowGroups']} 组回归通过",'偏移、容差、任务和分析恢复；既有界面操作另按实际版本留证'],
+ ['本地数据库','新库/重复启动/旧库升级通过','独立夹具确认迁移与既有记录保留；未操作用户数据库'],
+ ['交付文档','同源 Word 导出 PDF 并逐页核验','原生文字和表格可编辑；中文、图表与分页'],
  ],[115,170,225])
 add('独立参考如何避免自证','sub')
 add('参考生成器不调用应用计算模块：停车参考由闭式解生成，弯道参考从圆周几何生成，换道参考通过六个边界条件的线性方程独立求解。最大绝对数值差约 '+format(bench['summary']['maxAbsoluteError'],'.4g')+'。')
@@ -239,41 +267,32 @@ table(['评价方向','可展示内容','仍需补齐'],[
  ['前端 / 体验','完整工作台、对标曲线、执行步骤、报告下载','另一设备与评审账户端到端验收'],
  ['实用性 / 社会价值','工程方案比较、测试任务复盘与输入可追溯；教学为辅助','实际使用反馈，不编造节省时间指标'],
  ],[110,245,155])
-add('已验收 V2 产品演示','sub')
-def video_range(first,last):
- selected=[s for s in VIDEO_TIMELINE if first<=s['scene']<=last]
- def timestamp(frame):
-  seconds=frame//24;return f'{seconds//60}:{seconds%60:02}'
- return timestamp(selected[0]['startFrame'])+'–'+timestamp(selected[-1]['startFrame']+selected[-1]['frames'])
+add('本轮产品演示','sub')
+def timestamp(seconds):
+ seconds=int(seconds);return f'{seconds//60}:{seconds%60:02}'
 table(['时间','演示内容'],[
- [video_range('01','02'),'产品用途与五类工况'],
- [video_range('03','04'),'参数配置、运动预览与时序结果'],
- [video_range('05','07'),'日志导入、数据对标与专业资料'],
- [video_range('08','09'),'智能分析流程与独立候选比较'],
- [video_range('10','11'),'工况记录、恢复与中文报告输出'],
- [video_range('12','12'),'产品价值、边界与后续需求'],
+ [timestamp(c['startSeconds'])+'–'+timestamp(c['endSeconds']),c['title']] for c in VIDEO_TIMELINE
  ],[105,405])
-add('V2视频 '+str(VIDEO['formatChecks']['durationSeconds'])+' s、1920×1080，保留1.1.2素材及字幕。1.2.0复算的11个旧核对字段差值为0，其中渲染器明确读取6个候选卡字段，不能称11项均已逐帧确认。影片未重制，不含四任务首页和工具候选新入口，不充当新版本操作或模型实测；见VIDEO-120-REVALIDATION.json。','small')
+add('本轮视频 '+format(VIDEO['format']['durationSeconds'],'.2f')+' s、1920×1080，采用本机离线普通话合成解说、逐句字幕、实际界面截图与结果剪辑。新增四任务、工具候选、事实与任务报告画面。真实模型材料保留1.2.0版本和初次降级，基础日志/资料素材另标历史版本；不是连续操作录屏或新一轮联网模型测试。制作与核验见VIDEO-FINAL-121.json。','small')
 
 page(9,'项目成员与职责分配')
 add('学校：'+TEAM['school']+'。负责人：'+TEAM['captain']+'。指导教师：无。')
-add('队名：                              组别：','small')
 table(['成员','学院与专业','项目职责'],[[m['name'],m['college']+'\n'+m['discipline'],m['role'].replace('API接入、','API接入、\n',1)] for m in TEAM['members']],[65,175,270])
 add('软件架构、功能开发与系统集成由两名软件工程成员分工负责；车辆工况、模型依据、参数含义及适用条件由车辆工程成员负责梳理与核对。开发过程与成果由版本记录、测试及交付材料追溯。')
 add('开发过程中使用AI辅助，相关内容纳入版本管理、测试与复核。团队负责说明系统架构、关键代码及模型假设；产品内推理服务使用魔搭API接入Qwen模型。')
 
-page(10,'最终提交前的验收门槛')
-table(['门槛','当前状态','完成条件'],[
- ['真实免费模型','六题14请求原评测与另行界面验收保留','结果绑定实际源码；降级和引用支持局限不删除，不将小样本接收率称准确率'],
- ['工程软件复核','已完成本轮检查','输入、计算、连续需求与对标边界有针对性验证；车型适用性与实车精度另验'],
- ['访问与运行','本地已验收；评审未验收','另一台电脑复现；安排指定评审只读权限；验证链接可访问'],
- ['提交材料','本轮制作与逐项校核','PDF ≤30 页；普通话 5–8 分钟 1080p MP4；源码与完整 Git 历史；补真实报名信息'],
- ['报名规则','待团队核对','按学校、报名后台及组委会最新要求确认资格和截止时间'],
+page(10,'版本与交付证据')
+table(['证据','本轮交付','适用范围'],[
+ ['软件引擎',ENGINE+'；回归、接口与构建通过','曲线、资料字段、解析清理和旧索引兼容修复；未增加3D或硬件'],
+ ['真实模型','六题14请求；另有T06定向回归','保留实际1.2.0版本、初次降级及引用局限；未整批重跑'],
+ ['技术文档','可编辑Word与同源PDF','正式PDF不超过30页；原生文字/表格，截图保留真实版本'],
+ ['演示视频','普通话、1080p、5–8分钟','画面与数据来自已留证素材；本机合成配音'],
+ ['正式压缩包','技术PDF、MP4、仓库链接TXT','仅三项；技术Word与个人修改核对单单独交付'],
  ],[105,140,265])
-add('私有协作','sub')
-add('GitHub 仓库继续 Private。所有者在 Settings → Collaborators → Add people 输入共创伙伴用户名，对方接受后协作；推荐独立分支与 Pull Request。没有自动邀请任何人，也没有将仓库或网站改为公开。')
-add('交付态度','sub')
-add('视频采用真实界面截图、实际计算结果与普通话合成解说剪辑，明确披露素材和配音来源；不伪装连续操作、成员亲自配音或实车实验。用户仍需能解释代码逻辑，按报名后台核准身份、评审访问和提交阶段。')
+add('可追溯的修改范围','sub')
+add('保留完整Git历史及真实模型记录。源码中的产品接口、登录路径与部署配置保留必要技术标识；面向评审的开发辅助表述统一为AI。曲线显示修复不改变误差统计网格或物理方程。')
+add('使用与复核','sub')
+add('应用为前期需求评估与数据复盘原型，尚无实车标定或企业任务验收。后续实测与用户反馈列入展望，不计为本轮成果。视频采用实际截图与合成解说，不伪装连续操作、成员录音或实车实验。')
 
 page(11,'关键计算与证据口径')
 table(['能力','当前实现','证明范围'],[
@@ -314,6 +333,8 @@ add('定向回归的主要数值、patch和本例关系人工核对通过，但�
 page(13,'AI 选型、创新与总结展望')
 add('模型选型理由','sub')
 add('此前选用 ModelScope 提供的 Qwen/Qwen3.5-27B，基于当时可用的免费入口、中文解释需求，以及 OpenAI 兼容接口和工具协议的集成条件。既有联调证明它能完成所记录的案例；应用仍以本地 JSON、引用校验和有界纠正管理输出。未做模型横向基准，不声称其准确率、速度或中文能力优于其他模型。')
+add('集成与优化','sub')
+add('用约700字分块与混合词项检索缩小上下文，先组装确定性事实，再按任务开放受限工具。总请求限制为3次；错误诊断、事实登记映射和输出长度均有边界，持续失败回退规则结果。候选独立重算后经用户确认载入，减少解释、计算与当前输入混用。优化作用由固定回归和单题记录说明，不声称未经测量的速度或成本收益。')
 add('技术创新点：证据与工具的工程组合','sub')
 add('将服务端任务目标、确定性计算、日志误差、段落检索与受限工具串成同一证据链，用独立候选事实、执行检查、输入指纹和明确降级减少混用。这是面向具体流程的工程组合与交付设计，不是新的物理或语义嵌入算法。')
 add('应用创新点：面向工程复盘的完整工作台','sub')
@@ -342,12 +363,28 @@ refs=[
 for title,url in refs: add(title,'sub');add(url,'small')
 add('赛事信息还对照了用户提供的参赛资料汇编第 2.2 节；最终提交应以学校和报名后台要求为准。页面截图来自本机实际运行，规则分析不被描述为真实大模型联网结果。','small')
 
-file=OUT/'DriveLab-参赛技术文档.pdf'
-doc=SimpleDocTemplate(str(file),pagesize=A4,rightMargin=42,leftMargin=42,topMargin=61,bottomMargin=57,title='DriveLab 智能驾驶工况仿真与辅助分析平台参赛技术文档',author='DriveLab')
-doc.build(story,onFirstPage=footer,onLaterPages=footer)
-from pypdf import PdfReader
-reader=PdfReader(file)
-assert len(reader.pages)<=30
-assert all(len(page.extract_text().strip())>60 for page in reader.pages)
-(ROOT/'docs/competition/DriveLab-参赛技术文档.pdf').write_bytes(file.read_bytes())
-print(json.dumps({'file':str(file),'pages':len(reader.pages)},ensure_ascii=False))
+def main():
+ parser=argparse.ArgumentParser(description=__doc__)
+ parser.add_argument('--format',choices=['docx','reportlab-preview'],default='docx')
+ parser.add_argument('--output',type=Path)
+ parser.add_argument('--manifest',type=Path,default=ROOT/'.sites-runtime/technical-native/build-manifest.json')
+ args=parser.parse_args()
+ if args.format=='reportlab-preview':
+  file=args.output or OUT/'DriveLab-参赛技术文档-排版参考.pdf'
+  if file.resolve()==(OUT/'DriveLab-参赛技术文档.pdf').resolve():
+   raise ValueError('The formal PDF must be exported from the editable DOCX, not ReportLab.')
+  doc=SimpleDocTemplate(str(file),pagesize=A4,rightMargin=42,leftMargin=42,topMargin=61,bottomMargin=57,title='DriveLab 技术文档排版参考',author='DriveLab')
+  doc.build(story,onFirstPage=footer,onLaterPages=footer)
+  print(json.dumps({'file':str(file),'referenceOnly':True},ensure_ascii=False));return
+ from native_document import build_native_docx
+ file=args.output or OUT/'DriveLab-参赛技术文档.docx'
+ manifest=build_native_docx(content_blocks,file,title='DriveLab 智能驾驶工况仿真与辅助分析平台参赛技术文档',reviewed_on=REVIEW_DATE,footer='参赛技术文档 · 软件工程复核版')
+ manifest.update({'engineVersion':ENGINE,'builderSha256':hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),'pdfPolicy':'The formal PDF is a native Word export of this exact DOCX input.','sameContentSource':True})
+ args.manifest.parent.mkdir(parents=True,exist_ok=True)
+ args.manifest.write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+'\n',encoding='utf-8',newline='\n')
+ if file.resolve()==(OUT/'DriveLab-参赛技术文档.docx').resolve():
+  (ROOT/'docs/competition/DriveLab-参赛技术文档.docx').write_bytes(file.read_bytes())
+ print(json.dumps({key:value for key,value in manifest.items() if key!='blocks'},ensure_ascii=False))
+
+
+if __name__=='__main__':main()

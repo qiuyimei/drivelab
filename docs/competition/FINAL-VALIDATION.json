@@ -1,6 +1,6 @@
 {
-  "reviewedOn": "2026-11-17",
-  "engineVersion": "1.2.0",
+  "reviewedOn": "2026-11-18",
+  "engineVersion": "1.2.1",
   "softwareChecksPassed": true,
   "coreTests": 41,
   "analysisTests": 40,
@@ -9,11 +9,11 @@
   "independentMaxError": 9.094947017729282e-13,
   "retrievalCases": 12,
   "publicRows": 4973,
-  "typecheck": "passed",
-  "lint": "passed, zero errors and warnings (whole project and final app/lib/scripts pass)",
-  "build": "passed via official Sites build-site helper; build warnings for chunk size and barrel import optimization retained",
-  "apiIntegration": "passed 10 checks; includes task persistence and rejection of damaged analysis; fixtures cleaned",
-  "localDatabase": "既有1.1.3 fresh/repeat/legacy-preservation检查保留；本轮未修改数据库模式，1.2.0保存/读取/删除和任务快照由10项API检查及8组工作流验证。",
+  "typecheck": "passed tsc --noEmit; exit 0",
+  "lint": "passed eslint . --max-warnings 0; exit 0",
+  "build": "passed official Sites build-site helper; exit 0; chunk size and import optimization warnings retained",
+  "apiIntegration": "passed 14 checks against isolated 127.0.0.1:5186 checkout; temporary fixtures cleaned; no model requests",
+  "localDatabase": "passed isolated fresh install, repeat startup, legacy adoption and existing record preservation",
   "realModel": {
     "engineVersion": "1.2.0",
     "provider": "modelscope",
@@ -73,18 +73,11 @@
     "classification": "historical retained 72-case continuous-extrema cross-check; not rerun as a new 1.2.0 sweep"
   },
   "currentOnlineUi": {
-    "engineVersion": "1.2.0",
-    "projectId": "appgprj_6af9751c44388191b7b99d0646dbd840",
-    "deploymentId": "appgdep_6afc24648698819199dd8fd4f557af37",
-    "versionId": "appgprj_6af9751c44388191b7b99d0646dbd840~appgver_b34974f7e8a08191bbbaf60c92a45457",
-    "sourceCommit": "55ac9349c3b966e85db4a51641bdd794e96325fa",
-    "status": "succeeded",
-    "url": "https://drivelab-sim-v1-zllyh.qingjiugptproflb.chatgpt.site",
-    "audience": "owner-only private",
-    "envRevision": 1,
-    "verification": "本机同版UI、API、实际模型与生产构建已验收；Sites确认生产部署成功。没有冒称逐项重新操作全部生产交互；文档排版在另一次提交中交付，不影响应用构建输入。",
-    "buildFilesScanned": 89,
-    "knownModelKeyAbsentFromBuild": true
+    "engineVersion": "1.2.1",
+    "status": "publication receipt recorded outside frozen source",
+    "historicalDeployment": "1.2.0 retained in historicalOnlineUi120",
+    "receipt": "最终交付-20261118/验收/发布记录.json",
+    "audience": "owner-only private; unchanged"
   },
   "historicalOnlineUi113": {
     "projectId": "appgprj_6af9751c44388191b7b99d0646dbd840",
@@ -140,7 +133,8 @@
     "additionalBoundaries": [
       "legacy/unassigned task",
       "changed tolerance stale analysis"
-    ]
+    ],
+    "classification": "historical retained 1.2.0 UI evidence; current boundary coverage from regression and API checks"
   },
   "externalReviewerAccess": "not verified: private GitHub requires specified reviewer identity or accepted method; online site remains owner-only; no automatic invitation or permission change",
   "teamIdentity": "用户已确认厦门大学嘉庚学院三位成员、学院专业、负责人邱益美及无导师。职责是用户授权的项目职责分配，不作独立完成履历证明。",
@@ -158,22 +152,33 @@
     "补充已知公式关系提示并保留实际模型初始措辞问题。"
   ],
   "materialFormats": {
-    "status": "passed",
+    "status": "passed final native document and revised video QA",
+    "engineVersion": "1.2.1",
     "technicalPdfPages": 19,
-    "technicalSha256": "8378fb78349b11f00cfa56f493adc4e2ae71fa9429bd6626a4abefd44c69d5e1",
-    "implementationDocxPages": 25,
-    "implementationFigures": 17,
-    "implementationSha256": "4bbc508898faa7d5d5ae4183ca98b8264f64b2c9e678415c0afe74be11d86d46",
-    "reportPdfPages": 6,
-    "reportSha256": "78162cf4d580f4fda5ff92a169b4022088e96ebba99115cbf8b457bffd4438e7",
-    "videoDurationSeconds": 387.54,
+    "technicalSha256": "c7de164d4c63b86cec024ae92b620863d5fd6f432912fa1fc7870e29e236b1dd",
+    "editableTechnicalDocxSha256": "3e0ed8c6831379a3f2ed84ce07c9bb4c871eb7e818654caed02980b14796d582",
+    "sameContentSource": true,
+    "technicalNativeTables": 17,
+    "technicalFigureGroups": 4,
+    "checklistPages": 2,
+    "checklistExcludedFromSubmissionZip": true,
+    "videoDurationSeconds": 463.8333333333333,
     "videoResolution": [
       1920,
       1080
     ],
-    "videoNumericRevalidation": "VIDEO-120-REVALIDATION.json",
-    "videoRemadeFor120": false,
-    "editorialRevision": "团队按软件和车辆工程模块分工；正文采用简洁AI辅助说明，实际范围与许可单列，无未经统计比例或替换工具。"
+    "videoSha256": "378bad3c91ace12a193ed15bdcb95a7f9d6b500bae4fd18ee76c5e12ff59f368",
+    "videoRemadeFor121Materials": true,
+    "videoActualTaskUiVersion": "1.2.0",
+    "voice": "installed Windows Microsoft Huihui offline",
+    "newTtsNetworkRequests": 0,
+    "newLiveModelRequestsInThisMaterialsTask": 0,
+    "formalZipEntries": [
+      "01-DriveLab-参赛技术文档.pdf",
+      "02-DriveLab-参赛演示.mp4",
+      "03-DriveLab-仓库链接.txt"
+    ],
+    "formalZipSha256": "ac158e7e771f3f1c29630e3f12a1aedbad39d6d41744c97480def6dc961d16ab"
   },
   "historicalOnlineUi114": {
     "projectId": "appgprj_6af9751c44388191b7b99d0646dbd840",
@@ -228,7 +233,7 @@
     "classification": "historical formats; current materials pending final generation and QA"
   },
   "softwareImplementationComplete": true,
-  "softwareCheckStatus": "passed; final build, typecheck, full lint, targeted final task guard UI passed",
+  "softwareCheckStatus": "passed current 1.2.1 software gates; historical model and UI records retain actual version",
   "teamRegistration": {
     "identityConfirmed": true,
     "confirmed": false,
@@ -254,7 +259,7 @@
       "variantCount": 3,
       "referenceAssertions": 72,
       "harnessTests": 7,
-      "currentSourceSetSha256": "967acb7c95801cefab17b2bc2af17db3a8e6d5f9565e38d90a6a0833e549aaa2",
+      "currentSourceSetSha256": "4142df207e6f4fc6332ea06f3bfbd5dad2e924fddb17eea8cd2560c3d8d5f784",
       "realModel": false,
       "note": "72是24个参考断言在3个变体重复核对，不是72个独立问题；脚本化工具响应不是模型效果。"
     },
@@ -280,18 +285,113 @@
   ],
   "submissionReadiness": {
     "codeCapabilities": "implemented and checked within documented model/application scope",
-    "currentProductionBuild": "passed official helper",
-    "currentDeployment": "succeeded owner-only private; same application inputs as55ac934",
-    "materialFormats": "passed 25-page DOCX, 19-page technical PDF, 6-page report and retained video; neutral assistance wording",
+    "currentProductionBuild": "passed official helper for 1.2.1",
+    "currentDeployment": "Final publication outcome is recorded alongside delivered artifacts after this source snapshot is frozen.",
+    "materialFormats": "passed 19-page same-content PDF/editable DOCX, separately reviewed checklist and 7:43.833 1080p offline-Mandarin video; three-entry ZIP verified",
     "teamIdentity": "confirmed known identities and assigned responsibilities",
-    "registration": "unknown fields remain null; not verified",
+    "registration": "not handled in this materials-only task per user instruction",
     "reviewerRepositoryAccess": "not verified",
     "reviewerOnlineAccess": "not verified; owner-only",
     "contestSubmissionPerformed": false,
-    "awardOrScoreClaimed": false
+    "awardOrScoreClaimed": false,
+    "formalZipEntries": [
+      "technical PDF",
+      "MP4",
+      "repository link TXT"
+    ],
+    "separateOutputs": [
+      "editable technical DOCX",
+      "personal change checklist"
+    ]
   },
   "currentBuildScan": {
+    "status": "passed",
+    "buildFilesScanned": 89,
+    "knownLocalSecretValuesChecked": 1,
+    "knownModelKeyAbsentFromBuild": true,
+    "scope": "Exact known local secrets, not a guarantee of absence of all possible secrets."
+  },
+  "historicalSoftwareValidation120": {
+    "sourceCommit": "a5e28c23e6639e5e800a5e02122ff9edb3e650f0",
+    "coreTests": 41,
+    "analysisTests": 40,
+    "savedWorkflowGroups": 8,
+    "apiIntegration": "passed 10 checks; includes task persistence and rejection of damaged analysis; fixtures cleaned",
+    "typecheck": "passed",
+    "lint": "passed, zero errors and warnings (whole project and final app/lib/scripts pass)",
+    "build": "passed via official Sites build-site helper; build warnings for chunk size and barrel import optimization retained",
+    "ci": "https://github.com/qiuyimei/drivelab/actions/runs/44068094367"
+  },
+  "historicalOnlineUi120": {
+    "engineVersion": "1.2.0",
+    "projectId": "appgprj_6af9751c44388191b7b99d0646dbd840",
+    "deploymentId": "appgdep_6afc24648698819199dd8fd4f557af37",
+    "versionId": "appgprj_6af9751c44388191b7b99d0646dbd840~appgver_b34974f7e8a08191bbbaf60c92a45457",
+    "sourceCommit": "55ac9349c3b966e85db4a51641bdd794e96325fa",
+    "status": "succeeded",
+    "url": "https://drivelab-sim-v1-zllyh.qingjiugptproflb.chatgpt.site",
+    "audience": "owner-only private",
+    "envRevision": 1,
+    "verification": "本机同版UI、API、实际模型与生产构建已验收；Sites确认生产部署成功。没有冒称逐项重新操作全部生产交互；文档排版在另一次提交中交付，不影响应用构建输入。",
     "buildFilesScanned": 89,
     "knownModelKeyAbsentFromBuild": true
+  },
+  "importPlotGroups": 7,
+  "legacyKnowledgeGroups": 4,
+  "apiIntegrationChecks": 14,
+  "historicalMaterialFormats120": {
+    "status": "passed",
+    "technicalPdfPages": 19,
+    "technicalSha256": "8378fb78349b11f00cfa56f493adc4e2ae71fa9429bd6626a4abefd44c69d5e1",
+    "implementationDocxPages": 25,
+    "implementationFigures": 17,
+    "implementationSha256": "4bbc508898faa7d5d5ae4183ca98b8264f64b2c9e678415c0afe74be11d86d46",
+    "reportPdfPages": 6,
+    "reportSha256": "78162cf4d580f4fda5ff92a169b4022088e96ebba99115cbf8b457bffd4438e7",
+    "videoDurationSeconds": 387.54,
+    "videoResolution": [
+      1920,
+      1080
+    ],
+    "videoNumericRevalidation": "VIDEO-120-REVALIDATION.json",
+    "videoRemadeFor120": false,
+    "editorialRevision": "团队按软件和车辆工程模块分工；正文采用简洁AI辅助说明，实际范围与许可单列，无未经统计比例或替换工具。"
+  },
+  "resolvedIn121": [
+    "Cross-window plot segments and valid negative axes preserved without changing error statistics.",
+    "New imports reject non-string or overlong sections.",
+    "PDF parser cleanup on success, failure and rejection.",
+    "Legacy knowledge metadata validated and normalized on read without persisted migration."
+  ],
+  "verificationRun121": {
+    "reviewedOn": "2026-11-18",
+    "engineVersion": "1.2.1",
+    "core": 41,
+    "analysis": 40,
+    "savedWorkflowGroups": 8,
+    "importPlotGroups": 7,
+    "legacyKnowledgeGroups": 4,
+    "independentReferenceCases": 130,
+    "retrievalCases": 12,
+    "publicCanRows": 4973,
+    "aiTaskHarnessGroups": 7,
+    "offlineTasks": 8,
+    "offlineAssertions": 72,
+    "apiIntegrationChecks": 14,
+    "newLiveModelRequests": 0,
+    "userDataModified": false,
+    "passedCommands": [
+      "node scripts/test-all.mjs",
+      "tsc --noEmit",
+      "eslint . --max-warnings 0",
+      "node scripts/test-local-db.mjs",
+      "official Sites build-site.mjs",
+      "DRIVELAB_TEST_URL=http://127.0.0.1:5186 node scripts/test-api.mjs"
+    ],
+    "buildWarnings": [
+      "client chunk larger than 500 kB",
+      "lucide-react barrel optimization skips"
+    ],
+    "toolNotes": "Initial pnpm .cmd launch failed before build; corrected pnpm.mjs entrypoint passed. Loopback test used approved local access after sandbox EACCES."
   }
 }

@@ -1,0 +1,205 @@
+{
+  "engineVersion": "1.2.1",
+  "pageCount": 19,
+  "pages": 19,
+  "sha256": "c7de164d4c63b86cec024ae92b620863d5fd6f432912fa1fc7870e29e236b1dd",
+  "latestPdfSha256": "c7de164d4c63b86cec024ae92b620863d5fd6f432912fa1fc7870e29e236b1dd",
+  "bytes": 736928,
+  "docxSha256": "3e0ed8c6831379a3f2ed84ce07c9bb4c871eb7e818654caed02980b14796d582",
+  "docxBytes": 196976,
+  "outputPdf": "C:\\Users\\Zllyh\\Documents\\Codex\\2026-10-11\\n-h\\work\\drivelab\\.sites-runtime\\final121\\technical.pdf",
+  "outputDocx": "C:\\Users\\Zllyh\\Documents\\Codex\\2026-10-11\\n-h\\work\\drivelab\\.sites-runtime\\final121\\technical.docx",
+  "contentSha256": "f9b4d31830b6437a90885860a3ba1df38442c1a2fab483362ae7555dffa9b7d3",
+  "sameContentSource": true,
+  "nativeEditable": true,
+  "nativeParagraphs": 136,
+  "nativeTables": 17,
+  "actualFigureGroups": 4,
+  "sourceParagraphAndTableEquality": true,
+  "allSourceTextPresentInPdf": true,
+  "textEqualityExtractor": "pypdf text-operator sequence, whitespace normalized; pdfplumber used independently for character geometry",
+  "pdfExportInputDocxSha256": "3e0ed8c6831379a3f2ed84ce07c9bb4c871eb7e818654caed02980b14796d582",
+  "pdfExportReceipt": {
+    "inputDocx": "C:\\Users\\Zllyh\\Documents\\Codex\\2026-10-11\\n-h\\work\\drivelab\\.sites-runtime\\final121\\technical.docx",
+    "inputDocxSha256": "3e0ed8c6831379a3f2ed84ce07c9bb4c871eb7e818654caed02980b14796d582",
+    "outputPdf": "C:\\Users\\Zllyh\\Documents\\Codex\\2026-10-11\\n-h\\work\\drivelab\\.sites-runtime\\final121\\technical.pdf",
+    "outputPdfSha256": "c7de164d4c63b86cec024ae92b620863d5fd6f432912fa1fc7870e29e236b1dd",
+    "backend": "Microsoft Word 16 COM",
+    "wordVersion": "16.0",
+    "ownedWordPid": 91456,
+    "readOnly": true,
+    "addToRecentFiles": false,
+    "automationSecurity": 3,
+    "exportedAt": "2026-11-17T19:45:13.8140155Z"
+  },
+  "renderer": "Independent hidden Microsoft Word 16 COM exact-input PDF export; bundled render_docx.py rasterizer and Poppler",
+  "libreOfficeUsed": false,
+  "renderDirectory": "C:\\Users\\Zllyh\\Documents\\Codex\\2026-10-11\\n-h\\work\\drivelab\\.sites-runtime\\final121\\technical-pages",
+  "renderedPngSha256": {
+    "page-1.png": "90bfa4825665ab294e77085b84f77f660438eee8dcd0849ee801a8beb6b732aa",
+    "page-2.png": "ce13bbde248dcd4ed76c35b1b935c6b5d8811fcfc21bc5b90642e8f9a2ec590d",
+    "page-3.png": "51d79ef3dfcc8e94391ff958ee4b1c66ca4edf1961f562d6dc28fd2a9e4645b1",
+    "page-4.png": "7f27fafd0490184276be2e54c48aa569bc50d76d2ab00ddd30bd5065366e4b3a",
+    "page-5.png": "911cb95994328dc58475e7e69b08cc0b2b62e3896ca0fffeb6bbae5e8cde31bd",
+    "page-6.png": "8f8cb19651220bd56ef0434c89eb4597d893a69d4a7e564e431ad3ddefa2daca",
+    "page-7.png": "51d7a97f2c19f6950149c70697855ed0ef8299a21055925e3fdfa1cee3919ba2",
+    "page-8.png": "1cf000dafba2b1160005a317f34583cff721cf9ec88639f3c6dc4d296e6a65e8",
+    "page-9.png": "50f5dfef0946f8bcdfaed957bd54ab9f0d74676245a5f4ca84863f767a42c1ed",
+    "page-10.png": "1f5c1229b00bce3075c86c4982d19a7952a7fc0a15c05180e3fd4b2fbac07632",
+    "page-11.png": "b8930d71deb69628630165f461614252a3574c0e1c0a85ea8b57cc4a2db355aa",
+    "page-12.png": "907b3eeff4657b7b9349cb14491bc1c11a2addc11cab78eb70c0ae4587d41b75",
+    "page-13.png": "17bf3aa237f4abef2a599fb4ae617af1f65e4655e1f278eb3450da0c1507fe9c",
+    "page-14.png": "3ebc2e52ce0a14cafb621c91652b3e4c91a993a0df2eb10404d12905ec2abb41",
+    "page-15.png": "2fa7b2f1bbd624ae11322835d5d50f84fad0d6acbcdaa84fc91639eecb8fa9ce",
+    "page-16.png": "81e9c8eb24ee2eb1127b8ae9d7a126cfa8d029997b933da30bf2b0231b8e85c9",
+    "page-17.png": "1cbaeb40ad3f5c55dc83be3ba879738497d332606bc7bc640acd1b6cc346f938",
+    "page-18.png": "b95dc393683e2e0bae6435fc2eb6883410519b51347004182e5d749757d0266a",
+    "page-19.png": "15f18ca6536a748cbbae3981ddf1ce7e67318d4549a5dbb2454cd2fd0bc093ea"
+  },
+  "geometry": [
+    {
+      "page": 1,
+      "characters": 442,
+      "outsidePageCount": 0,
+      "replacementCount": 0
+    },
+    {
+      "page": 2,
+      "characters": 519,
+      "outsidePageCount": 0,
+      "replacementCount": 0
+    },
+    {
+      "page": 3,
+      "characters": 759,
+      "outsidePageCount": 0,
+      "replacementCount": 0
+    },
+    {
+      "page": 4,
+      "characters": 1010,
+      "outsidePageCount": 0,
+      "replacementCount": 0
+    },
+    {
+      "page": 5,
+      "characters": 1017,
+      "outsidePageCount": 0,
+      "replacementCount": 0
+    },
+    {
+      "page": 6,
+      "characters": 502,
+      "outsidePageCount": 0,
+      "replacementCount": 0
+    },
+    {
+      "page": 7,
+      "characters": 481,
+      "outsidePageCount": 0,
+      "replacementCount": 0
+    },
+    {
+      "page": 8,
+      "characters": 845,
+      "outsidePageCount": 0,
+      "replacementCount": 0
+    },
+    {
+      "page": 9,
+      "characters": 782,
+      "outsidePageCount": 0,
+      "replacementCount": 0
+    },
+    {
+      "page": 10,
+      "characters": 673,
+      "outsidePageCount": 0,
+      "replacementCount": 0
+    },
+    {
+      "page": 11,
+      "characters": 781,
+      "outsidePageCount": 0,
+      "replacementCount": 0
+    },
+    {
+      "page": 12,
+      "characters": 460,
+      "outsidePageCount": 0,
+      "replacementCount": 0
+    },
+    {
+      "page": 13,
+      "characters": 533,
+      "outsidePageCount": 0,
+      "replacementCount": 0
+    },
+    {
+      "page": 14,
+      "characters": 586,
+      "outsidePageCount": 0,
+      "replacementCount": 0
+    },
+    {
+      "page": 15,
+      "characters": 361,
+      "outsidePageCount": 0,
+      "replacementCount": 0
+    },
+    {
+      "page": 16,
+      "characters": 356,
+      "outsidePageCount": 0,
+      "replacementCount": 0
+    },
+    {
+      "page": 17,
+      "characters": 914,
+      "outsidePageCount": 0,
+      "replacementCount": 0
+    },
+    {
+      "page": 18,
+      "characters": 920,
+      "outsidePageCount": 0,
+      "replacementCount": 0
+    },
+    {
+      "page": 19,
+      "characters": 1021,
+      "outsidePageCount": 0,
+      "replacementCount": 0
+    }
+  ],
+  "visualReview": "pass",
+  "visuallyReviewedPages": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19
+  ],
+  "visualReviewAllPages": true,
+  "finalized": true,
+  "result": "passed_all_pages_rendered_and_visually_reviewed",
+  "copiesByteIdentical": true,
+  "limits": [
+    "Native structure and text equality do not establish engineering or natural-language semantic correctness.",
+    "Image readability is established by explicit page-image visual review, not by text or geometry checks."
+  ]
+}

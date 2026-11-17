@@ -1,23 +1,23 @@
 {
   "schemaVersion": 1,
   "suiteId": "drivelab-controlled-ai-tasks-v1",
-  "generatedAt": "2026-11-17T09:06:14.268Z",
-  "engineVersion": "1.2.0",
+  "generatedAt": "2026-11-17T19:22:20.007Z",
+  "engineVersion": "1.2.1",
   "fixtureSha256": "7a888c81b3c52b20c64392fe0a0c4e8df63cf8996793cb1e57fc047d620a4ebe",
   "sourceSha256": {
     "lib/trajectory-extrema.ts": "5ad1171dabca2cc36a6482a40cad7346caf94b85bf0ccdbeaf3886905f461ef7",
     "lib/simulation.ts": "4c705ade77f3e04152720053aaaa492756f1fd43d69e826c77692942b6b763a5",
-    "lib/logs.ts": "63dadd672f2c8f227e395e8b75a66f898084ecf0fd7469cecf0ba2a87463987d",
+    "lib/logs.ts": "c6266a379abf3837aea4466c4e5c505b0570aa932e73bed23f2193f4f9b450bc",
     "lib/knowledge-sources.ts": "9cd9df6c329fb40d641019b74df30ab14e2dd1ad18c8bbef6f9405d1c88fcf8d",
-    "lib/rag.ts": "7643c6b43d67cf8043bcff714c9ac5f1bbebd8a81a17a71774a2b89901fa43e4",
+    "lib/rag.ts": "4159d1ce4311b181c2e02325b3f9c905516d21eecc9df4fa1f077cfe262aec2e",
     "lib/retrieval.ts": "f08bfbc4aaefedb6be5ba6efdcdd7dcf81b0dd0bee99fc115e3381a133f794e7",
-    "lib/evidence.ts": "c2b6312be39e3c3d35c6227ea992fd234862a39a328db1c354e79e2c0decdbb0",
+    "lib/evidence.ts": "87e585a52673e27c0ec9b609b4309a727fdb90ba26fe0dc21a5565602aec97b1",
     "lib/provider.ts": "9396f3b691f7173d59fd6c8121709dc1382a7261085273f65f5688fe1d389e58",
     "lib/fingerprint.ts": "7a330dfcef5a86dd7efe1251441d3f216c588e240af643c5241d5a444820c4ad",
     "lib/analysis-tasks.ts": "d21ebdfdd6f1da94d52bf6242a4699d85e9b2900f49dc4122dba3ab71b0b7b91",
     "lib/analysis.ts": "fb224e5289c0b80a8077c1cb286f40416ed0986c8c25506f0471b73ab45f58b8"
   },
-  "sourceSetSha256": "967acb7c95801cefab17b2bc2af17db3a8e6d5f9565e38d90a6a0833e549aaa2",
+  "sourceSetSha256": "4142df207e6f4fc6332ea06f3bfbd5dad2e924fddb17eea8cd2560c3d8d5f784",
   "scope": {
     "data": "八个受控合成/项目资料夹具，不是实车验证。",
     "comparison": "同题：无检索规则、规则+RAG、完整工具流程。脚本化流程不计AI效果；真实流程需显式--live。",
@@ -42,8 +42,8 @@
     "tests": "node scripts/test-ai-task-evaluation.mjs"
   },
   "offline": {
-    "generatedAt": "2026-11-17T09:06:14.325Z",
-    "engineVersion": "1.2.0",
+    "generatedAt": "2026-11-17T19:22:20.049Z",
+    "engineVersion": "1.2.1",
     "tasks": [
       {
         "id": "T01-BIAS-MISSING",
@@ -86,9 +86,9 @@
             "isRealModel": false,
             "answer": "当前「合成固定偏差任务」的模型评估为：约束内。\n\n轮胎附着约束：连续附着需求峰值利用率 12.7%，采用当前恒减速/给定轨迹的摩擦圆需求近似，不求解轮胎饱和后的运动。\n\n侧向加速度：给定轨迹连续需求峰值 1.000 m/s²，设置阈值 3 m/s²（工程初始值，需标定）。\n\n转向物理约束：适用速度域内连续方向盘需求峰值 24.058°，设置极限 540°。\n\n按当前侧向阈值与附着条件估算，弯道评估速度上限约 62.4 km/h。\n\n建议：保留当前参数作为基线，导入实车日志，检查单位、时延与执行器增益。\n\n日志复盘：先核对方向盘角与前轮转角定义，确认横摆单位和采样时间；只在共同时间区间计算误差，逐项排查时钟偏移、传感器零偏与制动增益。\n\n知识库没有检索到足够相关段落，以上仅为规则计算结果。\n\n模型用于前期辅助评估，结论需结合实车标定与车辆工程审核。\n\n本次日志对标（合成评测-T01-BIAS-MISSING.csv）：\n车速：RMSE 3.000 km/h，平均偏差 3.000 km/h；两网格峰值误差 3.000 km/h（容差 2），峰值时刻 0.000 s；共同区间 0.000–5.000 s，覆盖率 100.0%，超差。\n横摆角速度：无可比较数据。\n制动压力：无可比较数据。\n方向盘转角：无可比较数据。\n\nMAE/RMSE按原仿真网格等点权统计，最大误差按两时间网格并集判定。误差描述的是当前两组数据的差异。应先确认真实行车工况、时间和单位一致，再讨论模型误差或传感器原因。\n\n工程边界：\n水平路面与运动学需求模型，不包含轮胎非线性、载荷转移和闭环控制。\n工程阈值与制动力增益为可配置初始值，需要车型标定与专业审核。\n导入日志来源未核验；文件名不能证明实测、合成或公开数据出处。公开或演示数据不能作为本模型的车型标定证据。\n误差仅描述两组数据的差异；未经工况、车型和采样一致性确认，不能当成模型精度或传感器故障证据。\n缺少通道：横摆角速度、制动压力、方向盘转角，不会补造。\n横摆角速度：该通道不足两个有效采集点，无法建立分段线性对比。\n制动压力：该通道不足两个有效采集点，无法建立分段线性对比。\n方向盘转角：该通道不足两个有效采集点，无法建立分段线性对比。",
             "structured": null,
-            "engineVersion": "1.2.0",
+            "engineVersion": "1.2.1",
             "evidence": {
-              "engineVersion": "1.2.0",
+              "engineVersion": "1.2.1",
               "config": {
                 "name": "合成固定偏差任务",
                 "scenario": "curve",
@@ -429,9 +429,9 @@
             "isRealModel": false,
             "answer": "当前「合成固定偏差任务」的模型评估为：约束内。\n\n轮胎附着约束：连续附着需求峰值利用率 12.7%，采用当前恒减速/给定轨迹的摩擦圆需求近似，不求解轮胎饱和后的运动。\n\n侧向加速度：给定轨迹连续需求峰值 1.000 m/s²，设置阈值 3 m/s²（工程初始值，需标定）。\n\n转向物理约束：适用速度域内连续方向盘需求峰值 24.058°，设置极限 540°。\n\n按当前侧向阈值与附着条件估算，弯道评估速度上限约 62.4 km/h。\n\n建议：保留当前参数作为基线，导入实车日志，检查单位、时延与执行器增益。\n\n日志复盘：先核对方向盘角与前轮转角定义，确认横摆单位和采样时间；只在共同时间区间计算误差，逐项排查时钟偏移、传感器零偏与制动增益。\n\n依据：[AI-EVAL-PROJECT] QA-X7 合成项目日志复盘说明；[KB-006] 采集日志时间对齐与偏差；[KB-002] 弯道侧向稳定与舒适性。\n\n模型用于前期辅助评估，结论需结合实车标定与车辆工程审核。\n\n本次日志对标（合成评测-T01-BIAS-MISSING.csv）：\n车速：RMSE 3.000 km/h，平均偏差 3.000 km/h；两网格峰值误差 3.000 km/h（容差 2），峰值时刻 0.000 s；共同区间 0.000–5.000 s，覆盖率 100.0%，超差。\n横摆角速度：无可比较数据。\n制动压力：无可比较数据。\n方向盘转角：无可比较数据。\n\nMAE/RMSE按原仿真网格等点权统计，最大误差按两时间网格并集判定。误差描述的是当前两组数据的差异。应先确认真实行车工况、时间和单位一致，再讨论模型误差或传感器原因。\n\n工程边界：\n水平路面与运动学需求模型，不包含轮胎非线性、载荷转移和闭环控制。\n工程阈值与制动力增益为可配置初始值，需要车型标定与专业审核。\n导入日志来源未核验；文件名不能证明实测、合成或公开数据出处。公开或演示数据不能作为本模型的车型标定证据。\n误差仅描述两组数据的差异；未经工况、车型和采样一致性确认，不能当成模型精度或传感器故障证据。\n缺少通道：横摆角速度、制动压力、方向盘转角，不会补造。\n横摆角速度：该通道不足两个有效采集点，无法建立分段线性对比。\n制动压力：该通道不足两个有效采集点，无法建立分段线性对比。\n方向盘转角：该通道不足两个有效采集点，无法建立分段线性对比。",
             "structured": null,
-            "engineVersion": "1.2.0",
+            "engineVersion": "1.2.1",
             "evidence": {
-              "engineVersion": "1.2.0",
+              "engineVersion": "1.2.1",
               "config": {
                 "name": "合成固定偏差任务",
                 "scenario": "curve",
@@ -671,10 +671,10 @@
                 "patch": {
                   "speed": 28.8
                 },
-                "baselineFingerprint": "9ddf01e7fad099015bb15445",
+                "baselineFingerprint": "f67e7619f90a56da3c7b20b5",
                 "applied": false,
                 "evidence": {
-                  "engineVersion": "1.2.0",
+                  "engineVersion": "1.2.1",
                   "config": {
                     "name": "合成固定偏差任务",
                     "scenario": "curve",
@@ -972,7 +972,7 @@
               "input": 0,
               "output": 0
             },
-            "durationMs": 6,
+            "durationMs": 4,
             "provider": null,
             "model": null,
             "fallbackReason": null,
@@ -1012,9 +1012,9 @@
                 "人工脚本响应不是模型输出，不计入AI任务成功率。"
               ]
             },
-            "engineVersion": "1.2.0",
+            "engineVersion": "1.2.1",
             "evidence": {
-              "engineVersion": "1.2.0",
+              "engineVersion": "1.2.1",
               "config": {
                 "name": "合成固定偏差任务",
                 "scenario": "curve",
@@ -1254,10 +1254,10 @@
                 "patch": {
                   "speed": 28.8
                 },
-                "baselineFingerprint": "9ddf01e7fad099015bb15445",
+                "baselineFingerprint": "f67e7619f90a56da3c7b20b5",
                 "applied": false,
                 "evidence": {
-                  "engineVersion": "1.2.0",
+                  "engineVersion": "1.2.1",
                   "config": {
                     "name": "合成固定偏差任务",
                     "scenario": "curve",
@@ -1567,7 +1567,7 @@
               "input": 0,
               "output": 0
             },
-            "durationMs": 4,
+            "durationMs": 3,
             "provider": "openrouter",
             "model": "fixture:free",
             "fallbackReason": null,
@@ -1628,9 +1628,9 @@
             "isRealModel": false,
             "answer": "当前「合成人工时移任务」的模型评估为：约束内。\n\n轮胎附着约束：连续附着需求峰值利用率 25.5%，采用当前恒减速/给定轨迹的摩擦圆需求近似，不求解轮胎饱和后的运动。\n\n侧向加速度：给定轨迹连续需求峰值 0.000 m/s²，设置阈值 3 m/s²（工程初始值，需标定）。\n\n转向物理约束：适用速度域内连续方向盘需求峰值 0.000°，设置极限 540°。\n\n完整制动过程预测：相同恒减速与目标运动假设下，全过程最小间距 75.0 m；此项包含显示时间窗之外的解析预测。\n\n制动与间距：仿真 5 s 内最小间距 75.0 m；理论完全停车需 25.0 m / 5.0 s。前车按恒速运动，静态目标按固定障碍物计算。\n\n建议：保留当前参数作为基线，导入实车日志，检查单位、时延与执行器增益。\n\n日志复盘：先核对方向盘角与前轮转角定义，确认横摆单位和采样时间；只在共同时间区间计算误差，逐项排查时钟偏移、传感器零偏与制动增益。\n\n知识库没有检索到足够相关段落，以上仅为规则计算结果。\n\n模型用于前期辅助评估，结论需结合实车标定与车辆工程审核。\n\n本次日志对标（合成评测-T02-KNOWN-SHIFT.csv）：\n车速：RMSE 3.600 km/h，平均偏差 3.600 km/h；两网格峰值误差 3.600 km/h（容差 2），峰值时刻 0.600 s；共同区间 0.500–5.000 s，覆盖率 90.0%，超差。\n横摆角速度：无可比较数据。\n制动压力：无可比较数据。\n方向盘转角：无可比较数据。\n\nMAE/RMSE按原仿真网格等点权统计，最大误差按两时间网格并集判定。误差描述的是当前两组数据的差异。应先确认真实行车工况、时间和单位一致，再讨论模型误差或传感器原因。\n\n工程边界：\n水平路面与运动学需求模型，不包含轮胎非线性、载荷转移和闭环控制。\n工程阈值与制动力增益为可配置初始值，需要车型标定与专业审核。\n导入日志来源未核验；文件名不能证明实测、合成或公开数据出处。公开或演示数据不能作为本模型的车型标定证据。\n误差仅描述两组数据的差异；未经工况、车型和采样一致性确认，不能当成模型精度或传感器故障证据。\n缺少通道：横摆角速度、制动压力、方向盘转角，不会补造。\n横摆角速度：该通道不足两个有效采集点，无法建立分段线性对比。\n制动压力：该通道不足两个有效采集点，无法建立分段线性对比。\n方向盘转角：该通道不足两个有效采集点，无法建立分段线性对比。",
             "structured": null,
-            "engineVersion": "1.2.0",
+            "engineVersion": "1.2.1",
             "evidence": {
-              "engineVersion": "1.2.0",
+              "engineVersion": "1.2.1",
               "config": {
                 "name": "合成人工时移任务",
                 "scenario": "urban",
@@ -2004,9 +2004,9 @@
             "isRealModel": false,
             "answer": "当前「合成人工时移任务」的模型评估为：约束内。\n\n轮胎附着约束：连续附着需求峰值利用率 25.5%，采用当前恒减速/给定轨迹的摩擦圆需求近似，不求解轮胎饱和后的运动。\n\n侧向加速度：给定轨迹连续需求峰值 0.000 m/s²，设置阈值 3 m/s²（工程初始值，需标定）。\n\n转向物理约束：适用速度域内连续方向盘需求峰值 0.000°，设置极限 540°。\n\n完整制动过程预测：相同恒减速与目标运动假设下，全过程最小间距 75.0 m；此项包含显示时间窗之外的解析预测。\n\n制动与间距：仿真 5 s 内最小间距 75.0 m；理论完全停车需 25.0 m / 5.0 s。前车按恒速运动，静态目标按固定障碍物计算。\n\n建议：保留当前参数作为基线，导入实车日志，检查单位、时延与执行器增益。\n\n日志复盘：先核对方向盘角与前轮转角定义，确认横摆单位和采样时间；只在共同时间区间计算误差，逐项排查时钟偏移、传感器零偏与制动增益。\n\n依据：[AI-EVAL-PROJECT] QA-X7 合成项目日志复盘说明；[KB-006] 采集日志时间对齐与偏差；[KB-002] 弯道侧向稳定与舒适性。\n\n模型用于前期辅助评估，结论需结合实车标定与车辆工程审核。\n\n本次日志对标（合成评测-T02-KNOWN-SHIFT.csv）：\n车速：RMSE 3.600 km/h，平均偏差 3.600 km/h；两网格峰值误差 3.600 km/h（容差 2），峰值时刻 0.600 s；共同区间 0.500–5.000 s，覆盖率 90.0%，超差。\n横摆角速度：无可比较数据。\n制动压力：无可比较数据。\n方向盘转角：无可比较数据。\n\nMAE/RMSE按原仿真网格等点权统计，最大误差按两时间网格并集判定。误差描述的是当前两组数据的差异。应先确认真实行车工况、时间和单位一致，再讨论模型误差或传感器原因。\n\n工程边界：\n水平路面与运动学需求模型，不包含轮胎非线性、载荷转移和闭环控制。\n工程阈值与制动力增益为可配置初始值，需要车型标定与专业审核。\n导入日志来源未核验；文件名不能证明实测、合成或公开数据出处。公开或演示数据不能作为本模型的车型标定证据。\n误差仅描述两组数据的差异；未经工况、车型和采样一致性确认，不能当成模型精度或传感器故障证据。\n缺少通道：横摆角速度、制动压力、方向盘转角，不会补造。\n横摆角速度：该通道不足两个有效采集点，无法建立分段线性对比。\n制动压力：该通道不足两个有效采集点，无法建立分段线性对比。\n方向盘转角：该通道不足两个有效采集点，无法建立分段线性对比。",
             "structured": null,
-            "engineVersion": "1.2.0",
+            "engineVersion": "1.2.1",
             "evidence": {
-              "engineVersion": "1.2.0",
+              "engineVersion": "1.2.1",
               "config": {
                 "name": "合成人工时移任务",
                 "scenario": "urban",
@@ -2287,10 +2287,10 @@
                 "patch": {
                   "speed": 28.8
                 },
-                "baselineFingerprint": "73b3fc6cf274423c057779b0",
+                "baselineFingerprint": "8cf2578d531d314f9f3be31c",
                 "applied": false,
                 "evidence": {
-                  "engineVersion": "1.2.0",
+                  "engineVersion": "1.2.1",
                   "config": {
                     "name": "合成人工时移任务",
                     "scenario": "urban",
@@ -2414,10 +2414,10 @@
                 "patch": {
                   "distance": 120
                 },
-                "baselineFingerprint": "73b3fc6cf274423c057779b0",
+                "baselineFingerprint": "8cf2578d531d314f9f3be31c",
                 "applied": false,
                 "evidence": {
-                  "engineVersion": "1.2.0",
+                  "engineVersion": "1.2.1",
                   "config": {
                     "name": "合成人工时移任务",
                     "scenario": "urban",
@@ -2748,7 +2748,7 @@
               "input": 0,
               "output": 0
             },
-            "durationMs": 1,
+            "durationMs": 2,
             "provider": null,
             "model": null,
             "fallbackReason": null,
@@ -2788,9 +2788,9 @@
                 "人工脚本响应不是模型输出，不计入AI任务成功率。"
               ]
             },
-            "engineVersion": "1.2.0",
+            "engineVersion": "1.2.1",
             "evidence": {
-              "engineVersion": "1.2.0",
+              "engineVersion": "1.2.1",
               "config": {
                 "name": "合成人工时移任务",
                 "scenario": "urban",
@@ -3071,10 +3071,10 @@
                 "patch": {
                   "speed": 28.8
                 },
-                "baselineFingerprint": "73b3fc6cf274423c057779b0",
+                "baselineFingerprint": "8cf2578d531d314f9f3be31c",
                 "applied": false,
                 "evidence": {
-                  "engineVersion": "1.2.0",
+                  "engineVersion": "1.2.1",
                   "config": {
                     "name": "合成人工时移任务",
                     "scenario": "urban",
@@ -3198,10 +3198,10 @@
                 "patch": {
                   "distance": 120
                 },
-                "baselineFingerprint": "73b3fc6cf274423c057779b0",
+                "baselineFingerprint": "8cf2578d531d314f9f3be31c",
                 "applied": false,
                 "evidence": {
-                  "engineVersion": "1.2.0",
+                  "engineVersion": "1.2.1",
                   "config": {
                     "name": "合成人工时移任务",
                     "scenario": "urban",
@@ -3395,7 +3395,7 @@
                 "kind": "calculation",
                 "status": "complete",
                 "detail": "51 个仿真点；51 行日志；服务端重新计算误差",
-                "durationMs": 1
+                "durationMs": 0
               },
               {
                 "id": "step-3",
@@ -3538,7 +3538,7 @@
               "input": 0,
               "output": 0
             },
-            "durationMs": 3,
+            "durationMs": 2,
             "provider": "openrouter",
             "model": "fixture:free",
             "fallbackReason": null,
@@ -3622,9 +3622,9 @@
             "isRealModel": false,
             "answer": "当前「合成稀疏日志任务」的模型评估为：约束内。\n\n轮胎附着约束：连续附着需求峰值利用率 12.7%，采用当前恒减速/给定轨迹的摩擦圆需求近似，不求解轮胎饱和后的运动。\n\n侧向加速度：给定轨迹连续需求峰值 1.000 m/s²，设置阈值 3 m/s²（工程初始值，需标定）。\n\n转向物理约束：适用速度域内连续方向盘需求峰值 24.058°，设置极限 540°。\n\n按当前侧向阈值与附着条件估算，弯道评估速度上限约 62.4 km/h。\n\n建议：保留当前参数作为基线，导入实车日志，检查单位、时延与执行器增益。\n\n日志复盘：先核对方向盘角与前轮转角定义，确认横摆单位和采样时间；只在共同时间区间计算误差，逐项排查时钟偏移、传感器零偏与制动增益。\n\n知识库没有检索到足够相关段落，以上仅为规则计算结果。\n\n模型用于前期辅助评估，结论需结合实车标定与车辆工程审核。\n\n本次日志对标（合成评测-T03-SPARSE-COVERAGE.csv）：\n车速：RMSE 0.000 km/h，平均偏差 0.000 km/h；两网格峰值误差 0.000 km/h（容差 2），峰值时刻 0.000 s；共同区间 0.000–5.000 s，覆盖率 100.0%，容差内。\n横摆角速度：无可比较数据。\n制动压力：无可比较数据。\n方向盘转角：无可比较数据。\n\nMAE/RMSE按原仿真网格等点权统计，最大误差按两时间网格并集判定。误差描述的是当前两组数据的差异。应先确认真实行车工况、时间和单位一致，再讨论模型误差或传感器原因。\n\n工程边界：\n水平路面与运动学需求模型，不包含轮胎非线性、载荷转移和闭环控制。\n工程阈值与制动力增益为可配置初始值，需要车型标定与专业审核。\n导入日志来源未核验；文件名不能证明实测、合成或公开数据出处。公开或演示数据不能作为本模型的车型标定证据。\n误差仅描述两组数据的差异；未经工况、车型和采样一致性确认，不能当成模型精度或传感器故障证据。\n缺少通道：横摆角速度、制动压力、方向盘转角，不会补造。\n车速：共同区间内只有 2 个原始采集点，插值后的点数不能视为独立测量数量。\n车速：采集点最大间隔 5.000 s 超过 1 s 提醒阈值；线性插值无法确认停采间隙内的实际变化。\n横摆角速度：该通道不足两个有效采集点，无法建立分段线性对比。\n制动压力：该通道不足两个有效采集点，无法建立分段线性对比。\n方向盘转角：该通道不足两个有效采集点，无法建立分段线性对比。",
             "structured": null,
-            "engineVersion": "1.2.0",
+            "engineVersion": "1.2.1",
             "evidence": {
-              "engineVersion": "1.2.0",
+              "engineVersion": "1.2.1",
               "config": {
                 "name": "合成稀疏日志任务",
                 "scenario": "curve",
@@ -3956,9 +3956,9 @@
             "isRealModel": false,
             "answer": "当前「合成稀疏日志任务」的模型评估为：约束内。\n\n轮胎附着约束：连续附着需求峰值利用率 12.7%，采用当前恒减速/给定轨迹的摩擦圆需求近似，不求解轮胎饱和后的运动。\n\n侧向加速度：给定轨迹连续需求峰值 1.000 m/s²，设置阈值 3 m/s²（工程初始值，需标定）。\n\n转向物理约束：适用速度域内连续方向盘需求峰值 24.058°，设置极限 540°。\n\n按当前侧向阈值与附着条件估算，弯道评估速度上限约 62.4 km/h。\n\n建议：保留当前参数作为基线，导入实车日志，检查单位、时延与执行器增益。\n\n日志复盘：先核对方向盘角与前轮转角定义，确认横摆单位和采样时间；只在共同时间区间计算误差，逐项排查时钟偏移、传感器零偏与制动增益。\n\n依据：[AI-EVAL-PROJECT] QA-X7 合成项目日志复盘说明；[KB-006] 采集日志时间对齐与偏差；[KB-002] 弯道侧向稳定与舒适性。\n\n模型用于前期辅助评估，结论需结合实车标定与车辆工程审核。\n\n本次日志对标（合成评测-T03-SPARSE-COVERAGE.csv）：\n车速：RMSE 0.000 km/h，平均偏差 0.000 km/h；两网格峰值误差 0.000 km/h（容差 2），峰值时刻 0.000 s；共同区间 0.000–5.000 s，覆盖率 100.0%，容差内。\n横摆角速度：无可比较数据。\n制动压力：无可比较数据。\n方向盘转角：无可比较数据。\n\nMAE/RMSE按原仿真网格等点权统计，最大误差按两时间网格并集判定。误差描述的是当前两组数据的差异。应先确认真实行车工况、时间和单位一致，再讨论模型误差或传感器原因。\n\n工程边界：\n水平路面与运动学需求模型，不包含轮胎非线性、载荷转移和闭环控制。\n工程阈值与制动力增益为可配置初始值，需要车型标定与专业审核。\n导入日志来源未核验；文件名不能证明实测、合成或公开数据出处。公开或演示数据不能作为本模型的车型标定证据。\n误差仅描述两组数据的差异；未经工况、车型和采样一致性确认，不能当成模型精度或传感器故障证据。\n缺少通道：横摆角速度、制动压力、方向盘转角，不会补造。\n车速：共同区间内只有 2 个原始采集点，插值后的点数不能视为独立测量数量。\n车速：采集点最大间隔 5.000 s 超过 1 s 提醒阈值；线性插值无法确认停采间隙内的实际变化。\n横摆角速度：该通道不足两个有效采集点，无法建立分段线性对比。\n制动压力：该通道不足两个有效采集点，无法建立分段线性对比。\n方向盘转角：该通道不足两个有效采集点，无法建立分段线性对比。",
             "structured": null,
-            "engineVersion": "1.2.0",
+            "engineVersion": "1.2.1",
             "evidence": {
-              "engineVersion": "1.2.0",
+              "engineVersion": "1.2.1",
               "config": {
                 "name": "合成稀疏日志任务",
                 "scenario": "curve",
@@ -4203,10 +4203,10 @@
                 "patch": {
                   "speed": 28.8
                 },
-                "baselineFingerprint": "73d5cdcbb68d50b0c05e0faf",
+                "baselineFingerprint": "17a87c5e9443d59b4549c2e3",
                 "applied": false,
                 "evidence": {
-                  "engineVersion": "1.2.0",
+                  "engineVersion": "1.2.1",
                   "config": {
                     "name": "合成稀疏日志任务",
                     "scenario": "curve",
@@ -4490,7 +4490,7 @@
               "input": 0,
               "output": 0
             },
-            "durationMs": 2,
+            "durationMs": 3,
             "provider": null,
             "model": null,
             "fallbackReason": null,
@@ -4530,9 +4530,9 @@
                 "人工脚本响应不是模型输出，不计入AI任务成功率。"
               ]
             },
-            "engineVersion": "1.2.0",
+            "engineVersion": "1.2.1",
             "evidence": {
-              "engineVersion": "1.2.0",
+              "engineVersion": "1.2.1",
               "config": {
                 "name": "合成稀疏日志任务",
                 "scenario": "curve",
@@ -4777,10 +4777,10 @@
                 "patch": {
                   "speed": 28.8
                 },
-                "baselineFingerprint": "73d5cdcbb68d50b0c05e0faf",
+                "baselineFingerprint": "17a87c5e9443d59b4549c2e3",
                 "applied": false,
                 "evidence": {
-                  "engineVersion": "1.2.0",
+                  "engineVersion": "1.2.1",
                   "config": {
                     "name": "合成稀疏日志任务",
                     "scenario": "curve",
@@ -4933,7 +4933,7 @@
                 "kind": "calculation",
                 "status": "complete",
                 "detail": "51 个仿真点；2 行日志；服务端重新计算误差",
-                "durationMs": 1
+                "durationMs": 0
               },
               {
                 "id": "step-3",
@@ -5076,7 +5076,7 @@
               "input": 0,
               "output": 0
             },
-            "durationMs": 3,
+            "durationMs": 1,
             "provider": "openrouter",
             "model": "fixture:free",
             "fallbackReason": null,
@@ -5151,9 +5151,9 @@
             "isRealModel": false,
             "answer": "当前「合成自定义候选任务」的模型评估为：约束内。\n\n轮胎附着约束：连续附着需求峰值利用率 63.7%，采用当前恒减速/给定轨迹的摩擦圆需求近似，不求解轮胎饱和后的运动。\n\n侧向加速度：给定轨迹连续需求峰值 0.000 m/s²，设置阈值 3 m/s²（工程初始值，需标定）。\n\n转向物理约束：适用速度域内连续方向盘需求峰值 0.000°，设置极限 540°。\n\n完整制动过程预测：相同恒减速与目标运动假设下，全过程最小间距 58.8 m；此项包含显示时间窗之外的解析预测。\n\n制动与间距：仿真 20 s 内最小间距 58.8 m；理论完全停车需 99.4 m / 6.4 s。前车按恒速运动，静态目标按固定障碍物计算。\n\n建议：保留当前参数作为基线，导入实车日志，检查单位、时延与执行器增益。\n\n知识库没有检索到足够相关段落，以上仅为规则计算结果。\n\n模型用于前期辅助评估，结论需结合实车标定与车辆工程审核。\n\n工程边界：\n水平路面与运动学需求模型，不包含轮胎非线性、载荷转移和闭环控制。\n工程阈值与制动力增益为可配置初始值，需要车型标定与专业审核。\n本次未绑定测量日志，不能诊断具体实车偏差。",
             "structured": null,
-            "engineVersion": "1.2.0",
+            "engineVersion": "1.2.1",
             "evidence": {
-              "engineVersion": "1.2.0",
+              "engineVersion": "1.2.1",
               "config": {
                 "name": "合成自定义候选任务",
                 "scenario": "highway",
@@ -5441,9 +5441,9 @@
             "isRealModel": false,
             "answer": "当前「合成自定义候选任务」的模型评估为：约束内。\n\n轮胎附着约束：连续附着需求峰值利用率 63.7%，采用当前恒减速/给定轨迹的摩擦圆需求近似，不求解轮胎饱和后的运动。\n\n侧向加速度：给定轨迹连续需求峰值 0.000 m/s²，设置阈值 3 m/s²（工程初始值，需标定）。\n\n转向物理约束：适用速度域内连续方向盘需求峰值 0.000°，设置极限 540°。\n\n完整制动过程预测：相同恒减速与目标运动假设下，全过程最小间距 58.8 m；此项包含显示时间窗之外的解析预测。\n\n制动与间距：仿真 20 s 内最小间距 58.8 m；理论完全停车需 99.4 m / 6.4 s。前车按恒速运动，静态目标按固定障碍物计算。\n\n建议：保留当前参数作为基线，导入实车日志，检查单位、时延与执行器增益。\n\n依据：[KB-004] 制动距离与响应时间；[KB-006] 采集日志时间对齐与偏差；[KB-002] 弯道侧向稳定与舒适性。\n\n模型用于前期辅助评估，结论需结合实车标定与车辆工程审核。\n\n工程边界：\n水平路面与运动学需求模型，不包含轮胎非线性、载荷转移和闭环控制。\n工程阈值与制动力增益为可配置初始值，需要车型标定与专业审核。\n本次未绑定测量日志，不能诊断具体实车偏差。",
             "structured": null,
-            "engineVersion": "1.2.0",
+            "engineVersion": "1.2.1",
             "evidence": {
-              "engineVersion": "1.2.0",
+              "engineVersion": "1.2.1",
               "config": {
                 "name": "合成自定义候选任务",
                 "scenario": "highway",
@@ -5567,10 +5567,10 @@
                 "patch": {
                   "speed": 80
                 },
-                "baselineFingerprint": "a41248646c7b4ff303290fbb",
+                "baselineFingerprint": "7c0628b826741862b432fd62",
                 "applied": false,
                 "evidence": {
-                  "engineVersion": "1.2.0",
+                  "engineVersion": "1.2.1",
                   "config": {
                     "name": "合成自定义候选任务",
                     "scenario": "highway",
@@ -5694,10 +5694,10 @@
                 "patch": {
                   "distance": 100
                 },
-                "baselineFingerprint": "a41248646c7b4ff303290fbb",
+                "baselineFingerprint": "7c0628b826741862b432fd62",
                 "applied": false,
                 "evidence": {
-                  "engineVersion": "1.2.0",
+                  "engineVersion": "1.2.1",
                   "config": {
                     "name": "合成自定义候选任务",
                     "scenario": "highway",
@@ -6093,7 +6093,7 @@
               "input": 0,
               "output": 0
             },
-            "durationMs": 3,
+            "durationMs": 2,
             "provider": null,
             "model": null,
             "fallbackReason": null,
@@ -6146,9 +6146,9 @@
                 "人工脚本响应不是模型输出，不计入AI任务成功率。"
               ]
             },
-            "engineVersion": "1.2.0",
+            "engineVersion": "1.2.1",
             "evidence": {
-              "engineVersion": "1.2.0",
+              "engineVersion": "1.2.1",
               "config": {
                 "name": "合成自定义候选任务",
                 "scenario": "highway",
@@ -6272,10 +6272,10 @@
                 "patch": {
                   "speed": 80
                 },
-                "baselineFingerprint": "a41248646c7b4ff303290fbb",
+                "baselineFingerprint": "7c0628b826741862b432fd62",
                 "applied": false,
                 "evidence": {
-                  "engineVersion": "1.2.0",
+                  "engineVersion": "1.2.1",
                   "config": {
                     "name": "合成自定义候选任务",
                     "scenario": "highway",
@@ -6399,10 +6399,10 @@
                 "patch": {
                   "distance": 100
                 },
-                "baselineFingerprint": "a41248646c7b4ff303290fbb",
+                "baselineFingerprint": "7c0628b826741862b432fd62",
                 "applied": false,
                 "evidence": {
-                  "engineVersion": "1.2.0",
+                  "engineVersion": "1.2.1",
                   "config": {
                     "name": "合成自定义候选任务",
                     "scenario": "highway",
@@ -6526,11 +6526,11 @@
                 "patch": {
                   "speed": 90
                 },
-                "baselineFingerprint": "a41248646c7b4ff303290fbb",
+                "baselineFingerprint": "7c0628b826741862b432fd62",
                 "toolCallId": "offline-T04-CUSTOM-CANDIDATES-0",
                 "applied": false,
                 "evidence": {
-                  "engineVersion": "1.2.0",
+                  "engineVersion": "1.2.1",
                   "config": {
                     "name": "合成自定义候选任务",
                     "scenario": "highway",
@@ -6654,11 +6654,11 @@
                 "patch": {
                   "distance": 110
                 },
-                "baselineFingerprint": "a41248646c7b4ff303290fbb",
+                "baselineFingerprint": "7c0628b826741862b432fd62",
                 "toolCallId": "offline-T04-CUSTOM-CANDIDATES-1",
                 "applied": false,
                 "evidence": {
-                  "engineVersion": "1.2.0",
+                  "engineVersion": "1.2.1",
                   "config": {
                     "name": "合成自定义候选任务",
                     "scenario": "highway",
@@ -7067,7 +7067,7 @@
               "input": 0,
               "output": 0
             },
-            "durationMs": 3,
+            "durationMs": 2,
             "provider": "openrouter",
             "model": "fixture:free",
             "fallbackReason": null,
@@ -7118,9 +7118,9 @@
             "isRealModel": false,
             "answer": "当前「合成弯道候选任务」的模型评估为：约束内。\n\n轮胎附着约束：连续附着需求峰值利用率 12.7%，采用当前恒减速/给定轨迹的摩擦圆需求近似，不求解轮胎饱和后的运动。\n\n侧向加速度：给定轨迹连续需求峰值 1.000 m/s²，设置阈值 3 m/s²（工程初始值，需标定）。\n\n转向物理约束：适用速度域内连续方向盘需求峰值 24.058°，设置极限 540°。\n\n按当前侧向阈值与附着条件估算，弯道评估速度上限约 62.4 km/h。\n\n建议：保留当前参数作为基线，导入实车日志，检查单位、时延与执行器增益。\n\n知识库没有检索到足够相关段落，以上仅为规则计算结果。\n\n模型用于前期辅助评估，结论需结合实车标定与车辆工程审核。\n\n工程边界：\n水平路面与运动学需求模型，不包含轮胎非线性、载荷转移和闭环控制。\n工程阈值与制动力增益为可配置初始值，需要车型标定与专业审核。\n本次未绑定测量日志，不能诊断具体实车偏差。",
             "structured": null,
-            "engineVersion": "1.2.0",
+            "engineVersion": "1.2.1",
             "evidence": {
-              "engineVersion": "1.2.0",
+              "engineVersion": "1.2.1",
               "config": {
                 "name": "合成弯道候选任务",
                 "scenario": "curve",
@@ -7286,9 +7286,9 @@
             "isRealModel": false,
             "answer": "当前「合成弯道候选任务」的模型评估为：约束内。\n\n轮胎附着约束：连续附着需求峰值利用率 12.7%，采用当前恒减速/给定轨迹的摩擦圆需求近似，不求解轮胎饱和后的运动。\n\n侧向加速度：给定轨迹连续需求峰值 1.000 m/s²，设置阈值 3 m/s²（工程初始值，需标定）。\n\n转向物理约束：适用速度域内连续方向盘需求峰值 24.058°，设置极限 540°。\n\n按当前侧向阈值与附着条件估算，弯道评估速度上限约 62.4 km/h。\n\n建议：保留当前参数作为基线，导入实车日志，检查单位、时延与执行器增益。\n\n依据：[KB-002] 弯道侧向稳定与舒适性；[KB-001] 附着与制动边界；[AI-EVAL-PROJECT] QA-X7 合成项目日志复盘说明。\n\n模型用于前期辅助评估，结论需结合实车标定与车辆工程审核。\n\n工程边界：\n水平路面与运动学需求模型，不包含轮胎非线性、载荷转移和闭环控制。\n工程阈值与制动力增益为可配置初始值，需要车型标定与专业审核。\n本次未绑定测量日志，不能诊断具体实车偏差。",
             "structured": null,
-            "engineVersion": "1.2.0",
+            "engineVersion": "1.2.1",
             "evidence": {
-              "engineVersion": "1.2.0",
+              "engineVersion": "1.2.1",
               "config": {
                 "name": "合成弯道候选任务",
                 "scenario": "curve",
@@ -7371,10 +7371,10 @@
                 "patch": {
                   "speed": 28.8
                 },
-                "baselineFingerprint": "705abadd2622a10742d6eba6",
+                "baselineFingerprint": "3cf1fa7efca3f6853171315a",
                 "applied": false,
                 "evidence": {
-                  "engineVersion": "1.2.0",
+                  "engineVersion": "1.2.1",
                   "config": {
                     "name": "合成弯道候选任务",
                     "scenario": "curve",
@@ -7648,7 +7648,7 @@
               "input": 0,
               "output": 0
             },
-            "durationMs": 2,
+            "durationMs": 1,
             "provider": null,
             "model": null,
             "fallbackReason": null,
@@ -7688,9 +7688,9 @@
                 "人工脚本响应不是模型输出，不计入AI任务成功率。"
               ]
             },
-            "engineVersion": "1.2.0",
+            "engineVersion": "1.2.1",
             "evidence": {
-              "engineVersion": "1.2.0",
+              "engineVersion": "1.2.1",
               "config": {
                 "name": "合成弯道候选任务",
                 "scenario": "curve",
@@ -7773,10 +7773,10 @@
                 "patch": {
                   "speed": 28.8
                 },
-                "baselineFingerprint": "705abadd2622a10742d6eba6",
+                "baselineFingerprint": "3cf1fa7efca3f6853171315a",
                 "applied": false,
                 "evidence": {
-                  "engineVersion": "1.2.0",
+                  "engineVersion": "1.2.1",
                   "config": {
                     "name": "合成弯道候选任务",
                     "scenario": "curve",
@@ -7859,11 +7859,11 @@
                 "patch": {
                   "speed": 28.8
                 },
-                "baselineFingerprint": "705abadd2622a10742d6eba6",
+                "baselineFingerprint": "3cf1fa7efca3f6853171315a",
                 "toolCallId": "offline-T05-CURVE-SQUARE-0",
                 "applied": false,
                 "evidence": {
-                  "engineVersion": "1.2.0",
+                  "engineVersion": "1.2.1",
                   "config": {
                     "name": "合成弯道候选任务",
                     "scenario": "curve",
@@ -8205,9 +8205,9 @@
             "isRealModel": false,
             "answer": "当前「合成换道候选任务」的模型评估为：约束内。\n\n轮胎附着约束：连续附着需求峰值利用率 10.3%，采用当前恒减速/给定轨迹的摩擦圆需求近似，不求解轮胎饱和后的运动。\n\n侧向加速度：给定轨迹连续需求峰值 0.808 m/s²，设置阈值 3 m/s²（工程初始值，需标定）。\n\n转向物理约束：适用速度域内连续方向盘需求峰值 3.112°，设置极限 540°。\n\n建议：保留当前参数作为基线，导入实车日志，检查单位、时延与执行器增益。\n\n知识库没有检索到足够相关段落，以上仅为规则计算结果。\n\n模型用于前期辅助评估，结论需结合实车标定与车辆工程审核。\n\n工程边界：\n水平路面与运动学需求模型，不包含轮胎非线性、载荷转移和闭环控制。\n工程阈值与制动力增益为可配置初始值，需要车型标定与专业审核。\n本次未绑定测量日志，不能诊断具体实车偏差。",
             "structured": null,
-            "engineVersion": "1.2.0",
+            "engineVersion": "1.2.1",
             "evidence": {
-              "engineVersion": "1.2.0",
+              "engineVersion": "1.2.1",
               "config": {
                 "name": "合成换道候选任务",
                 "scenario": "lane",
@@ -8377,9 +8377,9 @@
             "isRealModel": false,
             "answer": "当前「合成换道候选任务」的模型评估为：约束内。\n\n轮胎附着约束：连续附着需求峰值利用率 10.3%，采用当前恒减速/给定轨迹的摩擦圆需求近似，不求解轮胎饱和后的运动。\n\n侧向加速度：给定轨迹连续需求峰值 0.808 m/s²，设置阈值 3 m/s²（工程初始值，需标定）。\n\n转向物理约束：适用速度域内连续方向盘需求峰值 3.112°，设置极限 540°。\n\n建议：保留当前参数作为基线，导入实车日志，检查单位、时延与执行器增益。\n\n依据：[KB-005] 换道轨迹与紧急避障；[KB-002] 弯道侧向稳定与舒适性；[AI-EVAL-PROJECT] QA-X7 合成项目日志复盘说明。\n\n模型用于前期辅助评估，结论需结合实车标定与车辆工程审核。\n\n工程边界：\n水平路面与运动学需求模型，不包含轮胎非线性、载荷转移和闭环控制。\n工程阈值与制动力增益为可配置初始值，需要车型标定与专业审核。\n本次未绑定测量日志，不能诊断具体实车偏差。",
             "structured": null,
-            "engineVersion": "1.2.0",
+            "engineVersion": "1.2.1",
             "evidence": {
-              "engineVersion": "1.2.0",
+              "engineVersion": "1.2.1",
               "config": {
                 "name": "合成换道候选任务",
                 "scenario": "lane",
@@ -8462,10 +8462,10 @@
                 "patch": {
                   "speed": 72
                 },
-                "baselineFingerprint": "81dee07c378327cd4c531100",
+                "baselineFingerprint": "3ad8b05fdccdf22b9548c9f5",
                 "applied": false,
                 "evidence": {
-                  "engineVersion": "1.2.0",
+                  "engineVersion": "1.2.1",
                   "config": {
                     "name": "合成换道候选任务",
                     "scenario": "lane",
@@ -8548,10 +8548,10 @@
                 "patch": {
                   "laneTime": 6.25
                 },
-                "baselineFingerprint": "81dee07c378327cd4c531100",
+                "baselineFingerprint": "3ad8b05fdccdf22b9548c9f5",
                 "applied": false,
                 "evidence": {
-                  "engineVersion": "1.2.0",
+                  "engineVersion": "1.2.1",
                   "config": {
                     "name": "合成换道候选任务",
                     "scenario": "lane",
@@ -8829,7 +8829,7 @@
               "input": 0,
               "output": 0
             },
-            "durationMs": 3,
+            "durationMs": 1,
             "provider": null,
             "model": null,
             "fallbackReason": null,
@@ -8869,9 +8869,9 @@
                 "人工脚本响应不是模型输出，不计入AI任务成功率。"
               ]
             },
-            "engineVersion": "1.2.0",
+            "engineVersion": "1.2.1",
             "evidence": {
-              "engineVersion": "1.2.0",
+              "engineVersion": "1.2.1",
               "config": {
                 "name": "合成换道候选任务",
                 "scenario": "lane",
@@ -8954,10 +8954,10 @@
                 "patch": {
                   "speed": 72
                 },
-                "baselineFingerprint": "81dee07c378327cd4c531100",
+                "baselineFingerprint": "3ad8b05fdccdf22b9548c9f5",
                 "applied": false,
                 "evidence": {
-                  "engineVersion": "1.2.0",
+                  "engineVersion": "1.2.1",
                   "config": {
                     "name": "合成换道候选任务",
                     "scenario": "lane",
@@ -9040,10 +9040,10 @@
                 "patch": {
                   "laneTime": 6.25
                 },
-                "baselineFingerprint": "81dee07c378327cd4c531100",
+                "baselineFingerprint": "3ad8b05fdccdf22b9548c9f5",
                 "applied": false,
                 "evidence": {
-                  "engineVersion": "1.2.0",
+                  "engineVersion": "1.2.1",
                   "config": {
                     "name": "合成换道候选任务",
                     "scenario": "lane",
@@ -9126,11 +9126,11 @@
                 "patch": {
                   "laneTime": 6.25
                 },
-                "baselineFingerprint": "81dee07c378327cd4c531100",
+                "baselineFingerprint": "3ad8b05fdccdf22b9548c9f5",
                 "toolCallId": "offline-T06-LANE-DURATION-0",
                 "applied": false,
                 "evidence": {
-                  "engineVersion": "1.2.0",
+                  "engineVersion": "1.2.1",
                   "config": {
                     "name": "合成换道候选任务",
                     "scenario": "lane",
@@ -9465,9 +9465,9 @@
             "isRealModel": false,
             "answer": "当前「合成项目资料检索任务」的模型评估为：约束内。\n\n轮胎附着约束：连续附着需求峰值利用率 12.7%，采用当前恒减速/给定轨迹的摩擦圆需求近似，不求解轮胎饱和后的运动。\n\n侧向加速度：给定轨迹连续需求峰值 1.000 m/s²，设置阈值 3 m/s²（工程初始值，需标定）。\n\n转向物理约束：适用速度域内连续方向盘需求峰值 24.058°，设置极限 540°。\n\n按当前侧向阈值与附着条件估算，弯道评估速度上限约 62.4 km/h。\n\n建议：保留当前参数作为基线，导入实车日志，检查单位、时延与执行器增益。\n\n日志复盘：先核对方向盘角与前轮转角定义，确认横摆单位和采样时间；只在共同时间区间计算误差，逐项排查时钟偏移、传感器零偏与制动增益。\n\n知识库没有检索到足够相关段落，以上仅为规则计算结果。\n\n模型用于前期辅助评估，结论需结合实车标定与车辆工程审核。\n\n工程边界：\n水平路面与运动学需求模型，不包含轮胎非线性、载荷转移和闭环控制。\n工程阈值与制动力增益为可配置初始值，需要车型标定与专业审核。\n本次未绑定测量日志，不能诊断具体实车偏差。",
             "structured": null,
-            "engineVersion": "1.2.0",
+            "engineVersion": "1.2.1",
             "evidence": {
-              "engineVersion": "1.2.0",
+              "engineVersion": "1.2.1",
               "config": {
                 "name": "合成项目资料检索任务",
                 "scenario": "curve",
@@ -9627,9 +9627,9 @@
             "isRealModel": false,
             "answer": "当前「合成项目资料检索任务」的模型评估为：约束内。\n\n轮胎附着约束：连续附着需求峰值利用率 12.7%，采用当前恒减速/给定轨迹的摩擦圆需求近似，不求解轮胎饱和后的运动。\n\n侧向加速度：给定轨迹连续需求峰值 1.000 m/s²，设置阈值 3 m/s²（工程初始值，需标定）。\n\n转向物理约束：适用速度域内连续方向盘需求峰值 24.058°，设置极限 540°。\n\n按当前侧向阈值与附着条件估算，弯道评估速度上限约 62.4 km/h。\n\n建议：保留当前参数作为基线，导入实车日志，检查单位、时延与执行器增益。\n\n日志复盘：先核对方向盘角与前轮转角定义，确认横摆单位和采样时间；只在共同时间区间计算误差，逐项排查时钟偏移、传感器零偏与制动增益。\n\n依据：[AI-EVAL-PROJECT] QA-X7 合成项目日志复盘说明；[KB-006] 采集日志时间对齐与偏差；[KB-002] 弯道侧向稳定与舒适性。\n\n模型用于前期辅助评估，结论需结合实车标定与车辆工程审核。\n\n工程边界：\n水平路面与运动学需求模型，不包含轮胎非线性、载荷转移和闭环控制。\n工程阈值与制动力增益为可配置初始值，需要车型标定与专业审核。\n本次未绑定测量日志，不能诊断具体实车偏差。",
             "structured": null,
-            "engineVersion": "1.2.0",
+            "engineVersion": "1.2.1",
             "evidence": {
-              "engineVersion": "1.2.0",
+              "engineVersion": "1.2.1",
               "config": {
                 "name": "合成项目资料检索任务",
                 "scenario": "curve",
@@ -9712,10 +9712,10 @@
                 "patch": {
                   "speed": 28.8
                 },
-                "baselineFingerprint": "4a5e35dec2816aed335ed88e",
+                "baselineFingerprint": "529cccebf004c075d9036e69",
                 "applied": false,
                 "evidence": {
-                  "engineVersion": "1.2.0",
+                  "engineVersion": "1.2.1",
                   "config": {
                     "name": "合成项目资料检索任务",
                     "scenario": "curve",
@@ -10029,9 +10029,9 @@
                 "人工脚本响应不是模型输出，不计入AI任务成功率。"
               ]
             },
-            "engineVersion": "1.2.0",
+            "engineVersion": "1.2.1",
             "evidence": {
-              "engineVersion": "1.2.0",
+              "engineVersion": "1.2.1",
               "config": {
                 "name": "合成项目资料检索任务",
                 "scenario": "curve",
@@ -10114,10 +10114,10 @@
                 "patch": {
                   "speed": 28.8
                 },
-                "baselineFingerprint": "4a5e35dec2816aed335ed88e",
+                "baselineFingerprint": "529cccebf004c075d9036e69",
                 "applied": false,
                 "evidence": {
-                  "engineVersion": "1.2.0",
+                  "engineVersion": "1.2.1",
                   "config": {
                     "name": "合成项目资料检索任务",
                     "scenario": "curve",
@@ -10410,7 +10410,7 @@
               "input": 0,
               "output": 0
             },
-            "durationMs": 3,
+            "durationMs": 2,
             "provider": "openrouter",
             "model": "fixture:free",
             "fallbackReason": null,
@@ -10452,9 +10452,9 @@
             "isRealModel": false,
             "answer": "当前「合成资料未知项任务」的模型评估为：约束内。\n\n轮胎附着约束：连续附着需求峰值利用率 12.7%，采用当前恒减速/给定轨迹的摩擦圆需求近似，不求解轮胎饱和后的运动。\n\n侧向加速度：给定轨迹连续需求峰值 1.000 m/s²，设置阈值 3 m/s²（工程初始值，需标定）。\n\n转向物理约束：适用速度域内连续方向盘需求峰值 24.058°，设置极限 540°。\n\n按当前侧向阈值与附着条件估算，弯道评估速度上限约 62.4 km/h。\n\n建议：保留当前参数作为基线，导入实车日志，检查单位、时延与执行器增益。\n\n知识库没有检索到足够相关段落，以上仅为规则计算结果。\n\n模型用于前期辅助评估，结论需结合实车标定与车辆工程审核。\n\n工程边界：\n水平路面与运动学需求模型，不包含轮胎非线性、载荷转移和闭环控制。\n工程阈值与制动力增益为可配置初始值，需要车型标定与专业审核。\n本次未绑定测量日志，不能诊断具体实车偏差。",
             "structured": null,
-            "engineVersion": "1.2.0",
+            "engineVersion": "1.2.1",
             "evidence": {
-              "engineVersion": "1.2.0",
+              "engineVersion": "1.2.1",
               "config": {
                 "name": "合成资料未知项任务",
                 "scenario": "curve",
@@ -10602,9 +10602,9 @@
             "isRealModel": false,
             "answer": "当前「合成资料未知项任务」的模型评估为：约束内。\n\n轮胎附着约束：连续附着需求峰值利用率 12.7%，采用当前恒减速/给定轨迹的摩擦圆需求近似，不求解轮胎饱和后的运动。\n\n侧向加速度：给定轨迹连续需求峰值 1.000 m/s²，设置阈值 3 m/s²（工程初始值，需标定）。\n\n转向物理约束：适用速度域内连续方向盘需求峰值 24.058°，设置极限 540°。\n\n按当前侧向阈值与附着条件估算，弯道评估速度上限约 62.4 km/h。\n\n建议：保留当前参数作为基线，导入实车日志，检查单位、时延与执行器增益。\n\n依据：[AI-EVAL-PROJECT] QA-X7 合成项目日志复盘说明；[KB-002] 弯道侧向稳定与舒适性；[KB-006] 采集日志时间对齐与偏差。\n\n模型用于前期辅助评估，结论需结合实车标定与车辆工程审核。\n\n工程边界：\n水平路面与运动学需求模型，不包含轮胎非线性、载荷转移和闭环控制。\n工程阈值与制动力增益为可配置初始值，需要车型标定与专业审核。\n本次未绑定测量日志，不能诊断具体实车偏差。",
             "structured": null,
-            "engineVersion": "1.2.0",
+            "engineVersion": "1.2.1",
             "evidence": {
-              "engineVersion": "1.2.0",
+              "engineVersion": "1.2.1",
               "config": {
                 "name": "合成资料未知项任务",
                 "scenario": "curve",
@@ -10687,10 +10687,10 @@
                 "patch": {
                   "speed": 28.8
                 },
-                "baselineFingerprint": "ce76f490cdee314a5782e25a",
+                "baselineFingerprint": "4e1c5de1e5e3e1c42fa6fb6a",
                 "applied": false,
                 "evidence": {
-                  "engineVersion": "1.2.0",
+                  "engineVersion": "1.2.1",
                   "config": {
                     "name": "合成资料未知项任务",
                     "scenario": "curve",
@@ -10992,9 +10992,9 @@
                 "人工脚本响应不是模型输出，不计入AI任务成功率。"
               ]
             },
-            "engineVersion": "1.2.0",
+            "engineVersion": "1.2.1",
             "evidence": {
-              "engineVersion": "1.2.0",
+              "engineVersion": "1.2.1",
               "config": {
                 "name": "合成资料未知项任务",
                 "scenario": "curve",
@@ -11077,10 +11077,10 @@
                 "patch": {
                   "speed": 28.8
                 },
-                "baselineFingerprint": "ce76f490cdee314a5782e25a",
+                "baselineFingerprint": "4e1c5de1e5e3e1c42fa6fb6a",
                 "applied": false,
                 "evidence": {
-                  "engineVersion": "1.2.0",
+                  "engineVersion": "1.2.1",
                   "config": {
                     "name": "合成资料未知项任务",
                     "scenario": "curve",
@@ -11386,7 +11386,7 @@
               "input": 0,
               "output": 0
             },
-            "durationMs": 2,
+            "durationMs": 1,
             "provider": "openrouter",
             "model": "fixture:free",
             "fallbackReason": null,

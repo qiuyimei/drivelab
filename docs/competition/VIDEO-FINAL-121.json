@@ -1,0 +1,191 @@
+{
+  "version": "DriveLab-1.2.1-material-revision-20261118",
+  "checkedAt": "2026-11-18T03:47:32.368401+08:00",
+  "status": "passed_final_technical_and_sampled_visual_review",
+  "output": "01-DriveLab-新版参赛演示-1080p.mp4",
+  "outputSha256": "378bad3c91ace12a193ed15bdcb95a7f9d6b500bae4fd18ee76c5e12ff59f368",
+  "fileSize": 12828726,
+  "format": {
+    "durationSeconds": 463.8333333333333,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24,
+    "videoCodec": "H.264",
+    "pixelFormat": "yuv420p",
+    "audioCodec": "AAC",
+    "audioSampleRate": 24000,
+    "channels": 1,
+    "fullAvDecodeExitCode": 0,
+    "container": "MP4",
+    "containerReportedDurationSeconds": 463.83,
+    "frames": 11132
+  },
+  "chapters": [
+    {
+      "id": "01",
+      "title": "从一组参数，到有依据的工况复盘",
+      "startSeconds": 0.0,
+      "endSeconds": 38.0
+    },
+    {
+      "id": "02",
+      "title": "先选目标，再执行复盘任务",
+      "startSeconds": 38.0,
+      "endSeconds": 75.20833333333333
+    },
+    {
+      "id": "03",
+      "title": "模板、参数和计算结果相互衔接",
+      "startSeconds": 75.20833333333333,
+      "endSeconds": 113.375
+    },
+    {
+      "id": "04",
+      "title": "把采集日志放到同一时间轴上",
+      "startSeconds": 113.375,
+      "endSeconds": 149.58333333333334
+    },
+    {
+      "id": "05",
+      "title": "让专业资料参与当前问题的分析",
+      "startSeconds": 149.58333333333334,
+      "endSeconds": 184.29166666666666
+    },
+    {
+      "id": "06",
+      "title": "AI 连接受限工具，数值交给计算引擎",
+      "startSeconds": 184.29166666666666,
+      "endSeconds": 223.75
+    },
+    {
+      "id": "07",
+      "title": "真实案例：把换道时长从 5 s 改为 6.25 s",
+      "startSeconds": 223.75,
+      "endSeconds": 265.9583333333333
+    },
+    {
+      "id": "08",
+      "title": "载入候选之后，还要明确运行计算",
+      "startSeconds": 265.9583333333333,
+      "endSeconds": 303.0833333333333
+    },
+    {
+      "id": "09",
+      "title": "把每条解释连接到计算事实和资料段落",
+      "startSeconds": 303.0833333333333,
+      "endSeconds": 344.375
+    },
+    {
+      "id": "10",
+      "title": "同时保留完成判定和失败结果",
+      "startSeconds": 344.375,
+      "endSeconds": 385.5416666666667
+    },
+    {
+      "id": "11",
+      "title": "保存复盘条件，导出有前提的中文报告",
+      "startSeconds": 385.5416666666667,
+      "endSeconds": 423.3333333333333
+    },
+    {
+      "id": "12",
+      "title": "让前期工况分析更直观、更连贯",
+      "startSeconds": 423.3333333333333,
+      "endSeconds": 463.8333333333333
+    }
+  ],
+  "sourceScope": {
+    "deliveryVersion": "1.2.1 material revision",
+    "taskUiVersion": "1.2.0",
+    "baselineWorkflowUiVersion": "1.1.4",
+    "modelRecordDate": "2026-11-17",
+    "newModelRequests": 0,
+    "newApplicationRequests": 0,
+    "newTtsNetworkRequests": 0,
+    "presentationMethod": "labelled actual screenshots, evidence excerpts and explicitly labelled explanatory cards; not a new screen recording",
+    "retainedFailure": "T06 initial fallback remains shown; single accepted targeted retry remains separate from older six-case evaluation",
+    "limitations": "No claim of general semantic accuracy, real-vehicle validation, traffic-efficiency improvement, or 1.2.1 fresh online model run.",
+    "deferred": [
+      "3D scenes",
+      "hardware integration"
+    ],
+    "sixPointTwoFiveSecondsMeaning": "6.25 s is the changed laneTime parameter, not API latency or inference duration."
+  },
+  "subtitleChecks": {
+    "sentenceCount": 96,
+    "canonicalTtsInputSrtAssExact": true,
+    "pcmHashAndPlacementExact": true,
+    "nonoverlap": true,
+    "maxCaptionWidthPx": 1008.0,
+    "oneCompleteSentencePerCue": true,
+    "perSentenceFile": "qa/sentence-source-checks.json",
+    "renderedBoundaryAndMiddleChecks": 480,
+    "glyphChecks": 288,
+    "blankChecks": 192,
+    "minGlyphMaskF1": 0.9742360695026963,
+    "allPassed": true,
+    "detailFile": "qa/caption-render-checks.json"
+  },
+  "audioChecks": {
+    "voice": "Microsoft Huihui",
+    "language": "zh-CN",
+    "method": "Windows installed local WinRT speech synthesis",
+    "ttsNetworkRequests": 0,
+    "peakDb": -0.4,
+    "meanDb": -24.5,
+    "sourcePeakSample": 31436,
+    "sourceClippedSamples": 0,
+    "noClipping": true,
+    "maxSilenceOver1_2Seconds": 1.370917,
+    "aacPerSentenceAlignmentCount": 96,
+    "minAacPcmCorrelation": 0.9999501906928336,
+    "maxAacLagMs": 0.0,
+    "decodedPcmSampleDifference": 0,
+    "pronunciationListeningAudit": "Not claimed; input-language provenance, exact per-sentence synthesis input, PCM placement and decoded AAC alignment were checked."
+  },
+  "visualChecks": {
+    "sampledActualFinalFrames": 96,
+    "allSentenceMidpointsSampled": true,
+    "maxVisualHoldSeconds": 5.916666666666667,
+    "editorialMotion": "gentle image-panel drift; distinct sentence crops/highlights, fixed captions; no simulated pointer or fabricated UI action",
+    "allFramesVisuallyReviewed": true,
+    "contactSheets": [
+      "qa/visual-chapter-01.jpg",
+      "qa/visual-chapter-02.jpg",
+      "qa/visual-chapter-03.jpg",
+      "qa/visual-chapter-04.jpg",
+      "qa/visual-chapter-05.jpg",
+      "qa/visual-chapter-06.jpg",
+      "qa/visual-chapter-07.jpg",
+      "qa/visual-chapter-08.jpg",
+      "qa/visual-chapter-09.jpg",
+      "qa/visual-chapter-10.jpg",
+      "qa/visual-chapter-11.jpg",
+      "qa/visual-chapter-12.jpg"
+    ],
+    "historicalAndNewScreenshotLabels": true,
+    "allSampledFramesVisuallyReviewed": true,
+    "reviewScope": "All 96 actual final-video sentence midpoint frames in 12 contact sheets; full-resolution detail frames 53, 66 and 76; 480 rendered subtitle boundary/midpoint pixel checks. Not all 11132 frames manually inspected.",
+    "fullResolutionDetailFrames": [
+      53,
+      66,
+      76
+    ],
+    "visualReviewResult": "Passed: complete layout, subtitle placement and glyphs; consistent source-version labels; no unintended black/blank visual or overlapping elements in reviewed frames. Small source-UI text is accompanied by narrated explanation and large editorial point/value cards.",
+    "longUnchangedCardHold": false,
+    "maxCardIntervalSeconds": 5.916666666666667,
+    "allSourcePixelsPresentedAsScreenshots": true,
+    "functionCardsExplicitlyLabelled": true
+  },
+  "assetBindingDetail": "qa/source-byte-bindings.json",
+  "oldOutputFilesOverwritten": false,
+  "competitionChecks": {
+    "mp4": true,
+    "durationFiveToEightMinutes": true,
+    "atLeast1080p": true,
+    "mandarinNarration": true,
+    "projectIntroduction": true,
+    "coreFeatureDemonstration": true,
+    "aiHighlights": true
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "engineVersion": "1.2.1",
+  "pageCount": 2,
+  "pages": 2,
+  "sha256": "0db41d3ad21662d58a20537c8889f9792f87b44e616d886dd5bf0b828f0d0f9e",
+  "latestPdfSha256": "0db41d3ad21662d58a20537c8889f9792f87b44e616d886dd5bf0b828f0d0f9e",
+  "bytes": 269811,
+  "docxSha256": "5ef37db7c074bebe8bc037436732224769820c34656bad8fd4e6d21511b6e0cf",
+  "docxBytes": 40006,
+  "outputPdf": "C:\\Users\\Zllyh\\Documents\\Codex\\2026-10-11\\n-h\\work\\drivelab\\.sites-runtime\\final121\\checklist.pdf",
+  "outputDocx": "C:\\Users\\Zllyh\\Documents\\Codex\\2026-10-11\\n-h\\work\\drivelab\\.sites-runtime\\final121\\checklist.docx",
+  "contentSha256": "d784fe0a4ce3f55b74adbfda6856267973a271b61f214700e8d579ff72793dcf",
+  "sameContentSource": true,
+  "nativeEditable": true,
+  "nativeParagraphs": 29,
+  "nativeTables": 0,
+  "actualFigureGroups": 0,
+  "sourceParagraphAndTableEquality": true,
+  "allSourceTextPresentInPdf": true,
+  "textEqualityExtractor": "pypdf text-operator sequence, whitespace normalized; pdfplumber used independently for character geometry",
+  "pdfExportInputDocxSha256": "5ef37db7c074bebe8bc037436732224769820c34656bad8fd4e6d21511b6e0cf",
+  "pdfExportReceipt": {
+    "inputDocx": "C:\\Users\\Zllyh\\Documents\\Codex\\2026-10-11\\n-h\\work\\drivelab\\.sites-runtime\\final121\\checklist.docx",
+    "inputDocxSha256": "5ef37db7c074bebe8bc037436732224769820c34656bad8fd4e6d21511b6e0cf",
+    "outputPdf": "C:\\Users\\Zllyh\\Documents\\Codex\\2026-10-11\\n-h\\work\\drivelab\\.sites-runtime\\final121\\checklist.pdf",
+    "outputPdfSha256": "0db41d3ad21662d58a20537c8889f9792f87b44e616d886dd5bf0b828f0d0f9e",
+    "backend": "Microsoft Word 16 COM",
+    "wordVersion": "16.0",
+    "ownedWordPid": 27040,
+    "readOnly": true,
+    "addToRecentFiles": false,
+    "automationSecurity": 3,
+    "exportedAt": "2026-11-17T19:49:41.3465618Z"
+  },
+  "renderer": "Independent hidden Microsoft Word 16 COM exact-input PDF export; bundled render_docx.py rasterizer and Poppler",
+  "libreOfficeUsed": false,
+  "renderDirectory": "C:\\Users\\Zllyh\\Documents\\Codex\\2026-10-11\\n-h\\work\\drivelab\\.sites-runtime\\final121\\checklist-pages",
+  "renderedPngSha256": {
+    "page-1.png": "2fd9627442036735449aa4b62516554b1dc88a4d06df06fe3f1f6ef3146c29fa",
+    "page-2.png": "233ed5d23d802dcb198fb2088e8bed3e520f4387422f545de84d027f267dbe77"
+  },
+  "geometry": [
+    {
+      "page": 1,
+      "characters": 794,
+      "outsidePageCount": 0,
+      "replacementCount": 0
+    },
+    {
+      "page": 2,
+      "characters": 504,
+      "outsidePageCount": 0,
+      "replacementCount": 0
+    }
+  ],
+  "visualReview": "pass",
+  "visuallyReviewedPages": [
+    1,
+    2
+  ],
+  "visualReviewAllPages": true,
+  "finalized": true,
+  "result": "passed_all_pages_rendered_and_visually_reviewed",
+  "copiesByteIdentical": false,
+  "limits": [
+    "Native structure and text equality do not establish engineering or natural-language semantic correctness.",
+    "Image readability is established by explicit page-image visual review, not by text or geometry checks."
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "reviewedOn": "2026-11-18",
+  "engineVersion": "1.2.1",
+  "submissionPerformed": false,
+  "formalArchive": "C:\\Users\\Zllyh\\Documents\\Codex\\2026-10-11\\n-h\\outputs\\最终交付-20261118\\DriveLab-正式提交材料.zip",
+  "formalZipSha256": "ac158e7e771f3f1c29630e3f12a1aedbad39d6d41744c97480def6dc961d16ab",
+  "formalEntries": {
+    "01-DriveLab-参赛技术文档.pdf": {
+      "sha256": "c7de164d4c63b86cec024ae92b620863d5fd6f432912fa1fc7870e29e236b1dd",
+      "bytes": 736928
+    },
+    "02-DriveLab-参赛演示.mp4": {
+      "sha256": "378bad3c91ace12a193ed15bdcb95a7f9d6b500bae4fd18ee76c5e12ff59f368",
+      "bytes": 12828726
+    },
+    "03-DriveLab-仓库链接.txt": {
+      "sha256": "eaa5ba7b89f92e16e257776ee610f2778995cc8d36f53af7dbaf70f90485684f",
+      "bytes": 233
+    }
+  },
+  "separateFiles": {
+    "DriveLab-参赛技术文档.docx": {
+      "sha256": "3e0ed8c6831379a3f2ed84ce07c9bb4c871eb7e818654caed02980b14796d582",
+      "bytes": 196976
+    },
+    "DriveLab-参赛技术文档.pdf": {
+      "sha256": "c7de164d4c63b86cec024ae92b620863d5fd6f432912fa1fc7870e29e236b1dd",
+      "bytes": 736928
+    },
+    "DriveLab-最终修改核对单.docx": {
+      "sha256": "5ef37db7c074bebe8bc037436732224769820c34656bad8fd4e6d21511b6e0cf",
+      "bytes": 40006
+    },
+    "DriveLab-最终修改核对单.pdf": {
+      "sha256": "0db41d3ad21662d58a20537c8889f9792f87b44e616d886dd5bf0b828f0d0f9e",
+      "bytes": 269811
+    }
+  },
+  "technicalPages": 19,
+  "videoSeconds": 463.8333333333333,
+  "zipCrcAndByteEqualityPassed": true,
+  "editableWordAndChecklistExcludedFromFormalZip": true,
+  "registrationAndPermissionsNotHandled": true
+}
