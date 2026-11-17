@@ -3,7 +3,8 @@ import assert from 'node:assert/strict';
 import {spawnSync} from 'node:child_process';
 import path from 'node:path';
 import crypto from 'node:crypto';
-const base=path.resolve('.sites-runtime/db-bootstrap-qa',crypto.randomUUID());
+// Keep SQLite state paths below common Windows native path-length limits.
+const base=path.resolve('.sites-runtime','dbqa-'+crypto.randomUUID().slice(0,8));
 const env={...process.env,CI:'true',WRANGLER_SEND_METRICS:'false'};
 function command(args,extra={}){const r=spawnSync(process.execPath,args,{env:{...env,...extra},encoding:'utf8'});if(r.status!==0)throw Error(r.stdout+'\n'+r.stderr);return r.stdout;}
 function execute(state,options){return command(['node_modules/wrangler/bin/wrangler.js','d1','execute','DB','--local','--config','wrangler.local.json','--persist-to',state,...options,'--json']);}
