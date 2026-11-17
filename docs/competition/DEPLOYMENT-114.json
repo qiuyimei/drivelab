@@ -1,0 +1,13 @@
+{
+  "projectId": "appgprj_6af9751c44388191b7b99d0646dbd840",
+  "deploymentId": "appgdep_6afbcf8ae21481918e124a5bca6a7363",
+  "versionId": "appgprj_6af9751c44388191b7b99d0646dbd840~appgver_b534aa9b96c48191aa743eac158a2de2",
+  "sourceCommit": "4b75da8be22899b631be80c24f55d69e118a62b2",
+  "status": "succeeded",
+  "url": "https://drivelab-sim-v1-zllyh.qingjiugptproflb.chatgpt.site",
+  "audience": "owner-only private",
+  "envRevision": 1,
+  "verification": "本地同版UI/接口/模型验收通过；生产部署成功由Sites返回确认，未冒称全量重新操作线上每一项功能。",
+  "buildFilesScanned": 88,
+  "knownModelKeyAbsentFromBuild": true
+}

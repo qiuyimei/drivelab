@@ -1,0 +1,380 @@
+{
+  "checkedOn": "2026-11-17",
+  "checkedAt": "2026-11-17T11:48:32.400769+08:00",
+  "operation": "regenerated_114_technical_pdf_and_full_page_review",
+  "engineVersion": "1.1.4",
+  "pdf": "C:\\Users\\Zllyh\\Documents\\Codex\\2026-10-11\\n-h\\outputs\\DriveLab-参赛技术文档.pdf",
+  "repoCopy": "C:\\Users\\Zllyh\\Documents\\Codex\\2026-10-11\\n-h\\work\\drivelab\\docs\\competition\\DriveLab-参赛技术文档.pdf",
+  "result": "passed_full_15_page_visual_and_content_review",
+  "latestPdfSha256": "59d66091a2839e12724cb5be96a754748feccc0ab7f6d5c2908420d4aea155c9",
+  "latestFileBytes": 323178,
+  "pageCount": 15,
+  "method": {
+    "generation": "bundled Python + ReportLab; PDF edit operation marker ran successfully once before generation",
+    "render": "bundled Poppler pdftoppm, 130 dpi, all 15 pages to PNG",
+    "visualInspection": "All 15 complete rendered pages opened and reviewed, not only a contact sheet",
+    "geometry": "pdfplumber character bounding boxes checked against page bounds; pypdf extracted text reviewed for version/content and replacement characters",
+    "notClaimed": "No new vehicle, enterprise, legal eligibility or general model-semantic certification."
+  },
+  "layout": {
+    "outsidePageCharacters": 0,
+    "replacementCharacters": 0,
+    "allPagesHaveReadableText": true,
+    "noClippingOverlapOrMissingGlyphsObserved": true,
+    "headersFootersAndPageNumbersPassed": true,
+    "pageGeometry": [
+      {
+        "page": 1,
+        "characters": 445,
+        "outsidePageCount": 0,
+        "replacementCharacters": 0,
+        "bodyMinX": 48.0,
+        "bodyMaxX": 542.98,
+        "bodyMaxBottom": 590.52
+      },
+      {
+        "page": 2,
+        "characters": 488,
+        "outsidePageCount": 0,
+        "replacementCharacters": 0,
+        "bodyMinX": 48.0,
+        "bodyMaxX": 538.0,
+        "bodyMaxBottom": 466.20000000000005
+      },
+      {
+        "page": 3,
+        "characters": 680,
+        "outsidePageCount": 0,
+        "replacementCharacters": 0,
+        "bodyMinX": 48.0,
+        "bodyMaxX": 548.0,
+        "bodyMaxBottom": 521.52
+      },
+      {
+        "page": 4,
+        "characters": 971,
+        "outsidePageCount": 0,
+        "replacementCharacters": 0,
+        "bodyMinX": 48.0,
+        "bodyMaxX": 546.0,
+        "bodyMaxBottom": 657.52
+      },
+      {
+        "page": 5,
+        "characters": 837,
+        "outsidePageCount": 0,
+        "replacementCharacters": 0,
+        "bodyMinX": 48.0,
+        "bodyMaxX": 547.0,
+        "bodyMaxBottom": 602.52
+      },
+      {
+        "page": 6,
+        "characters": 384,
+        "outsidePageCount": 0,
+        "replacementCharacters": 0,
+        "bodyMinX": 48.0,
+        "bodyMaxX": 545.3530000000001,
+        "bodyMaxBottom": 649.6464000000001
+      },
+      {
+        "page": 7,
+        "characters": 730,
+        "outsidePageCount": 0,
+        "replacementCharacters": 0,
+        "bodyMinX": 48.0,
+        "bodyMaxX": 549.0,
+        "bodyMaxBottom": 654.52
+      },
+      {
+        "page": 8,
+        "characters": 753,
+        "outsidePageCount": 0,
+        "replacementCharacters": 0,
+        "bodyMinX": 48.0,
+        "bodyMaxX": 544.3600000000001,
+        "bodyMaxBottom": 572.2
+      },
+      {
+        "page": 9,
+        "characters": 644,
+        "outsidePageCount": 0,
+        "replacementCharacters": 0,
+        "bodyMinX": 48.0,
+        "bodyMaxX": 546.5899999999999,
+        "bodyMaxBottom": 540.2
+      },
+      {
+        "page": 10,
+        "characters": 619,
+        "outsidePageCount": 0,
+        "replacementCharacters": 0,
+        "bodyMinX": 48.0,
+        "bodyMaxX": 547.0,
+        "bodyMaxBottom": 621.2
+      },
+      {
+        "page": 11,
+        "characters": 572,
+        "outsidePageCount": 0,
+        "replacementCharacters": 0,
+        "bodyMinX": 48.0,
+        "bodyMaxX": 547.1700000000001,
+        "bodyMaxBottom": 510.20000000000005
+      },
+      {
+        "page": 12,
+        "characters": 560,
+        "outsidePageCount": 0,
+        "replacementCharacters": 0,
+        "bodyMinX": 48.0,
+        "bodyMaxX": 549.0,
+        "bodyMaxBottom": 421.52000000000004
+      },
+      {
+        "page": 13,
+        "characters": 544,
+        "outsidePageCount": 0,
+        "replacementCharacters": 0,
+        "bodyMinX": 48.0,
+        "bodyMaxX": 545.27,
+        "bodyMaxBottom": 664.2514
+      },
+      {
+        "page": 14,
+        "characters": 752,
+        "outsidePageCount": 0,
+        "replacementCharacters": 0,
+        "bodyMinX": 48.0,
+        "bodyMaxX": 546.2,
+        "bodyMaxBottom": 615.08
+      },
+      {
+        "page": 15,
+        "characters": 995,
+        "outsidePageCount": 0,
+        "replacementCharacters": 0,
+        "bodyMinX": 48.0,
+        "bodyMaxX": 545.7514999999997,
+        "bodyMaxBottom": 646.52
+      }
+    ]
+  },
+  "pageReview": [
+    {
+      "page": 1,
+      "result": "pass",
+      "observed": "封面版本1.1.4、能力概述和团队待确认清楚；无修错故事概述。",
+      "renderedPng": "C:\\Users\\Zllyh\\Documents\\Codex\\2026-10-11\\n-h\\work\\drivelab\\.sites-runtime\\technical-qa-114\\technical-01.png"
+    },
+    {
+      "page": 2,
+      "result": "pass",
+      "observed": "主用户为工程人员及小型测试团队，教学辅助；功能表和用途边界可读。",
+      "renderedPng": "C:\\Users\\Zllyh\\Documents\\Codex\\2026-10-11\\n-h\\work\\drivelab\\.sites-runtime\\technical-qa-114\\technical-02.png"
+    },
+    {
+      "page": 3,
+      "result": "pass",
+      "observed": "架构、服务端复算、账号隔离与输入指纹数据流清楚。",
+      "renderedPng": "C:\\Users\\Zllyh\\Documents\\Codex\\2026-10-11\\n-h\\work\\drivelab\\.sites-runtime\\technical-qa-114\\technical-03.png"
+    },
+    {
+      "page": 4,
+      "result": "pass",
+      "observed": "公式、角量单位、给定轨迹连续端点驻点极值、显示活动时间和适用速度域明确；时序仍0.1秒。",
+      "renderedPng": "C:\\Users\\Zllyh\\Documents\\Codex\\2026-10-11\\n-h\\work\\drivelab\\.sites-runtime\\technical-qa-114\\technical-04.png"
+    },
+    {
+      "page": 5,
+      "result": "pass",
+      "observed": "RAG词项检索、受限工具、三请求预算与当前114真实固定合成案例记录清楚；历史版本区分。",
+      "renderedPng": "C:\\Users\\Zllyh\\Documents\\Codex\\2026-10-11\\n-h\\work\\drivelab\\.sites-runtime\\technical-qa-114\\technical-05.png"
+    },
+    {
+      "page": 6,
+      "result": "pass",
+      "observed": "旧公开日志截图标历史且未显示引擎版本；表格明确共同区间/统计口径/缺失规则。",
+      "renderedPng": "C:\\Users\\Zllyh\\Documents\\Codex\\2026-10-11\\n-h\\work\\drivelab\\.sites-runtime\\technical-qa-114\\technical-06.png"
+    },
+    {
+      "page": 7,
+      "result": "pass",
+      "observed": "41核心、29分析、6工作流、130独立参考、12检索、72密扫；624/120与数据库检查清楚标既有113历史。",
+      "renderedPng": "C:\\Users\\Zllyh\\Documents\\Codex\\2026-10-11\\n-h\\work\\drivelab\\.sites-runtime\\technical-qa-114\\technical-07.png"
+    },
+    {
+      "page": 8,
+      "result": "pass",
+      "observed": "公开CAN来源/固定提交/哈希、许可、复现及审核边界清楚。",
+      "renderedPng": "C:\\Users\\Zllyh\\Documents\\Codex\\2026-10-11\\n-h\\work\\drivelab\\.sites-runtime\\technical-qa-114\\technical-08.png"
+    },
+    {
+      "page": 9,
+      "result": "pass",
+      "observed": "安装运行、数据库、模型保护与密钥配置说明可读，无实际凭证。",
+      "renderedPng": "C:\\Users\\Zllyh\\Documents\\Codex\\2026-10-11\\n-h\\work\\drivelab\\.sites-runtime\\technical-qa-114\\technical-09.png"
+    },
+    {
+      "page": 10,
+      "result": "pass",
+      "observed": "工程用途、V2实际时间轴及11数值114复算说明清楚，不冒充重制影片或新工具实测。",
+      "renderedPng": "C:\\Users\\Zllyh\\Documents\\Codex\\2026-10-11\\n-h\\work\\drivelab\\.sites-runtime\\technical-qa-114\\technical-10.png"
+    },
+    {
+      "page": 11,
+      "result": "pass",
+      "observed": "当前114固定工具案例与未核实资格/评审访问分开；协作与交付说明可读。",
+      "renderedPng": "C:\\Users\\Zllyh\\Documents\\Codex\\2026-10-11\\n-h\\work\\drivelab\\.sites-runtime\\technical-qa-114\\technical-11.png"
+    },
+    {
+      "page": 12,
+      "result": "pass",
+      "observed": "最终计算与数据处理能力陈述，三个新边界及历史记录清楚，没有旧排错故事表。",
+      "renderedPng": "C:\\Users\\Zllyh\\Documents\\Codex\\2026-10-11\\n-h\\work\\drivelab\\.sites-runtime\\technical-qa-114\\technical-12.png"
+    },
+    {
+      "page": 13,
+      "result": "pass",
+      "observed": "112默认历史截图与当前114实测区分；固定跟驰数字、报告与AI辅助说明可读。",
+      "renderedPng": "C:\\Users\\Zllyh\\Documents\\Codex\\2026-10-11\\n-h\\work\\drivelab\\.sites-runtime\\technical-qa-114\\technical-13.png"
+    },
+    {
+      "page": 14,
+      "result": "pass",
+      "observed": "选型理由、技术创新、面向工程复盘的应用创新、总结展望及可验后续计划齐全。",
+      "renderedPng": "C:\\Users\\Zllyh\\Documents\\Codex\\2026-10-11\\n-h\\work\\drivelab\\.sites-runtime\\technical-qa-114\\technical-14.png"
+    },
+    {
+      "page": 15,
+      "result": "pass",
+      "observed": "主要来源URL和许可可读，长URL正常折行，页脚及编号完整。",
+      "renderedPng": "C:\\Users\\Zllyh\\Documents\\Codex\\2026-10-11\\n-h\\work\\drivelab\\.sites-runtime\\technical-qa-114\\technical-15.png"
+    }
+  ],
+  "requiredContent": {
+    "primaryUsers": {
+      "page": 2,
+      "passed": true,
+      "statement": "车辆测试、底盘标定相关工程人员与小型测试团队为主，教学为辅助，尚无企业/车型验收。"
+    },
+    "continuousDemandScope": {
+      "pages": [
+        4,
+        12
+      ],
+      "passed": true,
+      "statement": "当前恒减速/给定轨迹在显示活动时间与适用速度域内检查端点和驻点，不泛化真实车辆峰值；0.1s时序与原网格均值误差统计保留。"
+    },
+    "currentChecks": {
+      "page": 7,
+      "core": 41,
+      "analysis": 29,
+      "savedWorkflows": 6,
+      "independentReference": 130,
+      "retrieval": 12,
+      "continuousDenseCases": 72
+    },
+    "historicalChecks": {
+      "page": 7,
+      "engineVersion": "1.1.3",
+      "longitudinalCases": 624,
+      "asynchronousLogCases": 120,
+      "explicitlyHistorical": true
+    },
+    "realModel": {
+      "pages": [
+        5,
+        11,
+        13
+      ],
+      "currentRecord": "LIVE-ENGINE-114-QA.json",
+      "requestsInFinalCase": 3,
+      "toolsInFinalCase": [
+        "compare_measurement",
+        "evaluate_parameters"
+      ],
+      "dataKind": "synthetic demonstration logs",
+      "initialQualitativeIssueRetained": true,
+      "selectedCaseOnly": true,
+      "historical112ScreenshotClearlyLabelled": true
+    },
+    "AISelectionInnovationAndOutlook": {
+      "page": 14,
+      "passed": true,
+      "items": [
+        "选型理由",
+        "技术创新",
+        "工程复盘应用创新",
+        "总结与四项后续方向"
+      ]
+    },
+    "teamAndAccess": {
+      "pages": [
+        1,
+        10,
+        11
+      ],
+      "honestPending": true,
+      "noAwardOrQualificationClaim": true
+    },
+    "video": {
+      "page": 10,
+      "seconds": 387.54,
+      "historyEngine": "1.1.2",
+      "numericRevalidationEngine": "1.1.4",
+      "numericComparisons": 11,
+      "notRemadeOrNewOperationRecording": true
+    }
+  },
+  "sourceSnapshotSha256": {
+    "scripts/create-technical-document.py": "8f49cc12e24f40e3c9585abd13e8edcf0537d26b907191ade9893f4d498a3ece",
+    "docs/competition/FINAL-VALIDATION.json": "68a30fe61df916a89745d7450f7035e645741bb481377ce9b8dc93cd3c0e5ceb",
+    "docs/evidence/engineering-results-audit-20261117.json": "31881409e0f85da22dfae9316aedf5f2ae46a21642ddb64b7e69c121fe114a65",
+    "docs/competition/LIVE-ENGINE-114-QA.json": "d5b20dfb196f6dbd4bfd992b14d8ccac87ae8541f2631b44d48b07c86a42f663",
+    "docs/competition/UI-ENGINE-114-QA.json": "7558117014cfd3864dabd967934a6c090b58e37b1268b5e35c75f70bd924ecf9",
+    "docs/competition/VIDEO-114-REVALIDATION.json": "cb2a4cbaa2c2ec5ec41149593c5148c3933af27e6bd7227cc07b3dbfa22d1215",
+    "public/validation/benchmark-results.json": "dca85bde09647093ab39e63e10fbe721abdee84992601115beed2b6ddf937132"
+  },
+  "renderedPngSha256": {
+    "technical-01.png": "e4ad36089fbb13ed7f9e333da7e246d3cdb9273fac5d3fd599b6563deaae2c91",
+    "technical-02.png": "d45941484fba5d48ce4c58001c1d3376a60f764cdc62d4248ceefea7310252de",
+    "technical-03.png": "892663d104d795309a74bc374d126bbcc52687995ef17f803ced78a19c88f009",
+    "technical-04.png": "721e5b3fdb05436d4826fd27f4cb47d3b03ac6598043efc79f1b3639dd8bc1e2",
+    "technical-05.png": "2b4b1bfbeb25961f3a20c402a710bc5fedf3557beb9fc5a732c68597af7586e4",
+    "technical-06.png": "b6574053aa106b0d13129bd86121c07324b76b7311e07b58a7b1638e60cea2d3",
+    "technical-07.png": "8622767a5249d54a97a93caaa0cc5188bc1c44eadda4a9b9e8534d438627fbfc",
+    "technical-08.png": "6066eb622617ad121b37f245961be39adbe2b36a981355874bbaab04f7c46a8e",
+    "technical-09.png": "2ed869440ab2b09a5ac2fdf268ccae1cec4aa1ce981b4b1cbd95b600933da48e",
+    "technical-10.png": "a0769ed09df6749b023be091ba842349115a7862837b8ef6fb2676a85164a70c",
+    "technical-11.png": "29f1507c87f3290397922711c9c44fe8a62decde01c41e5391c7b598cae85784",
+    "technical-12.png": "c96f58c5ddcb53fb6e94fe9da3e75e693b995a295337199cb06da1f3513f115e",
+    "technical-13.png": "9d570c9c5c6fb4732d8e15af873cc8186087f4bf1655924212d2c76b8079d2e2",
+    "technical-14.png": "17fe9ec5fa099e32ba10d2a2ca8f412b69ae20b957cf7e198046e149e6800afc",
+    "technical-15.png": "0b105305a1fddfc8cfcf0994456ee8c121fc3e6ac4440af674c2ad1c7ea871e4"
+  },
+  "inspectionRecord": "C:\\Users\\Zllyh\\Documents\\Codex\\2026-10-11\\n-h\\work\\drivelab\\.sites-runtime\\technical-qa-114\\inspection.json",
+  "contactSheets": [
+    "C:\\Users\\Zllyh\\Documents\\Codex\\2026-10-11\\n-h\\work\\drivelab\\.sites-runtime\\technical-qa-114\\contact-1.png",
+    "C:\\Users\\Zllyh\\Documents\\Codex\\2026-10-11\\n-h\\work\\drivelab\\.sites-runtime\\technical-qa-114\\contact-2.png",
+    "C:\\Users\\Zllyh\\Documents\\Codex\\2026-10-11\\n-h\\work\\drivelab\\.sites-runtime\\technical-qa-114\\contact-3.png",
+    "C:\\Users\\Zllyh\\Documents\\Codex\\2026-10-11\\n-h\\work\\drivelab\\.sites-runtime\\technical-qa-114\\contact-4.png"
+  ],
+  "previousArtifactPreserved": {
+    "file": "C:\\Users\\Zllyh\\Documents\\Codex\\2026-10-11\\n-h\\outputs\\archive\\technical-pdf-113-20261117\\DriveLab-参赛技术文档.pdf",
+    "sha256": "7114bafe73c89be172822faf1aa526a2c879825108d9b0c8325da97af0eda1a7"
+  },
+  "limitations": [
+    "This review certifies this PDF content/layout snapshot, not all software behavior or future service uptime.",
+    "Team identity, correct contest group, registration and reviewer access still need actual owner confirmation.",
+    "Historical screenshots and isolated real-model cases are not vehicle accuracy or general semantic accuracy proof."
+  ],
+  "remainingBlockingFindings": [],
+  "unchangedByThisOperation": [
+    "FINAL-VALIDATION.json",
+    "old engineering review JSONs",
+    "old technical PDF QA JSON",
+    "video MP4/SRT/audio",
+    "application source and secrets"
+  ]
+}

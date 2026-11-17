@@ -25,7 +25,27 @@ video_meta=json.loads((OUT/'DriveLab-参赛演示-制作与格式验收.json').r
 technical=OUT/'DriveLab-参赛技术文档.pdf'
 pdf=PdfReader(technical)
 assert 1<=len(pdf.pages)<=30
-assert validation['softwareChecksPassed'] and validation['analysisTests']>=27
+technical_qa=json.loads((ROOT/'docs/competition/TECHNICAL-PDF-QA-114.json').read_text(encoding='utf-8'))
+assert technical_qa['engineVersion']=='1.1.4' and technical_qa['pageCount']==len(pdf.pages)
+assert technical_qa['latestPdfSha256']==hashlib.sha256(technical.read_bytes()).hexdigest()
+implementation=json.loads((ROOT/'docs/competition/implementation-results.json').read_text(encoding='utf-8'))
+implementation_doc=OUT/'DriveLab 智能驾驶工况仿真与辅助分析 Web 平台 V1.0 软件实现与成果说明书.docx'
+assert implementation['finalized'] and implementation['engineVersion']=='1.1.4'
+assert implementation_doc.read_bytes()==(ROOT/'docs/competition/DriveLab-软件实现与成果说明书.docx').read_bytes()
+implementation_qa=json.loads((ROOT/'docs/competition/IMPLEMENTATION-RESULTS-QA.json').read_text(encoding='utf-8'))
+assert implementation_qa['engineVersion']=='1.1.4' and implementation_qa['finalized']
+assert implementation_qa['visualReview']=='pass' and implementation_qa['visualReviewAllPages']
+assert implementation_qa['outputRepositoryAndRenderInputByteIdentical']
+assert not implementation_qa['remainingBlockingFindings']
+assert implementation_qa['sha256']==hashlib.sha256(implementation_doc.read_bytes()).hexdigest()
+assert validation['engineVersion']=='1.1.4'
+assert validation['softwareChecksPassed'] and validation['coreTests']>=41 and validation['analysisTests']>=29
+assert validation['savedWorkflowGroups']>=6 and validation['independentCases']>=130
+assert validation['continuousExtremaReview']['cases']>=72
+assert 'passed 7 checks' in validation.get('apiIntegration','')
+engineering114=json.loads((ROOT/'docs/evidence/engineering-results-audit-20261117.json').read_text(encoding='utf-8'))
+live114=json.loads((ROOT/'docs/competition/LIVE-ENGINE-114-QA.json').read_text(encoding='utf-8'))
+assert engineering114['finalEngineVersion']=='1.1.4' and live114['engineVersion']=='1.1.4'
 video=OUT/'DriveLab-参赛演示.mp4'
 assert video.exists() and video.stat().st_size>1_000_000
 # Metadata is produced only after actual FFmpeg media and subtitle checks.
@@ -38,6 +58,10 @@ assert video_meta.get('fullDecodeExitCode')==0
 assert video_meta.get('audioVolumeChecks',{}).get('noDigitalPeakClipping')
 assert video_meta.get('subtitleRenderChecks',{}).get('changingSubtitlePixels')
 assert video_meta.get('outputSha256')==hashlib.sha256(video.read_bytes()).hexdigest()
+video_revalidation=json.loads((ROOT/'docs/competition/VIDEO-114-REVALIDATION.json').read_text(encoding='utf-8'))
+assert video_revalidation['engineVersion']=='1.1.4'
+assert video_revalidation['numericComparisons']==11 and video_revalidation['unchangedWithinTolerance']
+assert video_revalidation['mp4Sha256']==video_meta['outputSha256']
 sentence_checks=video_meta.get('sentenceSubtitleChecks',{})
 assert all(sentence_checks.get(key) for key in ['oneToOne','textExactMatch','noCrossSentenceConcatenation','noTimeOverlap','quantizedNoTimeOverlap'])
 assert sentence_checks.get('boundaryRenderChecks'), '必须完成实际字幕交界帧检查'
@@ -59,11 +83,14 @@ assets=[(technical,'01-参赛技术文档.pdf'),(video,'02-项目演示.mp4'),
        (ROOT/'README.md','06-README.md'),
        (ROOT/'docs/competition/AI-AND-LICENSES.txt','07-AI使用与第三方许可说明.txt'),
        (ROOT/'docs/competition/FINAL-VALIDATION.json','08-工程与软件验收.json'),
-       (ROOT/'docs/evidence/engineering-final-review-20261117.json','09-工程复核记录.json'),
-       (ROOT/'docs/evidence/analysis-final-review-20261117.json','10-AI证据链复核记录.json'),
-       (ROOT/'docs/competition/RULES-REVIEW-20261117.json','11-赛事要求核对.json'),
+       (ROOT/'docs/evidence/engineering-final-review-20261117.json','09-历史1.1.3工程复核记录.json'),
+       (ROOT/'docs/evidence/analysis-final-review-20261117.json','10-历史1.1.3AI证据链复核记录.json'),
+       (ROOT/'docs/competition/RULES-REVIEW-20261117.json','11-既有赛事规则核对-含历史113状态.json'),
        (ROOT/'docs/competition/team.json','12-报名信息核对.json'),
-       (OUT/'DriveLab-参赛演示-制作与格式验收.json','13-视频验收.json')]
+       (OUT/'DriveLab-参赛演示-制作与格式验收.json','13-视频验收.json'),
+       (OUT/'DriveLab 智能驾驶工况仿真与辅助分析 Web 平台 V1.0 软件实现与成果说明书.docx','16-软件实现与成果说明书.docx'),
+       (ROOT/'docs/evidence/engineering-results-audit-20261117.json','17-engineering-results-audit-20261117.json'),
+       (ROOT/'docs/competition/LIVE-ENGINE-114-QA.json','18-LIVE-ENGINE-114-QA.json')]
 for source,name in assets:
     if not source.is_file(): raise RuntimeError('缺少交付文件：'+source.name)
     shutil.copy2(source,DEST/name)
@@ -78,8 +105,13 @@ shutil.copy2(bundle,OUT/'DriveLab-完整Git历史.bundle')
 
 notice='''DriveLab 传智杯参赛材料 使用与提交须知
 
-本包已制作技术PDF、普通话1080p演示视频、字幕与逐字稿、源码、完整Git历史、许可与验收记录。
+本包包含技术PDF、软件实现与成果详细DOCX、普通话1080p演示视频、字幕与逐字稿、源码、完整Git历史、许可与验收记录。
 本包不等于报名系统已接收，不含虚构身份或人工签署。
+
+版本与文件索引
+当前计算引擎为1.1.4，当前状态以08工程与软件验收、17工程结果复核、18真实模型记录为准；16为详细软件成果说明书。原3页项目说明书保留为仓库及输出历史中的简版。
+09、10为1.1.3历史工程/AI审查；其中624组纵向、120组异步日志等保留各自执行版本，不冒充114新执行。112/113真实模型记录在源码docs/competition中按版本保留。
+11是既有赛事规则核对，包含当时1.1.3材料状态及待重建观察，不能把其中旧状态当作当前114状态，也不是本次重新浏览的记录。
 
 必须由团队补齐/确认
 1. team.json与README中的队名、学校、组别、队长、实际成员分工、指导教师。原开发文档两名拟定成员没有被当作完成贡献证明。
@@ -97,7 +129,10 @@ pnpm run dev
 证据与边界
 工程复核验证假设内的软件实现，不等同实车标定、持证工程签署或车辆安全认证。
 视频由真实界面、实际计算结果与功能流程示意剪辑而成，普通话采用AI合成解说，不是连续实时录屏或真人配音。
-结构和引用校验不证明所有自然语言语义。0.1s采样需求峰值不保证连续时间极值；公开路段仅作数据导入演示。
+当前时序显示与日志均方统计保留0.1s网格；约束和计算事实按当前恒减速/给定轨迹活动区间的端点、驻点求连续需求极值，避障转向限于既定适用速度域，低速段仍未完整评估。这不构成真实轮胎饱和、闭环控制或实车峰值求解。
+导入日志来源未核验，名称不证明数据出处；公开路段仅作数据导入演示。结构和引用登记检查、输入指纹均不是真实性签名，也不证明全部自然语言语义。
+本轮41项核心、29项分析、6组保存恢复、7项API及72组连续极值交叉检查等记录见08和17。114真实模型记录保留一次误导性定性表述及定向重试，不将单次复核推广为所有问题正确。
+V2视频未为114重制，其中11个停车/间距/稳态圆周展示数值已用114重算一致；VIDEO-114-REVALIDATION.json位于源码docs/competition中。旧画面不作为114新界面、新工具调用或实车验证证明。
 不以测试数量、单次模型通过或公开数据对比宣称实车准确率或保证获奖。
 '''
 (DEST/'00-提交前必读.txt').write_text(notice,encoding='utf-8')
@@ -108,6 +143,9 @@ for name in sorted(expected_names):
     files.append({'name':file.name,'bytes':file.stat().st_size,'sha256':hashlib.sha256(file.read_bytes()).hexdigest()})
 manifest={'preparedOn':'2026-11-17','revision':'最终复核与边界修订版','sourceCommit':revision,'engineVersion':validation['engineVersion'],
           'technicalPdfPages':len(pdf.pages),'videoDurationSeconds':duration,'sourceAndHistoryScan':scan_result,
+          'currentStatusFiles':['08-工程与软件验收.json','17-engineering-results-audit-20261117.json','18-LIVE-ENGINE-114-QA.json'],
+          'historicalReviewFiles':['09-历史1.1.3工程复核记录.json','10-历史1.1.3AI证据链复核记录.json','11-既有赛事规则核对-含历史113状态.json'],
+          'videoRevalidation':{'engineVersion':'1.1.4','numericComparisons':11,'unchangedWithinTolerance':True,'mp4RemadeFor114':False,'materialEngineVersion':video_revalidation['videoEngineMaterial'],'record':'docs/competition/VIDEO-114-REVALIDATION.json'},
           'fileArtifactsPrepared':True,'teamConfirmed':team['confirmed'],
           'reviewerAccessVerified':False,'registrationVerified':False,'submissionReady':False,
           'files':files}

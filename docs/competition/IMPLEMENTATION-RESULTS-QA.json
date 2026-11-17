@@ -1,0 +1,682 @@
+{
+  "checkedOn": "2026-11-17",
+  "machineResult": "pass",
+  "visualReview": "pass",
+  "docx": "C:\\Users\\Zllyh\\Documents\\Codex\\2026-10-11\\n-h\\work\\drivelab\\docs\\competition\\DriveLab-软件实现与成果说明书.docx",
+  "sha256": "c21d8ae51040a3609c684508d1483e1da091275f9f4f2be5c6364e8a3d92f9c5",
+  "bytes": 1435193,
+  "pageCount": 18,
+  "renderInputByteIdentical": true,
+  "engineVersion": "1.1.4",
+  "nativeBackend": "Microsoft Word16.0 hidden independent COM; macro disabled; task copy read-only; recent files disabled; PDF export; no save; quit owned instance",
+  "rasterizer": "bundled documents/render_docx.py.rasterize with temporary WordPDF adapter;130dpi",
+  "packagedLibreOffice": "not bundled on Windows; prior actual missing-soffice failure retained; no installed LO used",
+  "referenceUnchanged": true,
+  "sourceDerivedSectionGeometryPreserved": true,
+  "preservedPartsByteIdentical": [
+    "_rels/.rels",
+    "word/header2.xml",
+    "word/header1.xml",
+    "word/fontTable.xml",
+    "word/theme/theme1.xml",
+    "word/header3.xml",
+    "word/settings.xml",
+    "word/numbering.xml"
+  ],
+  "originalRelationshipMappingsPreserved": true,
+  "modules": 9,
+  "figures": [
+    {
+      "number": 1,
+      "assetId": "overview114",
+      "source": "docs\\competition\\screenshots\\implementation-114\\workbench.jpg",
+      "sourceSha256": "6b0e4228a4b8b902e16a4ceabc67ca154d2227e85c6c31a9d8f17bd39f968dba",
+      "engineVersion": "1.1.4",
+      "dataKind": "model",
+      "caption": "引擎1.1.4本机工作台指标局部，数值来自软件模型，不是企业实车测试。",
+      "crop": [
+        219,
+        190,
+        997,
+        340
+      ],
+      "panels": null,
+      "displayWidthInches": 6.2,
+      "displayHeightInches": 1.1953727506426735
+    },
+    {
+      "number": 2,
+      "assetId": "parameters114",
+      "source": "docs\\competition\\screenshots\\implementation-114\\workbench.jpg",
+      "sourceSha256": "6b0e4228a4b8b902e16a4ceabc67ca154d2227e85c6c31a9d8f17bd39f968dba",
+      "engineVersion": "1.1.4",
+      "dataKind": "model",
+      "caption": "引擎1.1.4本机参数面板的上、下局部并排，展示输入与运行、保存入口。原图为软件工作台。",
+      "crop": null,
+      "panels": [
+        [
+          236,
+          371,
+          480,
+          611
+        ],
+        [
+          236,
+          611,
+          480,
+          989
+        ]
+      ],
+      "displayWidthInches": 4.1005291005291005,
+      "displayHeightInches": 3.1
+    },
+    {
+      "number": 3,
+      "assetId": "constraints114",
+      "source": "docs\\competition\\screenshots\\implementation-114\\constraints.jpg",
+      "sourceSha256": "ea8a7feccf7ea8153974f8b78556cdca3456fe3d956f93e24148ff0fd1e0822f",
+      "engineVersion": "1.1.4",
+      "dataKind": "model",
+      "caption": "引擎1.1.4本机约束结果局部：15 km/h换道的连续转向需求111.409°超过设置的111.3°，是模型需求提示。",
+      "crop": [
+        595,
+        876,
+        1554,
+        1168
+      ],
+      "panels": null,
+      "displayWidthInches": 6.2,
+      "displayHeightInches": 1.8877997914494267
+    },
+    {
+      "number": 4,
+      "assetId": "curves114",
+      "source": "docs\\competition\\screenshots\\implementation-114\\workbench.jpg",
+      "sourceSha256": "6b0e4228a4b8b902e16a4ceabc67ca154d2227e85c6c31a9d8f17bd39f968dba",
+      "engineVersion": "1.1.4",
+      "dataKind": "model_with_synthetic_log",
+      "caption": "引擎1.1.4本机运动预览和车速曲线局部并排。预览是场景示意；图中导入曲线为合成演示数据。",
+      "crop": null,
+      "panels": [
+        [
+          511,
+          362,
+          998,
+          679
+        ],
+        [
+          511,
+          698,
+          998,
+          975
+        ]
+      ],
+      "displayWidthInches": 6.2,
+      "displayHeightInches": 1.9933062880324544
+    },
+    {
+      "number": 5,
+      "assetId": "knowledgeImport114",
+      "source": "docs\\competition\\screenshots\\implementation-114\\imported.jpg",
+      "sourceSha256": "bce1713fc5a27caf7419f2665a374c4dd349f3f8e8319f48a2f017184782ac7b",
+      "engineVersion": "1.1.4",
+      "dataKind": "project_authored_example",
+      "caption": "引擎1.1.4本机资料导入局部，支持读取文件、确认标题和正文。示例资料由项目编写，不是企业实测记录。",
+      "crop": [
+        499,
+        535,
+        1102,
+        740
+      ],
+      "panels": null,
+      "displayWidthInches": 4.118048780487805,
+      "displayHeightInches": 1.4000000000000001
+    },
+    {
+      "number": 6,
+      "assetId": "knowledgeSaved114",
+      "source": "docs\\competition\\screenshots\\implementation-114\\knowledge-imported.jpg",
+      "sourceSha256": "32e9cfb405d1debfec0bdbbf5bf52da3be26414ac3a9337558a8b01daf7ac1d7",
+      "engineVersion": "1.1.4",
+      "dataKind": "project_authored_example",
+      "caption": "同一资料已保存到个人知识库；正文与待审核状态局部拼排。上传成功不表示专业准确性已经审核。",
+      "crop": null,
+      "panels": [
+        [
+          716,
+          1000,
+          1104,
+          1207
+        ],
+        [
+          716,
+          1354,
+          1104,
+          1401
+        ]
+      ],
+      "displayWidthInches": 2.917293233082707,
+      "displayHeightInches": 2.0
+    },
+    {
+      "number": 7,
+      "assetId": "aiTools114",
+      "source": "docs\\competition\\screenshots\\implementation-114\\ai.jpg",
+      "sourceSha256": "d3a7f68848d8a447766a0999f6942004671fdc42b20412cabc2eb5b25e3146b4",
+      "engineVersion": "1.1.4",
+      "dataKind": "real_model_snapshot_with_synthetic_log",
+      "caption": "本机恢复展示的1.1.4真实模型快照，实际执行compare_measurement和evaluate_parameters；步骤与三请求状态局部拼排。",
+      "crop": null,
+      "panels": [
+        [
+          595,
+          1227,
+          1133,
+          1282
+        ],
+        [
+          595,
+          1338,
+          1133,
+          1396
+        ],
+        [
+          595,
+          1518,
+          1133,
+          1557
+        ]
+      ],
+      "displayWidthInches": 4.8909090909090915,
+      "displayHeightInches": 1.6
+    },
+    {
+      "number": 8,
+      "assetId": "aiText114",
+      "source": "docs\\competition\\screenshots\\implementation-114\\ai.jpg",
+      "sourceSha256": "d3a7f68848d8a447766a0999f6942004671fdc42b20412cabc2eb5b25e3146b4",
+      "engineVersion": "1.1.4",
+      "dataKind": "real_model_snapshot_with_synthetic_log",
+      "caption": "同次模型解释局部：90 km/h候选与100 km/h基线分别引用独立事实，响应时间保持0.8 s。文字仍需人工核对。",
+      "crop": [
+        595,
+        1981,
+        1550,
+        2240
+      ],
+      "panels": null,
+      "displayWidthInches": 6.2,
+      "displayHeightInches": 1.6814659685863873
+    },
+    {
+      "number": 9,
+      "assetId": "templates114",
+      "source": "docs\\competition\\screenshots\\implementation-114\\templates.jpg",
+      "sourceSha256": "504d725f401382dd54a247eab44fdd40168458d25226761b2d3535b1b943d95a",
+      "engineVersion": "1.1.4",
+      "dataKind": "model_presets",
+      "caption": "引擎1.1.4本机五类固定预设卡片局部拼排，保留原界面文字和载入入口，不是企业试验标准认证。",
+      "crop": null,
+      "panels": [
+        [
+          232,
+          430,
+          590,
+          610
+        ],
+        [
+          632,
+          430,
+          990,
+          610
+        ],
+        [
+          232,
+          824,
+          590,
+          1004
+        ],
+        [
+          632,
+          824,
+          990,
+          1004
+        ],
+        [
+          232,
+          1215,
+          590,
+          1395
+        ]
+      ],
+      "displayWidthInches": 4.646808510638298,
+      "displayHeightInches": 3.6
+    },
+    {
+      "number": 10,
+      "assetId": "records114",
+      "source": "docs\\competition\\screenshots\\implementation-114\\records.jpg",
+      "sourceSha256": "be83f14f09b40ce40707a2c78d7bbd3612437e2190e66d26596af98ab11bb912",
+      "engineVersion": "1.1.4",
+      "dataKind": "saved_model_with_synthetic_log",
+      "caption": "引擎1.1.4本机记录列表的名称、场景、模型结论与打开入口局部并排，展示个人记录。",
+      "crop": null,
+      "panels": [
+        [
+          286,
+          282,
+          468,
+          383
+        ],
+        [
+          640,
+          282,
+          728,
+          383
+        ],
+        [
+          820,
+          282,
+          904,
+          383
+        ],
+        [
+          1330,
+          282,
+          1402,
+          383
+        ]
+      ],
+      "displayWidthInches": 5.489108910891089,
+      "displayHeightInches": 1.2
+    },
+    {
+      "number": 11,
+      "assetId": "restored114",
+      "source": "docs\\competition\\screenshots\\implementation-114\\restored.jpg",
+      "sourceSha256": "62a1c35edac1f0c327a67bb3dc308bf6f95256cd2ab204c845fe344617d57297",
+      "engineVersion": "1.1.4",
+      "dataKind": "saved_model_with_synthetic_log",
+      "caption": "打开保存记录后，工作台恢复本例100 km/h参数及计算结果。该记录绑定的是合成演示日志，不是实车。",
+      "crop": [
+        253,
+        199,
+        1568,
+        355
+      ],
+      "panels": null,
+      "displayWidthInches": 6.2,
+      "displayHeightInches": 0.7355133079847909
+    },
+    {
+      "number": 12,
+      "assetId": "import114",
+      "source": "docs\\competition\\screenshots\\implementation-114\\comparison.jpg",
+      "sourceSha256": "d99f7316c167e84b691024930b20d1ec8ebba766543ea867266424655fa6f1f6",
+      "engineVersion": "1.1.4",
+      "dataKind": "synthetic",
+      "caption": "引擎1.1.4本机文件导入局部，显示单位、偏移与文件状态；此例为合成演示日志。",
+      "crop": [
+        239,
+        602,
+        974,
+        832
+      ],
+      "panels": null,
+      "displayWidthInches": 6.2,
+      "displayHeightInches": 1.9401360544217687
+    },
+    {
+      "number": 13,
+      "assetId": "comparisonCurve114",
+      "source": "docs\\competition\\screenshots\\implementation-114\\comparison.jpg",
+      "sourceSha256": "d99f7316c167e84b691024930b20d1ec8ebba766543ea867266424655fa6f1f6",
+      "engineVersion": "1.1.4",
+      "dataKind": "synthetic",
+      "caption": "引擎1.1.4本机车速叠加曲线，蓝线为仿真、橙线为合成演示日志，非真实测量。",
+      "crop": [
+        240,
+        881,
+        974,
+        1156
+      ],
+      "panels": null,
+      "displayWidthInches": 4.937818181818182,
+      "displayHeightInches": 1.85
+    },
+    {
+      "number": 14,
+      "assetId": "comparisonTable114",
+      "source": "docs\\competition\\screenshots\\implementation-114\\comparison.jpg",
+      "sourceSha256": "d99f7316c167e84b691024930b20d1ec8ebba766543ea867266424655fa6f1f6",
+      "engineVersion": "1.1.4",
+      "dataKind": "synthetic",
+      "caption": "同一合成示例的四通道普通误差表；偏差、覆盖、峰值时刻和质量信息另在分析证据或导出中查看。",
+      "crop": [
+        240,
+        1158,
+        974,
+        1457
+      ],
+      "panels": null,
+      "displayWidthInches": 5.0324414715719055,
+      "displayHeightInches": 2.05
+    },
+    {
+      "number": 15,
+      "assetId": "reportResults114",
+      "source": "docs\\competition\\screenshots\\implementation-114\\report-page-1.jpg",
+      "sourceSha256": "af86f68c3f0eea0350743df599155e85bd70041325d9f9edf37b4a1d11ef9912",
+      "engineVersion": "1.1.4",
+      "dataKind": "rules_with_synthetic_log",
+      "caption": "引擎1.1.4规则报告的结果表局部，参数为模型工况，绑定日志为合成示例。不是实车标定报告。",
+      "crop": [
+        80,
+        400,
+        1050,
+        820
+      ],
+      "panels": null,
+      "displayWidthInches": 5.542857142857143,
+      "displayHeightInches": 2.4
+    },
+    {
+      "number": 16,
+      "assetId": "reportFacts114",
+      "source": "docs\\competition\\screenshots\\implementation-114\\report-page-5.jpg",
+      "sourceSha256": "c7e7b065d398f2543bab0a12a3e44b53df2197a2e8a7c4c32e312404fcedf210",
+      "engineVersion": "1.1.4",
+      "dataKind": "rules_with_synthetic_log",
+      "caption": "同一规则样张的事实字典局部，可回查指标编号、值、单位和模型来源；输入指纹不是真实性签名。",
+      "crop": [
+        80,
+        370,
+        1050,
+        800
+      ],
+      "panels": null,
+      "displayWidthInches": 5.413953488372093,
+      "displayHeightInches": 2.4
+    }
+  ],
+  "geometry": [
+    {
+      "page": 1,
+      "characters": 622,
+      "outsidePageCount": 0,
+      "replacementCount": 0
+    },
+    {
+      "page": 2,
+      "characters": 578,
+      "outsidePageCount": 0,
+      "replacementCount": 0
+    },
+    {
+      "page": 3,
+      "characters": 674,
+      "outsidePageCount": 0,
+      "replacementCount": 0
+    },
+    {
+      "page": 4,
+      "characters": 462,
+      "outsidePageCount": 0,
+      "replacementCount": 0
+    },
+    {
+      "page": 5,
+      "characters": 607,
+      "outsidePageCount": 0,
+      "replacementCount": 0
+    },
+    {
+      "page": 6,
+      "characters": 493,
+      "outsidePageCount": 0,
+      "replacementCount": 0
+    },
+    {
+      "page": 7,
+      "characters": 588,
+      "outsidePageCount": 0,
+      "replacementCount": 0
+    },
+    {
+      "page": 8,
+      "characters": 683,
+      "outsidePageCount": 0,
+      "replacementCount": 0
+    },
+    {
+      "page": 9,
+      "characters": 621,
+      "outsidePageCount": 0,
+      "replacementCount": 0
+    },
+    {
+      "page": 10,
+      "characters": 435,
+      "outsidePageCount": 0,
+      "replacementCount": 0
+    },
+    {
+      "page": 11,
+      "characters": 539,
+      "outsidePageCount": 0,
+      "replacementCount": 0
+    },
+    {
+      "page": 12,
+      "characters": 536,
+      "outsidePageCount": 0,
+      "replacementCount": 0
+    },
+    {
+      "page": 13,
+      "characters": 534,
+      "outsidePageCount": 0,
+      "replacementCount": 0
+    },
+    {
+      "page": 14,
+      "characters": 553,
+      "outsidePageCount": 0,
+      "replacementCount": 0
+    },
+    {
+      "page": 15,
+      "characters": 485,
+      "outsidePageCount": 0,
+      "replacementCount": 0
+    },
+    {
+      "page": 16,
+      "characters": 549,
+      "outsidePageCount": 0,
+      "replacementCount": 0
+    },
+    {
+      "page": 17,
+      "characters": 569,
+      "outsidePageCount": 0,
+      "replacementCount": 0
+    },
+    {
+      "page": 18,
+      "characters": 621,
+      "outsidePageCount": 0,
+      "replacementCount": 0
+    }
+  ],
+  "renderedPngSha256": {
+    "page-1.png": "63550d6c7bfea70035488331114b546e81499aad65dd9f6cb48b62b627778506",
+    "page-2.png": "b634739620a9eabdae43add775d979f6bc36a2ccb53e670fe8d1935758aaa12e",
+    "page-3.png": "440a7a5f0ef1f5e0e518102145290a1668e17b68317fa4db5a6137a216a83e01",
+    "page-4.png": "b7511a0946610a6ca6ca4dee21bfc03262630a49708457aab08e06ec8dc61c1f",
+    "page-5.png": "293c9fd41e349601cb3e7d62ecec6f67326aa58b339fb9a2da559a7d8a366553",
+    "page-6.png": "87c1612b58084b17d11a0d3311fcb3195d45826f700742e3042f0fa134e7527e",
+    "page-7.png": "c1508a653f89d9ff8e306bf0add247ffa2d8223b2c360144c3bd8f192b3c6675",
+    "page-8.png": "0172d72466c5f8f7acdfeb6ac6704f0148c475109b1b98e684a103aed3c03716",
+    "page-9.png": "0a7a2db2652d2be04d3f6bff225b4fd7675e4200d17500bf19edf4d1d1a11f03",
+    "page-10.png": "b0e944fc74163fcb38f9dba08118d61a9b4341c85f578adc17f727be755f0875",
+    "page-11.png": "62ad99294cf88bac08d9460df2ac062e5b40eb7c9b22fc466fb62baa14e6c284",
+    "page-12.png": "f1c7f72af5c5f680d15d6cb3a531200ba05d63c4a9a769f95f9d29e27a8aa811",
+    "page-13.png": "16a32a0adb3734ae72262673413b2260493228ba37ff8d7db4e6757d45779a15",
+    "page-14.png": "0e25b7add43b5efcf7415efbeb4976deb000cb5ecf58c056da1388156e12de34",
+    "page-15.png": "17e86701d1703f413fb99efed4f09a30977b67b94945cd0966c1888ab5e80bfc",
+    "page-16.png": "5de93c8b6b384ce217f09484fe916266ffbc3c8c5f6dd3968f4f20a1f327f5c4",
+    "page-17.png": "c60a1c8460a3ed885923700a2646a23ea68578d7caa3e0e3762512f320dbbb43",
+    "page-18.png": "d5144d99d9d002da3058ce4e046caf965863955f22b06a9a0c892aaee3ae1356"
+  },
+  "limitations": [
+    "软件流程和引用检查不证明真实车型标定、企业验收或全部自然语言推理正确。",
+    "历史截图按实际版本和数据性质识别，不充当当前引擎新运行证据。"
+  ],
+  "result": "passed_complete_18_page_render_and_visual_review",
+  "visualReviewAllPages": true,
+  "finalized": true,
+  "docxSha256": "c21d8ae51040a3609c684508d1483e1da091275f9f4f2be5c6364e8a3d92f9c5",
+  "outputDocx": "C:/Users/Zllyh/Documents/Codex/2026-10-11/n-h/outputs/DriveLab 智能驾驶工况仿真与辅助分析 Web 平台 V1.0 软件实现与成果说明书.docx",
+  "repositoryDocx": "docs/competition/DriveLab-软件实现与成果说明书.docx",
+  "outputRepositoryAndRenderInputByteIdentical": true,
+  "contentSource": "docs/competition/implementation-results.json",
+  "builderSource": "scripts/create-implementation-results.py",
+  "contentSha256": "b1d3e6f2c286b8a4a273fc0da231e46e3aa5cf9cc274f165e2682021c04faf70",
+  "builderSha256": "422b73a33768cd07670b2aed5d64b13bbeffea5fe0afdcacb31ec6f5adaff30c",
+  "authoringMarker": "create count1 docx succeeded once before this operation; not repeated for iterations",
+  "ownedFinalWordPid": 61168,
+  "wordClosedWithoutSaving": true,
+  "installedLibreOfficeUsed": false,
+  "all18PagesIndividuallyViewed": true,
+  "finalIterationVisualCheck": {
+    "changedPages": [
+      7,
+      8,
+      11
+    ],
+    "reopenedFinalChangedPages": [
+      7,
+      8,
+      11
+    ],
+    "remaining15PngsByteIdenticalToIndividuallyViewedVersion": true
+  },
+  "pageReview": [
+    {
+      "page": 1,
+      "result": "pass",
+      "notes": "标题、当前原型、工程人员/小团队定位与非实车验收边界清楚，指标截图可见。"
+    },
+    {
+      "page": 2,
+      "result": "pass",
+      "notes": "主对象与教学拓展分列，五步流程完整。"
+    },
+    {
+      "page": 3,
+      "result": "pass",
+      "notes": "架构表和数据流可读，正文与表格无溢出。"
+    },
+    {
+      "page": 4,
+      "result": "pass",
+      "notes": "原要求/实现/操作/输入输出/效果齐全，参数面板上、下局部并排可读。"
+    },
+    {
+      "page": 5,
+      "result": "pass",
+      "notes": "端点/驻点连续需求与0.1s时序区别、5km/h软件域及111.409°实例完整。"
+    },
+    {
+      "page": 6,
+      "result": "pass",
+      "notes": "曲线与预览、五列CSV范围明确，图片和图注未截断。"
+    },
+    {
+      "page": 7,
+      "result": "pass",
+      "notes": "文件限制、导入操作、保存后的项目示例与待审核状态可见；去除多余白边后复看。"
+    },
+    {
+      "page": 8,
+      "result": "pass",
+      "notes": "四类工具与实际两工具/三请求快照分开表述；拼排后执行名称更清楚。"
+    },
+    {
+      "page": 9,
+      "result": "pass",
+      "notes": "90km/h工具候选与100km/h基线、固定0.8s及输出引用明确；表格完整。"
+    },
+    {
+      "page": 10,
+      "result": "pass",
+      "notes": "五类固定预设全部出现，未宣称自建/共享模板或标准认证。"
+    },
+    {
+      "page": 11,
+      "result": "pass",
+      "notes": "名称搜索/模型结论筛选、保存恢复与损坏隔离明确，记录和恢复结果截图可见。"
+    },
+    {
+      "page": 12,
+      "result": "pass",
+      "notes": "文件/单位/偏移/有效行状态完整，5MB/20000行/±60s及来源未核验明确。"
+    },
+    {
+      "page": 13,
+      "result": "pass",
+      "notes": "普通表与扩展分析信息的位置明确，合成叠加曲线有清楚图注。"
+    },
+    {
+      "page": 14,
+      "result": "pass",
+      "notes": "201样本合成案例、误差数值和容差解释准确，四通道表完整。"
+    },
+    {
+      "page": 15,
+      "result": "pass",
+      "notes": "PDF生成/当前输入一致性与规则样张的成果表清楚。"
+    },
+    {
+      "page": 16,
+      "result": "pass",
+      "notes": "事实字典、SIM/LOG/CAND区分和指纹局限完整，截图未裁切关键条目。"
+    },
+    {
+      "page": 17,
+      "result": "pass",
+      "notes": "100/80km/h与80/100m三方案表及99.38/67.16、58.77/72.47/78.77数值完整。"
+    },
+    {
+      "page": 18,
+      "result": "pass",
+      "notes": "范围与四项未来计划分明，未写成已实车/企业验收或完整原设计全部完成。"
+    }
+  ],
+  "layout": {
+    "characterOutsidePageCount": 0,
+    "textReplacementCharacterCount": 0,
+    "observedClipping": false,
+    "observedOverlap": false,
+    "observedMissingChineseGlyphs": false,
+    "bodySizePt": 11,
+    "pageNumbers": "1–18连续",
+    "figures": "16幅真实成果局部；正文另列关键数值，原截图像素和完整来源保留。"
+  },
+  "contentGates": {
+    "originalNineModulesCovered": true,
+    "eachModuleHasRequirementImplementationOperationInputOutputAndVisibleResult": true,
+    "primaryAudience": "车辆测试/底盘标定工程人员与小型测试团队",
+    "teachingSecondary": true,
+    "realModelSnapshotVsRuleReportVsSyntheticLogDistinguished": true,
+    "noGeneralSemanticOrRealVehicleCertificationClaim": true,
+    "toolCandidate90VsWorkedDefault80Separated": true,
+    "csvOnlyFiveFields": true,
+    "filenameNotProvenance": true,
+    "noAdministratorOrSharedTemplateClaim": true,
+    "noOriginalPersonnelOrSignatureInvented": true
+  },
+  "pdfDelivered": false,
+  "remainingBlockingFindings": []
+}
