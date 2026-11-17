@@ -3,6 +3,8 @@ from pathlib import Path
 from xml.sax.saxutils import escape
 import json
 import re
+import importlib.util
+from io import BytesIO
 from reportlab.pdfgen import canvas
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, PageBreak, Image, KeepTogether
 from reportlab.lib import colors
@@ -20,10 +22,22 @@ VALIDATION=json.loads((ROOT/'docs/competition/FINAL-VALIDATION.json').read_text(
 assert VALIDATION['engineVersion']==ENGINE and VALIDATION['softwareChecksPassed']
 ENGINEERING_REVIEW_RECORD='docs/evidence/engineering-results-audit-20261117.json'
 ENGINEERING_REVIEW=json.loads((ROOT/ENGINEERING_REVIEW_RECORD).read_text(encoding='utf-8'))
-assert ENGINEERING_REVIEW['finalEngineVersion']==ENGINE
+assert ENGINEERING_REVIEW['finalEngineVersion'] in {'1.1.4',ENGINE}
+TASK_EVALUATION_RECORD='docs/evidence/ai-task-evaluation-20261117.json'
+TASK_EVALUATION=json.loads((ROOT/TASK_EVALUATION_RECORD).read_text(encoding='utf-8'))
+TASK_REVIEW=TASK_EVALUATION['independentReview']
+assert TASK_REVIEW['sourceSetSha256']=='2c597a9c6878a46c48cb31accbdec2775bfbe9a9724e7092e050816609005f51'
+assert TASK_REVIEW['summary']['fixedLiveTasks']==6 and TASK_REVIEW['summary']['modelRequests']==14
+TASK_REGRESSION_RECORD='docs/evidence/AI-TASK-T06-REGRESSION-120.json'
+TASK_REGRESSION=json.loads((ROOT/TASK_REGRESSION_RECORD).read_text(encoding='utf-8'))
+assert TASK_REGRESSION['regression']['mode']=='llm' and TASK_REGRESSION['regression']['modelRequests']==3
 REVIEW_DATE=VALIDATION['reviewedOn']
 VIDEO=json.loads((ROOT/'docs/competition/VIDEO-QA.json').read_text(encoding='utf-8'))
 VIDEO_TIMELINE=json.loads((ROOT/'docs/competition/VIDEO-SUBTITLE-QA.json').read_text(encoding='utf-8'))['scenes']
+FIGURE_CONTENT=json.loads((ROOT/'docs/competition/implementation-results.json').read_text(encoding='utf-8'))
+figure_spec=importlib.util.spec_from_file_location('implementation_figure_layout',ROOT/'scripts/create-implementation-results.py')
+figure_layout=importlib.util.module_from_spec(figure_spec)
+figure_spec.loader.exec_module(figure_layout)
 HISTORICAL_MODEL_ENGINE='1.1.2'
 pdfmetrics.registerFont(TTFont('NotoSC', str(ROOT / 'public/fonts/NotoSansSC-Regular.ttf')))
 INK=colors.HexColor('#253846'); MUTED=colors.HexColor('#657887'); ORANGE=colors.HexColor('#df6939'); LINE=colors.HexColor('#dbe3e9')
@@ -37,6 +51,7 @@ styles={
  'headcell':ParagraphStyle('headcell',fontName='NotoSC',fontSize=9,leading=14,textColor=colors.white,wordWrap='CJK'),
 }
 story=[]
+section_number=0
 def p(text,kind='body'):
  return Paragraph(escape(str(text)).replace('\n','<br/>'),styles[kind])
 def add(text,kind='body'): story.append(p(text,kind))
@@ -46,13 +61,31 @@ def table(headers,rows,widths):
  t.setStyle(TableStyle([('BACKGROUND',(0,0),(-1,0),INK),('ROWBACKGROUNDS',(0,1),(-1,-1),[colors.white,colors.HexColor('#f5f7f9')]),('VALIGN',(0,0),(-1,-1),'TOP'),('LEFTPADDING',(0,0),(-1,-1),9),('RIGHTPADDING',(0,0),(-1,-1),9),('TOPPADDING',(0,0),(-1,-1),8),('BOTTOMPADDING',(0,0),(-1,-1),8),('LINEBELOW',(0,0),(-1,-1),.4,LINE)]))
  story.extend([t,Spacer(1,12)])
 def page(number,title):
- story.append(PageBreak());add(f'{number:02d}  /  DRIVELAB','small');add(title,'heading')
+ global section_number
+ section_number+=1
+ story.append(PageBreak());add(f'{section_number:02d}  /  DRIVELAB','small');add(title,'heading')
 def image(name):
  file=ROOT/'docs/competition/screenshots'/name
  if file.exists():
   from PIL import Image as PILImage
   with PILImage.open(file) as im: w,h=im.size
   story.extend([Image(str(file),width=510,height=510*h/w),Spacer(1,12)])
+
+def result_image(name,*,crop=None,max_height=195):
+ from io import BytesIO
+ from PIL import Image as PILImage
+ file=ROOT/'docs/competition/screenshots'/name
+ if not file.exists():raise FileNotFoundError(file)
+ with PILImage.open(file) as original:
+  result=original.crop(crop) if crop else original.copy()
+  stream=BytesIO();result.save(stream,format='PNG');stream.seek(0)
+  width=min(510,max_height*result.width/result.height)
+  story.extend([Image(stream,width=width,height=width*result.height/result.width),Spacer(1,10)])
+
+def result_asset(asset_id):
+ result=figure_layout.render_figure_asset(FIGURE_CONTENT,asset_id)
+ stream=BytesIO();result.save(stream,format='PNG');stream.seek(0)
+ story.extend([Image(stream,width=510,height=510*result.height/result.width),Spacer(1,12)])
 def footer(c,doc):
  c.setStrokeColor(LINE);c.line(42,801,553,801);c.line(42,39,553,39)
  c.setFont('NotoSC',8);c.setFillColor(MUTED)
@@ -67,11 +100,11 @@ story.append(Spacer(1,24))
 table(['版本','状态'],[[f'产品 V1.0 / 计算引擎 {ENGINE}','本轮软件复核；既有模型实测另标版本'],['目标赛道','2026 传智杯 AI WEB 网页开发挑战赛'],['代码仓库','github.com/qiuyimei/drivelab（私有）']],[155,355])
 add('当前结论','sub')
 add('项目形成了面向前期工况预评估与数据复盘的 Web 工作台，连接五类工况、参数计算、采集日志、专业资料、受限 AI 解释及中文报告。结果保留输入、处理口径和引用依据，便于工程人员比较方案与说明前提。软件验证与历史模型记录分开留证；尚无车型或企业标定验收。')
-if TEAM['confirmed']:
- add('团队：'+TEAM['teamName']+'；学校：'+TEAM['school']+'；组别：'+TEAM['group'],'small')
- add('成员：'+'；'.join(m['name']+'（'+m['role']+'）' for m in TEAM['members']),'small')
+if TEAM.get('identityConfirmed'):
+ add('学校：'+TEAM['school']+'；负责人：'+TEAM['captain']+'；成员：'+'、'.join(m['name'] for m in TEAM['members'])+'。','small')
+ add('队名：'+(TEAM['teamName'] or '')+'                 组别：'+(TEAM['group'] or '')+'                 指导教师：无','small')
 else:
- add('报名队伍名称、学校、组别、队长与实际分工尚待本人确认，统一登记于 README 与 team.json。本文不代填身份或人工签署。','small')
+ add('队名：                 学校：                 组别：','small')
 
 page(1,'问题、用户与功能闭环')
 add('主要用户是车辆测试、底盘标定相关工程人员及小型测试团队，用于在详细仿真或受控测试前整理工况条件、比较需求和复盘已有采集文件。教学与跨专业学习是辅助使用场景；当前未声称获得企业或真实车型验收。')
@@ -88,16 +121,16 @@ add('界面中的行车动画是运动学示意；紧急避障没有真实车辆
 
 page(2,'架构与数据流')
 table(['层','职责','主要实现'],[
- ['浏览器','React 交互、SVG 曲线、文档正文提取、PDF 下载','app/workbench.tsx；app/ui/*'],
+ ['浏览器','四类任务、React交互、SVG曲线、文档提取与候选载入','app/workbench.tsx；app/ui/*'],
  ['Worker API','账号识别、输入校验、仿真、分析与 SSE','app/api/[...path]/route.ts'],
  ['确定性证据','计算时序、误差、候选参数、输入指纹','lib/simulation.ts；evidence.ts；fingerprint.ts'],
  ['检索与解释','持久化分块、混合词项检索、受限工具、引用校验','lib/rag.ts；retrieval.ts；analysis.ts'],
  ['存储与模型','D1 按 owner 隔离；免费模型通过服务端调用','Drizzle 迁移；lib/provider.ts'],
  ],[80,265,165])
 add('一次分析的请求链','sub')
-add('浏览器提交工况 + 日志 + 容差 + 问题 → 服务端重新计算证据 → 检索工程段落 → 可选模型调用受限工具 → 校验结构和引用 → SSE 返回步骤及结果。模型不直接执行 SQL、访问任意 URL 或改写当前工况。')
+add('浏览器提交任务标识、原始问题、工况、日志与容差 → 服务端组装任务目标并重新计算证据 → 检索相关段落 → 可选模型调用受限工具 → 校验结构、引用登记与任务检查 → SSE返回步骤及结果。模型不直接执行SQL、访问任意URL或改写当前工况。')
 add('持久化原则','sub')
-add('列表只返回记录摘要；打开记录才读取本人完整快照。保存时校验输入指纹，包含引擎版本、工况、日志和容差。参数改变后，旧分析会被标记为过期，不作为当前证据保存。')
+add('列表只返回记录摘要；打开记录才读取本人完整快照。记录保留任务标识和原始问题，恢复时检查结构，并从实际工具产物重建任务状态。保存时校验引擎、工况、日志与容差指纹；输入变更或任务不匹配时，旧结果不冒充本次分析。该检查不是真实性签名。')
 add('技术栈：React 19、TypeScript、Vinext、Vite、Cloudflare Worker、D1、Drizzle。前后端共享纯计算模块，但服务端独立校验与复算。','small')
 
 page(3,'物理模型、公式与适用条件')
@@ -126,9 +159,20 @@ table(['工具','输入与行为','约束'],[
 add('检索实现','sub')
 add('中文单字/双字与英文词项，BM25 结合 512 维稀疏词项哈希向量余弦相似度。约 700 字分块、560 字步进；索引保留 docId#cN、字符范围、PDF 页码或段落。该方法不是语义 embedding。')
 add('生成校验与失败行为','sub')
-add('模型最多请求 3 轮、每轮至多 4 个工具；最终输出结构化 JSON。观察和建议必须引用有效 factId 或 chunkId；拒绝不存在的引用和绝对安全承诺。额度、网络或格式失败时保留规则结果。引用标识有效不等于文字语义已被完全证明，仍需人工复核。')
-add('当前 '+ENGINE+' 的本机真实模型记录见 LIVE-ENGINE-114-QA.json：最终案例在 3 次请求内执行日志对比和候选重算，主要数字及所选定性关系经人工对照；日志为合成演示数据。初始线性措辞问题保留，公式提示约束不保证其他问题语义正确。1.1.2 工具/线上截图、1.1.3 比较另标历史。','small')
-add('默认及工具重算候选使用独立 CAND_n 事实范围，保留参数、基线指纹与结果；基线事实不被候选覆盖。检索只暴露已登记的段落。校验仍不能自动证明所有自然语言语义，关键数值需对照事实字典复核。','small')
+add('模型最多请求3轮、每轮至多4个工具；最终输出结构化JSON。观察和建议须引用有效factId或chunkId。剩余请求内返回有界错误诊断与真实登记映射，要求模型自行纠正，不自动替换或填入引用。肯定式安全承诺仍拒绝。额度、网络或格式失败保留规则结果。编号有效不等于语义或引用支持已被证明。')
+add('1.2.0新增固定任务对照，原六题真实结果保留5个被接收回答及1个降级，见后文有限评测。1.1.2/1.1.3/1.1.4模型案例另标历史，不充当当前版本重新运行证据。','small')
+add('默认及工具重算候选使用独立CAND_n事实范围，保留patch、基线指纹和结果；界面均提供比较与确认载入。载入只填写参数，用户需单独运行，原日志随后解除绑定。检索只暴露已登记段落。编号校验不能证明文字与引用之间的全部支持关系。','small')
+
+page(4,'四类任务与可操作结果')
+table(['任务','前提与实际执行要求','完成检查的范围'],[
+ ['工况风险复盘','已复算基线；日志可选','基线已给，无需为了凑流程重复调用读取仿真'],
+ ['日志差异复盘','已绑定日志；实际compare_measurement','无日志阻止模型调用；误差不等于故障原因'],
+ ['候选方案比较','实际evaluate_parameters生成有输入变化的候选','默认建议或未变参数不计本次工具流程完成'],
+ ['资料依据问答','实际search_knowledge；核对返回的登记段落','零相关段落保留缺项，不伪装命中或车型知识'],
+ ],[105,225,180])
+add('任务状态由服务端按产物构建：complete为执行步骤齐全，partial为步骤不完整，非模型或降级为rules-only。原始问题随task保存，恢复时回到所选目标；切换任务不把旧结果当作新执行。检查仅记录流程，不保证自然语言语义或工程适用性。')
+result_asset('taskHome120')
+add('1.2.0本机四类任务卡局部拼排：按问题选择目标。无日志可做风险复盘，不能执行日志复盘。','small')
 
 page(5,'日志协议与公开数据')
 image('public-log.jpg')
@@ -136,7 +180,7 @@ add('历史 V1.0 界面：公开 comma2k19 导入样例，截图未显示引擎�
 table(['处理','规则'],[
  ['字段','time_s；speed_kmh；yaw_rate_dps；brake_pressure_bar；steering_angle_deg'],
  ['清洗与对齐','去无效行；时间排序；重复时间保留最后一行；首时刻归零后应用偏移'],
- ['对标','仅在正长度共同区间比较；MAE/RMSE/偏差按原仿真网格等点权计算，最大误差/时刻按两网格并集计算；间隔提醒只计与共同区间正长度相交的采集间隔'],
+ ['对标','在共同区间比较；单点可报告点误差，并警告不能代表持续工况。MAE/RMSE/偏差按原仿真网格等点权，最大误差/时刻按两网格并集；采样间隔提醒只计与共同区间正长度相交的间隔'],
  ['缺失','按有效通道值判断；有列名但全为空也标缺失。空值不补零，区间外不外推；先检查方向盘/前轮角定义'],
  ],[85,425])
 
@@ -144,9 +188,9 @@ page(6,'独立验证与结果')
 bench=json.loads((ROOT/'public/validation/benchmark-results.json').read_text(encoding='utf-8-sig'))
 assert bench['engineVersion']==ENGINE
 table(['验证','结果','证明范围'],[
- ['核心回归',str(VALIDATION['coreTests'])+' 项通过','给定轨迹连续极值、正长度共同区间、导入来源及既有计算/日志边界'],
+ ['核心回归',str(VALIDATION['coreTests'])+' 项通过','给定轨迹连续极值、共同区间与单点边界、导入来源及既有计算/日志边界'],
  ['分析回归',str(VALIDATION['analysisTests'])+' 项通过','工具往返、候选事实、引用闭包、有界纠正与降级'],
- ['独立解析参考',f"{bench['summary']['passed']} / {bench['summary']['total']}；另有 {VALIDATION['continuousExtremaReview']['cases']} 组连续需求密扫",'公式实现与给定轨迹活动区间/适用速度域需求交叉核对'],
+ ['独立解析参考',f"{bench['summary']['passed']} / {bench['summary']['total']}；另有1.1.4历史 {VALIDATION['continuousExtremaReview']['cases']} 组连续需求密扫",'当前公式实现与历史给定轨迹密扫分别留证；不冒充当前版本重新密扫'],
  ['既有1.1.3扩展交叉检查',f"{VALIDATION['independentExtendedReview']['longitudinalCases']} 组 / {VALIDATION['independentExtendedReview']['timeSamples']} 时序点；{VALIDATION['independentExtendedReview']['asynchronousLogCases']} 组异步日志",'历史检查保留；不冒充当前版本重新运行或实车精度'],
  ['固定检索回归',f"{bench['retrieval']['hitAt3']}/{bench['retrieval']['total']} Hit@3；{bench['retrieval']['top1']}/{bench['retrieval']['total']} Top1",'小样本回归，不代表泛化准确率'],
  ['公开 CAN 样例',f"{bench['publicSample']['rows']:,} 行；约 {bench['publicSample']['duration']:.2f} s",'哈希、单位、时间轴与缺失通道'],
@@ -157,7 +201,7 @@ table(['验证','结果','证明范围'],[
  ],[115,170,225])
 add('独立参考如何避免自证','sub')
 add('参考生成器不调用应用计算模块：停车参考由闭式解生成，弯道参考从圆周几何生成，换道参考通过六个边界条件的线性方程独立求解。最大绝对数值差约 '+format(bench['summary']['maxAbsoluteError'],'.4g')+'。')
-add('测试只证明各自记录范围内的实现，不能作为实车精度或通用模型回答准确率。当前 '+ENGINE+' 软件、真实模型与界面另有记录；1.1.2/1.1.3 历史检查不改称本轮重跑。不存在受控实车闭环标定或工程专家签署。','small')
+add('测试只证明各自范围内的实现，不能作为实车精度或通用模型回答准确率。当前软件、任务模型评测与界面分别留证；旧模型与扩展工程检查保留实际版本。不曾进行受控实车闭环标定或专业安全签署。','small')
 
 page(7,'数据来源、许可与复现')
 add('公开数据来源为 comma.ai 官方 comma2k19 仓库中的示例 CAN 片段，MIT 许可。仅保留速度与方向盘转角，没有伪造横摆角速度或制动压力。')
@@ -191,7 +235,7 @@ add('数据库初始化先检查旧结构，再接入迁移记录；不删除或
 
 page(9,'竞赛展示与团队复核')
 table(['评价方向','可展示内容','仍需补齐'],[
- ['AI 深度 / 创新','计算证据 + 日志 + RAG + 工具重算 + 来源与输入指纹','114 固定合成案例已核；泛化语义与外部使用仍需复核'],
+ ['AI 深度 / 创新','任务目标 + 计算证据 + 日志 + RAG + 工具候选 + 执行检查','固定合成题有限对照；泛化语义与引用支持仍需复核'],
  ['前端 / 体验','完整工作台、对标曲线、执行步骤、报告下载','另一设备与评审账户端到端验收'],
  ['实用性 / 社会价值','工程方案比较、测试任务复盘与输入可追溯；教学为辅助','实际使用反馈，不编造节省时间指标'],
  ],[110,245,155])
@@ -209,12 +253,18 @@ table(['时间','演示内容'],[
  [video_range('10','11'),'工况记录、恢复与中文报告输出'],
  [video_range('12','12'),'产品价值、边界与后续需求'],
  ],[105,405])
-add('V2 视频 '+str(VIDEO['formatChecks']['durationSeconds'])+' s、1920×1080，保留 1.1.2 素材与已验收字幕；11 个展示数值经 '+ENGINE+' 复算一致。影片未重制，不冒充新版本操作或模型实测；见 VIDEO-QA.json、VIDEO-114-REVALIDATION.json。','small')
-add('车辆工程角色审核公式、单位、参数、数据与边界；软件工程角色解释前后端、检索、工具约束、存储与测试。实际成员、学校、组别、指导教师、开发过程和分工由团队如实填写。')
+add('V2视频 '+str(VIDEO['formatChecks']['durationSeconds'])+' s、1920×1080，保留1.1.2素材及字幕。1.2.0复算的11个旧核对字段差值为0，其中渲染器明确读取6个候选卡字段，不能称11项均已逐帧确认。影片未重制，不含四任务首页和工具候选新入口，不充当新版本操作或模型实测；见VIDEO-120-REVALIDATION.json。','small')
+
+page(9,'项目成员与职责分配')
+add('学校：'+TEAM['school']+'。负责人：'+TEAM['captain']+'。指导教师：无。')
+add('队名：                              组别：','small')
+table(['成员','学院与专业','项目职责'],[[m['name'],m['college']+'\n'+m['discipline'],m['role'].replace('API接入、','API接入、\n',1)] for m in TEAM['members']],[65,175,270])
+add('以上为用户明确授权的职责安排，不用于虚构工时、人工独立完成履历或工程签署。团队应能够解释相应方案、代码、模型假设与交付结果。')
+add('项目使用Codex辅助代码实现、检查、材料与制作脚本；用户参与需求梳理、业务与视频界面反馈、账号配置联调和验收。使用的公开依赖、字体与数据另有许可记录。')
 
 page(10,'最终提交前的验收门槛')
 table(['门槛','当前状态','完成条件'],[
- ['真实免费模型','114 本机工具案例已记录','最终三次请求、两个工具与主要数值有记录；仅为固定合成案例，不将单次通过等同稳定'],
+ ['真实免费模型','六题14请求原评测与另行界面验收保留','结果绑定实际源码；降级和引用支持局限不删除，不将小样本接收率称准确率'],
  ['工程软件复核','已完成本轮检查','输入、计算、连续需求与对标边界有针对性验证；车型适用性与实车精度另验'],
  ['访问与运行','本地已验收；评审未验收','另一台电脑复现；安排指定评审只读权限；验证链接可访问'],
  ['提交材料','本轮制作与逐项校核','PDF ≤30 页；普通话 5–8 分钟 1080p MP4；源码与完整 Git 历史；补真实报名信息'],
@@ -229,30 +279,47 @@ page(11,'关键计算与证据口径')
 table(['能力','当前实现','证明范围'],[
  ['连续轨迹需求','给定五次轨迹在显示活动时间内检查端点与驻点；转向限定于适用速度域；附着结合恒减速需求','不是任意轨迹或真实轮胎模型的最坏情况'],
  ['时序与误差','0.1 s 时序与连续需求指标分开；MAE/RMSE/偏差仍按原仿真网格等点权；日志最大误差用两网格并集','不把采集插值点当成新增独立测量'],
- ['共同时间区间','仅在正长度重叠区间对标；单点接触不能给出持续工况误差通过结论','只证明所给分段线性数据的比较'],
+ ['共同时间区间','在共同区间比较；单点也可报告点误差，并警告不能代表持续工况；采样间隔提醒只计正长度相交','只证明所给分段线性数据与有效点的比较'],
  ['数据来源','文件名不证明来源；导入数据统一提示出处未核验，公开/合成样例不充当车型标定','人工确认数据授权、工况、采样与通道定义'],
  ['压力与低速边界','短制动保留解析压力需求和曲线覆盖提示；静止单独处理；低速横向不完整评估时明确告警','简化需求模型，不是执行器或车辆安全认证'],
  ],[105,270,135])
-add('当前 '+ENGINE+' 的源码与针对性验证见 '+ENGINEERING_REVIEW_RECORD+'、FINAL-VALIDATION.json。1.1.2/1.1.3 的工程和模型记录作为历史保留，不替代当前结果，也不被改写为新版本运行证明。','small')
+add('连续需求工程复核见'+ENGINEERING_REVIEW_RECORD+'（原记录版本'+ENGINEERING_REVIEW['finalEngineVersion']+'）；当前软件检查见FINAL-VALIDATION.json。旧工程和模型记录不被改写为本轮重新运行证明。','small')
 
-page(12,'真实模型与报告交付证据')
-image('final-ai.jpg')
-add('历史界面：引擎 1.1.2 的线上默认问题，2 次模型请求含一次纠正；没有 inspect_simulation/search_knowledge 工具执行步骤。独立工具案例另见 LIVE-ENGINE-112-QA.json。此图不证明本轮 '+ENGINE+' 已重新联网实测。','small')
+page(12,'真实工具产物与报告交付')
+result_asset('toolCandidate120')
+add('1.2.0本机初次T06工具候选三列与载入按钮局部拼排：换道时长5→6.25 s，侧向需求0.81→0.52 m/s²、方向盘需求3.11→1.99°。三请求后正文因引用失败降级，工具产物保留；不是成功模型回答。','small')
 add('固定案例核对','sub')
 add('100 km/h 自车、60 km/h 恒速前车、80 m 间距、0.8 s 响应、5 m/s² 减速：解析停车距离 99.3827 m，停车时间 6.3556 s，全过程最小间距 58.7654 m。停车距离大于初始间距并不直接判碰撞，因为前车持续运动。实际回答需明确未绑定测量日志。')
-add('报告包含参数、时序、约束、日志口径、事实字典、候选登记、资料锚点与执行步骤；旧分析因输入或引擎版本变化失效。完整样张随材料包提供。')
+page(12,'任务报告与执行检查')
+add('任务报告加入目标、原始问题、状态与逐项执行检查，并保留参数、时序、日志口径、事实字典、候选登记与资料锚点。旧分析与当前参数、日志、阈值或引擎不一致时不采用；任务检查不代表语义正确或认证完成。')
+result_asset('taskReport120')
+add('另一次唯一授权T06定向回归的成功PDF任务表：三请求、实际CAND_3和执行检查齐全。初次降级保留；完整成功报告已全6页检查，不代表通用语义可靠。','small')
 add('AI 辅助开发披露','sub')
-add('项目使用 Codex 辅助代码、回归、材料和配音脚本制作，并使用公开软件与数据。实际成员须对选题、代码逻辑与交付承担解释责任；拟定分工不作为已完成贡献，原创性或资格声明由本人核实后提交。')
+add('代码、检查和材料使用Codex辅助；职责分配与已证实的用户参与见成员页。软件成果、公开依赖与模型API分别说明，不虚构实车实验、持证工程签署或人工独立完成履历。')
+
+page(12,'有限任务对照及失败记录')
+add('固定问题对照无检索规则、规则加RAG和完整工具流程。离线8题中预选6题实际调用ModelScope Qwen/Qwen3.5-27B，共14次请求：5个模型回答被接收、1个降级。这个结果不是83.3%语义准确率。')
+table(['固定问题','实际观察','限制'],[
+ ['偏差与已知时移','误差和覆盖符合参考，模型组织时移校正行动','T01/T02部分具体断言所附资料只支持通用流程'],
+ ['自定义90 km/h与110 m','两个实际工具候选匹配独立公式','最终叙述缺引用，3请求后降级；不是模型答题成功'],
+ ['弯道降速20%','实际重算1.00→0.64 m/s²并解释平方关系','默认候选也可给相同数值；不是AI独有计算能力'],
+ ['项目资料问答','回答步骤、版本和页节位置','人工项目夹具，不是厂家PDF或真实车型规范'],
+ ['未知厂家标定','承认未知，不把默认540°当厂家值','合理未知不等于已获得车型参数'],
+ ],[115,205,190])
+add('原六题绑定源码集合SHA-256：\n'+TASK_REVIEW['sourceSetSha256'],'small')
+add('记录：'+TASK_EVALUATION_RECORD+'。评测使用合成日志和项目资料，单模型、单次小样本，实际API语料未严格隔离。主要任务人工核对不能证明全部引用蕴含、通用语义或实车适用性。未测真实用户耗时或节省比例。','small')
+add('初次T06界面验收另有1案例3请求降级及正确工具候选，未并入上述6题。补充有界诊断与登记映射后，唯一授权的同输入定向回归用3请求接收模型回答；不是重新运行整批评测。','small')
+add('定向回归的主要数值、patch和本例关系人工核对通过，但“reaction未变”的所附峰值/通用资料不直接编码该配置；交通流效率也未量化。两次结果不是随机重复对照，不能把改善完全归因于提示变化；见'+TASK_REGRESSION_RECORD+'。','small')
 
 page(13,'AI 选型、创新与总结展望')
 add('模型选型理由','sub')
 add('此前选用 ModelScope 提供的 Qwen/Qwen3.5-27B，基于当时可用的免费入口、中文解释需求，以及 OpenAI 兼容接口和工具协议的集成条件。既有联调证明它能完成所记录的案例；应用仍以本地 JSON、引用校验和有界纠正管理输出。未做模型横向基准，不声称其准确率、速度或中文能力优于其他模型。')
 add('技术创新点：证据与工具的工程组合','sub')
-add('将确定性工况计算、日志误差、段落检索和受限模型工具串成同一证据链；用独立候选事实范围、输入指纹、过期提醒与明确降级减少上下文混用。这是面向具体工作流的工程组合与交付设计，不是新的车辆物理算法或语义嵌入算法。')
+add('将服务端任务目标、确定性计算、日志误差、段落检索与受限工具串成同一证据链，用独立候选事实、执行检查、输入指纹和明确降级减少混用。这是面向具体流程的工程组合与交付设计，不是新的物理或语义嵌入算法。')
 add('应用创新点：面向工程复盘的完整工作台','sub')
 add('把工况设计、日志复盘、专业资料与候选比较连接到保存和报告，帮助车辆测试与底盘标定相关工程人员、小型团队说明条件、结果和依据；也可辅助教学。没有真实用户规模或效率对照试验，不虚构时间节省比例、商业收益或实车精度。')
 add('总结与展望','sub')
-add('当前原型已完成五类轻量工况、文件日志对标、知识检索、受限 AI 解释及证据交付闭环。软件回归支撑假设内的实现；模型文字、车辆适用性和团队实际贡献仍须由相应人员核实。后续计划如下，均不是已完成成果。')
+add('当前原型已完成五类轻量工况、文件日志对标、四类AI任务、可操作候选、保存恢复和报告交付。固定小样本对照显示有针对性的解释与资料问答，也保留引用局限和降级。后续计划如下，均不是已完成成果。')
 table(['后续方向','计划与验收方式'],[
  ['车型参数','由实际工程成员核对参数、阈值和增益，记录适用条件与审核结论'],
  ['受控实测','在授权、同工况数据基础上核对采样、单位和时间，再评价模型差异'],

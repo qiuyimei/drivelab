@@ -1,32 +1,57 @@
 {
   "reviewedOn": "2026-11-17",
-  "engineVersion": "1.1.4",
+  "engineVersion": "1.2.0",
   "softwareChecksPassed": true,
   "coreTests": 41,
-  "analysisTests": 29,
-  "savedWorkflowGroups": 6,
+  "analysisTests": 40,
+  "savedWorkflowGroups": 8,
   "independentCases": 130,
   "independentMaxError": 9.094947017729282e-13,
   "retrievalCases": 12,
   "publicRows": 4973,
   "typecheck": "passed",
-  "lint": "passed, zero errors and warnings",
-  "build": "passed via Sites build-site helper after final prompt change",
-  "apiIntegration": "passed 7 checks including same-fingerprint damaged analysis rejection; fixtures cleaned",
-  "localDatabase": "既有1.1.3 fresh/repeat/legacy-preservation检查保留；本轮未修改数据库模式，114保存/读取/删除由API检查验证。",
+  "lint": "passed, zero errors and warnings (whole project and final app/lib/scripts pass)",
+  "build": "passed via official Sites build-site helper; build warnings for chunk size and barrel import optimization retained",
+  "apiIntegration": "passed 10 checks; includes task persistence and rejection of damaged analysis; fixtures cleaned",
+  "localDatabase": "既有1.1.3 fresh/repeat/legacy-preservation检查保留；本轮未修改数据库模式，1.2.0保存/读取/删除和任务快照由10项API检查及8组工作流验证。",
   "realModel": {
-    "engineVersion": "1.1.4",
+    "engineVersion": "1.2.0",
     "provider": "modelscope",
     "model": "Qwen/Qwen3.5-27B",
-    "completedCases": 2,
-    "requests": [
-      3,
-      3
-    ],
-    "initialQualitativeIssueRetained": true,
-    "afterPromptSelectedCase": "主要数字及定性关系人工复核；仅此合成案例",
-    "newToolExecutionInFinalCase": true,
-    "records": "LIVE-ENGINE-114-QA.json"
+    "originalSix": {
+      "taskCount": 6,
+      "acceptedModelAnswers": 5,
+      "fallbacks": 1,
+      "modelRequests": 14,
+      "sourceSetSha256": "2c597a9c6878a46c48cb31accbdec2775bfbe9a9724e7092e050816609005f51",
+      "analysisSourceSha256": "0495fb0a0d6fd1ed5ec9427cc139c10a7fcbde29d37a2969961a5956b320a9b0",
+      "record": "docs/evidence/ai-task-evaluation-20261117.json",
+      "note": "旧六题真实调用未在纠错补丁后重跑；T04引用失败继续保留。"
+    },
+    "independentT06": {
+      "initial": {
+        "mode": "fallback",
+        "modelRequests": 3,
+        "unknownReferenceFailureRetained": true
+      },
+      "oneAuthorizedRegression": {
+        "mode": "llm",
+        "modelRequests": 3,
+        "taskStatus": "complete",
+        "tool": "evaluate_parameters",
+        "candidateId": "CAND_3",
+        "patch": {
+          "laneTime": 6.25
+        }
+      },
+      "analysisSourceSha256": "fb224e5289c0b80a8077c1cb286f40416ed0986c8c25506f0471b73ab45f58b8",
+      "record": "docs/evidence/AI-TASK-T06-REGRESSION-120.json",
+      "numericAndPatchReview": "主要数字、仅改变laneTime及其余参数保持通过；未应用基线。",
+      "semanticLimits": "obs4的侧向峰值引用不能直接证明reaction未变，需candidate.config/patch；交通流效率为未量化一般建议。"
+    },
+    "fullSixRetestedAfterCorrection": false,
+    "semanticAccuracy": null,
+    "note": "结构有效、引用登记及task complete均不证明全部语义或引用蕴含准确；无用户节时或实车收益数据。"
   },
   "publicRawReproduction": {
     "status": "passed",
@@ -43,19 +68,22 @@
   },
   "continuousExtremaReview": {
     "cases": 72,
-    "record": "docs/evidence/engineering-results-audit-20261117.json"
+    "record": "docs/evidence/engineering-results-audit-20261117.json",
+    "engineVersion": "1.1.4",
+    "classification": "historical retained 72-case continuous-extrema cross-check; not rerun as a new 1.2.0 sweep"
   },
   "currentOnlineUi": {
+    "engineVersion": "1.2.0",
     "projectId": "appgprj_6af9751c44388191b7b99d0646dbd840",
-    "deploymentId": "appgdep_6afbcf8ae21481918e124a5bca6a7363",
-    "versionId": "appgprj_6af9751c44388191b7b99d0646dbd840~appgver_b534aa9b96c48191aa743eac158a2de2",
-    "sourceCommit": "4b75da8be22899b631be80c24f55d69e118a62b2",
+    "deploymentId": "appgdep_6afc24648698819199dd8fd4f557af37",
+    "versionId": "appgprj_6af9751c44388191b7b99d0646dbd840~appgver_b34974f7e8a08191bbbaf60c92a45457",
+    "sourceCommit": "55ac9349c3b966e85db4a51641bdd794e96325fa",
     "status": "succeeded",
     "url": "https://drivelab-sim-v1-zllyh.qingjiugptproflb.chatgpt.site",
     "audience": "owner-only private",
     "envRevision": 1,
-    "verification": "本地同版UI/接口/模型验收通过；生产部署成功由Sites返回确认，未冒称全量重新操作线上每一项功能。",
-    "buildFilesScanned": 88,
+    "verification": "本机同版UI、API、实际模型与生产构建已验收；Sites确认生产部署成功。没有冒称逐项重新操作全部生产交互；文档排版在另一次提交中交付，不影响应用构建输入。",
+    "buildFilesScanned": 89,
     "knownModelKeyAbsentFromBuild": true
   },
   "historicalOnlineUi113": {
@@ -108,10 +136,14 @@
   },
   "localUi": {
     "status": "passed",
-    "record": "UI-ENGINE-114-QA.json"
+    "record": "UI-ENGINE-120-QA.json",
+    "additionalBoundaries": [
+      "legacy/unassigned task",
+      "changed tolerance stale analysis"
+    ]
   },
-  "externalReviewerAccess": "private owner-only; not authorized or verified for reviewers",
-  "teamIdentity": "awaiting owner confirmation",
+  "externalReviewerAccess": "not verified: private GitHub requires specified reviewer identity or accepted method; online site remains owner-only; no automatic invitation or permission change",
+  "teamIdentity": "用户已确认厦门大学嘉庚学院三位成员、学院专业、负责人邱益美及无导师。职责是用户授权的项目职责分配，不作独立完成履历证明。",
   "limits": [
     "连续需求极值只覆盖当前恒减速和给定轨迹方程的活动区间/适用速度域，不构成真实车辆峰值或饱和轨迹求解。",
     "避障进入低速横向域仍未完整评估。",
@@ -126,6 +158,60 @@
     "补充已知公式关系提示并保留实际模型初始措辞问题。"
   ],
   "materialFormats": {
+    "status": "passed",
+    "technicalPdfPages": 19,
+    "technicalSha256": "e2e24af951167b29b8d248a12413790d9c5205d4171181e114210da2fb79c7ce",
+    "implementationDocxPages": 25,
+    "implementationFigures": 17,
+    "implementationSha256": "f47b778000c187a577ab956f65c34909afcfdeca1e4f0edf8db791e5d0688cda",
+    "reportPdfPages": 6,
+    "reportSha256": "78162cf4d580f4fda5ff92a169b4022088e96ebba99115cbf8b457bffd4438e7",
+    "videoDurationSeconds": 387.54,
+    "videoResolution": [
+      1920,
+      1080
+    ],
+    "videoNumericRevalidation": "VIDEO-120-REVALIDATION.json",
+    "videoRemadeFor120": false,
+    "layoutRevision": "全宽左对齐、相关小图成组、参数与候选图放大，职责尾括注删除"
+  },
+  "historicalOnlineUi114": {
+    "projectId": "appgprj_6af9751c44388191b7b99d0646dbd840",
+    "deploymentId": "appgdep_6afbcf8ae21481918e124a5bca6a7363",
+    "versionId": "appgprj_6af9751c44388191b7b99d0646dbd840~appgver_b534aa9b96c48191aa743eac158a2de2",
+    "sourceCommit": "4b75da8be22899b631be80c24f55d69e118a62b2",
+    "status": "succeeded",
+    "url": "https://drivelab-sim-v1-zllyh.qingjiugptproflb.chatgpt.site",
+    "audience": "owner-only private",
+    "envRevision": 1,
+    "verification": "本地同版UI/接口/模型验收通过；生产部署成功由Sites返回确认，未冒称全量重新操作线上每一项功能。",
+    "buildFilesScanned": 88,
+    "knownModelKeyAbsentFromBuild": true,
+    "engineVersion": "1.1.4",
+    "classification": "historical retained deployment; not a 1.2.0 deployment"
+  },
+  "historicalRealModel114": {
+    "engineVersion": "1.1.4",
+    "provider": "modelscope",
+    "model": "Qwen/Qwen3.5-27B",
+    "completedCases": 2,
+    "requests": [
+      3,
+      3
+    ],
+    "initialQualitativeIssueRetained": true,
+    "afterPromptSelectedCase": "主要数字及定性关系人工复核；仅此合成案例",
+    "newToolExecutionInFinalCase": true,
+    "records": "LIVE-ENGINE-114-QA.json",
+    "classification": "historical retained real-model checks"
+  },
+  "historicalLocalUi114": {
+    "status": "passed",
+    "record": "UI-ENGINE-114-QA.json",
+    "engineVersion": "1.1.4",
+    "classification": "historical retained local UI checks"
+  },
+  "historicalMaterialFormats114": {
     "technicalPdfPages": 15,
     "reportPdfPages": 7,
     "videoDurationSeconds": 387.54,
@@ -137,6 +223,75 @@
     "implementationDocxPages": 18,
     "implementationFigures": 16,
     "implementationSha256": "c21d8ae51040a3609c684508d1483e1da091275f9f4f2be5c6364e8a3d92f9c5",
-    "technicalSha256": "59d66091a2839e12724cb5be96a754748feccc0ab7f6d5c2908420d4aea155c9"
+    "technicalSha256": "59d66091a2839e12724cb5be96a754748feccc0ab7f6d5c2908420d4aea155c9",
+    "engineVersion": "1.1.4",
+    "classification": "historical formats; current materials pending final generation and QA"
+  },
+  "softwareImplementationComplete": true,
+  "softwareCheckStatus": "passed; final build, typecheck, full lint, targeted final task guard UI passed",
+  "teamRegistration": {
+    "identityConfirmed": true,
+    "confirmed": false,
+    "source": "docs/competition/team.json",
+    "teamName": null,
+    "group": null,
+    "registrationStatus": null,
+    "paymentStatus": null,
+    "roleBasis": "用户授权的项目职责分配"
+  },
+  "currentPhysicsScope": {
+    "engineEquationsChangedIn120": false,
+    "retainedVersionBasis": "1.1.4",
+    "currentCoreAndReferenceChecks": "41 core and 130 independent analytic references passed; not a new real-vehicle validation",
+    "displayAndMeanStatisticsGridSeconds": 0.1,
+    "continuousPeakScope": "给定方程实际活动区间的端点/驻点与适用速度域；低速避障仍提示未完整评估。",
+    "historicalChecks": "1.1.4的72组极值密扫与1.1.3的624组纵向/120组异步日志继续按原版本保留。"
+  },
+  "aiTaskEvaluation": {
+    "record": "docs/evidence/ai-task-evaluation-20261117.json",
+    "offline": {
+      "taskCount": 8,
+      "variantCount": 3,
+      "referenceAssertions": 72,
+      "harnessTests": 7,
+      "currentSourceSetSha256": "967acb7c95801cefab17b2bc2af17db3a8e6d5f9565e38d90a6a0833e549aaa2",
+      "realModel": false,
+      "note": "72是24个参考断言在3个变体重复核对，不是72个独立问题；脚本化工具响应不是模型效果。"
+    },
+    "referenceCorrection": {
+      "analysisSourceSha256": "fb224e5289c0b80a8077c1cb286f40416ed0986c8c25506f0471b73ab45f58b8",
+      "analysisTests": 40,
+      "status": "passed offline mechanism checks",
+      "changes": "有界JSON问题定位、最终事实/来源/真实候选映射；不猜ID、不自动补引用、严格检查和3次请求上限保持。",
+      "checks": [
+        "未知事实与来源定位",
+        "诊断截断/转义长度有界",
+        "最终CAND_3映射与真实数值",
+        "连续错误3次后降级",
+        "纠错阶段拒绝工具调用"
+      ]
+    }
+  },
+  "resolvedIn120": [
+    "四种显式AI任务与执行产物检查接入现有计算/日志/检索/候选/保存报告流程。",
+    "区分默认候选与本次真实工具候选，保存恢复保留任务及事实证据。",
+    "引用纠错提供有界具体诊断与已登记事实映射，严格校验和总3请求上限保持；一次额外T06真实回归单独归档。",
+    "补充固定任务离线对照与保留失败的真实小样本记录，不把脚本响应或ID检查当语义准确率。"
+  ],
+  "submissionReadiness": {
+    "codeCapabilities": "implemented and checked within documented model/application scope",
+    "currentProductionBuild": "passed official helper",
+    "currentDeployment": "succeeded owner-only private; same application inputs as55ac934",
+    "materialFormats": "passed 25-page DOCX, 19-page technical PDF, 6-page report and retained video",
+    "teamIdentity": "confirmed known identities and assigned responsibilities",
+    "registration": "unknown fields remain null; not verified",
+    "reviewerRepositoryAccess": "not verified",
+    "reviewerOnlineAccess": "not verified; owner-only",
+    "contestSubmissionPerformed": false,
+    "awardOrScoreClaimed": false
+  },
+  "currentBuildScan": {
+    "buildFilesScanned": 89,
+    "knownModelKeyAbsentFromBuild": true
   }
 }

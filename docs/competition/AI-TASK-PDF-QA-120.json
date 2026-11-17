@@ -1,0 +1,48 @@
+{
+  "engineVersion": "1.2.0",
+  "scope": "唯一授权T06定向回归实际3请求llm/complete报告，非通用语义证明",
+  "pdf": "C:\\Users\\Zllyh\\Documents\\Codex\\2026-10-11\\n-h\\work\\drivelab\\.sites-runtime\\AI任务成功报告样张.pdf",
+  "sha256": "78162cf4d580f4fda5ff92a169b4022088e96ebba99115cbf8b457bffd4438e7",
+  "pages": 6,
+  "allPagesVisuallyReviewed": true,
+  "visualResult": "pass; all6 pages read; no clipping/overlap/missing glyphs; task table begins with header and data on page3",
+  "geometry": [
+    {
+      "page": 1,
+      "outside": 0,
+      "characters": 501
+    },
+    {
+      "page": 2,
+      "outside": 0,
+      "characters": 604
+    },
+    {
+      "page": 3,
+      "outside": 0,
+      "characters": 1240
+    },
+    {
+      "page": 4,
+      "outside": 0,
+      "characters": 1276
+    },
+    {
+      "page": 5,
+      "outside": 0,
+      "characters": 2003
+    },
+    {
+      "page": 6,
+      "outside": 0,
+      "characters": 834
+    }
+  ],
+  "output": "outputs/DriveLab-报告样张.pdf",
+  "repositoryCopy": "docs/competition/DriveLab-报告样张.pdf",
+  "allCopiesByteIdentical": true,
+  "pageCount": 6,
+  "result": "passed_full_6_page_visual_and_geometry_review",
+  "oldInitialFailureRetained": true,
+  "sourceRecord": "docs/evidence/AI-TASK-T06-REGRESSION-120.json"
+}

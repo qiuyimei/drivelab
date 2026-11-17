@@ -1,0 +1,25 @@
+{
+  "engineVersion": "1.2.0",
+  "sourceCommit": "55ac9349c3b966e85db4a51641bdd794e96325fa",
+  "applicationBuildInputsUnchangedFromVerifiedBuild": true,
+  "publication": {
+    "id": "appgdep_6afc24648698819199dd8fd4f557af37",
+    "project_id": "appgprj_6af9751c44388191b7b99d0646dbd840",
+    "title": "DriveLab · 智能驾驶工况仿真与辅助分析",
+    "version_id": "appgprj_6af9751c44388191b7b99d0646dbd840~appgver_b34974f7e8a08191bbbaf60c92a45457",
+    "type": "publish",
+    "status": "succeeded",
+    "url": "https://drivelab-sim-v1-zllyh.qingjiugptproflb.chatgpt.site",
+    "has_mcp": false,
+    "screenshot_asset_pointer": "sediment://file_00000000767881f880b834b29134b2b6",
+    "provider_deployment_id": "release---6af97f9478b88191a2e142fa6a6e5e61",
+    "failure_message": null,
+    "env_set_revision": 1,
+    "updated_at": "2026-11-17T09:55:06.389208+00:00"
+  },
+  "audience": "owner-only private; owner and one-user zero-group access verified before publish",
+  "archive": "drivelab120-site.tar.gz",
+  "archiveFiles": 89,
+  "knownModelKeyAbsentFromBuild": true,
+  "scope": "本机同版UI、API、实际模型与生产构建已验收；Sites确认生产部署成功。没有冒称逐项重新操作全部生产交互；文档排版在另一次提交中交付，不影响应用构建输入。"
+}

@@ -1,0 +1,36 @@
+{
+  "reviewedOn": "2026-11-17",
+  "engineVersion": "1.2.0",
+  "source": "https://m.saikr.com/vse/2026AIWEBKF",
+  "publisher": "传智杯全国大学生IT技能大赛",
+  "scope": "本轮重新读取赛事发布者公开正文，与用户截图所列提交规范核对；未登录报名系统。",
+  "requirements": {
+    "repository": "GitHub或Gitee；公开或提供评审访问；README、环境配置、真实Git历史。",
+    "video": "5至8分钟，MP4，至少1080p，普通话说明项目、功能和AI亮点。",
+    "technicalDocument": "PDF不超过30页，覆盖需求、架构、AI选型集成优化、功能、测试部署和创新。",
+    "team": "同校1至3名学生，至多2名指导老师；组别需按报名规则选择。",
+    "ai": "AI应处于应用核心，体现深度集成。",
+    "online": "可选；若提供，需要评审可访问、服务可用，必要时提供评审测试身份。",
+    "secrets": "API凭证通过环境配置，不能出现在公开源码。"
+  },
+  "deadline": {
+    "bodyDate": "2026-11-18",
+    "topWidget": "2026-11-19 00:00",
+    "backendVerified": false,
+    "interpretation": "不据顶部组件推断延期或已提交；精确时点和入口需本人报名后台确认。"
+  },
+  "projectEvidence": {
+    "repository": "https://github.com/qiuyimei/drivelab",
+    "repositoryVisibility": "private",
+    "reviewerAccessVerified": false,
+    "siteAudience": "owner-only private",
+    "identity": "用户确认厦门大学嘉庚学院三名成员，无指导老师；职责为用户授权分配。",
+    "group": null,
+    "registration": null,
+    "payment": null,
+    "submission": null,
+    "aiScope": "四类复盘任务、真实受限工具、RAG、候选重算、引用登记和有限实际模型评测；不宣称多模态或MCP实现。",
+    "formatEvidence": ["TECHNICAL-PDF-QA-120.json", "IMPLEMENTATION-RESULTS-QA.json", "VIDEO-120-REVALIDATION.json"],
+    "overall": "材料按要求准备并受最终哈希验收约束；报名、组别和评审访问未完成核实，不能称已正式提交或无条件满足全部参赛环节。"
+  }
+}

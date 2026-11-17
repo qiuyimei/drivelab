@@ -17,7 +17,7 @@ from zipfile import ZipFile, ZIP_DEFLATED
 from docx import Document
 from docx.shared import Inches
 from lxml import etree
-from PIL import Image
+from PIL import Image, ImageDraw, ImageFont
 
 ROOT = Path(__file__).resolve().parents[1]
 HELPER = ROOT/'scripts/create-project-explanation.py'
@@ -29,6 +29,68 @@ R = 'http://schemas.openxmlformats.org/officeDocument/2006/relationships'
 PKG_R = 'http://schemas.openxmlformats.org/package/2006/relationships'
 CT = 'http://schemas.openxmlformats.org/package/2006/content-types'
 DOCX_NAME = 'DriveLab 智能驾驶工况仿真与辅助分析 Web 平台 V1.0 软件实现与成果说明书.docx'
+
+
+def figure_sources(content, asset_id):
+    asset = content['assets'][asset_id]
+    if asset.get('components'):
+        return [source for child in asset['components'] for source in figure_sources(content, child)]
+    path = ROOT/asset['path']
+    return [{'source':str(path.relative_to(ROOT)), 'sourceSha256':hashlib.sha256(path.read_bytes()).hexdigest()}]
+
+
+def arrange_panels(pieces, columns, labels=None, normalize_width=False):
+    gap = 20 if labels else 12
+    cell_width = max(piece.width for piece in pieces)
+    if normalize_width:
+        pieces = [piece.resize((cell_width,round(piece.height*cell_width/piece.width)),Image.Resampling.LANCZOS) for piece in pieces]
+    output_width=cell_width if columns==1 else sum(piece.width for piece in pieces)+(len(pieces)-1)*gap if len(pieces)<=columns else columns*cell_width+(columns-1)*gap
+    label_size=max(12,round(output_width/44.6))
+    font = ImageFont.truetype(str(ROOT/'public/fonts/NotoSansSC-Regular.ttf'),label_size)
+    label_height = round(label_size*1.6) if labels else 0
+    if columns == 1:
+        canvas = Image.new('RGB',(cell_width,sum(piece.height+label_height for piece in pieces)+(len(pieces)-1)*gap),'white')
+        position = 0
+        for index,piece in enumerate(pieces):
+            if labels:ImageDraw.Draw(canvas).text((0,position),labels[index],font=font,fill='black')
+            canvas.paste(piece,(0,position+label_height));position += piece.height+label_height+gap
+        return canvas
+    if len(pieces) <= columns:
+        canvas=Image.new('RGB',(sum(piece.width for piece in pieces)+(len(pieces)-1)*gap,max(piece.height for piece in pieces)+label_height),'white')
+        position=0
+        for index,piece in enumerate(pieces):
+            if labels:ImageDraw.Draw(canvas).text((position,0),labels[index],font=font,fill='black')
+            canvas.paste(piece,(position,label_height));position+=piece.width+gap
+        return canvas
+    rows = (len(pieces)+columns-1)//columns
+    cell_height = max(piece.height for piece in pieces)+label_height
+    canvas = Image.new('RGB',(columns*cell_width+(columns-1)*gap,rows*cell_height+(rows-1)*gap),'white')
+    for index,piece in enumerate(pieces):
+        x=(index%columns)*(cell_width+gap);y=(index//columns)*(cell_height+gap)
+        if labels:ImageDraw.Draw(canvas).text((x,y),labels[index],font=font,fill='black')
+        canvas.paste(piece,(x,y+label_height))
+    return canvas
+
+
+def render_figure_asset(content, asset_id):
+    asset = content['assets'][asset_id]
+    if asset.get('components'):
+        return arrange_panels([render_figure_asset(content,child) for child in asset['components']],asset.get('panelColumns',2),asset.get('panelLabels'),True)
+    original = Image.open(ROOT/asset['path']).convert('RGB')
+    if asset.get('panels'):
+        image=arrange_panels([original.crop(tuple(rect)) for rect in asset['panels']],asset.get('panelColumns',2),asset.get('panelLabels'))
+    elif asset.get('crop'):
+        image=original.crop(tuple(asset['crop']))
+    else:image=original
+    if asset.get('footerPanel'):
+        footer=original.crop(tuple(asset['footerPanel']))
+        row_height=max(footer.height,36)
+        canvas=Image.new('RGB',(image.width,image.height+16+row_height),'white')
+        canvas.paste(image,(0,0));canvas.paste(footer,(image.width-footer.width,image.height+16))
+        font=ImageFont.truetype(str(ROOT/'public/fonts/NotoSansSC-Regular.ttf'),max(12,round(image.width/44.6)))
+        ImageDraw.Draw(canvas).text((0,image.height+16),'操作入口',font=font,fill='black')
+        image=canvas
+    return image
 
 
 def paragraph(text, *, lead=None, style='Normal', before=0, after=100):
@@ -116,44 +178,20 @@ class Builder:
     def figure(self, asset_id, *, max_height=3.2, crop=None, caption=None):
         asset = self.content['assets'][asset_id]
         max_height = asset.get('maxHeight', max_height)
-        path = ROOT/asset['path']
+        sources = figure_sources(self.content, asset_id)
+        path = ROOT/sources[0]['source']
         if not path.exists():
             if self.draft:
                 return
             raise FileNotFoundError(path)
         original_bytes = path.read_bytes()
-        image = Image.open(BytesIO(original_bytes)).convert('RGB')
+        image = render_figure_asset(self.content, asset_id)
         crop = crop or asset.get('crop')
         panels = asset.get('panels')
-        if panels:
-            pieces = [image.crop(tuple(rect)) for rect in panels]
-            columns = asset.get('panelColumns', 2)
-            cell_width = max(piece.width for piece in pieces)
-            cell_height = max(piece.height for piece in pieces)
-            gap = 12
-            rows = (len(pieces) + columns - 1)//columns
-            if columns == 1:
-                image = Image.new('RGB', (cell_width,sum(piece.height for piece in pieces)+(len(pieces)-1)*gap), 'white')
-                position = 0
-                for piece in pieces:
-                    image.paste(piece,(0,position))
-                    position += piece.height + gap
-            elif rows == 1:
-                image = Image.new('RGB', (sum(piece.width for piece in pieces)+(len(pieces)-1)*gap,cell_height), 'white')
-                position = 0
-                for piece in pieces:
-                    image.paste(piece,(position,0))
-                    position += piece.width + gap
-            else:
-                image = Image.new('RGB', (columns*cell_width+(columns-1)*gap, rows*cell_height+(rows-1)*gap), 'white')
-                for index, piece in enumerate(pieces):
-                    image.paste(piece, ((index%columns)*(cell_width+gap), (index//columns)*(cell_height+gap)))
-        elif crop:
-            image = image.crop(tuple(crop))
         stream = BytesIO()
         image.save(stream, format='PNG')
         value = stream.getvalue()
-        width = min(6.2, max_height*image.width/image.height)
+        width = 6.2
         scratch = Document()
         shape = scratch.add_paragraph().add_run().add_picture(BytesIO(value), width=Inches(width))
         inline = deepcopy(shape._inline)
@@ -168,7 +206,7 @@ class Builder:
         docprops.set('name', 'DriveLab actual result ' + str(number))
         docprops.set('descr', caption or asset['caption'])
         p = paragraph('', before=70, after=70)
-        p.find('w:pPr', NS).append(base.element('jc', val='center'))
+        p.find('w:pPr', NS).append(base.element('jc', val='left'))
         p.find('w:pPr', NS).append(base.element('keepNext'))
         drawing = base.element('drawing')
         drawing.append(inline)
@@ -184,7 +222,7 @@ class Builder:
             new_type = etree.SubElement(self.types, '{' + CT + '}Default')
             new_type.set('Extension', 'png')
             new_type.set('ContentType', 'image/png')
-        self.figures.append({'number': number, 'assetId': asset_id, 'source': str(path.relative_to(ROOT)), 'sourceSha256': hashlib.sha256(original_bytes).hexdigest(), 'engineVersion': asset['engineVersion'], 'dataKind': asset['dataKind'], 'caption': caption or asset['caption'], 'crop': crop, 'panels': panels, 'displayWidthInches': width, 'displayHeightInches': width*image.height/image.width})
+        self.figures.append({'number': number, 'assetId': asset_id, 'source': str(path.relative_to(ROOT)), 'sourceSha256': hashlib.sha256(original_bytes).hexdigest(), 'componentSources':sources, 'engineVersion': asset['engineVersion'], 'dataKind': asset['dataKind'], 'caption': caption or asset['caption'], 'crop': crop, 'panels': panels, 'displayWidthInches': width, 'displayHeightInches': width*image.height/image.width})
 
     def module(self, module, number):
         self.page(f'{number} {module["name"]}')
@@ -196,6 +234,8 @@ class Builder:
             self.text(f'{i} {step}', after=65)
         self.text(module['input'], lead='输入  ', after=65)
         self.text(module['output'], lead='输出  ', after=75)
+        if module.get('visualPage'):
+            self.page(module['visualPage'])
         self.add(subheading('实际界面与效果'))
         self.text(module['effect'], after=70)
         included = module['figureIds'][:1] if module.get('workedDetail') else module['figureIds']
@@ -240,6 +280,14 @@ class Builder:
         for i, module in enumerate(c['modules']):
             self.module(module, numbers[i])
             if module['id'] == 'M4':
+                task = c.get('taskFlow')
+                if task:
+                    self.page(task['title'])
+                    self.text(task['intro'])
+                    self.add(table(task['columns'], task['rows'], [2200, 3400, 3400]))
+                    for text in task['paragraphs']:
+                        self.text(text)
+                    self.figure(task['figureId'], max_height=2.1)
                 self.page('七 AI 工具与候选比较')
                 for text in c['aiDetail']['paragraphs']:
                     self.text(text)
@@ -255,6 +303,19 @@ class Builder:
                     self.add(table(detail['columns'], detail['rows'], [3800,2600,2600]))
                     self.add(subheading('实际解释与引用'))
                     self.figure(c['aiDetail']['secondaryFigureId'], max_height=2.8)
+                evaluation = c.get('taskEvaluation')
+                if evaluation:
+                    self.page(evaluation['title'])
+                    self.text(evaluation['intro'])
+                    self.add(table(evaluation['columns'], evaluation['rows'], [1800, 3600, 3600]))
+                    for text in evaluation['paragraphs']:
+                        self.text(text)
+                if c.get('targetedResult'):
+                    detail = c['targetedResult']
+                    self.page(detail['title'])
+                    for text in detail['paragraphs']:
+                        self.text(text)
+                    self.figure(detail['figureId'], max_height=2.5)
 
         self.page('十三 ' + c['caseStudy']['title'])
         self.text(c['caseStudy']['intro'])
@@ -275,6 +336,16 @@ class Builder:
         self.add(subheading('后续计划'))
         self.add(table(['方向', '计划内容'], c['scopeAndPlans']['plans'], [2000, 7000]))
         self.text(c['scopeAndPlans']['conclusion'], before=120)
+
+        if c.get('projectTeam'):
+            team = c['projectTeam']
+            self.page('十五 项目成员与职责分配')
+            self.text('学校  ' + team['school'])
+            self.text('队名  ' + team['teamName'] + '                 组别  ' + team['group'])
+            self.text('负责人  ' + team['captain'] + '                 指导教师  ' + team['advisors'])
+            self.add(table(['成员', '学院与专业', '项目职责'], team['rows'], [1300, 3300, 4400]))
+            for text in team['paragraphs']:
+                self.text(text)
 
         self.body.append(self.section)
         self.parts['word/document.xml'] = base.xml_bytes(self.document)
